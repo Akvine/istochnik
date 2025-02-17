@@ -5,14 +5,15 @@ import ru.akvine.istochnik.enums.DateShiftType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class LocalDateTimeSecondsShiftService extends AbstractLocalDateTimeShiftService<LocalDateTime, Long> {
+public class LocalDateTimeYearsRangeService extends AbstractLocalDateTimeRangeService<LocalDateTime, Long> {
     @Override
-    public List<LocalDateTime> shift(LocalDateTime start, LocalDateTime end, Long step) {
+    public Collection<LocalDateTime> range(LocalDateTime start, LocalDateTime end, Long step) {
         List<LocalDateTime> range = new ArrayList<>();
-        for (LocalDateTime date = start; date.isBefore(end) || date.isEqual(end); date = date.plusSeconds(step)) {
+        for (LocalDateTime date = start; date.isBefore(end) || date.isEqual(end); date = date.plusDays(step)) {
             range.add(date);
         }
         return range;
@@ -20,6 +21,6 @@ public class LocalDateTimeSecondsShiftService extends AbstractLocalDateTimeShift
 
     @Override
     public DateShiftType getByType() {
-        return DateShiftType.SECOND;
+        return DateShiftType.YEAR;
     }
 }

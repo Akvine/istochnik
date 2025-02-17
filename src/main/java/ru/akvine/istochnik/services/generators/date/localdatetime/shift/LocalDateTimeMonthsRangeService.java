@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LocalDateTimeMinutesShiftService extends AbstractLocalDateTimeShiftService<LocalDateTime, Long> {
+public class LocalDateTimeMonthsRangeService extends AbstractLocalDateTimeRangeService<LocalDateTime, Long> {
     @Override
-    public List<LocalDateTime> shift(LocalDateTime start, LocalDateTime end, Long step) {
+    public List<LocalDateTime> range(LocalDateTime start, LocalDateTime end, Long step) {
         List<LocalDateTime> range = new ArrayList<>();
-        for (LocalDateTime date = start; date.isBefore(end) || date.isEqual(end); date = date.plusMinutes(step)) {
+        for (LocalDateTime date = start; date.isBefore(end) || date.isEqual(end); date = date.plusMonths(step)) {
             range.add(date);
         }
         return range;
@@ -20,6 +20,6 @@ public class LocalDateTimeMinutesShiftService extends AbstractLocalDateTimeShift
 
     @Override
     public DateShiftType getByType() {
-        return DateShiftType.MINUTE;
+        return DateShiftType.MONTH;
     }
 }

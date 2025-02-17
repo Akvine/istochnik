@@ -3,8 +3,8 @@ package ru.akvine.istochnik.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.DateShiftType;
-import ru.akvine.istochnik.managers.LocalDateTimeShiftServicesManager;
-import ru.akvine.istochnik.services.generators.date.localdatetime.shift.AbstractLocalDateTimeShiftService;
+import ru.akvine.istochnik.managers.LocalDateTimeRangeServicesManager;
+import ru.akvine.istochnik.services.generators.date.localdatetime.shift.AbstractLocalDateTimeRangeService;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -17,10 +17,10 @@ import static java.util.stream.Collectors.toMap;
 public class ManagersConfig {
 
     @Bean
-    public LocalDateTimeShiftServicesManager localDateTimeShiftServicesManager(Collection<AbstractLocalDateTimeShiftService<LocalDateTime, Long>> services) {
-        Map<DateShiftType, AbstractLocalDateTimeShiftService<LocalDateTime, Long>> localDateTimeShiftServices = services
+    public LocalDateTimeRangeServicesManager localDateTimeShiftServicesManager(Collection<AbstractLocalDateTimeRangeService<LocalDateTime, Long>> services) {
+        Map<DateShiftType, AbstractLocalDateTimeRangeService<LocalDateTime, Long>> localDateTimeShiftServices = services
                 .stream()
-                .collect(toMap(AbstractLocalDateTimeShiftService::getByType, identity()));
-        return new LocalDateTimeShiftServicesManager(localDateTimeShiftServices);
+                .collect(toMap(AbstractLocalDateTimeRangeService::getByType, identity()));
+        return new LocalDateTimeRangeServicesManager(localDateTimeShiftServices);
     }
 }

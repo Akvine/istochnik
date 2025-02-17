@@ -2,7 +2,7 @@ package ru.akvine.istochnik.services.generators.date.localdatetime;
 
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.RangeType;
-import ru.akvine.istochnik.managers.LocalDateTimeShiftServicesManager;
+import ru.akvine.istochnik.managers.LocalDateTimeRangeServicesManager;
 import ru.akvine.istochnik.services.generators.ConstantGenerator;
 import ru.akvine.istochnik.services.generators.date.localdatetime.configs.LocalDateTimeConstantsConfig;
 import ru.akvine.istochnik.services.generators.date.localdatetime.configs.LocalDateTimeGeneratorConfig;
@@ -14,11 +14,11 @@ import java.util.List;
 @Service
 public class LocalDateTimeGeneratorService {
     private final LocalDateTimeRandomGenerator localDateTimeRandomGenerator;
-    private final LocalDateTimeShiftServicesManager localDateTimeShiftServicesManager;
+    private final LocalDateTimeRangeServicesManager localDateTimeRangeServicesManager;
 
-    public LocalDateTimeGeneratorService(LocalDateTimeRandomGenerator localDateTimeRandomGenerator, LocalDateTimeShiftServicesManager localDateTimeShiftServicesManager) {
+    public LocalDateTimeGeneratorService(LocalDateTimeRandomGenerator localDateTimeRandomGenerator, LocalDateTimeRangeServicesManager localDateTimeRangeServicesManager) {
         this.localDateTimeRandomGenerator = localDateTimeRandomGenerator;
-        this.localDateTimeShiftServicesManager = localDateTimeShiftServicesManager;
+        this.localDateTimeRangeServicesManager = localDateTimeRangeServicesManager;
     }
 
     public List<LocalDateTime> generate(LocalDateTimeConstantsConfig config) {
@@ -30,8 +30,8 @@ public class LocalDateTimeGeneratorService {
             return localDateTimeRandomGenerator.generate(config);
         } else {
             LocalDateTimeShiftRange shiftRange = config.getLocalDateTimeShiftRange();
-            return (List<LocalDateTime>) localDateTimeShiftServicesManager.getByType(shiftRange.getDateShiftType())
-                    .shift(shiftRange.getStart(), shiftRange.getEnd(), shiftRange.getShiftCount());
+            return (List<LocalDateTime>) localDateTimeRangeServicesManager.getByType(shiftRange.getDateShiftType())
+                    .range(shiftRange.getStart(), shiftRange.getEnd(), shiftRange.getShiftCount());
         }
     }
 }
