@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 
 public class LocalDateTimeShiftRange {
     private LocalDateTime start;
+    private LocalDateTime end;
+    private DateShiftType dateShiftType;
+    private long shiftCount;
 
     public LocalDateTime getStart() {
         return start;
@@ -39,7 +42,4 @@ public class LocalDateTimeShiftRange {
         this.shiftCount = shiftCount;
     }
 
-    private LocalDateTime end;
-    private DateShiftType dateShiftType;
-    private long shiftCount;
 }
