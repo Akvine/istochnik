@@ -2,19 +2,14 @@ package ru.akvine.istochnik.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 import ru.akvine.istochnik.controllers.meta.GeneratorControllerMeta;
-import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.date.localdatetime.LocalDateTimeGeneratorService;
-import ru.akvine.istochnik.services.generators.date.localdatetime.LocalDateTimeShiftRange;
-import ru.akvine.istochnik.services.generators.date.localdatetime.configs.LocalDateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerGeneratorService;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerShiftRange;
-import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerConstantsConfig;
 import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerGeneratorConfig;
-import ru.akvine.istochnik.services.generators.number.integer.random.IntegerRandomGenerator;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class GeneratorController implements GeneratorControllerMeta {
@@ -38,9 +33,12 @@ public class GeneratorController implements GeneratorControllerMeta {
                 true, true,
                 RangeType.SHIFT,
                 integerShiftRange);
+        Map<String, Double> filters = Map.of("plus", 19D, "minus", 1D, "pow", 0.5);
+        config.setFiltersWithValues(filters);
 //        IntegerConstantsConfig config = new IntegerConstantsConfig();
 //        config.setSize(30);
 //        config.setValue(15);
+//        new PowFilter().filter(List.of(1, 2, 3.5));
         return integerGeneratorService.generate(config);
     }
 }
