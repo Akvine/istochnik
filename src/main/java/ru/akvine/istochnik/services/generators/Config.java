@@ -1,6 +1,6 @@
 package ru.akvine.istochnik.services.generators;
 
-public abstract class Config {
+public class Config {
     public int getSize() {
         return size;
     }
