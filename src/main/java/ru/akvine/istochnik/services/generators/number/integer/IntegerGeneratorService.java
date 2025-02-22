@@ -37,9 +37,9 @@ public class IntegerGeneratorService {
         } else {
             Map<String, Double> filtersWithValues = config.getFiltersWithValues();
             List<Integer> generatedValues = (List<Integer>) integerRangeService.range(
-                    config.getIntegerRange().getStart(),
-                    config.getIntegerRange().getEnd(),
-                    config.getIntegerRange().getStep());
+                    config.getIntegerShiftRange().getStart(),
+                    config.getIntegerShiftRange().getEnd(),
+                    config.getIntegerShiftRange().getStep());
 
             if (!CollectionUtils.isEmpty(filtersWithValues)) {
                 for (Map.Entry<String, Double> entry : filtersWithValues.entrySet()) {

@@ -14,8 +14,8 @@ public class IntegerRandomGenerator extends AbstractRandomGenerator<Integer, Int
     public Collection<Integer> generate(IntegerGeneratorConfig config) {
         List<Integer> generatedValues = new ArrayList<>();
 
-        Integer start = config.getIntegerRange().getStart();
-        int end = config.getIntegerRange().getEnd();
+        Integer start = config.getIntegerShiftRange().getStart();
+        int end = config.getIntegerShiftRange().getEnd();
         if (start == null) {
             start = 0;
         }

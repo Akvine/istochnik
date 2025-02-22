@@ -1,13 +1,14 @@
 package ru.akvine.istochnik.services.generators;
 
-public class Config {
-    public int getSize() {
-        return size;
-    }
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
+@AllArgsConstructor
+public class Config {
     protected final int size;
 
-    public Config(int size) {
-        this.size = size;
+    public Config() {
+        this.size = 0;
     }
 }

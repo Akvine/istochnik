@@ -1,45 +1,16 @@
 package ru.akvine.istochnik.services.generators.date.localdatetime;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.DateShiftType;
 
 import java.time.LocalDateTime;
 
+@Data
+@Accessors(chain = true)
 public class LocalDateTimeShiftRange {
     private LocalDateTime start;
     private LocalDateTime end;
     private DateShiftType dateShiftType;
     private long shiftCount;
-
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public LocalDateTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
-    }
-
-    public DateShiftType getDateShiftType() {
-        return dateShiftType;
-    }
-
-    public void setDateShiftType(DateShiftType dateShiftType) {
-        this.dateShiftType = dateShiftType;
-    }
-
-    public long getShiftCount() {
-        return shiftCount;
-    }
-
-    public void setShiftCount(long shiftCount) {
-        this.shiftCount = shiftCount;
-    }
-
 }

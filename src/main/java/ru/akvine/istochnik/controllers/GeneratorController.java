@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
+import ru.akvine.istochnik.controllers.dto.GenerateRequest;
 import ru.akvine.istochnik.controllers.meta.GeneratorControllerMeta;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.uuid.UuidGeneratorService;
@@ -16,7 +17,7 @@ public class GeneratorController implements GeneratorControllerMeta {
     }
 
     @Override
-    public List<?> make() {
+    public List<?> make(GenerateRequest request) {
         Config config = new Config(10);
         return uuidGeneratorService.generate(config, "100");
     }
