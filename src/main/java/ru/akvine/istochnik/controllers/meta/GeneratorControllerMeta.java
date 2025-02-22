@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.controllers.meta;
 
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,5 +11,5 @@ import ru.akvine.istochnik.services.dto.Table;
 @RequestMapping(value = "/generator")
 public interface GeneratorControllerMeta {
     @GetMapping
-    Table generate(@RequestBody @Valid GenerateTableRequest request);
+    ResponseEntity<?> generate(@RequestBody @Valid GenerateTableRequest request);
 }

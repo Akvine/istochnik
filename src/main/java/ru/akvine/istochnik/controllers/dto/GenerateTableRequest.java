@@ -10,4 +10,5 @@ import java.util.List;
 public class GenerateTableRequest {
     private List<ColumnDto> columns;
     private int size;
+    private String fileType;
 }

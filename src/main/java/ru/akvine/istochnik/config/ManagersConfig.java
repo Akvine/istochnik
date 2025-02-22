@@ -3,8 +3,11 @@ package ru.akvine.istochnik.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.DateShiftType;
+import ru.akvine.istochnik.enums.FileType;
+import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
 import ru.akvine.istochnik.managers.IntegerFiltersManager;
 import ru.akvine.istochnik.managers.LocalDateTimeRangeServicesManager;
+import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.services.filters.integer.AbstractIntegerFilter;
 import ru.akvine.istochnik.services.generators.date.localdatetime.shift.AbstractLocalDateTimeRangeService;
 
@@ -33,5 +36,13 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(AbstractIntegerFilter::getName, identity()));
         return new IntegerFiltersManager(filters);
+    }
+
+    @Bean
+    public FileTableGeneratorsManager fileTableServicesManager(List<FileTableGenerator> generators) {
+        Map<FileType, FileTableGenerator> filters = generators
+                .stream()
+                .collect(toMap(FileTableGenerator::getType, identity()));
+        return new FileTableGeneratorsManager(filters);
     }
 }

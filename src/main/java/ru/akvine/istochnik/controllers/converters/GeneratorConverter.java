@@ -1,5 +1,7 @@
 package ru.akvine.istochnik.controllers.converters;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.akvine.istochnik.controllers.dto.ColumnDto;
 import ru.akvine.istochnik.controllers.dto.ConfigDto;
@@ -31,6 +33,14 @@ public class GeneratorConverter {
         return new GenerateData()
                 .setSize(size)
                 .setGenerateColumns(generateColumns);
+    }
+
+    public ResponseEntity<?> convertToResponse(byte[] file) {
+        Asserts.isNotNull(file);
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_TYPE, "application/csv")
+                .body(file);
     }
 
     private Config buildConfig(int size, ConfigDto configDto) {
