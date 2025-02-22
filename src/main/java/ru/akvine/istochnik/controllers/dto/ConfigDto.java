@@ -6,8 +6,6 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class ConfigDto {
-    private int size;
-
     private Boolean unique;
 
     private Boolean notNull;

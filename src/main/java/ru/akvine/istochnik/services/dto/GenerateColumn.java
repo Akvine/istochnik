@@ -2,12 +2,12 @@ package ru.akvine.istochnik.services.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.util.List;
+import ru.akvine.istochnik.enums.Type;
 
 @Data
 @Accessors(chain = true)
-public class Column {
+public class GenerateColumn {
     private String name;
-    private List<?> values;
+    private Type type;
+    private Config config;
 }

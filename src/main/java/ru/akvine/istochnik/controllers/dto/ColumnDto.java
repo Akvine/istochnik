@@ -8,5 +8,7 @@ import lombok.experimental.Accessors;
 public class ColumnDto {
     private String name;
 
+    private String type;
+
     private ConfigDto config;
 }

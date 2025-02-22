@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.exceptions.AddColumnException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,29 +13,33 @@ import java.util.List;
 public class Table {
     private final int rowsCount;
 
-    private List<List<Object>> values;
+    private List<Column> columns;
 
     public Table(int rowsCount) {
         this.rowsCount = rowsCount;
+        columns = new ArrayList<>();
     }
 
-    public void addColumn(List<Object> column) {
-        if (CollectionUtils.isEmpty(column)) {
+    public void addColumn(String columnName, List<?> values) {
+        if (CollectionUtils.isEmpty(values)) {
             throw new AddColumnException("Column is empty or null");
         }
 
-        if (column.size() != rowsCount) {
+        if (values.size() != rowsCount) {
             String errorMessage = String.format(
                     "Column size = [%s] is not equal to init rows count = [%s]",
-                    column.size(), rowsCount
+                    values.size(), rowsCount
             );
             throw new AddColumnException(errorMessage);
         }
 
-        values.add(column);
+        columns.add(new Column()
+                .setName(columnName)
+                .setValues(values)
+        );
     }
 
     public int getColumnsCount() {
-        return values.size();
+        return columns.size();
     }
 }

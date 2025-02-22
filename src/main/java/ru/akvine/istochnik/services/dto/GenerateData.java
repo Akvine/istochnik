@@ -3,20 +3,11 @@ package ru.akvine.istochnik.services.dto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 @Data
 @Accessors(chain = true)
 public class GenerateData {
+    private List<GenerateColumn> generateColumns;
     private int size;
-
-    private Boolean unique;
-
-    private Boolean notNull;
-
-    private String rangeType;
-
-    private String start;
-
-    private String end;
-
-    private Integer step;
 }

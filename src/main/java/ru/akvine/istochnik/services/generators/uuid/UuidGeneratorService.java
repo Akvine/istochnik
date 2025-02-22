@@ -9,6 +9,10 @@ import java.util.UUID;
 
 @Service
 public class UuidGeneratorService {
+    public List<String> generate(int size) {
+        return generate(new Config(size));
+    }
+
     public List<String> generate(Config config) {
         List<String> generatedValues = new ArrayList<>();
 

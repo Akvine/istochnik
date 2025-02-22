@@ -8,5 +8,5 @@ import lombok.experimental.Accessors;
 public class IntegerShiftRange {
     private Integer start;
     private int end;
-    private int step;
+    private Integer step;
 }

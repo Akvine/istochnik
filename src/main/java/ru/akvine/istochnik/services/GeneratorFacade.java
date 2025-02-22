@@ -1,9 +1,8 @@
 package ru.akvine.istochnik.services;
 
 import ru.akvine.istochnik.services.dto.GenerateData;
-
-import java.util.List;
+import ru.akvine.istochnik.services.dto.Table;
 
 public interface GeneratorFacade {
-    List<?> generate(GenerateData generateData);
+    Table generate(GenerateData generateData);
 }

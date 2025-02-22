@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class GenerateRequest {
+public class GenerateTableRequest {
     private List<ColumnDto> columns;
+    private int size;
 }
