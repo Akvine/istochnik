@@ -16,5 +16,5 @@ public class ConfigDto {
 
     private String end;
 
-    private Integer step;
+    private String step;
 }

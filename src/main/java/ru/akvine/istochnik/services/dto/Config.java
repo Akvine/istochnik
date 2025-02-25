@@ -19,5 +19,5 @@ public class Config {
 
     private String end;
 
-    private Integer step;
+    private String step;
 }

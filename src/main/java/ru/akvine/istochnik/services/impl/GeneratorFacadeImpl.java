@@ -11,6 +11,8 @@ import ru.akvine.istochnik.services.dto.GenerateData;
 import ru.akvine.istochnik.services.dto.Table;
 import ru.akvine.istochnik.services.generators.date.localdatetime.LocalDateTimeGeneratorService;
 import ru.akvine.istochnik.services.generators.date.localdatetime.configs.LocalDateTimeGeneratorConfig;
+import ru.akvine.istochnik.services.generators.number.doubles.DoubleGeneratorService;
+import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerGeneratorService;
 import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerGeneratorConfig;
 import ru.akvine.istochnik.services.generators.uuid.UuidGeneratorService;
@@ -24,6 +26,7 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
     private final LocalDateTimeGeneratorService localDateTimeGeneratorService;
     private final IntegerGeneratorService integerGeneratorService;
     private final UuidGeneratorService uuidGeneratorService;
+    private final DoubleGeneratorService doubleGeneratorService;
 
     private final ConfigMapperService configMapperService;
 
@@ -39,12 +42,16 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
 
             List<?> generatedValues = switch (type) {
                 case LOCALDATETIME -> {
-                    LocalDateTimeGeneratorConfig localDateTimeGeneratorConfig = configMapperService.generateLocalDateTimeConfig(config);
+                    LocalDateTimeGeneratorConfig localDateTimeGeneratorConfig = configMapperService.createLocalDateTimeConfig(config);
                     yield localDateTimeGeneratorService.generate(localDateTimeGeneratorConfig);
                 }
                 case INTEGER -> {
-                    IntegerGeneratorConfig integerGeneratorConfig = configMapperService.generateIntegerConfig(config);
+                    IntegerGeneratorConfig integerGeneratorConfig = configMapperService.createIntegerConfig(config);
                     yield integerGeneratorService.generate(integerGeneratorConfig);
+                }
+                case DOUBLE -> {
+                    DoubleGeneratorConfig doubleGeneratorConfig = configMapperService.createDoubleConfig(config);
+                    yield doubleGeneratorService.generate(doubleGeneratorConfig);
                 }
                 case UUID -> uuidGeneratorService.generate(config.getSize());
             };

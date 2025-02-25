@@ -10,7 +10,8 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 public enum Type {
     INTEGER("integer"),
     LOCALDATETIME("localDateTime"),
-    UUID("uuid");
+    UUID("uuid"),
+    DOUBLE("double");
 
     private final String value;
 
@@ -28,6 +29,9 @@ public enum Type {
             }
             case "uuid" -> {
                 return UUID;
+            }
+            case "double" -> {
+                return DOUBLE;
             }
             default -> throw new UnsupportedTypeGenerationException("Type = [" + type + "] is not supported by app!");
         }
