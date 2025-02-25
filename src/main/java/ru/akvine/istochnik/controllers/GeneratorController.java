@@ -26,7 +26,8 @@ public class GeneratorController implements GeneratorControllerMeta {
         GenerateData generateData = generatorConverter.convertToGenerateData(request);
         Table table = generatorFacade.generate(generateData);
         return generatorConverter.convertToResponse(
-                fileTableService.generateFile(FileType.from(request.getFileType()), table)
+                fileTableService.generateFile(FileType.from(request.getFileType()), table),
+                request.getFileType()
         );
     }
 }

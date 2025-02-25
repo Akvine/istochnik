@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum FileType {
-    CSV;
+    CSV,
+    XLSX;
 
     public static FileType from(String value) {
         if (StringUtils.isBlank(value)) {
@@ -17,6 +18,9 @@ public enum FileType {
         switch (value.toLowerCase()) {
             case "csv" -> {
                 return CSV;
+            }
+            case "xlsx" -> {
+                return XLSX;
             }
             default -> throw new UnsupportedOperationException("FileType = [" + value + "] is not supported!");
         }

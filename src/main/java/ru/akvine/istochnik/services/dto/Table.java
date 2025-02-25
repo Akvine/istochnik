@@ -12,7 +12,6 @@ import java.util.List;
 @Accessors(chain = true)
 public class Table {
     private final int rowsCount;
-
     private List<Column> columns;
 
     public Table(int rowsCount) {

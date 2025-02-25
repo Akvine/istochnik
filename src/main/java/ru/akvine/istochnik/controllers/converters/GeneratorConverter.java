@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.controllers.converters;
 
+import io.micrometer.common.util.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -35,11 +36,26 @@ public class GeneratorConverter {
                 .setGenerateColumns(generateColumns);
     }
 
-    public ResponseEntity<?> convertToResponse(byte[] file) {
+    public ResponseEntity<?> convertToResponse(byte[] file, String reportType) {
         Asserts.isNotNull(file);
+        Asserts.isNotNull(reportType);
+
+        String mimeType;
+        switch (reportType.toLowerCase()) {
+            case "csv": {
+                mimeType = "application/csv";
+                break;
+            }
+            case "xlsx": {
+                mimeType = "application/xlsx";
+                break;
+            }
+            default: throw new UnsupportedOperationException("Mime type = [" + reportType + "] is not supported!");
+        }
+
         return ResponseEntity
                 .ok()
-                .header(HttpHeaders.CONTENT_TYPE, "application/csv")
+                .header(HttpHeaders.CONTENT_TYPE, mimeType)
                 .body(file);
     }
 

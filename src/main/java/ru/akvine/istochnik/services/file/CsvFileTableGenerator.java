@@ -1,6 +1,5 @@
 package ru.akvine.istochnik.services.file;
 
-import com.opencsv.exceptions.CsvException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.stereotype.Service;
