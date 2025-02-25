@@ -8,7 +8,7 @@ import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
 import ru.akvine.istochnik.managers.IntegerFiltersManager;
 import ru.akvine.istochnik.managers.LocalDateTimeRangeServicesManager;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
-import ru.akvine.istochnik.services.filters.integer.AbstractIntegerFilter;
+import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 import ru.akvine.istochnik.services.generators.date.localdatetime.shift.AbstractLocalDateTimeRangeService;
 
 import java.time.LocalDateTime;
@@ -31,10 +31,10 @@ public class ManagersConfig {
     }
 
     @Bean
-    public IntegerFiltersManager integerFiltersManager(List<AbstractIntegerFilter<Integer>> integerFilters) {
-        Map<String, AbstractIntegerFilter<Integer>> filters = integerFilters
+    public IntegerFiltersManager integerFiltersManager(List<IntegerFilter<Integer>> integerFilters) {
+        Map<String, IntegerFilter<Integer>> filters = integerFilters
                 .stream()
-                .collect(toMap(AbstractIntegerFilter::getName, identity()));
+                .collect(toMap(IntegerFilter::getName, identity()));
         return new IntegerFiltersManager(filters);
     }
 

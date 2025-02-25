@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PowIntegerFilter extends AbstractIntegerFilter<Integer> {
+public class PowIntegerFilter extends IntegerFilter<Integer, Double> {
     @Override
-    public List<Integer> filter(List<Integer> input, double argument) {
-        return input.stream().map(value -> (int) Math.pow(value, argument)).toList();
+    public List<Integer> filter(List<Integer> input, Double[] argument) {
+        return input.stream().map(value -> (int) Math.pow(value, argument[0])).toList();
     }
 
     @Override

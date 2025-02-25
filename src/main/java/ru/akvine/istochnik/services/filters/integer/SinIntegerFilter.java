@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SinIntegerFilter extends AbstractIntegerFilter<Integer> {
+public class SinIntegerFilter extends IntegerFilter<Integer, Void> {
     @Override
-    public List<Integer> filter(List<Integer> input, double argument) {
+    public List<Integer> filter(List<Integer> input, Void[] argument) {
         return input.stream().map(value -> (int) Math.sin(value)).toList();
     }
 

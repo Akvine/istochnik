@@ -1,12 +1,12 @@
 package ru.akvine.istochnik.managers;
 
-import ru.akvine.istochnik.services.filters.integer.AbstractIntegerFilter;
+import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 
 import java.util.Map;
 
-public record IntegerFiltersManager(Map<String, AbstractIntegerFilter<Integer>> filters) {
+public record IntegerFiltersManager(Map<String, IntegerFilter<Integer>> filters) {
 
-    public AbstractIntegerFilter<Integer> getByType(String type) {
+    public IntegerFilter<Integer> getByType(String type) {
         if (filters.containsKey(type)) {
             return filters.get(type);
         }
