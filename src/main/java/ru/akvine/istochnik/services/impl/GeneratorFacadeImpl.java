@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.Type;
 import ru.akvine.istochnik.services.ConfigMapperService;
 import ru.akvine.istochnik.services.GeneratorFacade;
-import ru.akvine.istochnik.services.dto.GenerateColumn;
-import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.dto.GenerateData;
-import ru.akvine.istochnik.services.dto.Table;
+import ru.akvine.istochnik.services.dto.*;
 import ru.akvine.istochnik.services.generators.date.localdatetime.LocalDateTimeGeneratorService;
 import ru.akvine.istochnik.services.generators.date.localdatetime.configs.LocalDateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.DoubleGeneratorService;
@@ -39,6 +36,7 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
         for (GenerateColumn generateColumn : generateData.getGenerateColumns()) {
             Type type = generateColumn.getType();
             Config config = generateColumn.getConfig();
+            List<Filter> filters = generateColumn.getFilters();
 
             List<?> generatedValues = switch (type) {
                 case LOCALDATETIME -> {
@@ -47,7 +45,7 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
                 }
                 case INTEGER -> {
                     IntegerGeneratorConfig integerGeneratorConfig = configMapperService.createIntegerConfig(config);
-                    yield integerGeneratorService.generate(integerGeneratorConfig);
+                    yield integerGeneratorService.generate(integerGeneratorConfig, filters);
                 }
                 case DOUBLE -> {
                     DoubleGeneratorConfig doubleGeneratorConfig = configMapperService.createDoubleConfig(config);

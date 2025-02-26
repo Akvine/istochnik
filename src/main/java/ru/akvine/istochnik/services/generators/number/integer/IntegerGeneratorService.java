@@ -1,10 +1,12 @@
 package ru.akvine.istochnik.services.generators.number.integer;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.managers.IntegerFiltersManager;
+import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.ConstantGenerator;
 import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerConstantsConfig;
 import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerGeneratorConfig;
@@ -12,7 +14,6 @@ import ru.akvine.istochnik.services.generators.number.integer.random.IntegerRand
 import ru.akvine.istochnik.services.generators.number.integer.shift.AbstractIntegerRangeService;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -25,24 +26,39 @@ public class IntegerGeneratorService {
         return new ConstantGenerator<Integer>().generate(config.getSize(), config.getValue());
     }
 
-    public List<Integer> generate(IntegerGeneratorConfig config) {
+    public List<Integer> generate(IntegerGeneratorConfig config, List<Filter> filters) {
+        List<Integer> generatedValues;
+
         if (config.getRangeType() == RangeType.RANDOM) {
-            return (List<Integer>) integerRandomGenerator.generate(config);
+            generatedValues = (List<Integer>) integerRandomGenerator.generate(config);
         } else {
-            Map<String, Double> filtersWithValues = config.getFiltersWithValues();
-            List<Integer> generatedValues = (List<Integer>) integerRangeService.range(
+            generatedValues = (List<Integer>) integerRangeService.range(
                     config.getIntegerShiftRange().getStart(),
                     config.getIntegerShiftRange().getEnd(),
                     config.getIntegerShiftRange().getStep());
+        }
 
-            if (!CollectionUtils.isEmpty(filtersWithValues)) {
-                for (Map.Entry<String, Double> entry : filtersWithValues.entrySet()) {
-                    generatedValues = integerFiltersManager.getByType(entry.getKey())
-                            .filter(generatedValues, entry.getValue());
+        if (!CollectionUtils.isEmpty(filters)) {
+            for (Filter filter : filters) {
+                // TODO: Code-smells. Придумать что-нибудь по лучше
+                if (StringUtils.isNotBlank(filter.getArgument1())) {
+                    generatedValues = integerFiltersManager
+                            .getByType(filter.getName()).filter(generatedValues, new Double[]{Double.parseDouble(filter.getArgument1())});
+                } else if (StringUtils.isNotBlank(filter.getArgument1()) && StringUtils.isNotBlank(filter.getArgument2())) {
+                    generatedValues = integerFiltersManager
+                            .getByType(filter.getName()).filter(generatedValues, new Double[]
+                                    {
+                                            Double.parseDouble(filter.getArgument1()),
+                                            Double.parseDouble(filter.getArgument2())
+                                    }
+                            );
+                } else {
+                    generatedValues = integerFiltersManager
+                            .getByType(filter.getName()).filter(generatedValues, new Double[]{});
                 }
             }
-
-            return generatedValues;
         }
+
+        return generatedValues;
     }
 }

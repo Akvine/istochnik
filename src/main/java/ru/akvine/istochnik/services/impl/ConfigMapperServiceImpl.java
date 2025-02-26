@@ -40,7 +40,8 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
                 new IntegerShiftRange()
                         .setStart(Integer.parseInt(config.getStart()))
                         .setEnd(Integer.parseInt(config.getEnd()))
-                        .setStep(Integer.parseInt(config.getStep()))
+                        .setStep(Integer.parseInt(config.getStep())),
+                config.getFilters()
         );
     }
 

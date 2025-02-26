@@ -31,8 +31,8 @@ public class ManagersConfig {
     }
 
     @Bean
-    public IntegerFiltersManager integerFiltersManager(List<IntegerFilter<Integer>> integerFilters) {
-        Map<String, IntegerFilter<Integer>> filters = integerFilters
+    public IntegerFiltersManager integerFiltersManager(List<IntegerFilter<Integer, Double>> integerFilters) {
+        Map<String, IntegerFilter<Integer, Double>> filters = integerFilters
                 .stream()
                 .collect(toMap(IntegerFilter::getName, identity()));
         return new IntegerFiltersManager(filters);

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
 
+import java.util.List;
+
 @Data
 @Accessors(chain = true)
 public class Config {
@@ -20,4 +22,6 @@ public class Config {
     private String end;
 
     private String step;
+
+    private List<Filter> filters;
 }
