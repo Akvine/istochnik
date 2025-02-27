@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
-import ru.akvine.istochnik.managers.IntegerFiltersManager;
 import ru.akvine.istochnik.managers.LocalDateTimeRangeServicesManager;
+import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
+import ru.akvine.istochnik.managers.filters.StringFiltersManager;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
+import ru.akvine.istochnik.services.filters.string.StringFilter;
 import ru.akvine.istochnik.services.generators.date.localdatetime.shift.AbstractLocalDateTimeRangeService;
 
 import java.time.LocalDateTime;
@@ -36,6 +38,14 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(IntegerFilter::getName, identity()));
         return new IntegerFiltersManager(filters);
+    }
+
+    @Bean
+    public StringFiltersManager stringFiltersManager(List<StringFilter<String, String>> stringFilters) {
+        Map<String, StringFilter<String, String>> filters = stringFilters
+                .stream()
+                .collect(toMap(StringFilter::getName, identity()));
+        return new StringFiltersManager(filters);
     }
 
     @Bean

@@ -51,7 +51,7 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
                     DoubleGeneratorConfig doubleGeneratorConfig = configMapperService.createDoubleConfig(config);
                     yield doubleGeneratorService.generate(doubleGeneratorConfig);
                 }
-                case UUID -> uuidGeneratorService.generate(config.getSize());
+                case UUID -> uuidGeneratorService.generate(config.getSize(), filters);
             };
 
             table.addColumn(generateColumn.getName(), generatedValues);

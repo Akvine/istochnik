@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.enums.RangeType;
-import ru.akvine.istochnik.managers.IntegerFiltersManager;
+import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.ConstantGenerator;
 import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerConstantsConfig;

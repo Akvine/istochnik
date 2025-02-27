@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.managers;
+package ru.akvine.istochnik.managers.filters;
 
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 
@@ -11,6 +11,6 @@ public record IntegerFiltersManager(Map<String, IntegerFilter<Integer, Double>> 
             return filters.get(type);
         }
 
-        throw new UnsupportedOperationException("Type = [" + type + "] is not supported!");
+        throw new UnsupportedOperationException("Filter with name = [" + type + "] is not supported!");
     }
 }
