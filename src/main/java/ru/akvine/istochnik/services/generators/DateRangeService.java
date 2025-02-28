@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.services.generators.date;
+package ru.akvine.istochnik.services.generators;
 
 import ru.akvine.istochnik.enums.DateShiftType;
 

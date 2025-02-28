@@ -1,13 +1,13 @@
-package ru.akvine.istochnik.services.generators.date.time;
+package ru.akvine.istochnik.services.generators.time;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.managers.TimeRangeServicesManager;
 import ru.akvine.istochnik.services.generators.ConstantGenerator;
-import ru.akvine.istochnik.services.generators.date.time.configs.TimeConstantsConfig;
-import ru.akvine.istochnik.services.generators.date.time.configs.TimeGeneratorConfig;
-import ru.akvine.istochnik.services.generators.date.time.random.TimeRandomGenerator;
+import ru.akvine.istochnik.services.generators.time.configs.TimeConstantsConfig;
+import ru.akvine.istochnik.services.generators.time.configs.TimeGeneratorConfig;
+import ru.akvine.istochnik.services.generators.time.random.TimeRandomGenerator;
 
 import java.time.LocalTime;
 import java.util.List;

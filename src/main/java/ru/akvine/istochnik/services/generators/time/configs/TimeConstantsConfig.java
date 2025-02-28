@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.services.generators.date.time.configs;
+package ru.akvine.istochnik.services.generators.time.configs;
 
 import jakarta.annotation.Nullable;
 import lombok.Data;

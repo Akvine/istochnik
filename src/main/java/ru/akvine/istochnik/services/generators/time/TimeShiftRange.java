@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.services.generators.date.time;
+package ru.akvine.istochnik.services.generators.time;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

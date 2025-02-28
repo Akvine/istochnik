@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.services.generators.date.localdatetime.shift;
+package ru.akvine.istochnik.services.generators.datetime.shift;
 
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.DateShiftType;
@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class LocalDateTimeYearsRangeService extends AbstractLocalDateTimeRangeService<LocalDateTime, Long> {
+public class DateTimeYearsRangeService extends AbstractDateTimeRangeService<LocalDateTime, Long> {
     @Override
     public Collection<LocalDateTime> range(LocalDateTime start, LocalDateTime end, Long step) {
         List<LocalDateTime> range = new ArrayList<>();

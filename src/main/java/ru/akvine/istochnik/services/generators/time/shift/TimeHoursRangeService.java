@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.services.generators.date.time.shift;
+package ru.akvine.istochnik.services.generators.time.shift;
 
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.DateShiftType;
@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TimeSecondsRangeService extends AbstractTimeRangeService<LocalTime, Integer> {
+public class TimeHoursRangeService extends AbstractTimeRangeService<LocalTime, Integer> {
     @Override
     public List<LocalTime> range(LocalTime start, LocalTime end, Integer step) {
         List<LocalTime> range = new ArrayList<>();
-        for (LocalTime time = start; time.isBefore(end) || time.isAfter(end); time = time.plusSeconds(step)) {
+        for (LocalTime time = start; time.isBefore(end) || time.isAfter(end); time = time.plusHours(step)) {
             range.add(time);
         }
         return range;
@@ -20,6 +20,6 @@ public class TimeSecondsRangeService extends AbstractTimeRangeService<LocalTime,
 
     @Override
     public DateShiftType getByType() {
-        return DateShiftType.SECOND;
+        return DateShiftType.HOUR;
     }
 }

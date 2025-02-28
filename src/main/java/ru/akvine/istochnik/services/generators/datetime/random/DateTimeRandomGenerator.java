@@ -1,8 +1,8 @@
-package ru.akvine.istochnik.services.generators.date.localdatetime.random;
+package ru.akvine.istochnik.services.generators.datetime.random;
 
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
-import ru.akvine.istochnik.services.generators.date.localdatetime.configs.LocalDateTimeGeneratorConfig;
+import ru.akvine.istochnik.services.generators.datetime.configs.DateTimeGeneratorConfig;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class LocalDateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTime, LocalDateTimeGeneratorConfig> {
+public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTime, DateTimeGeneratorConfig> {
 
     @Override
-    public List<LocalDateTime> generate(LocalDateTimeGeneratorConfig config) {
+    public List<LocalDateTime> generate(DateTimeGeneratorConfig config) {
         List<LocalDateTime> generatedDates = new ArrayList<>();
 
-        LocalDateTime startDate = config.getLocalDateTimeShiftRange().getStart();
-        LocalDateTime endDate = config.getLocalDateTimeShiftRange().getEnd();
+        LocalDateTime startDate = config.getDateTimeShiftRange().getStart();
+        LocalDateTime endDate = config.getDateTimeShiftRange().getEnd();
 
 
         while (generatedDates.size() != config.getSize()) {

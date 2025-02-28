@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.services.generators.date.localdatetime.configs;
+package ru.akvine.istochnik.services.generators.datetime.configs;
 
 import jakarta.annotation.Nullable;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-public class LocalDateTimeConstantsConfig {
+public class DateTimeConstantsConfig {
     @Nullable
     private LocalDateTime constant;
     private int size;

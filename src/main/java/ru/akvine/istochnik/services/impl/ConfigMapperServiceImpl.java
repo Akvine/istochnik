@@ -3,28 +3,28 @@ package ru.akvine.istochnik.services.impl;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.ConfigMapperService;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.generators.date.localdatetime.LocalDateTimeShiftRange;
-import ru.akvine.istochnik.services.generators.date.localdatetime.configs.LocalDateTimeGeneratorConfig;
-import ru.akvine.istochnik.services.generators.date.time.TimeShiftRange;
-import ru.akvine.istochnik.services.generators.date.time.configs.TimeGeneratorConfig;
+import ru.akvine.istochnik.services.generators.datetime.DateTimeShiftRange;
+import ru.akvine.istochnik.services.generators.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.DoubleShiftRange;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerShiftRange;
 import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerGeneratorConfig;
+import ru.akvine.istochnik.services.generators.time.TimeShiftRange;
+import ru.akvine.istochnik.services.generators.time.configs.TimeGeneratorConfig;
 import ru.akvine.istochnik.utils.Asserts;
 import ru.akvine.istochnik.utils.DateTimeUtils;
 
 @Service
 public class ConfigMapperServiceImpl implements ConfigMapperService {
     @Override
-    public LocalDateTimeGeneratorConfig createLocalDateTimeConfig(Config config) {
+    public DateTimeGeneratorConfig createDateTimeConfig(Config config) {
         Asserts.isNotNull(config, "config is null");
-        return new LocalDateTimeGeneratorConfig(
+        return new DateTimeGeneratorConfig(
                 config.getSize(),
                 config.getNotNull(),
                 config.getUnique(),
                 config.getRangeType(),
-                new LocalDateTimeShiftRange()
+                new DateTimeShiftRange()
                         .setStart(DateTimeUtils.toLocalDateTime(config.getStart()))
                         .setEnd(DateTimeUtils.toLocalDateTime(config.getEnd()))
                         .setShiftCount(Integer.parseInt(config.getStep()))

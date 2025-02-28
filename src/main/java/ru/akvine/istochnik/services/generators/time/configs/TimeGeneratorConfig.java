@@ -1,10 +1,10 @@
-package ru.akvine.istochnik.services.generators.date.time.configs;
+package ru.akvine.istochnik.services.generators.time.configs;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.Config;
-import ru.akvine.istochnik.services.generators.date.time.TimeShiftRange;
+import ru.akvine.istochnik.services.generators.time.TimeShiftRange;
 
 @Data
 @Accessors(chain = true)

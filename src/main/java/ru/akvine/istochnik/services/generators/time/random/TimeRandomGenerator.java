@@ -1,8 +1,8 @@
-package ru.akvine.istochnik.services.generators.date.time.random;
+package ru.akvine.istochnik.services.generators.time.random;
 
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
-import ru.akvine.istochnik.services.generators.date.time.configs.TimeGeneratorConfig;
+import ru.akvine.istochnik.services.generators.time.configs.TimeGeneratorConfig;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

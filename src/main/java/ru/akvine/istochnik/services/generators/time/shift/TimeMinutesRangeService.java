@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.services.generators.date.time.shift;
+package ru.akvine.istochnik.services.generators.time.shift;
 
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.DateShiftType;

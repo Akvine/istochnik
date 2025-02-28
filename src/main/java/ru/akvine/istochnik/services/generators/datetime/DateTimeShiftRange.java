@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.services.generators.date.localdatetime;
+package ru.akvine.istochnik.services.generators.datetime;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-public class LocalDateTimeShiftRange {
+public class DateTimeShiftRange {
     private LocalDateTime start;
     private LocalDateTime end;
     private DateShiftType dateShiftType;

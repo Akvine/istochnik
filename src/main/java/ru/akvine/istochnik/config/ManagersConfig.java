@@ -5,15 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
-import ru.akvine.istochnik.managers.LocalDateTimeRangeServicesManager;
+import ru.akvine.istochnik.managers.DateTimeRangeServicesManager;
 import ru.akvine.istochnik.managers.TimeRangeServicesManager;
 import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
 import ru.akvine.istochnik.managers.filters.StringFiltersManager;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 import ru.akvine.istochnik.services.filters.string.StringFilter;
-import ru.akvine.istochnik.services.generators.date.localdatetime.shift.AbstractLocalDateTimeRangeService;
-import ru.akvine.istochnik.services.generators.date.time.shift.AbstractTimeRangeService;
+import ru.akvine.istochnik.services.generators.datetime.shift.AbstractDateTimeRangeService;
+import ru.akvine.istochnik.services.generators.time.shift.AbstractTimeRangeService;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -28,11 +28,11 @@ import static java.util.stream.Collectors.toMap;
 public class ManagersConfig {
 
     @Bean
-    public LocalDateTimeRangeServicesManager localDateTimeShiftServicesManager(Collection<AbstractLocalDateTimeRangeService<LocalDateTime, Long>> services) {
-        Map<DateShiftType, AbstractLocalDateTimeRangeService<LocalDateTime, Long>> localDateTimeShiftServices = services
+    public DateTimeRangeServicesManager dateTimeShiftServicesManager(Collection<AbstractDateTimeRangeService<LocalDateTime, Long>> services) {
+        Map<DateShiftType, AbstractDateTimeRangeService<LocalDateTime, Long>> localDateTimeShiftServices = services
                 .stream()
-                .collect(toMap(AbstractLocalDateTimeRangeService::getByType, identity()));
-        return new LocalDateTimeRangeServicesManager(localDateTimeShiftServices);
+                .collect(toMap(AbstractDateTimeRangeService::getByType, identity()));
+        return new DateTimeRangeServicesManager(localDateTimeShiftServices);
     }
 
     @Bean
