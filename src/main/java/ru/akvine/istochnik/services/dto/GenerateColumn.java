@@ -1,8 +1,10 @@
 package ru.akvine.istochnik.services.dto;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import ru.akvine.istochnik.enums.Type;
+import ru.akvine.istochnik.enums.BaseType;
+import ru.akvine.istochnik.enums.CustomType;
 
 import java.util.List;
 
@@ -10,7 +12,10 @@ import java.util.List;
 @Accessors(chain = true)
 public class GenerateColumn {
     private String name;
-    private Type type;
+    @Nullable
+    private BaseType baseType;
+    @Nullable
+    private CustomType customType;
     private Config config;
     private List<Filter> filters;
 }

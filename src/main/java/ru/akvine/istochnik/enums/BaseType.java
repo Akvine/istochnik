@@ -1,21 +1,21 @@
 package ru.akvine.istochnik.enums;
 
 import io.micrometer.common.util.StringUtils;
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 
 @AllArgsConstructor
 @Getter
-public enum Type {
+public enum BaseType {
     INTEGER("integer"),
-    LOCALDATETIME("localDateTime"),
-    UUID("uuid"),
+    STRING("string"),
     DOUBLE("double");
 
     private final String value;
 
-    public static Type from(String type) {
+    public static BaseType safeFrom(String type) {
         if (StringUtils.isBlank(type)) {
             throw new IllegalArgumentException("type is blank!");
         }
@@ -24,16 +24,22 @@ public enum Type {
             case "integer" -> {
                 return INTEGER;
             }
-            case "localDateTime" -> {
-                return LOCALDATETIME;
-            }
-            case "uuid" -> {
-                return UUID;
-            }
             case "double" -> {
                 return DOUBLE;
             }
+            case "string" -> {
+                return STRING;
+            }
             default -> throw new UnsupportedTypeGenerationException("Type = [" + type + "] is not supported by app!");
+        }
+    }
+
+    @Nullable
+    public static BaseType from(String type) {
+        try {
+            return safeFrom(type);
+        } catch (IllegalArgumentException | UnsupportedTypeGenerationException exception) {
+            return null;
         }
     }
 }

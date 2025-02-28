@@ -24,4 +24,6 @@ public class Config {
     private String step;
 
     private List<Filter> filters;
+
+    private Integer length;
 }

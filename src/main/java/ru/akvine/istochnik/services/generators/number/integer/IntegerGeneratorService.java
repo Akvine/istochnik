@@ -43,10 +43,10 @@ public class IntegerGeneratorService {
                 // TODO: Code-smells. Придумать что-нибудь по лучше
                 if (StringUtils.isNotBlank(filter.getArgument1())) {
                     generatedValues = integerFiltersManager
-                            .getByType(filter.getName()).filter(generatedValues, new Double[]{Double.parseDouble(filter.getArgument1())});
+                            .getFilter(filter.getName()).filter(generatedValues, new Double[]{Double.parseDouble(filter.getArgument1())});
                 } else if (StringUtils.isNotBlank(filter.getArgument1()) && StringUtils.isNotBlank(filter.getArgument2())) {
                     generatedValues = integerFiltersManager
-                            .getByType(filter.getName()).filter(generatedValues, new Double[]
+                            .getFilter(filter.getName()).filter(generatedValues, new Double[]
                                     {
                                             Double.parseDouble(filter.getArgument1()),
                                             Double.parseDouble(filter.getArgument2())
@@ -54,7 +54,7 @@ public class IntegerGeneratorService {
                             );
                 } else {
                     generatedValues = integerFiltersManager
-                            .getByType(filter.getName()).filter(generatedValues, new Double[]{});
+                            .getFilter(filter.getName()).filter(generatedValues, new Double[]{});
                 }
             }
         }

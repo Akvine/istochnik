@@ -8,8 +8,9 @@ import ru.akvine.istochnik.controllers.dto.ColumnDto;
 import ru.akvine.istochnik.controllers.dto.ConfigDto;
 import ru.akvine.istochnik.controllers.dto.FilterDto;
 import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
+import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.RangeType;
-import ru.akvine.istochnik.enums.Type;
+import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
@@ -27,9 +28,16 @@ public class GeneratorConverter {
         int size = request.getSize();
         List<GenerateColumn> generateColumns = new ArrayList<>();
         for (ColumnDto column : request.getColumns()) {
+            CustomType customType = null;
+            BaseType baseType = BaseType.from(column.getType());
+            if (baseType == null) {
+                customType = CustomType.safeFrom(column.getType());
+            }
+
             generateColumns.add(new GenerateColumn()
                     .setName(column.getName())
-                    .setType(Type.from(column.getType()))
+                    .setBaseType(baseType)
+                    .setCustomType(customType)
                     .setConfig(buildConfig(size, column.getConfig()))
                     .setFilters(CollectionUtils.isEmpty(column.getFilters()) ?
                             List.of() : column.getFilters().stream().map(this::buildFilter).toList()));
@@ -54,7 +62,8 @@ public class GeneratorConverter {
                 mimeType = "application/xlsx";
                 break;
             }
-            default: throw new UnsupportedOperationException("Mime type = [" + reportType + "] is not supported!");
+            default:
+                throw new UnsupportedOperationException("Mime type = [" + reportType + "] is not supported!");
         }
 
         return ResponseEntity
@@ -78,6 +87,7 @@ public class GeneratorConverter {
                 .setRangeType(RangeType.valueOf(configDto.getRangeType()))
                 .setStart(configDto.getStart())
                 .setEnd(configDto.getEnd())
-                .setStep(configDto.getStep());
+                .setStep(configDto.getStep())
+                .setLength(configDto.getLength());
     }
 }

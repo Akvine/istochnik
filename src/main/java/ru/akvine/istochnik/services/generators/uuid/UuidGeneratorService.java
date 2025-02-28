@@ -37,7 +37,7 @@ public class UuidGeneratorService {
                 // TODO: Code-smells. Придумать что-нибудь по лучше
                 if (filter.getArgument1() != null && filter.getArgument2() != null) {
                     generatedValues = stringFiltersManager
-                            .getByType(filter.getName()).filter(generatedValues, new String[]
+                            .getFilter(filter.getName()).filter(generatedValues, new String[]
                                     {
                                             filter.getArgument1(),
                                             filter.getArgument2()
@@ -45,10 +45,10 @@ public class UuidGeneratorService {
                             );
                 } else if (filter.getArgument1() != null) {
                     generatedValues = stringFiltersManager
-                            .getByType(filter.getName()).filter(generatedValues, new String[]{filter.getArgument1()});
+                            .getFilter(filter.getName()).filter(generatedValues, new String[]{filter.getArgument1()});
                 } else {
                     generatedValues = stringFiltersManager
-                            .getByType(filter.getName()).filter(generatedValues, new String[]{});
+                            .getFilter(filter.getName()).filter(generatedValues, new String[]{});
                 }
             }
         }
