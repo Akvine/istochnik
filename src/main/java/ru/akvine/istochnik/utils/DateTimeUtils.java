@@ -3,6 +3,7 @@ package ru.akvine.istochnik.utils;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
 @UtilityClass
 public class DateTimeUtils {
     public final static DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public final static DateTimeFormatter DEFAULT_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     public LocalDateTime toLocalDateTime(Date date) {
         if (date == null) {
@@ -28,6 +30,16 @@ public class DateTimeUtils {
         Asserts.isNotNull(date, "date can't be null");
         Asserts.isNotNull(formatter, "dateFormatter can't be null");
         return LocalDateTime.parse(date, formatter);
+    }
+
+    public LocalTime toLocalTime(String time) {
+        return toLocalTime(time, DEFAULT_TIME_FORMATTER);
+    }
+
+    public LocalTime toLocalTime(String time, DateTimeFormatter formatter) {
+        Asserts.isNotNull(time);
+        Asserts.isNotNull(formatter);
+        return LocalTime.parse(time, formatter);
     }
 
     public String formatLocalDateTime(LocalDateTime localDateTime) {

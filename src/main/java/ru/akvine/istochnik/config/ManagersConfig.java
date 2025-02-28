@@ -6,14 +6,17 @@ import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
 import ru.akvine.istochnik.managers.LocalDateTimeRangeServicesManager;
+import ru.akvine.istochnik.managers.TimeRangeServicesManager;
 import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
 import ru.akvine.istochnik.managers.filters.StringFiltersManager;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 import ru.akvine.istochnik.services.filters.string.StringFilter;
 import ru.akvine.istochnik.services.generators.date.localdatetime.shift.AbstractLocalDateTimeRangeService;
+import ru.akvine.istochnik.services.generators.date.time.shift.AbstractTimeRangeService;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +33,14 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(AbstractLocalDateTimeRangeService::getByType, identity()));
         return new LocalDateTimeRangeServicesManager(localDateTimeShiftServices);
+    }
+
+    @Bean
+    public TimeRangeServicesManager timeRangeServicesManager(Collection<AbstractTimeRangeService<LocalTime, Integer>> services) {
+        Map<DateShiftType, AbstractTimeRangeService<LocalTime, Integer>> timeShiftServices = services
+                .stream()
+                .collect(toMap(AbstractTimeRangeService::getByType, identity()));
+        return new TimeRangeServicesManager(timeShiftServices);
     }
 
     @Bean

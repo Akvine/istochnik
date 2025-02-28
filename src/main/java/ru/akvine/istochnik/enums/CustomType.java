@@ -9,7 +9,8 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 @AllArgsConstructor
 public enum CustomType {
     UUID(BaseType.STRING, "uuid"),
-    DATETIME(BaseType.STRING, "dateTime");
+    DATETIME(BaseType.STRING, "dateTime"),
+    TIME(BaseType.STRING, "time");
 
     private final BaseType baseType;
     private final String name;
@@ -25,6 +26,9 @@ public enum CustomType {
             }
             case "datetime" -> {
                 return DATETIME;
+            }
+            case "time" -> {
+                return TIME;
             }
             default -> throw new UnsupportedTypeGenerationException("Custom type = [" + name + "] is not supported by app!");
         }

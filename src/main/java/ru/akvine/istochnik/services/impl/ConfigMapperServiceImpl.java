@@ -5,6 +5,8 @@ import ru.akvine.istochnik.services.ConfigMapperService;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.generators.date.localdatetime.LocalDateTimeShiftRange;
 import ru.akvine.istochnik.services.generators.date.localdatetime.configs.LocalDateTimeGeneratorConfig;
+import ru.akvine.istochnik.services.generators.date.time.TimeShiftRange;
+import ru.akvine.istochnik.services.generators.date.time.configs.TimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.DoubleShiftRange;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerShiftRange;
@@ -25,6 +27,21 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
                 new LocalDateTimeShiftRange()
                         .setStart(DateTimeUtils.toLocalDateTime(config.getStart()))
                         .setEnd(DateTimeUtils.toLocalDateTime(config.getEnd()))
+                        .setShiftCount(Integer.parseInt(config.getStep()))
+        );
+    }
+
+    @Override
+    public TimeGeneratorConfig createTimeGeneratorConfig(Config config) {
+        Asserts.isNotNull(config);
+        return new TimeGeneratorConfig(
+                config.getSize(),
+                config.getNotNull(),
+                config.getUnique(),
+                config.getRangeType(),
+                new TimeShiftRange()
+                        .setStart(DateTimeUtils.toLocalTime(config.getStart()))
+                        .setEnd(DateTimeUtils.toLocalTime((config.getEnd())))
                         .setShiftCount(Integer.parseInt(config.getStep()))
         );
     }

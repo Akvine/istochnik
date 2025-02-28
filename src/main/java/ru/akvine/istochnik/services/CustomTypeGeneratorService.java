@@ -7,6 +7,8 @@ import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.date.localdatetime.LocalDateTimeGeneratorService;
 import ru.akvine.istochnik.services.generators.date.localdatetime.configs.LocalDateTimeGeneratorConfig;
+import ru.akvine.istochnik.services.generators.date.time.TimeGeneratorService;
+import ru.akvine.istochnik.services.generators.date.time.configs.TimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.uuid.UuidGeneratorService;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 public class CustomTypeGeneratorService {
     private final UuidGeneratorService uuidGeneratorService;
     private final LocalDateTimeGeneratorService localDateTimeGeneratorService;
+    private final TimeGeneratorService timeGeneratorService;
     private final ConfigMapperService configMapperService;
 
     public List<?> generate(CustomType type, Config config, List<Filter> filters) {
@@ -24,6 +27,10 @@ public class CustomTypeGeneratorService {
             case DATETIME -> {
                 LocalDateTimeGeneratorConfig localDateTimeGeneratorConfig = configMapperService.createLocalDateTimeConfig(config);
                 yield localDateTimeGeneratorService.generate(localDateTimeGeneratorConfig);
+            }
+            case TIME -> {
+                TimeGeneratorConfig timeGeneratorConfig = configMapperService.createTimeGeneratorConfig(config);
+                yield timeGeneratorService.generate(timeGeneratorConfig);
             }
         };
     }
