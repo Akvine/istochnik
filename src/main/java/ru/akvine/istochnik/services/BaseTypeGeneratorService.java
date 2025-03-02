@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.generators.bool.BooleanGeneratorService;
+import ru.akvine.istochnik.services.generators.bool.configs.BooleanGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.DoubleGeneratorService;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerGeneratorService;
@@ -20,6 +22,7 @@ public class BaseTypeGeneratorService {
     private final ConfigMapperService configMapperService;
     private final DoubleGeneratorService doubleGeneratorService;
     private final IntegerGeneratorService integerGeneratorService;
+    private final BooleanGeneratorService booleanGeneratorService;
 
     public List<?> generate(BaseType type, Config config, List<Filter> filters) {
         return switch (type) {
@@ -38,6 +41,10 @@ public class BaseTypeGeneratorService {
                 }
 
                 yield generatedValues;
+            }
+            case BOOLEAN -> {
+                BooleanGeneratorConfig booleanGeneratorConfig = configMapperService.createBooleanConfig(config);
+                yield booleanGeneratorService.generate(booleanGeneratorConfig);
             }
         };
     }

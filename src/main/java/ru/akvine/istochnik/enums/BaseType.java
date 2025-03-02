@@ -11,7 +11,8 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 public enum BaseType {
     INTEGER("integer"),
     STRING("string"),
-    DOUBLE("double");
+    DOUBLE("double"),
+    BOOLEAN("boolean");
 
     private final String value;
 
@@ -29,6 +30,9 @@ public enum BaseType {
             }
             case "string" -> {
                 return STRING;
+            }
+            case "boolean" -> {
+                return BOOLEAN;
             }
             default -> throw new UnsupportedTypeGenerationException("Type = [" + type + "] is not supported by app!");
         }

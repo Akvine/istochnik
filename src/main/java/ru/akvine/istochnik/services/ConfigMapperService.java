@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.services;
 
 import ru.akvine.istochnik.services.dto.Config;
+import ru.akvine.istochnik.services.generators.bool.configs.BooleanGeneratorConfig;
 import ru.akvine.istochnik.services.generators.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.time.configs.TimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
@@ -14,4 +15,6 @@ public interface ConfigMapperService {
     IntegerGeneratorConfig createIntegerConfig(Config config);
 
     DoubleGeneratorConfig createDoubleConfig(Config config);
+
+    BooleanGeneratorConfig createBooleanConfig(Config config);
 }

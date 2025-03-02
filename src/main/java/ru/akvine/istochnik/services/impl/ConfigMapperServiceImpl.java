@@ -3,6 +3,8 @@ package ru.akvine.istochnik.services.impl;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.ConfigMapperService;
 import ru.akvine.istochnik.services.dto.Config;
+import ru.akvine.istochnik.services.generators.bool.BooleanShiftRange;
+import ru.akvine.istochnik.services.generators.bool.configs.BooleanGeneratorConfig;
 import ru.akvine.istochnik.services.generators.datetime.DateTimeShiftRange;
 import ru.akvine.istochnik.services.generators.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.DoubleShiftRange;
@@ -74,6 +76,19 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
                         .setStart(Double.parseDouble(config.getStart()))
                         .setEnd(Double.parseDouble(config.getEnd()))
                         .setStep(Double.parseDouble(config.getStep()))
+        );
+    }
+
+    @Override
+    public BooleanGeneratorConfig createBooleanConfig(Config config) {
+        Asserts.isNotNull(config, "config is null");
+        return new BooleanGeneratorConfig(
+                config.getSize(),
+                config.getNotNull(),
+                config.getUnique(),
+                config.getRangeType(),
+                new BooleanShiftRange()
+                        .setStart(Boolean.parseBoolean(config.getStart()))
         );
     }
 }
