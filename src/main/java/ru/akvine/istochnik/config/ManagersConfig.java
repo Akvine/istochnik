@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.enums.FileType;
+import ru.akvine.istochnik.managers.DateRangeServicesManager;
 import ru.akvine.istochnik.managers.DateTimeRangeServicesManager;
 import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
 import ru.akvine.istochnik.managers.TimeRangeServicesManager;
@@ -14,9 +15,11 @@ import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.services.filters.doubles.DoubleFilter;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 import ru.akvine.istochnik.services.filters.string.StringFilter;
+import ru.akvine.istochnik.services.generators.date.shift.AbstractDateRangeService;
 import ru.akvine.istochnik.services.generators.datetime.shift.AbstractDateTimeRangeService;
 import ru.akvine.istochnik.services.generators.time.shift.AbstractTimeRangeService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collection;
@@ -43,6 +46,14 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(AbstractTimeRangeService::getByType, identity()));
         return new TimeRangeServicesManager(timeShiftServices);
+    }
+
+    @Bean
+    public DateRangeServicesManager dateRangeServicesManager(Collection<AbstractDateRangeService<LocalDate, Integer>> services) {
+        Map<DateShiftType, AbstractDateRangeService<LocalDate, Integer>> localDateShiftServices = services
+                .stream()
+                .collect(toMap(AbstractDateRangeService::getByType, identity()));
+        return new DateRangeServicesManager(localDateShiftServices);
     }
 
     @Bean

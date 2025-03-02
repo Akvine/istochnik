@@ -5,6 +5,8 @@ import ru.akvine.istochnik.services.ConfigMapperService;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.generators.bool.BooleanShiftRange;
 import ru.akvine.istochnik.services.generators.bool.configs.BooleanGeneratorConfig;
+import ru.akvine.istochnik.services.generators.date.DateShiftRange;
+import ru.akvine.istochnik.services.generators.date.configs.DateGeneratorConfig;
 import ru.akvine.istochnik.services.generators.datetime.DateTimeShiftRange;
 import ru.akvine.istochnik.services.generators.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.DoubleShiftRange;
@@ -89,6 +91,21 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
                 config.getRangeType(),
                 new BooleanShiftRange()
                         .setStart(Boolean.parseBoolean(config.getStart()))
+        );
+    }
+
+    @Override
+    public DateGeneratorConfig createDateConfig(Config config) {
+        Asserts.isNotNull(config, "config is null");
+        return new DateGeneratorConfig(
+                config.getSize(),
+                config.getNotNull(),
+                config.getUnique(),
+                config.getRangeType(),
+                new DateShiftRange()
+                        .setStart(DateTimeUtils.toLocalDate(config.getStart()))
+                        .setEnd(DateTimeUtils.toLocalDate(config.getEnd()))
+                        .setShiftCount(Integer.parseInt(config.getStep()))
         );
     }
 }

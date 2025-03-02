@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.generators.date.DateGeneratorService;
+import ru.akvine.istochnik.services.generators.date.configs.DateGeneratorConfig;
 import ru.akvine.istochnik.services.generators.datetime.DateTimeGeneratorService;
 import ru.akvine.istochnik.services.generators.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.time.TimeGeneratorService;
@@ -19,6 +21,8 @@ public class CustomTypeGeneratorService {
     private final UuidGeneratorService uuidGeneratorService;
     private final DateTimeGeneratorService dateTimeGeneratorService;
     private final TimeGeneratorService timeGeneratorService;
+    private final DateGeneratorService dateGeneratorService;
+
     private final ConfigMapperService configMapperService;
 
     public List<?> generate(CustomType type, Config config, List<Filter> filters) {
@@ -31,6 +35,10 @@ public class CustomTypeGeneratorService {
             case TIME -> {
                 TimeGeneratorConfig timeGeneratorConfig = configMapperService.createTimeGeneratorConfig(config);
                 yield timeGeneratorService.generate(timeGeneratorConfig);
+            }
+            case DATE -> {
+                DateGeneratorConfig dateGeneratorConfig = configMapperService.createDateConfig(config);
+                yield dateGeneratorService.generate(dateGeneratorConfig);
             }
         };
     }
