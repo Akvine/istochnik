@@ -29,7 +29,7 @@ public class BaseTypeGeneratorService {
             }
             case DOUBLE -> {
                 DoubleGeneratorConfig doubleGeneratorConfig = configMapperService.createDoubleConfig(config);
-                yield doubleGeneratorService.generate(doubleGeneratorConfig);
+                yield doubleGeneratorService.generate(doubleGeneratorConfig, filters);
             }
             case STRING -> {
                 List<Object> generatedValues = new ArrayList<>();

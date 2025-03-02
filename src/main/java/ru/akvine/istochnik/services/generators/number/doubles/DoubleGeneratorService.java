@@ -1,8 +1,12 @@
 package ru.akvine.istochnik.services.generators.number.doubles;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.managers.filters.DoubleFiltersManager;
+import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.ConstantGenerator;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleConstantConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
@@ -16,19 +20,44 @@ import java.util.List;
 public class DoubleGeneratorService {
     private final DoubleRandomGenerator doubleRandomGenerator;
     private final DoubleRangeService doubleRangeService;
+    private final DoubleFiltersManager doubleFiltersManager;
 
     public List<Double> generate(DoubleConstantConfig config) {
         return new ConstantGenerator<Double>().generate(config.getSize(), config.getValue());
     }
 
-    public List<Double> generate(DoubleGeneratorConfig config) {
+    public List<Double> generate(DoubleGeneratorConfig config, List<Filter> filters) {
+        List<Double> generatedValues;
         if (config.getRangeType() == RangeType.RANDOM) {
-            return doubleRandomGenerator.generate(config);
+            generatedValues = doubleRandomGenerator.generate(config);
         } else {
-            return doubleRangeService.range(
+            generatedValues = doubleRangeService.range(
                     config.getDoubleShiftRange().getStart(),
                     config.getDoubleShiftRange().getEnd(),
                     config.getDoubleShiftRange().getStep());
         }
+
+        if (!CollectionUtils.isEmpty(filters)) {
+            for (Filter filter : filters) {
+                // TODO: Code-smells. Придумать что-нибудь по лучше
+                if (StringUtils.isNotBlank(filter.getArgument1())) {
+                    generatedValues = doubleFiltersManager
+                            .getFilter(filter.getName()).filter(generatedValues, new Double[]{Double.parseDouble(filter.getArgument1())});
+                } else if (StringUtils.isNotBlank(filter.getArgument1()) && StringUtils.isNotBlank(filter.getArgument2())) {
+                    generatedValues = doubleFiltersManager
+                            .getFilter(filter.getName()).filter(generatedValues, new Double[]
+                                    {
+                                            Double.parseDouble(filter.getArgument1()),
+                                            Double.parseDouble(filter.getArgument2())
+                                    }
+                            );
+                } else {
+                    generatedValues = doubleFiltersManager
+                            .getFilter(filter.getName()).filter(generatedValues, new Double[]{});
+                }
+            }
+        }
+
+        return generatedValues;
     }
 }

@@ -4,12 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.enums.FileType;
-import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
 import ru.akvine.istochnik.managers.DateTimeRangeServicesManager;
+import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
 import ru.akvine.istochnik.managers.TimeRangeServicesManager;
+import ru.akvine.istochnik.managers.filters.DoubleFiltersManager;
 import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
 import ru.akvine.istochnik.managers.filters.StringFiltersManager;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
+import ru.akvine.istochnik.services.filters.doubles.DoubleFilter;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 import ru.akvine.istochnik.services.filters.string.StringFilter;
 import ru.akvine.istochnik.services.generators.datetime.shift.AbstractDateTimeRangeService;
@@ -49,6 +51,14 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(IntegerFilter::getName, identity()));
         return new IntegerFiltersManager(filters);
+    }
+
+    @Bean
+    public DoubleFiltersManager doubleFiltersManager(List<DoubleFilter<Double, Double>> doubleFilters) {
+        Map<String, DoubleFilter<Double, Double>> filters = doubleFilters
+                .stream()
+                .collect(toMap(DoubleFilter::getName, identity()));
+        return new DoubleFiltersManager(filters);
     }
 
     @Bean
