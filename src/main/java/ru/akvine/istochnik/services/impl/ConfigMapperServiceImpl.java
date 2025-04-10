@@ -32,7 +32,7 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
                 new DateTimeShiftRange()
                         .setStart(DateTimeUtils.toLocalDateTime(config.getStart()))
                         .setEnd(DateTimeUtils.toLocalDateTime(config.getEnd()))
-                        .setShiftCount(Integer.parseInt(config.getStep()))
+                        .setShiftCount(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep()))
         );
     }
 
@@ -106,7 +106,7 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
                 new DateShiftRange()
                         .setStart(DateTimeUtils.toLocalDate(config.getStart()))
                         .setEnd(DateTimeUtils.toLocalDate(config.getEnd()))
-                        .setShiftCount(Integer.parseInt(config.getStep()))
+                        .setShiftCount(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep()))
         );
     }
 }
