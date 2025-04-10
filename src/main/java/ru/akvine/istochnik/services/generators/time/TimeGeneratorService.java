@@ -18,6 +18,7 @@ public class TimeGeneratorService {
     private final TimeRandomGenerator timeRandomGenerator;
     private final TimeRangeServicesManager timeRangeServicesManager;
 
+    // TODO: вынести во всех генератор стратегию генерации по константам в единую точку
     public List<LocalTime> generate(TimeConstantsConfig config) {
         return new ConstantGenerator<LocalTime>().generate(config.getSize(), config.getConstant());
     }

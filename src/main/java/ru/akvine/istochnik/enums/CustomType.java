@@ -12,7 +12,8 @@ public enum CustomType {
     UUID(BaseType.STRING, "uuid"),
     DATETIME(BaseType.STRING, "dateTime"),
     TIME(BaseType.STRING, "time"),
-    DATE(BaseType.STRING, "date");
+    DATE(BaseType.STRING, "date"),
+    SNILS(BaseType.INTEGER, "snils");
 
     private final BaseType baseType;
     private final String name;
@@ -22,21 +23,13 @@ public enum CustomType {
             throw new IllegalArgumentException("Custom type = [" + name + "] can't be blank!");
         }
 
-        switch (name.toLowerCase()) {
-            case "uuid" -> {
-                return UUID;
+        for (CustomType customType : values()) {
+            if (customType.getName().equals(name)) {
+                return customType;
             }
-            case "datetime" -> {
-                return DATETIME;
-            }
-            case "time" -> {
-                return TIME;
-            }
-            case "date" -> {
-                return DATE;
-            }
-            default -> throw new UnsupportedTypeGenerationException("Custom type = [" + name + "] is not supported by app!");
         }
+
+        throw new UnsupportedTypeGenerationException("Custom type = [" + name + "] is not supported by app!");
     }
 
     @Nullable

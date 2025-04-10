@@ -11,9 +11,11 @@ import java.util.List;
 public class Config {
     private int size;
 
-    private Boolean unique;
+    private boolean unique;
 
-    private Boolean notNull;
+    private boolean notNull;
+
+    private boolean valid;
 
     private RangeType rangeType;
 

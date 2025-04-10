@@ -89,6 +89,7 @@ public class GeneratorConverter {
                 .setStart(configDto.getStart())
                 .setEnd(configDto.getEnd())
                 .setStep(configDto.getStep())
-                .setLength(configDto.getLength());
+                .setLength(configDto.getLength())
+                .setValid(configDto.isValid());
     }
 }

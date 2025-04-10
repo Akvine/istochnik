@@ -10,6 +10,8 @@ public class ConfigDto {
 
     private boolean notNull;
 
+    private boolean valid;
+
     private String rangeType;
 
     private String start;

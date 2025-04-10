@@ -14,6 +14,7 @@ import ru.akvine.istochnik.services.generators.number.doubles.DoubleShiftRange;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerShiftRange;
 import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerGeneratorConfig;
+import ru.akvine.istochnik.services.generators.snils.configs.SnilsGeneratorConfig;
 import ru.akvine.istochnik.services.generators.time.TimeShiftRange;
 import ru.akvine.istochnik.services.generators.time.configs.TimeGeneratorConfig;
 import ru.akvine.istochnik.utils.Asserts;
@@ -26,8 +27,8 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
         Asserts.isNotNull(config, "config is null");
         return new DateTimeGeneratorConfig(
                 config.getSize(),
-                config.getNotNull(),
-                config.getUnique(),
+                config.isNotNull(),
+                config.isUnique(),
                 config.getRangeType(),
                 new DateTimeShiftRange()
                         .setStart(DateTimeUtils.toLocalDateTime(config.getStart()))
@@ -41,8 +42,8 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
         Asserts.isNotNull(config);
         return new TimeGeneratorConfig(
                 config.getSize(),
-                config.getNotNull(),
-                config.getUnique(),
+                config.isNotNull(),
+                config.isUnique(),
                 config.getRangeType(),
                 new TimeShiftRange()
                         .setStart(DateTimeUtils.toLocalTime(config.getStart()))
@@ -56,8 +57,8 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
         Asserts.isNotNull(config, "config is null");
         return new IntegerGeneratorConfig(
                 config.getSize(),
-                config.getNotNull(),
-                config.getUnique(),
+                config.isNotNull(),
+                config.isUnique(),
                 config.getRangeType(),
                 new IntegerShiftRange()
                         .setStart(Integer.parseInt(config.getStart()))
@@ -72,8 +73,8 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
         Asserts.isNotNull(config);
         return new DoubleGeneratorConfig(
                 config.getSize(),
-                config.getNotNull(),
-                config.getUnique(),
+                config.isNotNull(),
+                config.isUnique(),
                 config.getRangeType(),
                 new DoubleShiftRange()
                         .setStart(Double.parseDouble(config.getStart()))
@@ -87,8 +88,8 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
         Asserts.isNotNull(config, "config is null");
         return new BooleanGeneratorConfig(
                 config.getSize(),
-                config.getNotNull(),
-                config.getUnique(),
+                config.isNotNull(),
+                config.isUnique(),
                 config.getRangeType(),
                 new BooleanShiftRange()
                         .setStart(Boolean.parseBoolean(config.getStart()))
@@ -100,13 +101,23 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
         Asserts.isNotNull(config, "config is null");
         return new DateGeneratorConfig(
                 config.getSize(),
-                config.getNotNull(),
-                config.getUnique(),
+                config.isNotNull(),
+                config.isUnique(),
                 config.getRangeType(),
                 new DateShiftRange()
                         .setStart(DateTimeUtils.toLocalDate(config.getStart()))
                         .setEnd(DateTimeUtils.toLocalDate(config.getEnd()))
                         .setShiftCount(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep()))
+        );
+    }
+
+    @Override
+    public SnilsGeneratorConfig createSnilsGeneratorConfig(Config config) {
+        return new SnilsGeneratorConfig(
+                config.getSize(),
+                config.isNotNull(),
+                config.isUnique(),
+                config.isValid()
         );
     }
 }
