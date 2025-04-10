@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.services.filters.string;
 
 import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.enums.FilterType;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class SubstringFilter extends StringFilter<String, String> {
     }
 
     @Override
-    public String getName() {
-        return "subString";
+    public FilterType getName() {
+        return FilterType.SUBSTRING;
     }
 }

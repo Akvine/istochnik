@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.services.filters.doubles;
 
 import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.enums.FilterType;
 import ru.akvine.istochnik.utils.MathUtils;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class RoundDoubleFilter extends DoubleFilter<Double, Double> {
     }
 
     @Override
-    public String getName() {
-        return "round";
+    public FilterType getName() {
+        return FilterType.ROUND;
     }
 }

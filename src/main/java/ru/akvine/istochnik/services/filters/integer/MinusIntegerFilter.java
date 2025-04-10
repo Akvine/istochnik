@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.services.filters.integer;
 
 import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.enums.FilterType;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class MinusIntegerFilter extends IntegerFilter<Integer, Double> {
     }
 
     @Override
-    public String getName() {
-        return "minus";
+    public FilterType getName() {
+        return FilterType.MINUS;
     }
 }

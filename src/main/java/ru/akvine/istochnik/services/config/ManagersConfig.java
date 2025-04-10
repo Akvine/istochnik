@@ -1,9 +1,10 @@
-package ru.akvine.istochnik.config;
+package ru.akvine.istochnik.services.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.enums.FileType;
+import ru.akvine.istochnik.enums.FilterType;
 import ru.akvine.istochnik.managers.DateRangeServicesManager;
 import ru.akvine.istochnik.managers.DateTimeRangeServicesManager;
 import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
@@ -58,7 +59,7 @@ public class ManagersConfig {
 
     @Bean
     public IntegerFiltersManager integerFiltersManager(List<IntegerFilter<Integer, Double>> integerFilters) {
-        Map<String, IntegerFilter<Integer, Double>> filters = integerFilters
+        Map<FilterType, IntegerFilter<Integer, Double>> filters = integerFilters
                 .stream()
                 .collect(toMap(IntegerFilter::getName, identity()));
         return new IntegerFiltersManager(filters);
@@ -66,7 +67,7 @@ public class ManagersConfig {
 
     @Bean
     public DoubleFiltersManager doubleFiltersManager(List<DoubleFilter<Double, Double>> doubleFilters) {
-        Map<String, DoubleFilter<Double, Double>> filters = doubleFilters
+        Map<FilterType, DoubleFilter<Double, Double>> filters = doubleFilters
                 .stream()
                 .collect(toMap(DoubleFilter::getName, identity()));
         return new DoubleFiltersManager(filters);
@@ -74,7 +75,7 @@ public class ManagersConfig {
 
     @Bean
     public StringFiltersManager stringFiltersManager(List<StringFilter<String, String>> stringFilters) {
-        Map<String, StringFilter<String, String>> filters = stringFilters
+        Map<FilterType, StringFilter<String, String>> filters = stringFilters
                 .stream()
                 .collect(toMap(StringFilter::getName, identity()));
         return new StringFiltersManager(filters);

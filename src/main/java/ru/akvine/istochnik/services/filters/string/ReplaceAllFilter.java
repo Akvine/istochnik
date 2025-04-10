@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.services.filters.string;
 
 import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.enums.FilterType;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class ReplaceAllFilter extends StringFilter<String, String> {
     }
 
     @Override
-    public String getName() {
-        return "replaceAll";
+    public FilterType getName() {
+        return FilterType.REPLACE_ALL;
     }
 }

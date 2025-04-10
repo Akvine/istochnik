@@ -9,6 +9,7 @@ import ru.akvine.istochnik.controllers.dto.ConfigDto;
 import ru.akvine.istochnik.controllers.dto.FilterDto;
 import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
 import ru.akvine.istochnik.enums.CustomType;
+import ru.akvine.istochnik.enums.FilterType;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.services.dto.Config;
@@ -74,7 +75,7 @@ public class GeneratorConverter {
 
     private Filter buildFilter(FilterDto filterDto) {
         return new Filter()
-                .setName(filterDto.getName())
+                .setName(FilterType.safeFrom(filterDto.getName()))
                 .setArgument1(filterDto.getArg1())
                 .setArgument2(filterDto.getArg2());
     }

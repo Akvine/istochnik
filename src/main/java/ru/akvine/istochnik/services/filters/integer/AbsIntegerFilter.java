@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.services.filters.integer;
 
 import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.enums.FilterType;
 import ru.akvine.istochnik.services.filters.Filter;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class AbsIntegerFilter extends Filter<Integer, Void> {
     }
 
     @Override
-    public String getName() {
-        return "abs";
+    public FilterType getName() {
+        return FilterType.ABS;
     }
 }

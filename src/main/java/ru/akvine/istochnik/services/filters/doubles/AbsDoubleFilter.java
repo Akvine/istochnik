@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.services.filters.doubles;
 
 import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.enums.FilterType;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class AbsDoubleFilter extends DoubleFilter<Double, Double> {
     }
 
     @Override
-    public String getName() {
-        return "abs";
+    public FilterType getName() {
+        return FilterType.ABS;
     }
 }

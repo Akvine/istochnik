@@ -6,36 +6,57 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 public enum BaseType {
-    INTEGER("integer"),
-    STRING("string"),
-    DOUBLE("double"),
-    BOOLEAN("boolean");
+    INTEGER("int", List.of(
+            FilterType.ABS,
+            FilterType.COS,
+            FilterType.DIVIDE,
+            FilterType.MINUS,
+            FilterType.PLUS,
+            FilterType.POW,
+            FilterType.SIN
+    )),
+    DOUBLE("double", List.of(
+            FilterType.ABS,
+            FilterType.CEIL,
+            FilterType.COS,
+            FilterType.DIVIDE,
+            FilterType.FLOOR,
+            FilterType.MINUS,
+            FilterType.PLUS,
+            FilterType.POW,
+            FilterType.ROUND,
+            FilterType.SIN
+    )),
+    STRING("str", List.of(
+            FilterType.BASE64,
+            FilterType.LOWER_CASE,
+            FilterType.REPLACE_ALL,
+            FilterType.SUBSTRING,
+            FilterType.TRIM,
+            FilterType.UPPER_CASE
+    )),
+    BOOLEAN("bool", List.of());
 
     private final String value;
+    private final List<FilterType> supportedFilterType;
 
     public static BaseType safeFrom(String type) {
         if (StringUtils.isBlank(type)) {
             throw new IllegalArgumentException("type is blank!");
         }
 
-        switch (type) {
-            case "integer" -> {
-                return INTEGER;
+        for (BaseType baseType : values()) {
+            if (baseType.getValue().equals(type)) {
+                return baseType;
             }
-            case "double" -> {
-                return DOUBLE;
-            }
-            case "string" -> {
-                return STRING;
-            }
-            case "boolean" -> {
-                return BOOLEAN;
-            }
-            default -> throw new UnsupportedTypeGenerationException("Type = [" + type + "] is not supported by app!");
         }
+
+        throw new UnsupportedTypeGenerationException("Base type = [" + type + "] is not supported!");
     }
 
     @Nullable
