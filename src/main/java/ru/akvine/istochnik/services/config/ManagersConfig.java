@@ -2,13 +2,11 @@ package ru.akvine.istochnik.services.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.enums.FilterType;
-import ru.akvine.istochnik.managers.DateRangeServicesManager;
-import ru.akvine.istochnik.managers.DateTimeRangeServicesManager;
-import ru.akvine.istochnik.managers.FileTableGeneratorsManager;
-import ru.akvine.istochnik.managers.TimeRangeServicesManager;
+import ru.akvine.istochnik.managers.*;
 import ru.akvine.istochnik.managers.filters.DoubleFiltersManager;
 import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
 import ru.akvine.istochnik.managers.filters.StringFiltersManager;
@@ -19,6 +17,7 @@ import ru.akvine.istochnik.services.filters.string.StringFilter;
 import ru.akvine.istochnik.services.generators.date.shift.AbstractDateRangeService;
 import ru.akvine.istochnik.services.generators.datetime.shift.AbstractDateTimeRangeService;
 import ru.akvine.istochnik.services.generators.time.shift.AbstractTimeRangeService;
+import ru.akvine.istochnik.validators.type.BaseTypeValidator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -87,5 +86,13 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(FileTableGenerator::getType, identity()));
         return new FileTableGeneratorsManager(filters);
+    }
+
+    @Bean
+    public BaseTypeValidatorsManager baseTypeValidatorsManager(List<BaseTypeValidator> typeValidators) {
+        Map<BaseType, BaseTypeValidator> validators = typeValidators
+                .stream()
+                .collect(toMap(BaseTypeValidator::getBaseType, identity()));
+        return new BaseTypeValidatorsManager(validators);
     }
 }

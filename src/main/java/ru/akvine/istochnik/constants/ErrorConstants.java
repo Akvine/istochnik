@@ -6,6 +6,7 @@ public final class ErrorConstants {
     }
 
     public interface Validation {
+        String REQUEST_FIELDS_INVALID_ERROR = "request.fields.invalid.error";
         String TYPE_INVALID_ERROR = "type.invalid.error";
     }
 }

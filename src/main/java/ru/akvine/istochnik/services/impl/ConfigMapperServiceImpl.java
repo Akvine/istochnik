@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.services.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.ConfigMapperService;
 import ru.akvine.istochnik.services.dto.Config;
@@ -61,7 +62,7 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
                 new IntegerShiftRange()
                         .setStart(Integer.parseInt(config.getStart()))
                         .setEnd(Integer.parseInt(config.getEnd()))
-                        .setStep(Integer.parseInt(config.getStep())),
+                        .setStep(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep())),
                 config.getFilters()
         );
     }
@@ -77,7 +78,7 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
                 new DoubleShiftRange()
                         .setStart(Double.parseDouble(config.getStart()))
                         .setEnd(Double.parseDouble(config.getEnd()))
-                        .setStep(Double.parseDouble(config.getStep()))
+                        .setStep(StringUtils.isBlank(config.getStep()) ? 1 : Double.parseDouble(config.getStep()))
         );
     }
 

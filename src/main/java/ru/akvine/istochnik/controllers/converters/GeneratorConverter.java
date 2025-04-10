@@ -83,8 +83,8 @@ public class GeneratorConverter {
     private Config buildConfig(int size, ConfigDto configDto) {
         return new Config()
                 .setSize(size)
-                .setNotNull(configDto.getNotNull())
-                .setUnique(configDto.getUnique())
+                .setNotNull(configDto.isNotNull())
+                .setUnique(configDto.isUnique())
                 .setRangeType(RangeType.valueOf(configDto.getRangeType()))
                 .setStart(configDto.getStart())
                 .setEnd(configDto.getEnd())

@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.enums;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +36,15 @@ public enum CustomType {
                 return DATE;
             }
             default -> throw new UnsupportedTypeGenerationException("Custom type = [" + name + "] is not supported by app!");
+        }
+    }
+
+    @Nullable
+    public static CustomType from(String name) {
+        try {
+            return safeFrom(name);
+        } catch (UnsupportedTypeGenerationException exception) {
+            return null;
         }
     }
 }

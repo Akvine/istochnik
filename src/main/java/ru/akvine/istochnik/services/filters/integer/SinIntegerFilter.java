@@ -6,9 +6,9 @@ import ru.akvine.istochnik.enums.FilterType;
 import java.util.List;
 
 @Service
-public class SinIntegerFilter extends IntegerFilter<Integer, Void> {
+public class SinIntegerFilter extends IntegerFilter<Integer, Double> {
     @Override
-    public List<Integer> filter(List<Integer> input, Void[] argument) {
+    public List<Integer> filter(List<Integer> input, Double[] argument) {
         return input.stream().map(value -> (int) Math.sin(value)).toList();
     }
 

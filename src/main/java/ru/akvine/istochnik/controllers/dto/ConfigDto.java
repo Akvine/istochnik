@@ -6,9 +6,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class ConfigDto {
-    private Boolean unique;
+    private boolean unique;
 
-    private Boolean notNull;
+    private boolean notNull;
 
     private String rangeType;
 

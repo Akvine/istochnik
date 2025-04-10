@@ -59,6 +59,10 @@ public enum BaseType {
         throw new UnsupportedTypeGenerationException("Base type = [" + type + "] is not supported!");
     }
 
+    public boolean isSupported(FilterType filterType) {
+        return supportedFilterType.contains(filterType);
+    }
+
     @Nullable
     public static BaseType from(String type) {
         try {
