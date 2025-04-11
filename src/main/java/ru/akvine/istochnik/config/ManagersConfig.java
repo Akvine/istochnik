@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.services.config;
+package ru.akvine.istochnik.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
