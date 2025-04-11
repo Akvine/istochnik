@@ -10,7 +10,7 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 @AllArgsConstructor
 public enum CustomType {
     UUID(BaseType.STRING, "uuid"),
-    DATETIME(BaseType.STRING, "dateTime"),
+    DATETIME(BaseType.STRING, "datetime"),
     TIME(BaseType.STRING, "time"),
     DATE(BaseType.STRING, "date"),
     SNILS(BaseType.INTEGER, "snils"),

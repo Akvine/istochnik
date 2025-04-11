@@ -2,21 +2,22 @@ package ru.akvine.istochnik.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.akvine.istochnik.enums.BaseType;
-import ru.akvine.istochnik.enums.DateShiftType;
-import ru.akvine.istochnik.enums.FileType;
-import ru.akvine.istochnik.enums.FilterType;
+import ru.akvine.istochnik.enums.*;
 import ru.akvine.istochnik.managers.*;
 import ru.akvine.istochnik.managers.filters.DoubleFiltersManager;
 import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
 import ru.akvine.istochnik.managers.filters.StringFiltersManager;
+import ru.akvine.istochnik.services.BaseTypeGeneratorService;
+import ru.akvine.istochnik.services.CustomTypeGeneratorService;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.services.filters.doubles.DoubleFilter;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 import ru.akvine.istochnik.services.filters.string.StringFilter;
+import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.date.shift.AbstractDateRangeService;
 import ru.akvine.istochnik.services.generators.datetime.shift.AbstractDateTimeRangeService;
 import ru.akvine.istochnik.services.generators.time.shift.AbstractTimeRangeService;
+import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 import ru.akvine.istochnik.validators.type.BaseTypeValidator;
 
 import java.time.LocalDate;
@@ -94,5 +95,29 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(BaseTypeValidator::getBaseType, identity()));
         return new BaseTypeValidatorsManager(validators);
+    }
+
+    @Bean
+    public ConfigMapperServicesManager configMapperServicesManager(List<ConfigMapperService<? extends Config>> configMapperServices) {
+        Map<String, ConfigMapperService<? extends Config>> mappers = configMapperServices
+                .stream()
+                .collect(toMap(ConfigMapperService::getType, identity()));
+        return new ConfigMapperServicesManager(mappers);
+    }
+
+    @Bean
+    public BaseTypeGeneratorServicesManager baseTypeGeneratorServicesManager(List<BaseTypeGeneratorService> baseTypeGeneratorServices) {
+        Map<BaseType, BaseTypeGeneratorService> generatorServices = baseTypeGeneratorServices
+                .stream()
+                .collect(toMap(BaseTypeGeneratorService::getType, identity()));
+        return new BaseTypeGeneratorServicesManager(generatorServices);
+    }
+
+    @Bean
+    public CustomTypeGeneratorServicesManager customTypeGeneratorServicesManager(List<CustomTypeGeneratorService> customTypeGeneratorServices) {
+        Map<CustomType, CustomTypeGeneratorService> generatorServices = customTypeGeneratorServices
+                .stream()
+                .collect(toMap(CustomTypeGeneratorService::getType, identity()));
+        return new CustomTypeGeneratorServicesManager(generatorServices);
     }
 }

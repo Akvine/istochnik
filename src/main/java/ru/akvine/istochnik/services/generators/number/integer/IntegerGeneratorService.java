@@ -7,8 +7,6 @@ import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.ConstantGenerator;
-import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerConstantsConfig;
 import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.integer.random.IntegerRandomGenerator;
 import ru.akvine.istochnik.services.generators.number.integer.shift.AbstractIntegerRangeService;
@@ -21,10 +19,6 @@ public class IntegerGeneratorService {
     private final IntegerRandomGenerator integerRandomGenerator;
     private final AbstractIntegerRangeService<Integer, Integer> integerRangeService;
     private final IntegerFiltersManager integerFiltersManager;
-
-    public List<Integer> generate(IntegerConstantsConfig config) {
-        return new ConstantGenerator<Integer>().generate(config.getSize(), config.getValue());
-    }
 
     public List<Integer> generate(IntegerGeneratorConfig config, List<Filter> filters) {
         List<Integer> generatedValues;
