@@ -11,6 +11,7 @@ import ru.akvine.istochnik.services.generators.date.configs.DateGeneratorConfig;
 import ru.akvine.istochnik.services.generators.datetime.DateTimeShiftRange;
 import ru.akvine.istochnik.services.generators.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.inn.org.InnOrgGeneratorConfig;
+import ru.akvine.istochnik.services.generators.inn.personal.InnPersGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.DoubleShiftRange;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerShiftRange;
@@ -125,6 +126,16 @@ public class ConfigMapperServiceImpl implements ConfigMapperService {
     @Override
     public InnOrgGeneratorConfig createInnOrgGeneratorConfig(Config config) {
         return new InnOrgGeneratorConfig(
+                config.getSize(),
+                config.isNotNull(),
+                config.isUnique(),
+                config.isValid()
+        );
+    }
+
+    @Override
+    public InnPersGeneratorConfig createInnPersGeneratorConfig(Config config) {
+        return new InnPersGeneratorConfig(
                 config.getSize(),
                 config.isNotNull(),
                 config.isUnique(),

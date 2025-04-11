@@ -11,6 +11,8 @@ import ru.akvine.istochnik.services.generators.datetime.DateTimeGeneratorService
 import ru.akvine.istochnik.services.generators.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.inn.org.InnOrgGenerator;
 import ru.akvine.istochnik.services.generators.inn.org.InnOrgGeneratorConfig;
+import ru.akvine.istochnik.services.generators.inn.personal.InnPersGenerator;
+import ru.akvine.istochnik.services.generators.inn.personal.InnPersGeneratorConfig;
 import ru.akvine.istochnik.services.generators.snils.SnilsRandomGenerator;
 import ru.akvine.istochnik.services.generators.snils.configs.SnilsGeneratorConfig;
 import ru.akvine.istochnik.services.generators.time.TimeGeneratorService;
@@ -28,6 +30,7 @@ public class CustomTypeGeneratorService {
     private final DateGeneratorService dateGeneratorService;
     private final SnilsRandomGenerator snilsRandomGenerator;
     private final InnOrgGenerator innOrgRandomGenerator;
+    private final InnPersGenerator innPersGenerator;
 
     private final ConfigMapperService configMapperService;
 
@@ -53,6 +56,10 @@ public class CustomTypeGeneratorService {
             case INN_ORG -> {
                 InnOrgGeneratorConfig innOrgGeneratorConfig = configMapperService.createInnOrgGeneratorConfig(config);
                 yield (List<Long>) innOrgRandomGenerator.generate(innOrgGeneratorConfig);
+            }
+            case INN_PERSONAL -> {
+                InnPersGeneratorConfig innOrgGeneratorConfig = configMapperService.createInnPersGeneratorConfig(config);
+                yield (List<Long>) innPersGenerator.generate(innOrgGeneratorConfig);
             }
         };
     }

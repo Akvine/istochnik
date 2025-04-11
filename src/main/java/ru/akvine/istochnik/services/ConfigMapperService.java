@@ -5,6 +5,7 @@ import ru.akvine.istochnik.services.generators.bool.configs.BooleanGeneratorConf
 import ru.akvine.istochnik.services.generators.date.configs.DateGeneratorConfig;
 import ru.akvine.istochnik.services.generators.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.inn.org.InnOrgGeneratorConfig;
+import ru.akvine.istochnik.services.generators.inn.personal.InnPersGeneratorConfig;
 import ru.akvine.istochnik.services.generators.snils.configs.SnilsGeneratorConfig;
 import ru.akvine.istochnik.services.generators.time.configs.TimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
@@ -26,4 +27,6 @@ public interface ConfigMapperService {
     SnilsGeneratorConfig createSnilsGeneratorConfig(Config config);
 
     InnOrgGeneratorConfig createInnOrgGeneratorConfig(Config config);
+
+    InnPersGeneratorConfig createInnPersGeneratorConfig(Config config);
 }
