@@ -13,7 +13,8 @@ public enum CustomType {
     DATETIME(BaseType.STRING, "dateTime"),
     TIME(BaseType.STRING, "time"),
     DATE(BaseType.STRING, "date"),
-    SNILS(BaseType.INTEGER, "snils");
+    SNILS(BaseType.INTEGER, "snils"),
+    INN_ORG(BaseType.INTEGER, "inn_org");
 
     private final BaseType baseType;
     private final String name;
