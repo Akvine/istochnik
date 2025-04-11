@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.controllers.converters;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -8,10 +9,7 @@ import ru.akvine.istochnik.controllers.dto.ColumnDto;
 import ru.akvine.istochnik.controllers.dto.ConfigDto;
 import ru.akvine.istochnik.controllers.dto.FilterDto;
 import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
-import ru.akvine.istochnik.enums.CustomType;
-import ru.akvine.istochnik.enums.FilterType;
-import ru.akvine.istochnik.enums.RangeType;
-import ru.akvine.istochnik.enums.BaseType;
+import ru.akvine.istochnik.enums.*;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
@@ -29,10 +27,15 @@ public class GeneratorConverter {
         int size = request.getSize();
         List<GenerateColumn> generateColumns = new ArrayList<>();
         for (ColumnDto column : request.getColumns()) {
+
+            GenerationStrategy strategy = GenerationStrategy.from(column.getGenerationStrategy());
             CustomType customType = null;
-            BaseType baseType = BaseType.from(column.getType());
-            if (baseType == null) {
-                customType = CustomType.safeFrom(column.getType());
+            BaseType baseType = null;
+            if (strategy == GenerationStrategy.ALGORITHM) {
+                baseType = BaseType.from(column.getType());
+                if (baseType == null) {
+                    customType = CustomType.safeFrom(column.getType());
+                }
             }
 
             generateColumns.add(new GenerateColumn()
@@ -40,6 +43,7 @@ public class GeneratorConverter {
                     .setBaseType(baseType)
                     .setCustomType(customType)
                     .setConfig(buildConfig(size, column.getConfig()))
+                    .setGenerationStrategy(strategy)
                     .setFilters(CollectionUtils.isEmpty(column.getFilters()) ?
                             List.of() : column.getFilters().stream().map(this::buildFilter).toList()));
         }
@@ -85,11 +89,13 @@ public class GeneratorConverter {
                 .setSize(size)
                 .setNotNull(configDto.isNotNull())
                 .setUnique(configDto.isUnique())
-                .setRangeType(RangeType.valueOf(configDto.getRangeType()))
+                .setRangeType(StringUtils.isBlank(configDto.getRangeType()) ?
+                        null : RangeType.valueOf(configDto.getRangeType()))
                 .setStart(configDto.getStart())
                 .setEnd(configDto.getEnd())
                 .setStep(configDto.getStep())
                 .setLength(configDto.getLength())
-                .setValid(configDto.isValid());
+                .setValid(configDto.isValid())
+                .setConstant(configDto.getConstant());
     }
 }

@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
+import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.managers.BaseTypeGeneratorServicesManager;
 import ru.akvine.istochnik.managers.CustomTypeGeneratorServicesManager;
 import ru.akvine.istochnik.services.GeneratorFacade;
 import ru.akvine.istochnik.services.dto.*;
+import ru.akvine.istochnik.services.generators.ConstantGenerator;
 import ru.akvine.istochnik.utils.Asserts;
 
 import java.util.List;
@@ -28,17 +30,27 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
             CustomType customType = generateColumn.getCustomType();
             Config config = generateColumn.getConfig();
             List<Filter> filters = generateColumn.getFilters();
+            GenerationStrategy strategy = generateColumn.getGenerationStrategy();
 
             List<?> generatedValues;
-            if (baseType != null) {
-                generatedValues = baseTypeGeneratorServicesManager.get(baseType).generate(config, filters);
+
+            if (strategy == GenerationStrategy.CONSTANT) {
+                generatedValues = generate(config);
             } else {
-                generatedValues = customTypeGeneratorServicesManager.get(customType).generate(config, filters);
+                if (baseType != null) {
+                    generatedValues = baseTypeGeneratorServicesManager.get(baseType).generate(config, filters);
+                } else {
+                    generatedValues = customTypeGeneratorServicesManager.get(customType).generate(config, filters);
+                }
             }
 
             table.addColumn(generateColumn.getName(), generatedValues);
         }
 
         return table;
+    }
+
+    public List<?> generate(Config config) {
+        return new ConstantGenerator<>().generate(config.getSize(), config.getConstant());
     }
 }

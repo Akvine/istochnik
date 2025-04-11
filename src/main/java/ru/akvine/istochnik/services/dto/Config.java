@@ -28,4 +28,6 @@ public class Config {
     private List<Filter> filters;
 
     private Integer length;
+
+    private Object constant;
 }

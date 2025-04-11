@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
+import ru.akvine.istochnik.enums.GenerationStrategy;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public class GenerateColumn {
     private CustomType customType;
     private Config config;
     private List<Filter> filters;
+    private GenerationStrategy generationStrategy;
 }

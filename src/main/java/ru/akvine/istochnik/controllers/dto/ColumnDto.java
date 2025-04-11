@@ -15,6 +15,9 @@ public class ColumnDto {
     @NotBlank
     private String type;
 
+    @NotBlank
+    private String generationStrategy;
+
     private ConfigDto config;
 
     private List<FilterDto> filters;

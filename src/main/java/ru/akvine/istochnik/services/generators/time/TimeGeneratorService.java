@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.managers.TimeRangeServicesManager;
-import ru.akvine.istochnik.services.generators.ConstantGenerator;
-import ru.akvine.istochnik.services.generators.time.configs.TimeConstantsConfig;
 import ru.akvine.istochnik.services.generators.time.configs.TimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.time.random.TimeRandomGenerator;
 
@@ -17,11 +15,6 @@ import java.util.List;
 public class TimeGeneratorService {
     private final TimeRandomGenerator timeRandomGenerator;
     private final TimeRangeServicesManager timeRangeServicesManager;
-
-    // TODO: вынести во всех генератор стратегию генерации по константам в единую точку
-    public List<LocalTime> generate(TimeConstantsConfig config) {
-        return new ConstantGenerator<LocalTime>().generate(config.getSize(), config.getConstant());
-    }
 
     public List<LocalTime> generate(TimeGeneratorConfig config) {
         if (config.getRangeType() == RangeType.RANDOM) {

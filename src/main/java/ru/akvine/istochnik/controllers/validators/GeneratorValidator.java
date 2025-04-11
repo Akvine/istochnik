@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import ru.akvine.istochnik.controllers.dto.ColumnDto;
 import ru.akvine.istochnik.controllers.dto.FilterDto;
 import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
-import ru.akvine.istochnik.controllers.dto.validation.GeneralInfo;
 import ru.akvine.istochnik.controllers.dto.validation.ValidationColumnsInfo;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.FileType;
+import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 import ru.akvine.istochnik.managers.BaseTypeValidatorsManager;
 import ru.akvine.istochnik.utils.Asserts;
@@ -50,26 +50,34 @@ public class GeneratorValidator {
         for (ColumnDto column : columns) {
             String columnName = column.getName();
 
-            BaseType baseType = BaseType.from(column.getType());
-            CustomType customType = CustomType.from(column.getType());
-
-            if (Objects.isNull(baseType) && Objects.isNull(customType)) {
-                validationColumnsInfo.put(columnName, "field [type] has invalid value");
-                continue;
+            GenerationStrategy strategy = null;
+            try {
+                strategy = GenerationStrategy.from(column.getGenerationStrategy());
+            } catch (RuntimeException exception) {
+                validationColumnsInfo.put(columnName, exception.getMessage());
             }
 
-            if (baseType == null) {
-                baseType = customType.getBaseType();
+            if (strategy == GenerationStrategy.ALGORITHM) {
+                BaseType baseType = BaseType.from(column.getType());
+                CustomType customType = CustomType.from(column.getType());
+
+                if (Objects.isNull(baseType) && Objects.isNull(customType)) {
+                    validationColumnsInfo.put(columnName, "field [type] has invalid value");
+                    continue;
+                }
+
+                if (baseType == null) {
+                    baseType = customType.getBaseType();
+                }
+
+                List<String> errors = baseTypeValidatorsManager
+                        .get(baseType)
+                        .validate(columnName, buildValidateAction(rowsCount, column));
+
+                if (CollectionUtils.isNotEmpty(errors)) {
+                    validationColumnsInfo.put(columnName, errors);
+                }
             }
-
-            List<String> errors = baseTypeValidatorsManager
-                    .get(baseType)
-                    .validate(columnName, buildValidateAction(rowsCount, column));
-
-            if (CollectionUtils.isNotEmpty(errors)) {
-                validationColumnsInfo.put(columnName, errors);
-            }
-
         }
 
         if (StringUtils.isNotBlank(sb.toString()) || !validationColumnsInfo.getColumnNamesPerErrorMessages().isEmpty()) {

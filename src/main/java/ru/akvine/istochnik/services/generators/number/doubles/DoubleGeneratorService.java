@@ -7,8 +7,6 @@ import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.managers.filters.DoubleFiltersManager;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.ConstantGenerator;
-import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleConstantConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
 import ru.akvine.istochnik.services.generators.number.doubles.random.DoubleRandomGenerator;
 import ru.akvine.istochnik.services.generators.number.doubles.shift.DoubleRangeService;
@@ -21,10 +19,6 @@ public class DoubleGeneratorService {
     private final DoubleRandomGenerator doubleRandomGenerator;
     private final DoubleRangeService doubleRangeService;
     private final DoubleFiltersManager doubleFiltersManager;
-
-    public List<Double> generate(DoubleConstantConfig config) {
-        return new ConstantGenerator<Double>().generate(config.getSize(), config.getValue());
-    }
 
     public List<Double> generate(DoubleGeneratorConfig config, List<Filter> filters) {
         List<Double> generatedValues;

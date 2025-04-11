@@ -21,4 +21,6 @@ public class ConfigDto {
     private String step;
 
     private Integer length;
+
+    private Object constant;
 }
