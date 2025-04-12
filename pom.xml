@@ -110,6 +110,12 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>5.3.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.github.krraghavan</groupId>
+			<artifactId>xeger</artifactId>
+			<version>1.0.0-RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

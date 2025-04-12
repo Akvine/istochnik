@@ -10,7 +10,8 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 public enum GenerationStrategy {
     CONSTANT("constant"),
     ALGORITHM("algorithm"),
-    DICTIONARY("dictionary");
+    DICTIONARY("dictionary"),
+    REGEXP("regexp");
 
     private final String name;
 

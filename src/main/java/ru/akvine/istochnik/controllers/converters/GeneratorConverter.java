@@ -96,6 +96,7 @@ public class GeneratorConverter {
                 .setLength(configDto.getLength())
                 .setValid(configDto.isValid())
                 .setDictionary(configDto.getDictionary())
-                .setConstant(configDto.getConstant());
+                .setConstant(configDto.getConstant())
+                .setRegexps(configDto.getRegexps());
     }
 }

@@ -33,4 +33,6 @@ public class Config {
     private Object constant;
 
     private Set<String> dictionary;
+
+    private Set<String> regexps;
 }

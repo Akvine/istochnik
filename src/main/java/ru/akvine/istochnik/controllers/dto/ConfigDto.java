@@ -27,4 +27,6 @@ public class ConfigDto {
     private Object constant;
 
     private Set<String> dictionary;
+
+    private Set<String> regexps;
 }
