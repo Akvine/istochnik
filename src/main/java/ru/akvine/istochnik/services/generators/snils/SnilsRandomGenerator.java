@@ -19,19 +19,24 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
     public Collection<Long> generate(SnilsGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
 
+        int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
                         if (generatedValues.contains(null)) {
+                            iteration++;
                             continue;
                         } else {
                             generatedValues.add(null);
                         }
                     } else {
                         generatedValues.add(null);
+                        iteration++;
                         continue;
                     }
                 }
@@ -40,13 +45,16 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
             long generatedValue = randomGenerator.nextLong(MIN_SNILS_LEFT_BOUND, MIN_SNILS_RIGHT_BOUND);
 
             if (config.isValid() && !isValidSnils(generatedValue)) {
+                iteration++;
                 continue;
             }
 
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
+                iteration++;
                 continue;
             }
 
+            iteration++;
             generatedValues.add(generatedValue);
         }
 

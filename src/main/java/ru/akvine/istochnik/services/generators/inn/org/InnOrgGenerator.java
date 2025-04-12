@@ -15,19 +15,24 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
     public Collection<Long> generate(InnOrgGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
 
+        int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
                         if (generatedValues.contains(null)) {
+                            iteration++;
                             continue;
                         } else {
                             generatedValues.add(null);
                         }
                     } else {
                         generatedValues.add(null);
+                        iteration++;
                         continue;
                     }
                 }
@@ -41,10 +46,12 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
             String generatedInn = innWithoutControl + controlDigit;
 
             if (config.isValid() && !isValidInn(generatedInn)) {
+                iteration++;
                 continue;
             }
 
             if (config.isUnique() && generatedValues.contains(Long.parseLong(generatedInn))) {
+                iteration++;
                 continue;
             }
 

@@ -19,12 +19,15 @@ public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTi
         LocalDateTime startDate = config.getDateTimeShiftRange().getStart();
         LocalDateTime endDate = config.getDateTimeShiftRange().getEnd();
 
-
+        int iteration = 0;
         while (generatedDates.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
                 if (isNull) {
                     generatedDates.add(null);
+                    iteration++;
                     continue;
                 }
             }
@@ -35,15 +38,18 @@ public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTi
             LocalDateTime generateDate = LocalDateTime.ofEpochSecond(randomEpoch, 0, java.time.ZoneOffset.UTC);
 
             if (generateDate.isAfter(endDate)) {
+                iteration++;
                 continue;
             }
 
             if (config.isUnique()) {
                 if (generatedDates.contains(generateDate)) {
+                    iteration++;
                     continue;
                 }
             }
 
+            iteration++;
             generatedDates.add(generateDate);
         }
 

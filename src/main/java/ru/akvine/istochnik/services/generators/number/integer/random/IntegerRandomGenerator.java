@@ -20,19 +20,24 @@ public class IntegerRandomGenerator extends AbstractRandomGenerator<Integer, Int
             start = 0;
         }
 
+        int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
                         if (generatedValues.contains(null)) {
+                            iteration++;
                             continue;
                         } else {
                             generatedValues.add(null);
                         }
                     } else {
                         generatedValues.add(null);
+                        iteration++;
                         continue;
                     }
                 }
@@ -41,9 +46,11 @@ public class IntegerRandomGenerator extends AbstractRandomGenerator<Integer, Int
             int generatedValue = randomGenerator.nextInt(start, end);
 
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
+                iteration++;
                 continue;
             }
 
+            iteration++;
             generatedValues.add(generatedValue);
         }
 

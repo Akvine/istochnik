@@ -18,12 +18,15 @@ public class TimeRandomGenerator extends AbstractRandomGenerator<LocalTime, Time
         LocalTime startDate = config.getTimeShiftRange().getStart();
         LocalTime endDate = config.getTimeShiftRange().getEnd();
 
-
+        int iteration = 0;
         while (generatedDates.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
                 if (isNull) {
                     generatedDates.add(null);
+                    iteration++;
                     continue;
                 }
             }
@@ -35,15 +38,18 @@ public class TimeRandomGenerator extends AbstractRandomGenerator<LocalTime, Time
             LocalTime generateTime = LocalTime.ofSecondOfDay(randomSeconds);
 
             if (generateTime.isAfter(endDate)) {
+                iteration++;
                 continue;
             }
 
             if (config.isUnique()) {
                 if (generatedDates.contains(generateTime)) {
+                    iteration++;
                     continue;
                 }
             }
 
+            iteration++;
             generatedDates.add(generateTime);
         }
 

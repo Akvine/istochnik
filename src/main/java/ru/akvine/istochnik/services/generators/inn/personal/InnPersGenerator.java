@@ -13,19 +13,24 @@ public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGener
     public Collection<Long> generate(InnPersGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
 
+        int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
                         if (generatedValues.contains(null)) {
+                            iteration++;
                             continue;
                         } else {
                             generatedValues.add(null);
                         }
                     } else {
                         generatedValues.add(null);
+                        iteration++;
                         continue;
                     }
                 }
@@ -42,13 +47,16 @@ public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGener
             String generatedInn = innWithoutControl + controlDigit1 + controlDigit2;
 
             if (config.isValid() && !isValidInn(generatedInn)) {
+                iteration++;
                 continue;
             }
 
             if (config.isUnique() && generatedValues.contains(Long.parseLong(generatedInn))) {
+                iteration++;
                 continue;
             }
 
+            iteration++;
             generatedValues.add(Long.parseLong(generatedInn));
         }
 

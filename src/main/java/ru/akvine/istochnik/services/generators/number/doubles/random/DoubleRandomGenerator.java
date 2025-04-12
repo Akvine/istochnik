@@ -19,19 +19,24 @@ public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, Doubl
             start = 0D;
         }
 
+        int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
                         if (generatedValues.contains(null)) {
+                            iteration++;
                             continue;
                         } else {
                             generatedValues.add(null);
                         }
                     } else {
                         generatedValues.add(null);
+                        iteration++;
                         continue;
                     }
                 }
@@ -40,9 +45,11 @@ public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, Doubl
             double generatedValue = randomGenerator.nextDouble(start, end);
 
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
+                iteration++;
                 continue;
             }
 
+            iteration++;
             generatedValues.add(generatedValue);
         }
 

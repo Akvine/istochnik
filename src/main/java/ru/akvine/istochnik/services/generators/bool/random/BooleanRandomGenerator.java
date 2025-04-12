@@ -13,30 +13,36 @@ public class BooleanRandomGenerator extends AbstractRandomGenerator<Boolean, Boo
     public List<Boolean> generate(BooleanGeneratorConfig config) {
         List<Boolean> generatedValues = new ArrayList<>();
 
+        int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
                         if (generatedValues.contains(null)) {
+                            iteration++;
                             continue;
                         } else {
                             generatedValues.add(null);
                         }
                     } else {
                         generatedValues.add(null);
+                        iteration++;
                         continue;
                     }
                 }
             }
 
             boolean generatedValue = randomGenerator.nextBoolean();
-
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
+                iteration++;
                 continue;
             }
 
+            iteration++;
             generatedValues.add(generatedValue);
         }
 

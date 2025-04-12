@@ -13,19 +13,24 @@ public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGener
     public Collection<Long> generate(OgrnGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
 
+        int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
                         if (generatedValues.contains(null)) {
+                            iteration++;
                             continue;
                         } else {
                             generatedValues.add(null);
                         }
                     } else {
                         generatedValues.add(null);
+                        iteration++;
                         continue;
                     }
                 }
@@ -43,13 +48,16 @@ public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGener
             ogrnBuilder.append(controlDigit);
 
             if (config.isValid()) {
+                iteration++;
                 continue;
             }
 
             if (config.isUnique() && generatedValues.contains(Long.parseLong(ogrnBuilder.toString()))) {
+                iteration++;
                 continue;
             }
 
+            iteration++;
             generatedValues.add(Long.parseLong(ogrnBuilder.toString()));
         }
 

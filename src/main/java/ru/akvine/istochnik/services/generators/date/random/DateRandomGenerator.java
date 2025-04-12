@@ -18,11 +18,15 @@ public class DateRandomGenerator extends AbstractRandomGenerator<LocalDate, Date
         LocalDate startDate = config.getDateShiftRange().getStart();
         LocalDate endDate = config.getDateShiftRange().getEnd();
 
+        int iteration = 0;
         while (generatedDates.size() != config.getSize()) {
+            checkGenerationCountAttempts(iteration, config.getSize());
+
             if (!config.isNotNull()) {
                 boolean isNull = randomGenerator.nextBoolean();
                 if (isNull) {
                     generatedDates.add(null);
+                    iteration++;
                     continue;
                 }
             }
@@ -34,15 +38,18 @@ public class DateRandomGenerator extends AbstractRandomGenerator<LocalDate, Date
             );
 
             if (generateDate.isAfter(endDate)) {
+                iteration++;
                 continue;
             }
 
             if (config.isUnique()) {
                 if (generatedDates.contains(generateDate)) {
+                    iteration++;
                     continue;
                 }
             }
 
+            iteration++;
             generatedDates.add(generateDate);
         }
 
