@@ -9,7 +9,8 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 @AllArgsConstructor
 public enum GenerationStrategy {
     CONSTANT("constant"),
-    ALGORITHM("algorithm");
+    ALGORITHM("algorithm"),
+    DICTIONARY("dictionary");
 
     private final String name;
 

@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Accessors(chain = true)
@@ -30,4 +31,6 @@ public class Config {
     private Integer length;
 
     private Object constant;
+
+    private Set<String> dictionary;
 }

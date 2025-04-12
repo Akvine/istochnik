@@ -11,6 +11,7 @@ import ru.akvine.istochnik.managers.filters.StringFiltersManager;
 import ru.akvine.istochnik.services.BaseTypeGeneratorService;
 import ru.akvine.istochnik.services.CustomTypeGeneratorService;
 import ru.akvine.istochnik.services.FilterService;
+import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.services.filters.doubles.DoubleFilter;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
@@ -129,5 +130,13 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(FilterService::getType, identity()));
         return new FilterServicesManager(filterServicesMap);
+    }
+
+    @Bean
+    public GenerationHandlersManager generationHandlersManager(List<GenerationHandler> generationHandlers) {
+        Map<GenerationStrategy, GenerationHandler> handlers = generationHandlers
+                .stream()
+                .collect(toMap(GenerationHandler::getStrategy, identity()));
+        return new GenerationHandlersManager(handlers);
     }
 }

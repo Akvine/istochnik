@@ -3,6 +3,8 @@ package ru.akvine.istochnik.controllers.dto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.Set;
+
 @Data
 @Accessors(chain = true)
 public class ConfigDto {
@@ -23,4 +25,6 @@ public class ConfigDto {
     private Integer length;
 
     private Object constant;
+
+    private Set<String> dictionary;
 }
