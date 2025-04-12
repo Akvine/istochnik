@@ -31,7 +31,8 @@ public enum FilterType {
     SUBSTRING("substring", "filter.substring.code"),
     TRIM("trim", "filter.trim.code"),
     UPPER_CASE("upperCase", "filter.upperCase.code"),
-    DATE_FORMAT("format", "filter.format.code");
+    DATE_FORMAT("format", "filter.format.code"),
+    CAPITALIZE("capitalize", "filter.capitalize.code");
 
     private final String name;
     private final String descriptionCode;

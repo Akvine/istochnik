@@ -39,7 +39,8 @@ public enum BaseType {
             FilterType.SUBSTRING,
             FilterType.TRIM,
             FilterType.UPPER_CASE,
-            FilterType.DATE_FORMAT
+            FilterType.DATE_FORMAT,
+            FilterType.CAPITALIZE
     )),
     BOOLEAN("bool", List.of());
 
