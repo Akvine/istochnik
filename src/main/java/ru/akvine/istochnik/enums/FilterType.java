@@ -32,7 +32,13 @@ public enum FilterType {
     TRIM("trim", "filter.trim.code"),
     UPPER_CASE("upperCase", "filter.upperCase.code"),
     DATE_FORMAT("format", "filter.format.code"),
-    CAPITALIZE("capitalize", "filter.capitalize.code");
+    CAPITALIZE("capitalize", "filter.capitalize.code"),
+    REMOVE_WHITESPACES("removeWhitespaces", "filter.remove.whitespaces.code"),
+    INVERSION("inversion", "filter.inversion.code"),
+    RANDOM_NUMERIC_REPLACE("randomNumericReplace", "filter.random.numeric.replace.code"),
+    RANDOM_RUSSIAN_REPLACE("randomRussianReplace", "filter.random.russian.replace.code"),
+    RANDOM_ENGLISH_REPLACE("randomEnglishReplace", "filter.random.english.replace.code"),
+    RANDOM_REPLACE("randomReplace", "filter.random.english.replace.code");
 
     private final String name;
     private final String descriptionCode;

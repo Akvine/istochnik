@@ -40,7 +40,12 @@ public enum BaseType {
             FilterType.TRIM,
             FilterType.UPPER_CASE,
             FilterType.DATE_FORMAT,
-            FilterType.CAPITALIZE
+            FilterType.CAPITALIZE,
+            FilterType.REMOVE_WHITESPACES,
+            FilterType.RANDOM_NUMERIC_REPLACE,
+            FilterType.RANDOM_RUSSIAN_REPLACE,
+            FilterType.RANDOM_ENGLISH_REPLACE,
+            FilterType.RANDOM_REPLACE
     )),
     BOOLEAN("bool", List.of());
 
