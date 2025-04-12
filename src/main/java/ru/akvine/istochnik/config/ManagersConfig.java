@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.*;
 import ru.akvine.istochnik.managers.*;
 import ru.akvine.istochnik.managers.filters.DoubleFiltersManager;
+import ru.akvine.istochnik.managers.filters.FilterServicesManager;
 import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
 import ru.akvine.istochnik.managers.filters.StringFiltersManager;
 import ru.akvine.istochnik.services.BaseTypeGeneratorService;
 import ru.akvine.istochnik.services.CustomTypeGeneratorService;
+import ru.akvine.istochnik.services.FilterService;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.services.filters.doubles.DoubleFilter;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
@@ -119,5 +121,13 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(CustomTypeGeneratorService::getType, identity()));
         return new CustomTypeGeneratorServicesManager(generatorServices);
+    }
+
+    @Bean
+    public FilterServicesManager filterServicesManager(List<FilterService> filterServices) {
+        Map<BaseType, FilterService> filterServicesMap = filterServices
+                .stream()
+                .collect(toMap(FilterService::getType, identity()));
+        return new FilterServicesManager(filterServicesMap);
     }
 }

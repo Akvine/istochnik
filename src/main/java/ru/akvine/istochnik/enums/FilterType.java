@@ -21,7 +21,6 @@ public enum FilterType {
     PLUS("plus", "filter.plus.code"),
     POW("pow", "filter.pow.code"),
     ROUND("round", "filter.round.code"),
-    KAIF("kaif", "filter.kaif.code"),
 
     /**
      * Фильтры для строк

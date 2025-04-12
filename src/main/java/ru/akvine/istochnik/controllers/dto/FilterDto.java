@@ -8,7 +8,5 @@ import lombok.experimental.Accessors;
 public class FilterDto {
     private String name;
 
-    private String arg1;
-
-    private String arg2;
+    private Object[] arguments = new Object[]{};
 }

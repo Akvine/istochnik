@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
+import ru.akvine.istochnik.managers.filters.FilterServicesManager;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.bool.BooleanGeneratorService;
@@ -18,8 +19,9 @@ public class BooleanRandomGeneratorService extends AbstractBaseTypeGeneratorServ
 
     @Autowired
     protected BooleanRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
-                                            BooleanGeneratorService booleanGeneratorService) {
-        super(configMappersManager);
+                                            BooleanGeneratorService booleanGeneratorService,
+                                            FilterServicesManager filterServicesManager) {
+        super(configMappersManager, filterServicesManager);
         this.booleanGeneratorService = booleanGeneratorService;
     }
 
@@ -29,7 +31,7 @@ public class BooleanRandomGeneratorService extends AbstractBaseTypeGeneratorServ
                 .configMappers()
                 .get(getType().getValue());
         BooleanGeneratorConfig mappedConfig = (BooleanGeneratorConfig) configMapper.map(config);
-        return booleanGeneratorService.generate(mappedConfig);
+        return apply(booleanGeneratorService.generate(mappedConfig), filters);
     }
 
     @Override

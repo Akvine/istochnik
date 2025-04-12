@@ -80,8 +80,7 @@ public class GeneratorConverter {
     private Filter buildFilter(FilterDto filterDto) {
         return new Filter()
                 .setName(FilterType.safeFrom(filterDto.getName()))
-                .setArgument1(filterDto.getArg1())
-                .setArgument2(filterDto.getArg2());
+                .setArguments(filterDto.getArguments());
     }
 
     private Config buildConfig(int size, ConfigDto configDto) {

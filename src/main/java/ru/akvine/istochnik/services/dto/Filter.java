@@ -1,6 +1,5 @@
 package ru.akvine.istochnik.services.dto;
 
-import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.FilterType;
@@ -10,9 +9,5 @@ import ru.akvine.istochnik.enums.FilterType;
 public class Filter {
     private FilterType name;
 
-    @Nullable
-    private String argument1;
-
-    @Nullable
-    private String argument2;
+    private Object[] arguments;
 }

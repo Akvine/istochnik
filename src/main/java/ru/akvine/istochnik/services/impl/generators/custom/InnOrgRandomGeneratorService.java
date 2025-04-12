@@ -3,6 +3,7 @@ package ru.akvine.istochnik.services.impl.generators.custom;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
+import ru.akvine.istochnik.managers.filters.FilterServicesManager;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.inn.org.InnOrgGenerator;
@@ -16,8 +17,9 @@ public class InnOrgRandomGeneratorService extends AbstractCustomTypeGeneratorSer
     private final InnOrgGenerator innOrgGenerator;
 
     protected InnOrgRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
-                                           InnOrgGenerator innOrgGenerator) {
-        super(configMappersManager);
+                                           InnOrgGenerator innOrgGenerator,
+                                           FilterServicesManager filterServicesManager) {
+        super(configMappersManager, filterServicesManager);
         this.innOrgGenerator = innOrgGenerator;
     }
 
@@ -27,7 +29,7 @@ public class InnOrgRandomGeneratorService extends AbstractCustomTypeGeneratorSer
                 .configMappers()
                 .get(getType().getName());
         InnOrgGeneratorConfig mappedConfig = (InnOrgGeneratorConfig) configMapper.map(config);
-        return (List<?>) innOrgGenerator.generate(mappedConfig);
+        return apply((List<?>) innOrgGenerator.generate(mappedConfig), filters);
     }
 
     @Override

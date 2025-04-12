@@ -3,6 +3,7 @@ package ru.akvine.istochnik.services.impl.generators.custom;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
+import ru.akvine.istochnik.managers.filters.FilterServicesManager;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.ogrn.OgrnGeneratorConfig;
@@ -16,8 +17,9 @@ public class OgrnRandomGeneratorService extends AbstractCustomTypeGeneratorServi
     private final OgrnRandomGenerator ogrnRandomGenerator;
 
     protected OgrnRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
-                                         OgrnRandomGenerator ogrnRandomGenerator) {
-        super(configMappersManager);
+                                         OgrnRandomGenerator ogrnRandomGenerator,
+                                         FilterServicesManager filterServicesManager) {
+        super(configMappersManager, filterServicesManager);
         this.ogrnRandomGenerator = ogrnRandomGenerator;
     }
 
@@ -27,7 +29,7 @@ public class OgrnRandomGeneratorService extends AbstractCustomTypeGeneratorServi
                 .configMappers()
                 .get(getType().getName());
         OgrnGeneratorConfig mappedConfig = (OgrnGeneratorConfig) configMapper.map(config);
-        return (List<?>) ogrnRandomGenerator.generate(mappedConfig);
+        return apply((List<?>) ogrnRandomGenerator.generate(mappedConfig), filters);
     }
 
     @Override

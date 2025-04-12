@@ -3,6 +3,7 @@ package ru.akvine.istochnik.services.impl.generators.base;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
+import ru.akvine.istochnik.managers.filters.FilterServicesManager;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.number.doubles.DoubleGeneratorService;
@@ -16,8 +17,9 @@ public class DoubleRandomGeneratorService extends AbstractBaseTypeGeneratorServi
     private final DoubleGeneratorService doubleGeneratorService;
 
     protected DoubleRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
-                                           DoubleGeneratorService doubleGeneratorService) {
-        super(configMappersManager);
+                                           DoubleGeneratorService doubleGeneratorService,
+                                           FilterServicesManager filterServicesManager) {
+        super(configMappersManager, filterServicesManager);
         this.doubleGeneratorService = doubleGeneratorService;
     }
 
@@ -27,7 +29,7 @@ public class DoubleRandomGeneratorService extends AbstractBaseTypeGeneratorServi
                 .configMappers()
                 .get(getType().getValue());
         DoubleGeneratorConfig mappedConfig = (DoubleGeneratorConfig) configMapper.map(config);
-        return doubleGeneratorService.generate(mappedConfig, filters);
+        return apply(doubleGeneratorService.generate(mappedConfig), filters);
     }
 
     @Override

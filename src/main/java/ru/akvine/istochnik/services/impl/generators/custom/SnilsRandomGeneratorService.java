@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
+import ru.akvine.istochnik.managers.filters.FilterServicesManager;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.snils.SnilsRandomGenerator;
@@ -18,8 +19,9 @@ public class SnilsRandomGeneratorService extends AbstractCustomTypeGeneratorServ
 
     @Autowired
     protected SnilsRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
-                                          SnilsRandomGenerator snilsRandomGenerator) {
-        super(configMappersManager);
+                                          SnilsRandomGenerator snilsRandomGenerator,
+                                          FilterServicesManager filterServicesManager) {
+        super(configMappersManager, filterServicesManager);
         this.snilsRandomGenerator = snilsRandomGenerator;
     }
 
@@ -29,7 +31,7 @@ public class SnilsRandomGeneratorService extends AbstractCustomTypeGeneratorServ
                 .configMappers()
                 .get(getType().getName());
         SnilsGeneratorConfig mappedConfig = (SnilsGeneratorConfig) configMapper.map(config);
-        return (List<?>) snilsRandomGenerator.generate(mappedConfig);
+        return apply((List<?>) snilsRandomGenerator.generate(mappedConfig), filters);
     }
 
     @Override

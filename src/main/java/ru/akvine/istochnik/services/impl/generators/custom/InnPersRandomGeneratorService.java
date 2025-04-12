@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
+import ru.akvine.istochnik.managers.filters.FilterServicesManager;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.inn.personal.InnPersGenerator;
@@ -17,8 +18,10 @@ public class InnPersRandomGeneratorService extends AbstractCustomTypeGeneratorSe
     private final InnPersGenerator innPersGenerator;
 
     @Autowired
-    protected InnPersRandomGeneratorService(ConfigMapperServicesManager configMappersManager, InnPersGenerator innPersGenerator) {
-        super(configMappersManager);
+    protected InnPersRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
+                                            InnPersGenerator innPersGenerator,
+                                            FilterServicesManager filterServicesManager) {
+        super(configMappersManager, filterServicesManager);
         this.innPersGenerator = innPersGenerator;
     }
 
@@ -28,7 +31,7 @@ public class InnPersRandomGeneratorService extends AbstractCustomTypeGeneratorSe
                 .configMappers()
                 .get(getType().getName());
         InnPersGeneratorConfig mappedConfig = (InnPersGeneratorConfig) configMapper.map(config);
-        return (List<?>) innPersGenerator.generate(mappedConfig);
+        return apply((List<?>) innPersGenerator.generate(mappedConfig), filters);
     }
 
     @Override

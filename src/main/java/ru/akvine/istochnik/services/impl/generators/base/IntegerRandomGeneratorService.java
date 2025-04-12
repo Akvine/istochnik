@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
+import ru.akvine.istochnik.managers.filters.FilterServicesManager;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerGeneratorService;
@@ -18,8 +19,9 @@ public class IntegerRandomGeneratorService extends AbstractBaseTypeGeneratorServ
 
     @Autowired
     protected IntegerRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
-                                            IntegerGeneratorService integerGeneratorService) {
-        super(configMappersManager);
+                                            IntegerGeneratorService integerGeneratorService,
+                                            FilterServicesManager filterServicesManager) {
+        super(configMappersManager, filterServicesManager);
         this.integerGeneratorService = integerGeneratorService;
     }
 
@@ -29,7 +31,7 @@ public class IntegerRandomGeneratorService extends AbstractBaseTypeGeneratorServ
                 .configMappers()
                 .get(getType().getValue());
         IntegerGeneratorConfig mappedConfig = (IntegerGeneratorConfig) configMapper.map(config);
-        return integerGeneratorService.generate(mappedConfig, filters);
+        return apply(integerGeneratorService.generate(mappedConfig), filters);
     }
 
     @Override
