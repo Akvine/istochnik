@@ -20,5 +20,9 @@ public class ColumnDto {
 
     private ConfigDto config;
 
+    private boolean convertToString;
+
+    private List<FilterDto> postFilters;
+
     private List<FilterDto> filters;
 }

@@ -44,6 +44,9 @@ public class GeneratorConverter {
                     .setCustomType(customType)
                     .setConfig(buildConfig(size, column.getConfig()))
                     .setGenerationStrategy(strategy)
+                    .setConvertToString(column.isConvertToString())
+                    .setPostFilters(CollectionUtils.isEmpty(column.getPostFilters()) ?
+                            List.of() : column.getPostFilters().stream().map(this::buildFilter).toList())
                     .setFilters(CollectionUtils.isEmpty(column.getFilters()) ?
                             List.of() : column.getFilters().stream().map(this::buildFilter).toList()));
         }

@@ -19,5 +19,7 @@ public class GenerateColumn {
     private CustomType customType;
     private Config config;
     private List<Filter> filters;
+    private boolean convertToString;
+    private List<Filter> postFilters;
     private GenerationStrategy generationStrategy;
 }
