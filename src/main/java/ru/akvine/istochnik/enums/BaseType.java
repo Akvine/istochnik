@@ -45,7 +45,12 @@ public enum BaseType {
             FilterType.RANDOM_NUMERIC_REPLACE,
             FilterType.RANDOM_RUSSIAN_REPLACE,
             FilterType.RANDOM_ENGLISH_REPLACE,
-            FilterType.RANDOM_REPLACE
+            FilterType.RANDOM_REPLACE,
+            FilterType.ADD_AFTER,
+            FilterType.ADD_BEFORE,
+            FilterType.REPEAT,
+            FilterType.REVERSE,
+            FilterType.TRANSLIT
     )),
     BOOLEAN("bool", List.of());
 

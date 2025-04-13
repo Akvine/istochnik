@@ -6,7 +6,7 @@ import ru.akvine.istochnik.enums.FilterType;
 import java.util.List;
 
 @Service
-public class CharToUpperCaseFilter extends StringFilter<String, String> {
+public class CapitalizeFilter extends StringFilter<String, String> {
 
     @Override
     public List<String> filter(List<String> input, String[] arguments) {

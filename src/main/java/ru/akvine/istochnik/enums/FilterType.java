@@ -38,7 +38,13 @@ public enum FilterType {
     RANDOM_NUMERIC_REPLACE("randomNumericReplace", "filter.random.numeric.replace.code"),
     RANDOM_RUSSIAN_REPLACE("randomRussianReplace", "filter.random.russian.replace.code"),
     RANDOM_ENGLISH_REPLACE("randomEnglishReplace", "filter.random.english.replace.code"),
-    RANDOM_REPLACE("randomReplace", "filter.random.english.replace.code");
+    RANDOM_REPLACE("randomReplace", "filter.random.english.replace.code"),
+    ADD_BEFORE("addBefore", "filter.add.before.code"),
+    ADD_AFTER("addAfter", "filter.add.after.code"),
+    REPEAT("repeat", "filter.repeat.code"),
+    REVERSE("reverse", "filter.reverse.code"),
+    TRANSLIT("translit", "filter.translit.code"),
+    RANDOM_CASE("randomCase", "filter.random.case.code");
 
     private final String name;
     private final String descriptionCode;
