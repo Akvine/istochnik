@@ -23,6 +23,9 @@ public class CsvFileTableGenerator implements FileTableGenerator {
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
              CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), format)) {
 
+            List<String> headers = table.getColumns().stream().map(Column::getName).toList();
+            csvPrinter.printRecord(headers);
+
             int rowsCount = table.getRowsCount();
             for (int rowIndex = 0; rowIndex < rowsCount; ++rowIndex) {
                 List<Object> values = new ArrayList<>();
