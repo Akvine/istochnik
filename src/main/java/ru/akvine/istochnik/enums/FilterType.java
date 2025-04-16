@@ -21,6 +21,19 @@ public enum FilterType {
     PLUS("plus", "filter.plus.code"),
     POW("pow", "filter.pow.code"),
     ROUND("round", "filter.round.code"),
+    LOG("log", "filter.log.code"),
+    LOG10("log10", "filter.log.code"),
+    EXP("exp", "filter.exp.code"),
+    MOD("mod", "filter.mod.code"),
+    TAN("tan", "filter.tan.code"),
+    COT("cot", "filter.cot.code"),
+    ARCSIN("arcsin", "filter.arcsin.code"),
+    ARCCOS("arccos", "filter.arccos.code"),
+    ARCTAN("arctan", "filter.arctan.code"),
+    ZSCORE("zscore", "filter.zscore.code"),
+    MINMAXSCALING("minMaxScaling", "filter.minMaxScaling.code"),
+    NEGATIVE("negative", "filter.negative.code"),
+
 
     /**
      * Фильтры для строк

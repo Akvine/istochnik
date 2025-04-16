@@ -13,12 +13,12 @@ import java.util.List;
 public enum BaseType {
     INTEGER("int", List.of(
             FilterType.ABS,
-            FilterType.COS,
             FilterType.DIVIDE,
             FilterType.MINUS,
             FilterType.PLUS,
             FilterType.POW,
-            FilterType.SIN
+            FilterType.MOD,
+            FilterType.NEGATIVE
     )),
     DOUBLE("double", List.of(
             FilterType.ABS,
@@ -30,7 +30,19 @@ public enum BaseType {
             FilterType.PLUS,
             FilterType.POW,
             FilterType.ROUND,
-            FilterType.SIN
+            FilterType.SIN,
+            FilterType.TAN,
+            FilterType.LOG,
+            FilterType.LOG10,
+            FilterType.EXP,
+            FilterType.COT,
+            FilterType.ARCSIN,
+            FilterType.ARCCOS,
+            FilterType.ARCTAN,
+            FilterType.ZSCORE,
+            FilterType.MINMAXSCALING,
+            FilterType.NEGATIVE
+
     )),
     STRING("str", List.of(
             FilterType.BASE64,

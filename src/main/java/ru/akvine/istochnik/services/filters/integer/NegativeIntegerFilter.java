@@ -6,14 +6,14 @@ import ru.akvine.istochnik.enums.FilterType;
 import java.util.List;
 
 @Service
-public class SinIntegerFilter extends IntegerFilter<Integer, Double> {
+public class NegativeIntegerFilter extends IntegerFilter<Integer, Double> {
     @Override
-    public List<Integer> filter(List<Integer> input, Double[] argument) {
-        return input.stream().map(value -> (int) Math.sin(value)).toList();
+    public List<Integer> filter(List<Integer> input, Double[] arguments) {
+        return input.stream().map(value -> value * (-1)).toList();
     }
 
     @Override
     public FilterType getName() {
-        return FilterType.SIN;
+        return FilterType.NEGATIVE;
     }
 }
