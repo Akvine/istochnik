@@ -1,5 +1,6 @@
-package ru.akvine.istochnik.services.file;
+package ru.akvine.istochnik.services.file.excel;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -8,8 +9,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.exceptions.ReportGenerationException;
+import ru.akvine.istochnik.managers.CellConfigurersManager;
 import ru.akvine.istochnik.services.dto.Column;
 import ru.akvine.istochnik.services.dto.Table;
+import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.utils.Asserts;
 import ru.akvine.istochnik.utils.POIUtils;
 
@@ -17,8 +20,11 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class XlsxFileTableGenerator implements FileTableGenerator {
     private final static String SHEET_NAME = "sheet";
+
+    private final CellConfigurersManager cellConfigurersManager;
 
     @Override
     public byte[] generate(Table table) {
@@ -40,9 +46,13 @@ public class XlsxFileTableGenerator implements FileTableGenerator {
 
                     if (value == null) {
                         createdCell.setCellValue("");
+                        createdCell.setCellValue(createdCell.getStringCellValue());
                     } else {
-                        createdCell.setCellValue(value.toString());
+                        cellConfigurersManager
+                                .getByClass(value.getClass())
+                                .configure(createdCell, value);
                     }
+
                 }
             }
 

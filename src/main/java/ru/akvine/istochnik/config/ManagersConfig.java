@@ -13,6 +13,7 @@ import ru.akvine.istochnik.services.CustomTypeGeneratorService;
 import ru.akvine.istochnik.services.FilterService;
 import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
+import ru.akvine.istochnik.services.file.excel.factory.CellConfigurer;
 import ru.akvine.istochnik.services.filters.doubles.DoubleFilter;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 import ru.akvine.istochnik.services.filters.string.StringFilter;
@@ -138,5 +139,13 @@ public class ManagersConfig {
                 .stream()
                 .collect(toMap(GenerationHandler::getStrategy, identity()));
         return new GenerationHandlersManager(handlers);
+    }
+
+    @Bean
+    public CellConfigurersManager cellFactoriesManager(List<CellConfigurer> cellFactories) {
+        Map<Class<?>, CellConfigurer> factories = cellFactories
+                .stream()
+                .collect(toMap(CellConfigurer::getType, identity()));
+        return new CellConfigurersManager(factories);
     }
 }
