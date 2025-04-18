@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import ru.akvine.istochnik.controllers.dto.ColumnDto;
-import ru.akvine.istochnik.controllers.dto.FilterDto;
-import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
+import ru.akvine.compozit.commons.istochnik.ColumnDto;
+import ru.akvine.compozit.commons.istochnik.FilterDto;
+import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.controllers.dto.validation.ValidationColumnsInfo;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
@@ -30,7 +30,6 @@ public class GeneratorValidator {
 
         int rowsCount = request.getSize();
         List<ColumnDto> columns = request.getColumns();
-
 
         StringBuilder sb = new StringBuilder();
         if (rowsCount < 0) {

@@ -1,7 +1,6 @@
 package ru.akvine.istochnik.validators.type;
 
 import org.springframework.stereotype.Component;
-import ru.akvine.istochnik.controllers.dto.FilterDto;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.FilterType;
 import ru.akvine.istochnik.enums.RangeType;
