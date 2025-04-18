@@ -3,6 +3,7 @@ package ru.akvine.istochnik.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
+import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.managers.GenerationHandlersManager;
@@ -11,7 +12,6 @@ import ru.akvine.istochnik.services.GeneratorFacade;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 import ru.akvine.istochnik.services.dto.GenerateData;
 import ru.akvine.istochnik.services.dto.Table;
-import ru.akvine.istochnik.utils.Asserts;
 
 import java.util.List;
 

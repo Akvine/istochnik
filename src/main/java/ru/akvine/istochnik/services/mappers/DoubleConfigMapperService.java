@@ -2,11 +2,11 @@ package ru.akvine.istochnik.services.mappers;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.generators.number.doubles.DoubleShiftRange;
 import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
-import ru.akvine.istochnik.utils.Asserts;
 
 @Service
 public class DoubleConfigMapperService implements ConfigMapperService<DoubleGeneratorConfig> {

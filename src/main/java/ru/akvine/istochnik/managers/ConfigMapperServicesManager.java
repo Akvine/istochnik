@@ -1,9 +1,9 @@
 package ru.akvine.istochnik.managers;
 
+import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
-import ru.akvine.istochnik.utils.Asserts;
 
 import java.util.Map;
 

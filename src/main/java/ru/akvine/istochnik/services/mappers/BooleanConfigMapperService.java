@@ -1,11 +1,11 @@
 package ru.akvine.istochnik.services.mappers;
 
 import org.springframework.stereotype.Service;
+import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.generators.bool.BooleanShiftRange;
 import ru.akvine.istochnik.services.generators.bool.configs.BooleanGeneratorConfig;
-import ru.akvine.istochnik.utils.Asserts;
 
 @Service
 public class BooleanConfigMapperService implements ConfigMapperService<BooleanGeneratorConfig>{

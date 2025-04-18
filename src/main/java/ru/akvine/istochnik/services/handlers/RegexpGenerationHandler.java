@@ -3,6 +3,7 @@ package ru.akvine.istochnik.services.handlers;
 import lombok.RequiredArgsConstructor;
 import nl.flotsam.xeger.Xeger;
 import org.springframework.stereotype.Service;
+import ru.akvine.compozit.commons.utils.CollectionUtils;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.enums.RangeType;
@@ -10,7 +11,6 @@ import ru.akvine.istochnik.managers.filters.FilterServicesManager;
 import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
-import ru.akvine.istochnik.utils.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;

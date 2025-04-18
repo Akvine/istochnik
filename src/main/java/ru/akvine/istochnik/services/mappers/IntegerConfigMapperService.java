@@ -2,11 +2,11 @@ package ru.akvine.istochnik.services.mappers;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.generators.number.integer.IntegerShiftRange;
 import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerGeneratorConfig;
-import ru.akvine.istochnik.utils.Asserts;
 
 @Service
 public class IntegerConfigMapperService implements ConfigMapperService<IntegerGeneratorConfig> {

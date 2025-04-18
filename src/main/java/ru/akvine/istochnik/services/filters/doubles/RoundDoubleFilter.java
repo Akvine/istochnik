@@ -1,8 +1,8 @@
 package ru.akvine.istochnik.services.filters.doubles;
 
 import org.springframework.stereotype.Service;
+import ru.akvine.compozit.commons.utils.MathUtils;
 import ru.akvine.istochnik.enums.FilterType;
-import ru.akvine.istochnik.utils.MathUtils;
 
 import java.util.List;
 

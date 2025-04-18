@@ -9,12 +9,12 @@ import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
 import ru.akvine.compozit.commons.istochnik.FilterDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
+import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.*;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 import ru.akvine.istochnik.services.dto.GenerateData;
-import ru.akvine.istochnik.utils.Asserts;
 
 import java.util.ArrayList;
 import java.util.List;

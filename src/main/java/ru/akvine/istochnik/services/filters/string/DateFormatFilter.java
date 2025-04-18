@@ -1,8 +1,8 @@
 package ru.akvine.istochnik.services.filters.string;
 
 import org.springframework.stereotype.Service;
+import ru.akvine.compozit.commons.utils.DateTimeUtils;
 import ru.akvine.istochnik.enums.FilterType;
-import ru.akvine.istochnik.utils.DateTimeUtils;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;

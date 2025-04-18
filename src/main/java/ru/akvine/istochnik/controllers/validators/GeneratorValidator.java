@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.FilterDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
+import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.controllers.dto.validation.ValidationColumnsInfo;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
@@ -14,7 +15,6 @@ import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 import ru.akvine.istochnik.managers.BaseTypeValidatorsManager;
-import ru.akvine.istochnik.utils.Asserts;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
 
 import java.util.List;
