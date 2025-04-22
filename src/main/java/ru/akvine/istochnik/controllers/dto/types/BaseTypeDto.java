@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class CustomTypeDto extends TypeDto {
-    private String customType;
+public class BaseTypeDto {
+    private String description;
+    private String baseType;
 }

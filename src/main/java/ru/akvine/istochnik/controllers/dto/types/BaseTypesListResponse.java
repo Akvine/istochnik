@@ -8,6 +8,6 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class CustomTypesListResponse extends SuccessfulResponse {
-    private List<CustomBaseTypeDto> types;
+public class BaseTypesListResponse extends SuccessfulResponse {
+    private List<BaseTypeDto> types;
 }
