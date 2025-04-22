@@ -3,8 +3,8 @@ package ru.akvine.istochnik.services.impl.generators.custom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
-import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
-import ru.akvine.istochnik.managers.filters.FilterServicesManager;
+import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
+import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.datetime.DateTimeGeneratorService;
@@ -19,16 +19,16 @@ public class DateTimeRandomGeneratorService extends AbstractCustomTypeGeneratorS
     private final DateTimeGeneratorService dateTimeGeneratorService;
 
     @Autowired
-    protected DateTimeRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
+    protected DateTimeRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                              DateTimeGeneratorService dateTimeGeneratorService,
-                                             FilterServicesManager filterServicesManager) {
-        super(configMappersManager, filterServicesManager);
+                                             FilterServicesProvider filterServicesProvider) {
+        super(configMappersProvider, filterServicesProvider);
         this.dateTimeGeneratorService = dateTimeGeneratorService;
     }
 
     @Override
     public List<?> generate(Config config, List<Filter> filters) {
-        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersManager
+        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
                 .configMappers()
                 .get(getType().getName());
         DateTimeGeneratorConfig mappedConfig = (DateTimeGeneratorConfig) configMapper.map(config);

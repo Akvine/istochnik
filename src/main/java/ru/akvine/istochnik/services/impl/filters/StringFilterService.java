@@ -3,7 +3,7 @@ package ru.akvine.istochnik.services.impl.filters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
-import ru.akvine.istochnik.managers.filters.StringFiltersManager;
+import ru.akvine.istochnik.providers.filters.StringFiltersProvider;
 import ru.akvine.istochnik.services.FilterService;
 import ru.akvine.istochnik.services.dto.Filter;
 
@@ -12,13 +12,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class StringFilterService implements FilterService {
-    private final StringFiltersManager stringFiltersManager;
+    private final StringFiltersProvider stringFiltersProvider;
 
     @Override
     public List<?> apply(List<?> generatedValues, List<Filter> filters) {
         List<?> values = generatedValues;
         for (Filter filter : filters) {
-            values = stringFiltersManager.getFilter(filter.getName()).filter(
+            values = stringFiltersProvider.getFilter(filter.getName()).filter(
                     (List<String>) values,
                     mapArguments(filter.getArguments())
             );

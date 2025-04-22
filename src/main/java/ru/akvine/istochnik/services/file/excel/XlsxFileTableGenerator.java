@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.exceptions.ReportGenerationException;
-import ru.akvine.istochnik.managers.CellConfigurersManager;
+import ru.akvine.istochnik.providers.CellConfigurersProvider;
 import ru.akvine.istochnik.services.dto.Column;
 import ru.akvine.istochnik.services.dto.Table;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
@@ -24,7 +24,7 @@ import java.util.List;
 public class XlsxFileTableGenerator implements FileTableGenerator {
     private final static String SHEET_NAME = "sheet";
 
-    private final CellConfigurersManager cellConfigurersManager;
+    private final CellConfigurersProvider cellConfigurersProvider;
 
     @Override
     public byte[] generate(Table table) {
@@ -48,7 +48,7 @@ public class XlsxFileTableGenerator implements FileTableGenerator {
                         createdCell.setCellValue("");
                         createdCell.setCellValue(createdCell.getStringCellValue());
                     } else {
-                        cellConfigurersManager
+                        cellConfigurersProvider
                                 .getByClass(value.getClass())
                                 .configure(createdCell, value);
                     }

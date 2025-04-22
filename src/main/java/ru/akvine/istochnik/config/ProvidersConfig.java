@@ -3,11 +3,11 @@ package ru.akvine.istochnik.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.*;
-import ru.akvine.istochnik.managers.*;
-import ru.akvine.istochnik.managers.filters.DoubleFiltersManager;
-import ru.akvine.istochnik.managers.filters.FilterServicesManager;
-import ru.akvine.istochnik.managers.filters.IntegerFiltersManager;
-import ru.akvine.istochnik.managers.filters.StringFiltersManager;
+import ru.akvine.istochnik.providers.*;
+import ru.akvine.istochnik.providers.filters.DoubleFiltersProvider;
+import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
+import ru.akvine.istochnik.providers.filters.IntegerFiltersProvider;
+import ru.akvine.istochnik.providers.filters.StringFiltersProvider;
 import ru.akvine.istochnik.services.BaseTypeGeneratorService;
 import ru.akvine.istochnik.services.CustomTypeGeneratorService;
 import ru.akvine.istochnik.services.FilterService;
@@ -35,117 +35,117 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 @Configuration
-public class ManagersConfig {
+public class ProvidersConfig {
 
     @Bean
-    public DateTimeRangeServicesManager dateTimeShiftServicesManager(Collection<AbstractDateTimeRangeService<LocalDateTime, Long>> services) {
+    public DateTimeRangeServicesProvider dateTimeShiftServicesProvider(Collection<AbstractDateTimeRangeService<LocalDateTime, Long>> services) {
         Map<DateShiftType, AbstractDateTimeRangeService<LocalDateTime, Long>> localDateTimeShiftServices = services
                 .stream()
                 .collect(toMap(AbstractDateTimeRangeService::getByType, identity()));
-        return new DateTimeRangeServicesManager(localDateTimeShiftServices);
+        return new DateTimeRangeServicesProvider(localDateTimeShiftServices);
     }
 
     @Bean
-    public TimeRangeServicesManager timeRangeServicesManager(Collection<AbstractTimeRangeService<LocalTime, Integer>> services) {
+    public TimeRangeServicesProvider timeRangeServicesProvider(Collection<AbstractTimeRangeService<LocalTime, Integer>> services) {
         Map<DateShiftType, AbstractTimeRangeService<LocalTime, Integer>> timeShiftServices = services
                 .stream()
                 .collect(toMap(AbstractTimeRangeService::getByType, identity()));
-        return new TimeRangeServicesManager(timeShiftServices);
+        return new TimeRangeServicesProvider(timeShiftServices);
     }
 
     @Bean
-    public DateRangeServicesManager dateRangeServicesManager(Collection<AbstractDateRangeService<LocalDate, Integer>> services) {
+    public DateRangeServicesProvider dateRangeServicesProvider(Collection<AbstractDateRangeService<LocalDate, Integer>> services) {
         Map<DateShiftType, AbstractDateRangeService<LocalDate, Integer>> localDateShiftServices = services
                 .stream()
                 .collect(toMap(AbstractDateRangeService::getByType, identity()));
-        return new DateRangeServicesManager(localDateShiftServices);
+        return new DateRangeServicesProvider(localDateShiftServices);
     }
 
     @Bean
-    public IntegerFiltersManager integerFiltersManager(List<IntegerFilter<Integer, Double>> integerFilters) {
+    public IntegerFiltersProvider integerFiltersProvider(List<IntegerFilter<Integer, Double>> integerFilters) {
         Map<FilterType, IntegerFilter<Integer, Double>> filters = integerFilters
                 .stream()
                 .collect(toMap(IntegerFilter::getName, identity()));
-        return new IntegerFiltersManager(filters);
+        return new IntegerFiltersProvider(filters);
     }
 
     @Bean
-    public DoubleFiltersManager doubleFiltersManager(List<DoubleFilter<Double, Double>> doubleFilters) {
+    public DoubleFiltersProvider doubleFiltersProvider(List<DoubleFilter<Double, Double>> doubleFilters) {
         Map<FilterType, DoubleFilter<Double, Double>> filters = doubleFilters
                 .stream()
                 .collect(toMap(DoubleFilter::getName, identity()));
-        return new DoubleFiltersManager(filters);
+        return new DoubleFiltersProvider(filters);
     }
 
     @Bean
-    public StringFiltersManager stringFiltersManager(List<StringFilter<String, String>> stringFilters) {
+    public StringFiltersProvider stringFiltersProvider(List<StringFilter<String, String>> stringFilters) {
         Map<FilterType, StringFilter<String, String>> filters = stringFilters
                 .stream()
                 .collect(toMap(StringFilter::getName, identity()));
-        return new StringFiltersManager(filters);
+        return new StringFiltersProvider(filters);
     }
 
     @Bean
-    public FileTableGeneratorsManager fileTableServicesManager(List<FileTableGenerator> generators) {
+    public FileTableGeneratorsProvider fileTableServicesProvider(List<FileTableGenerator> generators) {
         Map<FileType, FileTableGenerator> filters = generators
                 .stream()
                 .collect(toMap(FileTableGenerator::getType, identity()));
-        return new FileTableGeneratorsManager(filters);
+        return new FileTableGeneratorsProvider(filters);
     }
 
     @Bean
-    public BaseTypeValidatorsManager baseTypeValidatorsManager(List<BaseTypeValidator> typeValidators) {
+    public BaseTypeValidatorsProvider baseTypeValidatorsProvider(List<BaseTypeValidator> typeValidators) {
         Map<BaseType, BaseTypeValidator> validators = typeValidators
                 .stream()
                 .collect(toMap(BaseTypeValidator::getBaseType, identity()));
-        return new BaseTypeValidatorsManager(validators);
+        return new BaseTypeValidatorsProvider(validators);
     }
 
     @Bean
-    public ConfigMapperServicesManager configMapperServicesManager(List<ConfigMapperService<? extends Config>> configMapperServices) {
+    public ConfigMapperServicesProvider configMapperServicesProvider(List<ConfigMapperService<? extends Config>> configMapperServices) {
         Map<String, ConfigMapperService<? extends Config>> mappers = configMapperServices
                 .stream()
                 .collect(toMap(ConfigMapperService::getType, identity()));
-        return new ConfigMapperServicesManager(mappers);
+        return new ConfigMapperServicesProvider(mappers);
     }
 
     @Bean
-    public BaseTypeGeneratorServicesManager baseTypeGeneratorServicesManager(List<BaseTypeGeneratorService> baseTypeGeneratorServices) {
+    public BaseTypeGeneratorServicesProvider baseTypeGeneratorServicesProvider(List<BaseTypeGeneratorService> baseTypeGeneratorServices) {
         Map<BaseType, BaseTypeGeneratorService> generatorServices = baseTypeGeneratorServices
                 .stream()
                 .collect(toMap(BaseTypeGeneratorService::getType, identity()));
-        return new BaseTypeGeneratorServicesManager(generatorServices);
+        return new BaseTypeGeneratorServicesProvider(generatorServices);
     }
 
     @Bean
-    public CustomTypeGeneratorServicesManager customTypeGeneratorServicesManager(List<CustomTypeGeneratorService> customTypeGeneratorServices) {
+    public CustomTypeGeneratorServicesProvider customTypeGeneratorServicesProvider(List<CustomTypeGeneratorService> customTypeGeneratorServices) {
         Map<CustomType, CustomTypeGeneratorService> generatorServices = customTypeGeneratorServices
                 .stream()
                 .collect(toMap(CustomTypeGeneratorService::getType, identity()));
-        return new CustomTypeGeneratorServicesManager(generatorServices);
+        return new CustomTypeGeneratorServicesProvider(generatorServices);
     }
 
     @Bean
-    public FilterServicesManager filterServicesManager(List<FilterService> filterServices) {
+    public FilterServicesProvider filterServicesProvider(List<FilterService> filterServices) {
         Map<BaseType, FilterService> filterServicesMap = filterServices
                 .stream()
                 .collect(toMap(FilterService::getType, identity()));
-        return new FilterServicesManager(filterServicesMap);
+        return new FilterServicesProvider(filterServicesMap);
     }
 
     @Bean
-    public GenerationHandlersManager generationHandlersManager(List<GenerationHandler> generationHandlers) {
+    public GenerationHandlersProvider generationHandlersProvider(List<GenerationHandler> generationHandlers) {
         Map<GenerationStrategy, GenerationHandler> handlers = generationHandlers
                 .stream()
                 .collect(toMap(GenerationHandler::getStrategy, identity()));
-        return new GenerationHandlersManager(handlers);
+        return new GenerationHandlersProvider(handlers);
     }
 
     @Bean
-    public CellConfigurersManager cellFactoriesManager(List<CellConfigurer> cellFactories) {
+    public CellConfigurersProvider cellFactoriesProvider(List<CellConfigurer> cellFactories) {
         Map<Class<?>, CellConfigurer> factories = cellFactories
                 .stream()
                 .collect(toMap(CellConfigurer::getType, identity()));
-        return new CellConfigurersManager(factories);
+        return new CellConfigurersProvider(factories);
     }
 }

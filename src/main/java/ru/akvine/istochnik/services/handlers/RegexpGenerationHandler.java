@@ -7,7 +7,7 @@ import ru.akvine.compozit.commons.utils.CollectionUtils;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.enums.RangeType;
-import ru.akvine.istochnik.managers.filters.FilterServicesManager;
+import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
@@ -19,7 +19,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class RegexpGenerationHandler implements GenerationHandler {
-    private final FilterServicesManager filterServicesManager;
+    private final FilterServicesProvider filterServicesProvider;
 
     @Override
     public List<?> handle(GenerateColumn generateColumn) {
@@ -44,7 +44,7 @@ public class RegexpGenerationHandler implements GenerationHandler {
             }
         }
 
-        return filterServicesManager.getByType(BaseType.STRING).apply(generatedValues, filters);
+        return filterServicesProvider.getByType(BaseType.STRING).apply(generatedValues, filters);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.managers;
+package ru.akvine.istochnik.providers;
 
 import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.services.generators.date.shift.AbstractDateRangeService;
@@ -6,7 +6,7 @@ import ru.akvine.istochnik.services.generators.date.shift.AbstractDateRangeServi
 import java.time.LocalDate;
 import java.util.Map;
 
-public record DateRangeServicesManager(Map<DateShiftType, AbstractDateRangeService<LocalDate, Integer>> services) {
+public record DateRangeServicesProvider(Map<DateShiftType, AbstractDateRangeService<LocalDate, Integer>> services) {
     public AbstractDateRangeService<LocalDate, Integer> getByType(DateShiftType type) {
         if (services.containsKey(type)) {
             return services.get(type);

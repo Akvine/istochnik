@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.managers;
+package ru.akvine.istochnik.providers;
 
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.CustomType;
@@ -7,7 +7,7 @@ import ru.akvine.istochnik.services.CustomTypeGeneratorService;
 
 import java.util.Map;
 
-public record CustomTypeGeneratorServicesManager(Map<CustomType, CustomTypeGeneratorService> generatorServices) {
+public record CustomTypeGeneratorServicesProvider(Map<CustomType, CustomTypeGeneratorService> generatorServices) {
     public CustomTypeGeneratorService get(CustomType type) {
         Asserts.isNotNull(type);
         if (generatorServices.containsKey(type)) {

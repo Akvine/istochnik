@@ -2,8 +2,8 @@ package ru.akvine.istochnik.services.impl.generators.custom;
 
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
-import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
-import ru.akvine.istochnik.managers.filters.FilterServicesManager;
+import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
+import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.inn.org.InnOrgGenerator;
@@ -16,16 +16,16 @@ import java.util.List;
 public class InnOrgRandomGeneratorService extends AbstractCustomTypeGeneratorService {
     private final InnOrgGenerator innOrgGenerator;
 
-    protected InnOrgRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
+    protected InnOrgRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                            InnOrgGenerator innOrgGenerator,
-                                           FilterServicesManager filterServicesManager) {
-        super(configMappersManager, filterServicesManager);
+                                           FilterServicesProvider filterServicesProvider) {
+        super(configMappersProvider, filterServicesProvider);
         this.innOrgGenerator = innOrgGenerator;
     }
 
     @Override
     public List<?> generate(Config config, List<Filter> filters) {
-        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersManager
+        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
                 .configMappers()
                 .get(getType().getName());
         InnOrgGeneratorConfig mappedConfig = (InnOrgGeneratorConfig) configMapper.map(config);

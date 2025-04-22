@@ -3,8 +3,8 @@ package ru.akvine.istochnik.services.impl.generators.base;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
-import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
-import ru.akvine.istochnik.managers.filters.FilterServicesManager;
+import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
+import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 
@@ -14,9 +14,9 @@ import java.util.List;
 public class StringRandomGeneratorService extends AbstractBaseTypeGeneratorService {
 
     @Autowired
-    protected StringRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
-                                           FilterServicesManager filterServicesManager) {
-        super(configMappersManager, filterServicesManager);
+    protected StringRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
+                                           FilterServicesProvider filterServicesProvider) {
+        super(configMappersProvider, filterServicesProvider);
     }
 
     @Override

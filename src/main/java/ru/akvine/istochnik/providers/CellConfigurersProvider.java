@@ -1,11 +1,11 @@
-package ru.akvine.istochnik.managers;
+package ru.akvine.istochnik.providers;
 
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.services.file.excel.factory.CellConfigurer;
 
 import java.util.Map;
 
-public record CellConfigurersManager(Map<Class<?>, CellConfigurer> converts) {
+public record CellConfigurersProvider(Map<Class<?>, CellConfigurer> converts) {
     public CellConfigurer getByClass(Class<?> clazz) {
         if (converts.containsKey(clazz)) {
             return converts.get(clazz);

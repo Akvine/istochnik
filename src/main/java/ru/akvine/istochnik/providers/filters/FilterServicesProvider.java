@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.managers.filters;
+package ru.akvine.istochnik.providers.filters;
 
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
@@ -6,7 +6,7 @@ import ru.akvine.istochnik.services.FilterService;
 
 import java.util.Map;
 
-public record FilterServicesManager(Map<BaseType, FilterService> filterServices) {
+public record FilterServicesProvider(Map<BaseType, FilterService> filterServices) {
     public FilterService getByType(BaseType type) {
         if (filterServices.containsKey(type)) {
             return filterServices.get(type);

@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.managers;
+package ru.akvine.istochnik.providers;
 
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
@@ -7,7 +7,7 @@ import ru.akvine.istochnik.services.BaseTypeGeneratorService;
 
 import java.util.Map;
 
-public record BaseTypeGeneratorServicesManager(Map<BaseType, BaseTypeGeneratorService> generatorServices) {
+public record BaseTypeGeneratorServicesProvider(Map<BaseType, BaseTypeGeneratorService> generatorServices) {
     public BaseTypeGeneratorService get(BaseType type) {
         Asserts.isNotNull(type);
         if (generatorServices.containsKey(type)) {

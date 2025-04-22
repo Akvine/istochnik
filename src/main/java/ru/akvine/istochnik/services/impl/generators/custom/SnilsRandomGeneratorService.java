@@ -3,8 +3,8 @@ package ru.akvine.istochnik.services.impl.generators.custom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
-import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
-import ru.akvine.istochnik.managers.filters.FilterServicesManager;
+import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
+import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.snils.SnilsRandomGenerator;
@@ -18,16 +18,16 @@ public class SnilsRandomGeneratorService extends AbstractCustomTypeGeneratorServ
     private final SnilsRandomGenerator snilsRandomGenerator;
 
     @Autowired
-    protected SnilsRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
+    protected SnilsRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                           SnilsRandomGenerator snilsRandomGenerator,
-                                          FilterServicesManager filterServicesManager) {
-        super(configMappersManager, filterServicesManager);
+                                          FilterServicesProvider filterServicesProvider) {
+        super(configMappersProvider, filterServicesProvider);
         this.snilsRandomGenerator = snilsRandomGenerator;
     }
 
     @Override
     public List<?> generate(Config config, List<Filter> filters) {
-        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersManager
+        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
                 .configMappers()
                 .get(getType().getName());
         SnilsGeneratorConfig mappedConfig = (SnilsGeneratorConfig) configMapper.map(config);

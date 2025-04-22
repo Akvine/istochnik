@@ -14,7 +14,7 @@ import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
-import ru.akvine.istochnik.managers.BaseTypeValidatorsManager;
+import ru.akvine.istochnik.providers.BaseTypeValidatorsProvider;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
 
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 public class GeneratorValidator {
-    private final BaseTypeValidatorsManager baseTypeValidatorsManager;
+    private final BaseTypeValidatorsProvider baseTypeValidatorsProvider;
 
     public void verifyGenerateTableRequest(GenerateTableRequest request) {
         Asserts.isNotNull(request);
@@ -69,7 +69,7 @@ public class GeneratorValidator {
                     baseType = customType.getBaseType();
                 }
 
-                List<String> errors = baseTypeValidatorsManager
+                List<String> errors = baseTypeValidatorsProvider
                         .get(baseType)
                         .validate(columnName, buildValidateAction(rowsCount, column));
 

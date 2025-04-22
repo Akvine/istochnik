@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.managers;
+package ru.akvine.istochnik.providers;
 
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
@@ -7,7 +7,7 @@ import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 
 import java.util.Map;
 
-public record ConfigMapperServicesManager(Map<String, ConfigMapperService<? extends Config>> configMappers) {
+public record ConfigMapperServicesProvider(Map<String, ConfigMapperService<? extends Config>> configMappers) {
 
     public ConfigMapperService<? extends Config> get(String type) {
         Asserts.isNotNull(type);

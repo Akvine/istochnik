@@ -2,8 +2,8 @@ package ru.akvine.istochnik.services.impl.generators.custom;
 
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
-import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
-import ru.akvine.istochnik.managers.filters.FilterServicesManager;
+import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
+import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.uuid.UuidGeneratorService;
@@ -14,10 +14,10 @@ import java.util.List;
 public class UuidRandomGeneratorService extends AbstractCustomTypeGeneratorService {
     private final UuidGeneratorService uuidGeneratorService;
 
-    protected UuidRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
+    protected UuidRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                          UuidGeneratorService uuidGeneratorService,
-                                         FilterServicesManager filterServicesManager) {
-        super(configMappersManager, filterServicesManager);
+                                         FilterServicesProvider filterServicesProvider) {
+        super(configMappersProvider, filterServicesProvider);
         this.uuidGeneratorService = uuidGeneratorService;
     }
 

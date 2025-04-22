@@ -3,8 +3,8 @@ package ru.akvine.istochnik.services.impl.generators.base;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
-import ru.akvine.istochnik.managers.ConfigMapperServicesManager;
-import ru.akvine.istochnik.managers.filters.FilterServicesManager;
+import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
+import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.generators.bool.BooleanGeneratorService;
@@ -18,16 +18,16 @@ public class BooleanRandomGeneratorService extends AbstractBaseTypeGeneratorServ
     private final BooleanGeneratorService booleanGeneratorService;
 
     @Autowired
-    protected BooleanRandomGeneratorService(ConfigMapperServicesManager configMappersManager,
+    protected BooleanRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                             BooleanGeneratorService booleanGeneratorService,
-                                            FilterServicesManager filterServicesManager) {
-        super(configMappersManager, filterServicesManager);
+                                            FilterServicesProvider filterServicesProvider) {
+        super(configMappersProvider, filterServicesProvider);
         this.booleanGeneratorService = booleanGeneratorService;
     }
 
     @Override
     public List<?> generate(Config config, List<Filter> filters) {
-        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersManager
+        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
                 .configMappers()
                 .get(getType().getValue());
         BooleanGeneratorConfig mappedConfig = (BooleanGeneratorConfig) configMapper.map(config);
