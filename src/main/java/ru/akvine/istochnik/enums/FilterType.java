@@ -57,7 +57,9 @@ public enum FilterType {
     REPEAT("repeat", "filter.repeat.code"),
     REVERSE("reverse", "filter.reverse.code"),
     TRANSLIT("translit", "filter.translit.code"),
-    RANDOM_CASE("randomCase", "filter.random.case.code");
+    RANDOM_CASE("randomCase", "filter.random.case.code"),
+    MD5("md5", "filter.md5.code"),
+    SHA256("sha256", "filter.sha256.code");
 
     private final String name;
     private final String descriptionCode;
