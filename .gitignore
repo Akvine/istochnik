@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+## Custom excludes ###
+*.log
+*.log.*
+/tdumps
+*.tdump
+application-*.properties
