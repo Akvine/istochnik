@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.services.impl.generators.custom;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
@@ -41,6 +42,12 @@ public class DateTimeRandomGeneratorService extends AbstractCustomTypeGeneratorS
     }
 
     private List<String> transformToString(List<LocalDateTime> values) {
-        return values.stream().map(LocalDateTime::toString).toList();
+        return values.stream().map(dateTime -> {
+            if (dateTime == null) {
+                return null;
+            } else {
+                return dateTime.toString();
+            }
+        }).toList();
     }
 }

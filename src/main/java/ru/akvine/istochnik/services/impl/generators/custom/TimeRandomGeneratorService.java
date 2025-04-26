@@ -39,6 +39,12 @@ public class TimeRandomGeneratorService extends AbstractCustomTypeGeneratorServi
     }
 
     private List<String> transformToString(List<LocalTime> values) {
-        return values.stream().map(LocalTime::toString).toList();
+        return values.stream().map(time -> {
+            if (time == null) {
+                return null;
+            } else {
+                return time.toString();
+            }
+        }).toList();
     }
 }

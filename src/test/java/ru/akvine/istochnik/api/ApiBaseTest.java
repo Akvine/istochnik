@@ -38,6 +38,22 @@ public abstract class ApiBaseTest {
                 .toList();
     }
 
+    protected List<Double> asDouble(byte[] response) {
+        List<String> values = asString(response);
+        return values.stream()
+                .filter(StringUtils::isNotBlank)
+                .map(Double::parseDouble)
+                .toList();
+    }
+
+    protected List<Boolean> asBoolean(byte[] response) {
+        List<String> values = asString(response);
+        return values.stream()
+                .filter(StringUtils::isNotBlank)
+                .map(Boolean::parseBoolean)
+                .toList();
+    }
+
     protected List<String> asString(byte[] response) {
         List<String> lines;
 

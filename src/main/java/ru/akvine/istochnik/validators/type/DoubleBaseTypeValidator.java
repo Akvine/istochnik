@@ -57,7 +57,7 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator{
                 errorMessages.add(ErrorMessages.STEP_FIELD_ERROR);
             }
 
-            if (start != null &&  end != null && start < end) {
+            if (start != null &&  end != null && start > end) {
                 errorMessages.add(IntegerBaseTypeValidator.ErrorMessages.END_LESS_START_ERROR);
             }
 

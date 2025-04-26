@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.services.impl.generators.base;
 
+import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.BaseTypeGeneratorService;
@@ -17,6 +18,9 @@ public abstract class AbstractBaseTypeGeneratorService implements BaseTypeGenera
     }
 
     protected List<?> apply(List<?> generatedValues, List<Filter> filters) {
+        if (CollectionUtils.isEmpty(filters)) {
+            return generatedValues;
+        }
         return filterServicesProvider.getByType(getType()).apply(generatedValues, filters);
     }
 }

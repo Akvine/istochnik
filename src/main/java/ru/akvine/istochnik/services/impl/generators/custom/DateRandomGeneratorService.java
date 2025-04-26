@@ -41,6 +41,12 @@ public class DateRandomGeneratorService extends AbstractCustomTypeGeneratorServi
     }
 
     private List<String> transformToString(List<LocalDate> values) {
-        return values.stream().map(LocalDate::toString).toList();
+        return values.stream().map(date -> {
+            if (date == null) {
+                return null;
+            } else {
+                return date.toString();
+            }
+        }).toList();
     }
 }
