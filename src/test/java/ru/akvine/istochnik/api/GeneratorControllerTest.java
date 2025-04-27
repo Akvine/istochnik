@@ -303,7 +303,8 @@ public class GeneratorControllerTest extends ApiBaseTest {
                         .setName("uuid_column")
                         .setType(CustomType.UUID.getName())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
-                        .setConfig(new ConfigDto())
+                        .setConfig(new ConfigDto()
+                                .setNotNull(true))
         );
 
         GenerateTableRequest request = new GenerateTableRequest()
@@ -339,6 +340,7 @@ public class GeneratorControllerTest extends ApiBaseTest {
                         .setType(CustomType.DATETIME.getName())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
+                                .setNotNull(true)
                                 .setRangeType(RangeType.RANDOM.getType().toUpperCase())
                                 .setStart("2025-04-02 14:00:00")
                                 .setEnd("2025-10-02 14:00:00")
@@ -415,6 +417,7 @@ public class GeneratorControllerTest extends ApiBaseTest {
                         .setType(CustomType.TIME.getName())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
+                                .setNotNull(true)
                                 .setRangeType(RangeType.RANDOM.getType().toUpperCase())
                                 .setStart("14:00:00")
                                 .setEnd("19:00:00")
@@ -442,5 +445,161 @@ public class GeneratorControllerTest extends ApiBaseTest {
         assertThat(response).isNotEmpty();
 
         assertThatNoException().isThrownBy(() -> asString(response));
+    }
+
+    @Test
+    @DisplayName("Generate snils values successful")
+    void successful_snils_values() {
+        List<ColumnDto> columnsToGenerate = List.of(
+                new ColumnDto()
+                        .setName("snils_column")
+                        .setType(CustomType.SNILS.getName())
+                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
+                        .setConfig(new ConfigDto()
+                                .setNotNull(true)
+                                .setRangeType(RangeType.RANDOM.getType().toUpperCase())
+                                .setStart("1")
+                                .setEnd("20")
+                        )
+        );
+
+        GenerateTableRequest request = new GenerateTableRequest()
+                .setSize(10)
+                .setFileType(FileType.CSV.name())
+                .setColumns(columnsToGenerate);
+
+        byte[] response = RestAssured
+                .given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when()
+                .post(RestMethods.GENERATE_DATA_ENDPOINT)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .asByteArray();
+
+        assertThat(response).isNotNull();
+        assertThat(response).isNotEmpty();
+
+        assertThatNoException().isThrownBy(() -> asLong(response));
+    }
+
+    @Test
+    @DisplayName("Generate valid snils values successful")
+    void successful_valid_snils_values() {
+        List<ColumnDto> columnsToGenerate = List.of(
+                new ColumnDto()
+                        .setName("snils_column")
+                        .setType(CustomType.SNILS.getName())
+                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
+                        .setConfig(new ConfigDto()
+                                .setRangeType(RangeType.RANDOM.getType().toUpperCase())
+                                .setValid(true)
+                                .setStart("1")
+                                .setEnd("20")
+                        )
+        );
+
+        GenerateTableRequest request = new GenerateTableRequest()
+                .setSize(10)
+                .setFileType(FileType.CSV.name())
+                .setColumns(columnsToGenerate);
+
+        byte[] response = RestAssured
+                .given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when()
+                .post(RestMethods.GENERATE_DATA_ENDPOINT)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .asByteArray();
+
+        assertThat(response).isNotNull();
+        assertThat(response).isNotEmpty();
+
+        assertThatNoException().isThrownBy(() -> asLong(response));
+    }
+
+    @Test
+    @DisplayName("Generate personal inn values successful")
+    void successful_personal_inn_values() {
+        List<ColumnDto> columnsToGenerate = List.of(
+                new ColumnDto()
+                        .setName("personal_inn_column")
+                        .setType(CustomType.INN_PERSONAL.getName())
+                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
+                        .setConfig(new ConfigDto()
+                                .setNotNull(true)
+                                .setRangeType(RangeType.RANDOM.getType().toUpperCase())
+                                .setStart("1")
+                                .setEnd("20")
+                        )
+        );
+
+        GenerateTableRequest request = new GenerateTableRequest()
+                .setSize(10)
+                .setFileType(FileType.CSV.name())
+                .setColumns(columnsToGenerate);
+
+        byte[] response = RestAssured
+                .given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when()
+                .post(RestMethods.GENERATE_DATA_ENDPOINT)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .asByteArray();
+
+        assertThat(response).isNotNull();
+        assertThat(response).isNotEmpty();
+
+        assertThatNoException().isThrownBy(() -> asLong(response));
+    }
+
+    @Test
+    @DisplayName("Generate organization inn values successful")
+    void successful_organization_inn_values() {
+        List<ColumnDto> columnsToGenerate = List.of(
+                new ColumnDto()
+                        .setName("organization_inn_column")
+                        .setType(CustomType.INN_ORG.getName())
+                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
+                        .setConfig(new ConfigDto()
+                                .setRangeType(RangeType.RANDOM.getType().toUpperCase())
+                                .setNotNull(true)
+                                .setStart("1")
+                                .setEnd("20")
+                        )
+        );
+
+        GenerateTableRequest request = new GenerateTableRequest()
+                .setSize(10)
+                .setFileType(FileType.CSV.name())
+                .setColumns(columnsToGenerate);
+
+        byte[] response = RestAssured
+                .given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when()
+                .post(RestMethods.GENERATE_DATA_ENDPOINT)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .asByteArray();
+
+        assertThat(response).isNotNull();
+        assertThat(response).isNotEmpty();
+
+        assertThatNoException().isThrownBy(() -> asLong(response));
     }
 }
