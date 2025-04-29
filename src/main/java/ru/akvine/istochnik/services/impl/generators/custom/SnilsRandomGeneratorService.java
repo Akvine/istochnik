@@ -7,8 +7,8 @@ import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.snils.SnilsRandomGenerator;
-import ru.akvine.istochnik.services.generators.snils.configs.SnilsGeneratorConfig;
+import ru.akvine.istochnik.services.generators.custom.snils.SnilsRandomGenerator;
+import ru.akvine.istochnik.services.generators.custom.snils.configs.SnilsGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 
 import java.util.List;

@@ -7,8 +7,8 @@ import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.bool.BooleanGeneratorService;
-import ru.akvine.istochnik.services.generators.bool.configs.BooleanGeneratorConfig;
+import ru.akvine.istochnik.services.generators.base.bool.BooleanGeneratorService;
+import ru.akvine.istochnik.services.generators.base.bool.configs.BooleanGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 
 import java.util.List;

@@ -7,8 +7,8 @@ import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.date.DateGeneratorService;
-import ru.akvine.istochnik.services.generators.date.configs.DateGeneratorConfig;
+import ru.akvine.istochnik.services.generators.custom.date.DateGeneratorService;
+import ru.akvine.istochnik.services.generators.custom.date.configs.DateGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
 package ru.akvine.istochnik.providers;
 
 import ru.akvine.istochnik.enums.DateShiftType;
-import ru.akvine.istochnik.services.generators.datetime.shift.AbstractDateTimeRangeService;
+import ru.akvine.istochnik.services.generators.custom.datetime.shift.AbstractDateTimeRangeService;
 
 import java.time.LocalDateTime;
 import java.util.Map;

@@ -6,8 +6,8 @@ import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.inn.org.InnOrgGenerator;
-import ru.akvine.istochnik.services.generators.inn.org.InnOrgGeneratorConfig;
+import ru.akvine.istochnik.services.generators.custom.inn.org.InnOrgGenerator;
+import ru.akvine.istochnik.services.generators.custom.inn.org.InnOrgGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 
 import java.util.List;

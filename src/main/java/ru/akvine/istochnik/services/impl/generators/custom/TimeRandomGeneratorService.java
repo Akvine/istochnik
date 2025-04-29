@@ -6,8 +6,8 @@ import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.time.TimeGeneratorService;
-import ru.akvine.istochnik.services.generators.time.configs.TimeGeneratorConfig;
+import ru.akvine.istochnik.services.generators.custom.time.TimeGeneratorService;
+import ru.akvine.istochnik.services.generators.custom.time.configs.TimeGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 
 import java.time.LocalTime;

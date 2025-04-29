@@ -18,9 +18,9 @@ import ru.akvine.istochnik.services.filters.doubles.DoubleFilter;
 import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
 import ru.akvine.istochnik.services.filters.string.StringFilter;
 import ru.akvine.istochnik.services.generators.Config;
-import ru.akvine.istochnik.services.generators.date.shift.AbstractDateRangeService;
-import ru.akvine.istochnik.services.generators.datetime.shift.AbstractDateTimeRangeService;
-import ru.akvine.istochnik.services.generators.time.shift.AbstractTimeRangeService;
+import ru.akvine.istochnik.services.generators.custom.date.shift.AbstractDateRangeService;
+import ru.akvine.istochnik.services.generators.custom.datetime.shift.AbstractDateTimeRangeService;
+import ru.akvine.istochnik.services.generators.custom.time.shift.AbstractTimeRangeService;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 import ru.akvine.istochnik.validators.type.BaseTypeValidator;
 

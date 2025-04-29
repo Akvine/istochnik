@@ -6,8 +6,8 @@ import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.compozit.commons.utils.DateTimeUtils;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.generators.time.TimeShiftRange;
-import ru.akvine.istochnik.services.generators.time.configs.TimeGeneratorConfig;
+import ru.akvine.istochnik.services.generators.custom.time.TimeShiftRange;
+import ru.akvine.istochnik.services.generators.custom.time.configs.TimeGeneratorConfig;
 
 @Service
 public class TimeConfigMapperService implements ConfigMapperService<TimeGeneratorConfig> {

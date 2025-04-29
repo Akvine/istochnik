@@ -6,8 +6,8 @@ import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.number.doubles.DoubleGeneratorService;
-import ru.akvine.istochnik.services.generators.number.doubles.configs.DoubleGeneratorConfig;
+import ru.akvine.istochnik.services.generators.base.number.doubles.DoubleGeneratorService;
+import ru.akvine.istochnik.services.generators.base.number.doubles.configs.DoubleGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 
 import java.util.List;

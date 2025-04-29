@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.generators.inn.personal.InnPersGeneratorConfig;
+import ru.akvine.istochnik.services.generators.custom.inn.personal.InnPersGeneratorConfig;
 
 @Service
 public class InnPersonalConfigMapperService implements ConfigMapperService<InnPersGeneratorConfig> {

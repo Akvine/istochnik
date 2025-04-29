@@ -6,7 +6,7 @@ import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.uuid.UuidGeneratorService;
+import ru.akvine.istochnik.services.generators.custom.uuid.UuidGeneratorService;
 
 import java.util.List;
 

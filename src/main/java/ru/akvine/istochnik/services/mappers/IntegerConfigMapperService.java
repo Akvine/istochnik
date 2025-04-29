@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.generators.number.integer.IntegerShiftRange;
-import ru.akvine.istochnik.services.generators.number.integer.configs.IntegerGeneratorConfig;
+import ru.akvine.istochnik.services.generators.base.number.integer.IntegerShiftRange;
+import ru.akvine.istochnik.services.generators.base.number.integer.configs.IntegerGeneratorConfig;
 
 @Service
 public class IntegerConfigMapperService implements ConfigMapperService<IntegerGeneratorConfig> {

@@ -6,8 +6,8 @@ import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Filter;
-import ru.akvine.istochnik.services.generators.ogrn.OgrnGeneratorConfig;
-import ru.akvine.istochnik.services.generators.ogrn.OgrnRandomGenerator;
+import ru.akvine.istochnik.services.generators.custom.ogrn.OgrnGeneratorConfig;
+import ru.akvine.istochnik.services.generators.custom.ogrn.OgrnRandomGenerator;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 
 import java.util.List;
