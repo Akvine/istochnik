@@ -2,7 +2,7 @@ package ru.akvine.istochnik.controllers.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import ru.akvine.istochnik.controllers.dto.common.ErrorResponse;
+import ru.akvine.compozit.commons.dto.ErrorResponse;
 
 import java.util.List;
 import java.util.Map;

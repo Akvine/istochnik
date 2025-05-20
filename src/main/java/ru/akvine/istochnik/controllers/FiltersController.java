@@ -2,8 +2,8 @@ package ru.akvine.istochnik.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import ru.akvine.compozit.commons.dto.Response;
 import ru.akvine.istochnik.controllers.converters.FiltersConverter;
-import ru.akvine.istochnik.controllers.dto.common.Response;
 import ru.akvine.istochnik.controllers.meta.FiltersControllerMeta;
 
 @RestController

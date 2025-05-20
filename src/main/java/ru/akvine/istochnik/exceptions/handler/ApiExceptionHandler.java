@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import ru.akvine.compozit.commons.dto.ErrorResponse;
 import ru.akvine.istochnik.constants.ErrorConstants;
 import ru.akvine.istochnik.controllers.dto.GenerateDataErrorResponse;
-import ru.akvine.istochnik.controllers.dto.common.ErrorResponse;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 
 @RestControllerAdvice

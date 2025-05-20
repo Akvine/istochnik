@@ -3,8 +3,8 @@ package ru.akvine.istochnik.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.akvine.compozit.commons.dto.Response;
 import ru.akvine.istochnik.controllers.converters.TypesConverter;
-import ru.akvine.istochnik.controllers.dto.common.Response;
 import ru.akvine.istochnik.controllers.meta.TypesControllerMeta;
 import ru.akvine.istochnik.enums.Language;
 

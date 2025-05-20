@@ -2,7 +2,7 @@ package ru.akvine.istochnik.controllers.dto.types;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import ru.akvine.istochnik.controllers.dto.common.SuccessfulResponse;
+import ru.akvine.compozit.commons.dto.SuccessfulResponse;
 
 import java.util.List;
 
