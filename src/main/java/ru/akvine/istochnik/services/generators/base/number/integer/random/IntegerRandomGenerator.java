@@ -56,9 +56,4 @@ public class IntegerRandomGenerator extends AbstractRandomGenerator<Integer, Int
 
         return generatedValues;
     }
-
-    @Override
-    public Class<?> getType() {
-        return Integer.class;
-    }
 }

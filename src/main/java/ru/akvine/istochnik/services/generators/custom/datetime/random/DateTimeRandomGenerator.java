@@ -56,9 +56,4 @@ public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTi
 
         return generatedDates;
     }
-
-    @Override
-    public Class<?> getType() {
-        return LocalDateTime.class;
-    }
 }

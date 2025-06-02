@@ -56,9 +56,4 @@ public class TimeRandomGenerator extends AbstractRandomGenerator<LocalTime, Time
 
         return generatedDates;
     }
-
-    @Override
-    public Class<?> getType() {
-        return LocalTime.class;
-    }
 }

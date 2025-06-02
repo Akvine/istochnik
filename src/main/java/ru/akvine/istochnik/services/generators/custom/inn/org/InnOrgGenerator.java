@@ -61,11 +61,6 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
         return generatedValues;
     }
 
-    @Override
-    public Class<?> getType() {
-        return Integer.class;
-    }
-
     public static boolean isValidInn(String inn) {
         int expectedControlDigit = calculateControlDigit(inn.substring(0, 9));
         int actualControlDigit = Character.getNumericValue(inn.charAt(9));

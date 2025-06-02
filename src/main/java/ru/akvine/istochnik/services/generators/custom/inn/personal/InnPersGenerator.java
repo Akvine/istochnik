@@ -63,11 +63,6 @@ public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGener
         return generatedValues;
     }
 
-    @Override
-    public Class<?> getType() {
-        return Long.class;
-    }
-
     public static boolean isValidInn(String inn) {
         int expectedControlDigit1 = calculateControlDigit(inn.substring(0, 10), true);
         int expectedControlDigit2 = calculateControlDigit(inn.substring(0, 10) + expectedControlDigit1, false);

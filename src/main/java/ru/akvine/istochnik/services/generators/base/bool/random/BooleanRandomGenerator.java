@@ -48,9 +48,4 @@ public class BooleanRandomGenerator extends AbstractRandomGenerator<Boolean, Boo
 
         return generatedValues;
     }
-
-    @Override
-    public Class<?> getType() {
-        return Boolean.class;
-    }
 }

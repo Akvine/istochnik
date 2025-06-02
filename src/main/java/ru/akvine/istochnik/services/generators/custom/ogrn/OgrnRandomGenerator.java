@@ -63,9 +63,4 @@ public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGener
 
         return generatedValues;
     }
-
-    @Override
-    public Class<?> getType() {
-        return Integer.class;
-    }
 }

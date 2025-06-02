@@ -17,7 +17,7 @@ public abstract class AbstractRandomGenerator<T, C extends Config> implements Ge
             String message = String.format(
                     "Max attempts to generation [%s] is exceeded for [%s] column type",
                     maxGenerationAttempts,
-                    getType()
+                    getName()
             );
             throw new GenerationException(message);
         }

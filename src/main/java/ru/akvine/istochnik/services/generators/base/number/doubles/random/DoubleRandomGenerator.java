@@ -55,9 +55,4 @@ public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, Doubl
 
         return generatedValues;
     }
-
-    @Override
-    public Class<?> getType() {
-        return Double.class;
-    }
 }

@@ -61,11 +61,6 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
         return generatedValues;
     }
 
-    @Override
-    public Class<?> getType() {
-        return Integer.class;
-    }
-
     private boolean isValidSnils(long snils) {
         String snilsStr = String.format("%011d", snils);
 
