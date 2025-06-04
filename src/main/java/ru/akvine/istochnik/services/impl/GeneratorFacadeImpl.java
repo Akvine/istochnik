@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.services.impl;
 
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -15,6 +16,7 @@ import ru.akvine.istochnik.services.dto.GenerateColumn;
 import ru.akvine.istochnik.services.dto.GenerateData;
 import ru.akvine.istochnik.services.dto.Table;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.RejectedExecutionException;
@@ -32,9 +34,10 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
         Asserts.isNotNull(generateData, "generateData is null");
 
         Table table = new Table(generateData.getSize());
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (GenerateColumn generateColumn : generateData.getGenerateColumns()) {
             try {
-                CompletableFuture.runAsync(
+                CompletableFuture<Void> result = CompletableFuture.runAsync(
                         () -> {
                             GenerationStrategy strategy = generateColumn.getGenerationStrategy();
                             List<?> generatedValues = generationHandlersProvider.getByType(strategy).handle(generateColumn);
@@ -50,11 +53,18 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
                         },
                         taskExecutor.executor()
                 );
+                futures.add(result);
             } catch (RejectedExecutionException exception) {
                 log.info("Executor [{}] is full. Task was rejected");
             }
         }
 
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
         return table;
+    }
+
+    @PreDestroy
+    public void destroy() {
+        taskExecutor.executor().shutdown();
     }
 }
