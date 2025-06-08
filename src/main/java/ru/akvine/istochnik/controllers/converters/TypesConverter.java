@@ -18,9 +18,11 @@ import java.util.Arrays;
 public class TypesConverter {
     private final MessageResolverService messageResolverService;
 
-    public CustomTypesListResponse convertToCustomTypesListResponse() {
+    public CustomTypesListResponse convertToCustomTypesListResponse(Language language) {
         return new CustomTypesListResponse()
-                .setTypes(Arrays.stream(CustomType.values()).map(this::buildCustomTypeDto).toList());
+                .setTypes(Arrays.stream(CustomType.values()).map(
+                        customType -> buildCustomTypeDto(customType, language)
+                ).toList());
     }
 
     public BaseTypesListResponse convertToBaseTypesListResponse(Language language) {
@@ -30,10 +32,11 @@ public class TypesConverter {
                         .toList());
     }
 
-    private CustomBaseTypeDto buildCustomTypeDto(CustomType customType) {
+    private CustomBaseTypeDto buildCustomTypeDto(CustomType customType, Language language) {
         CustomBaseTypeDto customTypeDto = new CustomBaseTypeDto();
         customTypeDto.setCustomType(customType.getName());
         customTypeDto.setBaseType(customType.getBaseType().getValue());
+        customTypeDto.setDescription(messageResolverService.message(customType.getCode(), language));
         return customTypeDto;
     }
 

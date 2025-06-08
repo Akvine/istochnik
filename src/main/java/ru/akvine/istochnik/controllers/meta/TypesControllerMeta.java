@@ -8,8 +8,8 @@ import ru.akvine.compozit.commons.dto.Response;
 @RequestMapping(value = "/types")
 public interface TypesControllerMeta {
     @GetMapping(value = "/custom")
-    Response listCustom();
+    Response listCustom(@RequestParam(required = false, defaultValue = "en") String lang);
 
     @GetMapping(value = "/base")
-    Response listBase(@RequestParam(required = false) String lang);
+    Response listBase(@RequestParam(required = false, defaultValue = "en") String lang);
 }

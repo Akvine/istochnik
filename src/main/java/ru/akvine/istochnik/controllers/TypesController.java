@@ -14,8 +14,8 @@ public class TypesController implements TypesControllerMeta {
     private final TypesConverter typesConverter;
 
     @Override
-    public Response listCustom() {
-        return typesConverter.convertToCustomTypesListResponse();
+    public Response listCustom(@RequestParam(required = false, defaultValue = "en") String lang) {
+        return typesConverter.convertToCustomTypesListResponse(Language.from(lang));
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public enum BaseType {
-    INTEGER("int", "type.integer.code", List.of(
+    INTEGER("int", "base.type.integer.code", List.of(
             FilterType.ABS,
             FilterType.DIVIDE,
             FilterType.MINUS,
@@ -20,7 +20,7 @@ public enum BaseType {
             FilterType.MOD,
             FilterType.NEGATIVE
     )),
-    DOUBLE("double", "type.double.code", List.of(
+    DOUBLE("double", "base.type.double.code", List.of(
             FilterType.ABS,
             FilterType.CEIL,
             FilterType.COS,
@@ -44,7 +44,7 @@ public enum BaseType {
             FilterType.NEGATIVE
 
     )),
-    STRING("str", "type.string.code", List.of(
+    STRING("str", "base.type.string.code", List.of(
             FilterType.BASE64,
             FilterType.LOWER_CASE,
             FilterType.REPLACE_ALL,
@@ -64,7 +64,7 @@ public enum BaseType {
             FilterType.REVERSE,
             FilterType.TRANSLIT
     )),
-    BOOLEAN("bool", "type.boolean.code", List.of());
+    BOOLEAN("bool", "base.type.boolean.code", List.of());
 
     private final String value;
     private final String code;

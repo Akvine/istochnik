@@ -8,4 +8,5 @@ import lombok.experimental.Accessors;
 public class CustomBaseTypeDto {
     private String customType;
     private String baseType;
+    private String description;
 }
