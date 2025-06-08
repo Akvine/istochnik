@@ -2,10 +2,10 @@ package ru.akvine.istochnik.controllers.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.akvine.istochnik.controllers.dto.types.BaseTypeDto;
-import ru.akvine.istochnik.controllers.dto.types.BaseTypesListResponse;
-import ru.akvine.istochnik.controllers.dto.types.CustomBaseTypeDto;
-import ru.akvine.istochnik.controllers.dto.types.CustomTypesListResponse;
+import ru.akvine.compozit.commons.istochnik.BaseTypeDto;
+import ru.akvine.compozit.commons.istochnik.BaseTypesListResponse;
+import ru.akvine.compozit.commons.istochnik.CustomBaseTypeDto;
+import ru.akvine.compozit.commons.istochnik.CustomTypesListResponse;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.Language;
