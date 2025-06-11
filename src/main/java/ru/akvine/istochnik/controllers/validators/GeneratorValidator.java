@@ -3,6 +3,7 @@ package ru.akvine.istochnik.controllers.validators;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.FilterDto;
@@ -24,6 +25,11 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class GeneratorValidator {
     private final BaseTypeValidatorsProvider baseTypeValidatorsProvider;
+
+    @Value("${max.dictionaries.per.column}")
+    private int maxDictionariesPerColumn;
+    @Value("${max.dictionary.elements.count}")
+    private int maxDictionaryElementsCount;
 
     public void verifyGenerateTableRequest(GenerateTableRequest request) {
         Asserts.isNotNull(request);
@@ -54,6 +60,24 @@ public class GeneratorValidator {
                 strategy = GenerationStrategy.from(column.getGenerationStrategy());
             } catch (RuntimeException exception) {
                 validationColumnsInfo.put(columnName, exception.getMessage());
+            }
+
+            if (strategy == GenerationStrategy.DICTIONARY) {
+                if (column.getConfig().getDictionaries().size() > maxDictionariesPerColumn) {
+                    validationColumnsInfo.put(
+                            columnName,
+                            "dictionaries count can't be more than max = [" + maxDictionariesPerColumn + "]");
+                } else {
+                    column.getConfig().getDictionaries().forEach(dictionary -> {
+                        if (dictionary.size() > maxDictionaryElementsCount) {
+                            String errorMessage = String.format(
+                                    "Dictionary has more max limit = [%s] elements count = [%s]",
+                                    dictionary.size(), maxDictionaryElementsCount
+                            );
+                            validationColumnsInfo.put(columnName, errorMessage);
+                        }
+                    });
+                }
             }
 
             if (strategy == GenerationStrategy.ALGORITHM) {

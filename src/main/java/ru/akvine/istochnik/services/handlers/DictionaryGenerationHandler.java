@@ -11,8 +11,10 @@ import ru.akvine.istochnik.services.dto.Filter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,9 @@ public class DictionaryGenerationHandler implements GenerationHandler {
     @Override
     public List<?> handle(GenerateColumn generateColumn) {
         List<Filter> filters = generateColumn.getFilters();
-        Set<String> dictionary = generateColumn.getConfig().getDictionary();
+        Set<String> dictionary = generateColumn.getConfig().getDictionaries().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
         int size = generateColumn.getConfig().getSize();
 
         List<String> generatedValues = new ArrayList<>();
