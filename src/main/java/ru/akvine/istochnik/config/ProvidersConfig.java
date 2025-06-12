@@ -62,8 +62,8 @@ public class ProvidersConfig {
     }
 
     @Bean
-    public IntegerConvertersProvider integerConvertersProvider(List<IntegerConverter<Integer, Double>> integerConverters) {
-        Map<ConverterType, IntegerConverter<Integer, Double>> converters = integerConverters
+    public IntegerConvertersProvider integerConvertersProvider(List<IntegerConverter<Long, Double>> integerConverters) {
+        Map<ConverterType, IntegerConverter<Long, Double>> converters = integerConverters
                 .stream()
                 .collect(toMap(IntegerConverter::getName, identity()));
         return new IntegerConvertersProvider(converters);

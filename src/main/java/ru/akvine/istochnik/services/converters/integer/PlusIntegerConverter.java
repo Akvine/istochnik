@@ -6,10 +6,10 @@ import ru.akvine.istochnik.enums.ConverterType;
 import java.util.List;
 
 @Service
-public class PlusIntegerConverter extends IntegerConverter<Integer, Double> {
+public class PlusIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
-    public List<Integer> convert(List<Integer> input, Double[] argument) {
-        return input.stream().map(value -> (int) (value + argument[0])).toList();
+    public List<Long> convert(List<Long> input, Double[] argument) {
+        return input.stream().map(value -> (long) (value + argument[0])).toList();
     }
 
     @Override

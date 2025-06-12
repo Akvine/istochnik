@@ -6,10 +6,10 @@ import ru.akvine.istochnik.enums.ConverterType;
 import java.util.List;
 
 @Service
-public class DivideIntegerConverter extends IntegerConverter<Integer, Double> {
+public class DivideIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
-    public List<Integer> convert(List<Integer> input, Double[] arguments) {
-        return input.stream().map(value -> (int) (value / arguments[0])).toList();
+    public List<Long> convert(List<Long> input, Double[] arguments) {
+        return input.stream().map(value -> (long) (value / arguments[0])).toList();
     }
 
     @Override

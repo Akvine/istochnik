@@ -6,11 +6,11 @@ import ru.akvine.istochnik.enums.ConverterType;
 import java.util.List;
 
 @Service
-public class ModIntegerConverter extends IntegerConverter<Integer, Double> {
+public class ModIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
-    public List<Integer> convert(List<Integer> input, Double[] arguments) {
+    public List<Long> convert(List<Long> input, Double[] arguments) {
         Double operand = arguments[0];
-        return input.stream().map(value -> (int) (value % operand)).toList();
+        return input.stream().map(value -> (long) (value % operand)).toList();
     }
 
     @Override

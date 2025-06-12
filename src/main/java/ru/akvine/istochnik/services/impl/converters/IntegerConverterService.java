@@ -19,7 +19,7 @@ public class IntegerConverterService implements ConverterService {
         List<?> values = generatedValues;
         for (Converter converter : converters) {
             values = integerConvertersProvider.getConverter(converter.getName()).convert(
-                    (List<Integer>) values,
+                    (List<Long>) values,
                     mapArguments(converter.getArguments())
             );
         }

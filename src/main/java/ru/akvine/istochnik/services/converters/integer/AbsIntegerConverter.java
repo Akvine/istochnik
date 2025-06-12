@@ -7,9 +7,9 @@ import ru.akvine.istochnik.services.converters.Converter;
 import java.util.List;
 
 @Service
-public class AbsIntegerConverter extends Converter<Integer, Void> {
+public class AbsIntegerConverter extends Converter<Long, Void> {
     @Override
-    public List<Integer> convert(List<Integer> input, Void[] argument) {
+    public List<Long> convert(List<Long> input, Void[] argument) {
         return input.stream().map(Math::abs).toList();
     }
 
