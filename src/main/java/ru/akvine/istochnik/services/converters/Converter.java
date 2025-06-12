@@ -8,4 +8,8 @@ public abstract class Converter<T, A> {
     public abstract List<T> convert(List<T> input, A[] arguments);
 
     public abstract ConverterType getName();
+
+    public void validateArgument(A[] arguments) {
+
+    }
 }

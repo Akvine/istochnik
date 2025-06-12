@@ -16,4 +16,12 @@ public class MinusDoubleConverter extends DoubleConverter<Double, Double> {
     public ConverterType getName() {
         return ConverterType.MINUS;
     }
+
+
+    @Override
+    public void validateArgument(Double[] arguments) {
+        if (arguments == null || arguments.length == 0 || arguments[0] == null) {
+            throw new IllegalArgumentException("arguments can't be null or empty!");
+        }
+    }
 }

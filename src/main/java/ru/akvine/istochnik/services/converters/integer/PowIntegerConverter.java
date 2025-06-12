@@ -16,4 +16,11 @@ public class PowIntegerConverter extends IntegerConverter<Integer, Double> {
     public ConverterType getName() {
         return ConverterType.POW;
     }
+
+    @Override
+    public void validateArgument(Double[] arguments) {
+        if (arguments == null || arguments.length == 0 || arguments[0] == null) {
+            throw new IllegalArgumentException("arguments can't be null or empty!");
+        }
+    }
 }

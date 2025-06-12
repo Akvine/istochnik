@@ -40,4 +40,11 @@ public class DateFormatConverter extends StringConverter<String, String> {
     public ConverterType getName() {
         return ConverterType.DATE_FORMAT;
     }
+
+    @Override
+    public void validateArgument(String[] arguments) {
+        if (arguments == null || arguments.length == 0 || arguments[0] == null) {
+            throw new IllegalArgumentException("arguments can't be null or empty!");
+        }
+    }
 }

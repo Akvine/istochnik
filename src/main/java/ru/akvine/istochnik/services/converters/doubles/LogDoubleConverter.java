@@ -16,4 +16,15 @@ public class LogDoubleConverter extends DoubleConverter<Double, Double> {
     public ConverterType getName() {
         return ConverterType.LOG;
     }
+
+    @Override
+    public void validateArgument(Double[] arguments) {
+        if (arguments == null || arguments.length == 0 || arguments[0] == null) {
+            throw new IllegalArgumentException("arguments can't be null or empty!");
+        }
+
+        if (arguments[0] == 0) {
+            throw new IllegalArgumentException("argument can't be less or equal to 0!");
+        }
+    }
 }

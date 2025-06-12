@@ -1,19 +1,24 @@
 package ru.akvine.istochnik.validators.type;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.akvine.compozit.commons.istochnik.ConverterDto;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.ConverterType;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
+import ru.akvine.istochnik.providers.converters.IntegerConvertersProvider;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class IntegerBaseTypeValidator implements BaseTypeValidator {
+    private final IntegerConvertersProvider integerConvertersProvider;
+
     @Override
     public List<String> validate(String columnName, ValidateAction action) {
         Asserts.isNotNull(columnName);
@@ -70,9 +75,10 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
             }
         }
 
-        Collection<String> converters = action.getConverters() == null ? List.of() : action.getConverters();
-        for (String converterName : converters) {
 
+        for (ConverterDto converterDto : action.getConverters()) {
+
+            String converterName = converterDto.getName();
             ConverterType converterType;
             try {
                 converterType = ConverterType.safeFrom(converterName);
@@ -84,8 +90,16 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
                             getBaseType().getValue()
                     ));
                 }
+
+                integerConvertersProvider.getConverter(converterType).validateArgument(
+                        mapArguments(converterDto.getArguments()));
             } catch (UnsupportedTypeGenerationException exception) {
                 errorMessages.add(String.format(ErrorMessages.CONVERTER_NOT_SUPPORTED_ERROR, converterName));
+            } catch (IllegalArgumentException argumentException) {
+                errorMessages.add(
+                        String.format(DoubleBaseTypeValidator.ErrorMessages.CONVERTER_HAS_INVALID_ARGUMENTS,
+                                converterName,
+                                argumentException.getMessage()));
             }
         }
 
@@ -109,5 +123,15 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
 
         String CONVERTER_NOT_SUPPORTED_ERROR = "converter with name [%s] is not supported by app";
         String CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR = "converter with name [%s] is not supported for type = [%s]";
+    }
+
+    // TODO: дублирование кода тут и в IntegerConverterService
+    private Double[] mapArguments(Object[] arguments) {
+        Double[] array = new Double[arguments.length];
+        for (int i = 0; i < arguments.length; ++i) {
+            array[i] = (Double) arguments[i];
+        }
+
+        return array;
     }
 }

@@ -17,4 +17,11 @@ public class AddAfterConverter extends StringConverter<String, String> {
     public ConverterType getName() {
         return ConverterType.ADD_AFTER;
     }
+
+    @Override
+    public void validateArgument(String[] arguments) {
+        if (arguments == null || arguments.length == 0 || arguments[0] == null) {
+            throw new IllegalArgumentException("arguments can't be null or empty!");
+        }
+    }
 }
