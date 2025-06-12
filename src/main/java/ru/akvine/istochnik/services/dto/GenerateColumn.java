@@ -18,8 +18,8 @@ public class GenerateColumn {
     @Nullable
     private CustomType customType;
     private Config config;
-    private List<Filter> filters;
+    private List<Converter> converters;
     private boolean convertToString;
-    private List<Filter> postFilters;
+    private List<Converter> postConverters;
     private GenerationStrategy generationStrategy;
 }

@@ -3,7 +3,7 @@ package ru.akvine.istochnik.services.generators.base.number.integer.configs;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.base.number.integer.IntegerShiftRange;
 
@@ -16,19 +16,19 @@ public class IntegerGeneratorConfig extends Config {
     private final boolean unique;
     private final RangeType rangeType;
     private final IntegerShiftRange integerShiftRange;
-    private final List<Filter> filters;
+    private final List<Converter> converters;
 
     public IntegerGeneratorConfig(int size,
                                   boolean notNull,
                                   boolean unique,
                                   RangeType rangeType,
                                   IntegerShiftRange integerShiftRange,
-                                  List<Filter> filters) {
+                                  List<Converter> converters) {
         super(size);
         this.notNull = notNull;
         this.unique = unique;
         this.rangeType = rangeType;
         this.integerShiftRange = integerShiftRange;
-        this.filters = filters;
+        this.converters = converters;
     }
 }

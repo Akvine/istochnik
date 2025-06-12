@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
-import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.generators.base.number.integer.IntegerGeneratorService;
 import ru.akvine.istochnik.services.generators.base.number.integer.configs.IntegerGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
@@ -20,18 +20,18 @@ public class IntegerRandomGeneratorService extends AbstractBaseTypeGeneratorServ
     @Autowired
     protected IntegerRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                             IntegerGeneratorService integerGeneratorService,
-                                            FilterServicesProvider filterServicesProvider) {
-        super(configMappersProvider, filterServicesProvider);
+                                            ConverterConvertersProvider converterConvertersProvider) {
+        super(configMappersProvider, converterConvertersProvider);
         this.integerGeneratorService = integerGeneratorService;
     }
 
     @Override
-    public List<?> generate(Config config, List<Filter> filters) {
+    public List<?> generate(Config config, List<Converter> converters) {
         ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
                 .configMappers()
                 .get(getType().getValue());
         IntegerGeneratorConfig mappedConfig = (IntegerGeneratorConfig) configMapper.map(config);
-        return apply(integerGeneratorService.generate(mappedConfig), filters);
+        return apply(integerGeneratorService.generate(mappedConfig), converters);
     }
 
     @Override

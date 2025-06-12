@@ -3,7 +3,7 @@ package ru.akvine.istochnik.validators.type;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
-import ru.akvine.istochnik.enums.FilterType;
+import ru.akvine.istochnik.enums.ConverterType;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
@@ -72,22 +72,22 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator{
             }
         }
 
-        Collection<String> filters = action.getFilters() == null ? List.of() : action.getFilters();
-        for (String filterName : filters) {
+        Collection<String> converters = action.getConverters() == null ? List.of() : action.getConverters();
+        for (String converterName : converters) {
 
-            FilterType filterType;
+            ConverterType converterType;
             try {
-                filterType = FilterType.safeFrom(filterName);
+                converterType = ConverterType.safeFrom(converterName);
 
-                if (!getBaseType().isSupported(filterType)) {
+                if (!getBaseType().isSupported(converterType)) {
                     errorMessages.add(String.format(
-                            ErrorMessages.FILTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR,
-                            filterName,
+                            ErrorMessages.CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR,
+                            converterName,
                             getBaseType().getValue()
                     ));
                 }
             } catch (UnsupportedTypeGenerationException exception) {
-                errorMessages.add(String.format(ErrorMessages.FILTER_NOT_SUPPORTED_ERROR, filterName));
+                errorMessages.add(String.format(ErrorMessages.CONVERTER_NOT_SUPPORTED_ERROR, converterName));
             }
         }
 
@@ -109,7 +109,7 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator{
         String RANGE_TYPE_IS_BLANK_ERROR = "field [rangeType] can't be blank";
         String INVALID_RANGE_OR_STEP_ERROR = "field [end] or [step] is invalid. Possible generated rows less than size";
 
-        String FILTER_NOT_SUPPORTED_ERROR = "filter with name [%s] is not supported by app";
-        String FILTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR = "filter with name [%s] is not supported for type = [%s]";
+        String CONVERTER_NOT_SUPPORTED_ERROR = "converter with name [%s] is not supported by app";
+        String CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR = "converter with name [%s] is not supported for type = [%s]";
     }
 }

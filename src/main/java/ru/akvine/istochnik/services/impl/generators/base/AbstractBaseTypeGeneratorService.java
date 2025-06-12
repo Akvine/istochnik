@@ -2,25 +2,25 @@ package ru.akvine.istochnik.services.impl.generators.base;
 
 import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
-import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.BaseTypeGeneratorService;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 
 import java.util.List;
 
 public abstract class AbstractBaseTypeGeneratorService implements BaseTypeGeneratorService {
     protected final ConfigMapperServicesProvider configMappersProvider;
-    protected final FilterServicesProvider filterServicesProvider;
+    protected final ConverterConvertersProvider converterConvertersProvider;
 
-    protected AbstractBaseTypeGeneratorService(ConfigMapperServicesProvider configMappersProvider, FilterServicesProvider filterServicesProvider) {
+    protected AbstractBaseTypeGeneratorService(ConfigMapperServicesProvider configMappersProvider, ConverterConvertersProvider converterConvertersProvider) {
         this.configMappersProvider = configMappersProvider;
-        this.filterServicesProvider = filterServicesProvider;
+        this.converterConvertersProvider = converterConvertersProvider;
     }
 
-    protected List<?> apply(List<?> generatedValues, List<Filter> filters) {
-        if (CollectionUtils.isEmpty(filters)) {
+    protected List<?> apply(List<?> generatedValues, List<Converter> converters) {
+        if (CollectionUtils.isEmpty(converters)) {
             return generatedValues;
         }
-        return filterServicesProvider.getByType(getType()).apply(generatedValues, filters);
+        return converterConvertersProvider.getByType(getType()).apply(generatedValues, converters);
     }
 }

@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
-import ru.akvine.compozit.commons.istochnik.FilterDto;
+import ru.akvine.compozit.commons.istochnik.ConverterDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.*;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 import ru.akvine.istochnik.services.dto.GenerateData;
 
@@ -45,10 +45,10 @@ public class GeneratorConverter {
                     .setConfig(buildConfig(size, column.getConfig()))
                     .setGenerationStrategy(strategy)
                     .setConvertToString(column.isConvertToString())
-                    .setPostFilters(CollectionUtils.isEmpty(column.getPostFilters()) ?
-                            List.of() : column.getPostFilters().stream().map(this::buildFilter).toList())
-                    .setFilters(CollectionUtils.isEmpty(column.getFilters()) ?
-                            List.of() : column.getFilters().stream().map(this::buildFilter).toList()));
+                    .setPostConverters(CollectionUtils.isEmpty(column.getPostConverters()) ?
+                            List.of() : column.getPostConverters().stream().map(this::buildConverter).toList())
+                    .setConverters(CollectionUtils.isEmpty(column.getConverters()) ?
+                            List.of() : column.getConverters().stream().map(this::buildConverter).toList()));
         }
 
         return new GenerateData()
@@ -80,10 +80,10 @@ public class GeneratorConverter {
                 .body(file);
     }
 
-    private Filter buildFilter(FilterDto filterDto) {
-        return new Filter()
-                .setName(FilterType.safeFrom(filterDto.getName()))
-                .setArguments(filterDto.getArguments());
+    private Converter buildConverter(ConverterDto converterDto) {
+        return new Converter()
+                .setName(ConverterType.safeFrom(converterDto.getName()))
+                .setArguments(converterDto.getArguments());
     }
 
     private Config buildConfig(int size, ConfigDto configDto) {

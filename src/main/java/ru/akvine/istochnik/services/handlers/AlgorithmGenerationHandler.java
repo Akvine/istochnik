@@ -9,7 +9,7 @@ import ru.akvine.istochnik.providers.BaseTypeGeneratorServicesProvider;
 import ru.akvine.istochnik.providers.CustomTypeGeneratorServicesProvider;
 import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 
 import java.util.List;
@@ -26,13 +26,13 @@ public class AlgorithmGenerationHandler implements GenerationHandler {
         BaseType baseType = generateColumn.getBaseType();
         CustomType customType = generateColumn.getCustomType();
         Config config = generateColumn.getConfig();
-        List<Filter> filters = generateColumn.getFilters();
+        List<Converter> converters = generateColumn.getConverters();
 
         List<?> generatedValues;
         if (baseType != null) {
-            generatedValues = baseTypeGeneratorServicesProvider.get(baseType).generate(config, filters);
+            generatedValues = baseTypeGeneratorServicesProvider.get(baseType).generate(config, converters);
         } else {
-            generatedValues = customTypeGeneratorServicesProvider.get(customType).generate(config, filters);
+            generatedValues = customTypeGeneratorServicesProvider.get(customType).generate(config, converters);
         }
         return generatedValues;
     }

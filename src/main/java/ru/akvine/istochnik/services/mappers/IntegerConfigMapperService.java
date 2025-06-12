@@ -22,7 +22,7 @@ public class IntegerConfigMapperService implements ConfigMapperService<IntegerGe
                         .setStart(Integer.parseInt(config.getStart()))
                         .setEnd(Integer.parseInt(config.getEnd()))
                         .setStep(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep())),
-                config.getFilters()
+                config.getConverters()
         );
     }
 

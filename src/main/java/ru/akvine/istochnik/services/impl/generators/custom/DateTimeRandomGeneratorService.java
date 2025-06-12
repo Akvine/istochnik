@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
-import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.generators.custom.datetime.DateTimeGeneratorService;
 import ru.akvine.istochnik.services.generators.custom.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
@@ -21,18 +21,18 @@ public class DateTimeRandomGeneratorService extends AbstractCustomTypeGeneratorS
     @Autowired
     protected DateTimeRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                              DateTimeGeneratorService dateTimeGeneratorService,
-                                             FilterServicesProvider filterServicesProvider) {
-        super(configMappersProvider, filterServicesProvider);
+                                             ConverterConvertersProvider converterConvertersProvider) {
+        super(configMappersProvider, converterConvertersProvider);
         this.dateTimeGeneratorService = dateTimeGeneratorService;
     }
 
     @Override
-    public List<?> generate(Config config, List<Filter> filters) {
+    public List<?> generate(Config config, List<Converter> converters) {
         ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
                 .configMappers()
                 .get(getType().getName());
         DateTimeGeneratorConfig mappedConfig = (DateTimeGeneratorConfig) configMapper.map(config);
-        return apply(transformToString(dateTimeGeneratorService.generate(mappedConfig)), filters);
+        return apply(transformToString(dateTimeGeneratorService.generate(mappedConfig)), converters);
     }
 
     @Override

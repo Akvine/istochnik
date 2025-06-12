@@ -10,7 +10,7 @@ import ru.akvine.istochnik.config.async.TaskExecutor;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.providers.GenerationHandlersProvider;
-import ru.akvine.istochnik.services.ConverterService;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.GeneratorFacade;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 import ru.akvine.istochnik.services.dto.GenerateData;
@@ -26,7 +26,7 @@ import java.util.concurrent.RejectedExecutionException;
 @Slf4j
 public class GeneratorFacadeImpl implements GeneratorFacade {
     private final GenerationHandlersProvider generationHandlersProvider;
-    private final ConverterService converterService;
+    private final ConverterConvertersProvider converterConvertersProvider;
     private final TaskExecutor taskExecutor;
 
     @Override
@@ -45,8 +45,11 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
                             if (strategy == GenerationStrategy.ALGORITHM &&
                                     generateColumn.isConvertToString() &&
                                     generateColumn.getBaseType() != BaseType.STRING &&
-                                    CollectionUtils.isNotEmpty(generateColumn.getPostFilters())) {
-                                generatedValues = converterService.convert(generatedValues, generateColumn.getPostFilters());
+                                    CollectionUtils.isNotEmpty(generateColumn.getPostConverters())) {
+                                List<String> converted = generatedValues.stream().map(String::valueOf).toList();
+                                generatedValues = converterConvertersProvider
+                                        .getByType(BaseType.STRING)
+                                        .apply(converted, generateColumn.getPostConverters());
                             }
 
                             table.addColumn(generateColumn.getName(), generatedValues);

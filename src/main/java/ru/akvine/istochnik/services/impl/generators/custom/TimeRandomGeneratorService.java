@@ -3,9 +3,9 @@ package ru.akvine.istochnik.services.impl.generators.custom;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
-import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.generators.custom.time.TimeGeneratorService;
 import ru.akvine.istochnik.services.generators.custom.time.configs.TimeGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
@@ -19,18 +19,18 @@ public class TimeRandomGeneratorService extends AbstractCustomTypeGeneratorServi
 
     protected TimeRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                          TimeGeneratorService timeGeneratorService,
-                                         FilterServicesProvider filterServicesProvider) {
-        super(configMappersProvider, filterServicesProvider);
+                                         ConverterConvertersProvider converterConvertersProvider) {
+        super(configMappersProvider, converterConvertersProvider);
         this.timeGeneratorService = timeGeneratorService;
     }
 
     @Override
-    public List<?> generate(Config config, List<Filter> filters) {
+    public List<?> generate(Config config, List<Converter> converters) {
         ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
                 .configMappers()
                 .get(getType().getName());
         TimeGeneratorConfig mappedConfig = (TimeGeneratorConfig) configMapper.map(config);
-        return apply(transformToString(timeGeneratorService.generate(mappedConfig)), filters);
+        return apply(transformToString(timeGeneratorService.generate(mappedConfig)), converters);
     }
 
     @Override

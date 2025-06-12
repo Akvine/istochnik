@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
-import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ public class StringRandomGeneratorService extends AbstractBaseTypeGeneratorServi
 
     @Autowired
     protected StringRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
-                                           FilterServicesProvider filterServicesProvider) {
-        super(configMappersProvider, filterServicesProvider);
+                                           ConverterConvertersProvider converterConvertersProvider) {
+        super(configMappersProvider, converterConvertersProvider);
     }
 
     @Override
-    public List<?> generate(Config config, List<Filter> filters) {
+    public List<?> generate(Config config, List<Converter> converters) {
         return List.of();
     }
 

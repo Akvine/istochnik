@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.akvine.compozit.commons.utils.CollectionUtils;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
-import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.GenerationHandler;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 
 import java.util.ArrayList;
@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class DictionaryGenerationHandler implements GenerationHandler {
-    private final FilterServicesProvider filterServicesProvider;
+    private final ConverterConvertersProvider converterConvertersProvider;
 
     @Override
     public List<?> handle(GenerateColumn generateColumn) {
-        List<Filter> filters = generateColumn.getFilters();
+        List<Converter> converters = generateColumn.getConverters();
         Set<String> dictionary = generateColumn.getConfig().getDictionaries().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toSet());
@@ -35,7 +35,7 @@ public class DictionaryGenerationHandler implements GenerationHandler {
             generatedValues.add(element);
         }
 
-        return filterServicesProvider.getByType(BaseType.STRING).apply(generatedValues, filters);
+        return converterConvertersProvider.getByType(BaseType.STRING).apply(generatedValues, converters);
     }
 
     @Override

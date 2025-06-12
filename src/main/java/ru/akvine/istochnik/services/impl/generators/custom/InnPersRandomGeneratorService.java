@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
-import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.generators.custom.inn.personal.InnPersGenerator;
 import ru.akvine.istochnik.services.generators.custom.inn.personal.InnPersGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
@@ -20,18 +20,18 @@ public class InnPersRandomGeneratorService extends AbstractCustomTypeGeneratorSe
     @Autowired
     protected InnPersRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                             InnPersGenerator innPersGenerator,
-                                            FilterServicesProvider filterServicesProvider) {
-        super(configMappersProvider, filterServicesProvider);
+                                            ConverterConvertersProvider converterConvertersProvider) {
+        super(configMappersProvider, converterConvertersProvider);
         this.innPersGenerator = innPersGenerator;
     }
 
     @Override
-    public List<?> generate(Config config, List<Filter> filters) {
+    public List<?> generate(Config config, List<Converter> converters) {
         ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
                 .configMappers()
                 .get(getType().getName());
         InnPersGeneratorConfig mappedConfig = (InnPersGeneratorConfig) configMapper.map(config);
-        return apply((List<?>) innPersGenerator.generate(mappedConfig), filters);
+        return apply((List<?>) innPersGenerator.generate(mappedConfig), converters);
     }
 
     @Override

@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
-import ru.akvine.compozit.commons.istochnik.FilterDto;
+import ru.akvine.compozit.commons.istochnik.ConverterDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.controllers.dto.validation.ValidationColumnsInfo;
@@ -116,9 +116,9 @@ public class GeneratorValidator {
                 .setStep(columnDto.getConfig().getStep())
                 .setRangeType(columnDto.getConfig().getRangeType());
 
-        if (CollectionUtils.isNotEmpty(columnDto.getFilters())) {
-            action.setFilters(columnDto.getFilters().stream()
-                    .map(FilterDto::getName).toList());
+        if (CollectionUtils.isNotEmpty(columnDto.getConverters())) {
+            action.setConverters(columnDto.getConverters().stream()
+                    .map(ConverterDto::getName).toList());
         }
         return action;
     }

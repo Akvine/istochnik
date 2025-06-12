@@ -12,63 +12,63 @@ import java.util.List;
 @Getter
 public enum BaseType {
     INTEGER("int", "base.type.integer.code", List.of(
-            FilterType.ABS,
-            FilterType.DIVIDE,
-            FilterType.MINUS,
-            FilterType.PLUS,
-            FilterType.POW,
-            FilterType.MOD,
-            FilterType.NEGATIVE
+            ConverterType.ABS,
+            ConverterType.DIVIDE,
+            ConverterType.MINUS,
+            ConverterType.PLUS,
+            ConverterType.POW,
+            ConverterType.MOD,
+            ConverterType.NEGATIVE
     )),
     DOUBLE("double", "base.type.double.code", List.of(
-            FilterType.ABS,
-            FilterType.CEIL,
-            FilterType.COS,
-            FilterType.DIVIDE,
-            FilterType.FLOOR,
-            FilterType.MINUS,
-            FilterType.PLUS,
-            FilterType.POW,
-            FilterType.ROUND,
-            FilterType.SIN,
-            FilterType.TAN,
-            FilterType.LOG,
-            FilterType.LOG10,
-            FilterType.EXP,
-            FilterType.COT,
-            FilterType.ARCSIN,
-            FilterType.ARCCOS,
-            FilterType.ARCTAN,
-            FilterType.ZSCORE,
-            FilterType.MINMAXSCALING,
-            FilterType.NEGATIVE
+            ConverterType.ABS,
+            ConverterType.CEIL,
+            ConverterType.COS,
+            ConverterType.DIVIDE,
+            ConverterType.FLOOR,
+            ConverterType.MINUS,
+            ConverterType.PLUS,
+            ConverterType.POW,
+            ConverterType.ROUND,
+            ConverterType.SIN,
+            ConverterType.TAN,
+            ConverterType.LOG,
+            ConverterType.LOG10,
+            ConverterType.EXP,
+            ConverterType.COT,
+            ConverterType.ARCSIN,
+            ConverterType.ARCCOS,
+            ConverterType.ARCTAN,
+            ConverterType.ZSCORE,
+            ConverterType.MINMAXSCALING,
+            ConverterType.NEGATIVE
 
     )),
     STRING("str", "base.type.string.code", List.of(
-            FilterType.BASE64,
-            FilterType.LOWER_CASE,
-            FilterType.REPLACE_ALL,
-            FilterType.SUBSTRING,
-            FilterType.TRIM,
-            FilterType.UPPER_CASE,
-            FilterType.DATE_FORMAT,
-            FilterType.CAPITALIZE,
-            FilterType.REMOVE_WHITESPACES,
-            FilterType.RANDOM_NUMERIC_REPLACE,
-            FilterType.RANDOM_RUSSIAN_REPLACE,
-            FilterType.RANDOM_ENGLISH_REPLACE,
-            FilterType.RANDOM_REPLACE,
-            FilterType.ADD_AFTER,
-            FilterType.ADD_BEFORE,
-            FilterType.REPEAT,
-            FilterType.REVERSE,
-            FilterType.TRANSLIT
+            ConverterType.BASE64,
+            ConverterType.LOWER_CASE,
+            ConverterType.REPLACE_ALL,
+            ConverterType.SUBSTRING,
+            ConverterType.TRIM,
+            ConverterType.UPPER_CASE,
+            ConverterType.DATE_FORMAT,
+            ConverterType.CAPITALIZE,
+            ConverterType.REMOVE_WHITESPACES,
+            ConverterType.RANDOM_NUMERIC_REPLACE,
+            ConverterType.RANDOM_RUSSIAN_REPLACE,
+            ConverterType.RANDOM_ENGLISH_REPLACE,
+            ConverterType.RANDOM_REPLACE,
+            ConverterType.ADD_AFTER,
+            ConverterType.ADD_BEFORE,
+            ConverterType.REPEAT,
+            ConverterType.REVERSE,
+            ConverterType.TRANSLIT
     )),
     BOOLEAN("bool", "base.type.boolean.code", List.of());
 
     private final String value;
     private final String code;
-    private final List<FilterType> supportedFilterType;
+    private final List<ConverterType> supportedConverterType;
 
     public static BaseType safeFrom(String type) {
         if (StringUtils.isBlank(type)) {
@@ -84,8 +84,8 @@ public enum BaseType {
         throw new UnsupportedTypeGenerationException("Base type = [" + type + "] is not supported!");
     }
 
-    public boolean isSupported(FilterType filterType) {
-        return supportedFilterType.contains(filterType);
+    public boolean isSupported(ConverterType converterType) {
+        return supportedConverterType.contains(converterType);
     }
 
     @Nullable

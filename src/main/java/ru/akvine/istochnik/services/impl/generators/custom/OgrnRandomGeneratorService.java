@@ -3,9 +3,9 @@ package ru.akvine.istochnik.services.impl.generators.custom;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
-import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.dto.Config;
-import ru.akvine.istochnik.services.dto.Filter;
+import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.generators.custom.ogrn.OgrnGeneratorConfig;
 import ru.akvine.istochnik.services.generators.custom.ogrn.OgrnRandomGenerator;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
@@ -18,18 +18,18 @@ public class OgrnRandomGeneratorService extends AbstractCustomTypeGeneratorServi
 
     protected OgrnRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
                                          OgrnRandomGenerator ogrnRandomGenerator,
-                                         FilterServicesProvider filterServicesProvider) {
-        super(configMappersProvider, filterServicesProvider);
+                                         ConverterConvertersProvider converterConvertersProvider) {
+        super(configMappersProvider, converterConvertersProvider);
         this.ogrnRandomGenerator = ogrnRandomGenerator;
     }
 
     @Override
-    public List<?> generate(Config config, List<Filter> filters) {
+    public List<?> generate(Config config, List<Converter> converters) {
         ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
                 .configMappers()
                 .get(getType().getName());
         OgrnGeneratorConfig mappedConfig = (OgrnGeneratorConfig) configMapper.map(config);
-        return apply((List<?>) ogrnRandomGenerator.generate(mappedConfig), filters);
+        return apply((List<?>) ogrnRandomGenerator.generate(mappedConfig), converters);
     }
 
     @Override

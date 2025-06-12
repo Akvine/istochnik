@@ -4,19 +4,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.*;
 import ru.akvine.istochnik.providers.*;
-import ru.akvine.istochnik.providers.filters.DoubleFiltersProvider;
-import ru.akvine.istochnik.providers.filters.FilterServicesProvider;
-import ru.akvine.istochnik.providers.filters.IntegerFiltersProvider;
-import ru.akvine.istochnik.providers.filters.StringFiltersProvider;
+import ru.akvine.istochnik.providers.converters.DoubleConvertersProvider;
+import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
+import ru.akvine.istochnik.providers.converters.IntegerConvertersProvider;
+import ru.akvine.istochnik.providers.converters.StringConvertersProvider;
 import ru.akvine.istochnik.services.BaseTypeGeneratorService;
+import ru.akvine.istochnik.services.ConverterService;
 import ru.akvine.istochnik.services.CustomTypeGeneratorService;
-import ru.akvine.istochnik.services.FilterService;
 import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.services.file.excel.factory.CellConfigurer;
-import ru.akvine.istochnik.services.filters.doubles.DoubleFilter;
-import ru.akvine.istochnik.services.filters.integer.IntegerFilter;
-import ru.akvine.istochnik.services.filters.string.StringFilter;
+import ru.akvine.istochnik.services.converters.doubles.DoubleConverter;
+import ru.akvine.istochnik.services.converters.integer.IntegerConverter;
+import ru.akvine.istochnik.services.converters.string.StringConverter;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.custom.date.shift.AbstractDateRangeService;
 import ru.akvine.istochnik.services.generators.custom.datetime.shift.AbstractDateTimeRangeService;
@@ -62,35 +62,35 @@ public class ProvidersConfig {
     }
 
     @Bean
-    public IntegerFiltersProvider integerFiltersProvider(List<IntegerFilter<Integer, Double>> integerFilters) {
-        Map<FilterType, IntegerFilter<Integer, Double>> filters = integerFilters
+    public IntegerConvertersProvider integerConvertersProvider(List<IntegerConverter<Integer, Double>> integerConverters) {
+        Map<ConverterType, IntegerConverter<Integer, Double>> converters = integerConverters
                 .stream()
-                .collect(toMap(IntegerFilter::getName, identity()));
-        return new IntegerFiltersProvider(filters);
+                .collect(toMap(IntegerConverter::getName, identity()));
+        return new IntegerConvertersProvider(converters);
     }
 
     @Bean
-    public DoubleFiltersProvider doubleFiltersProvider(List<DoubleFilter<Double, Double>> doubleFilters) {
-        Map<FilterType, DoubleFilter<Double, Double>> filters = doubleFilters
+    public DoubleConvertersProvider doubleConvertersProvider(List<DoubleConverter<Double, Double>> doubleConverters) {
+        Map<ConverterType, DoubleConverter<Double, Double>> converters = doubleConverters
                 .stream()
-                .collect(toMap(DoubleFilter::getName, identity()));
-        return new DoubleFiltersProvider(filters);
+                .collect(toMap(DoubleConverter::getName, identity()));
+        return new DoubleConvertersProvider(converters);
     }
 
     @Bean
-    public StringFiltersProvider stringFiltersProvider(List<StringFilter<String, String>> stringFilters) {
-        Map<FilterType, StringFilter<String, String>> filters = stringFilters
+    public StringConvertersProvider stringConvertersProvider(List<StringConverter<String, String>> stringConverters) {
+        Map<ConverterType, StringConverter<String, String>> converters = stringConverters
                 .stream()
-                .collect(toMap(StringFilter::getName, identity()));
-        return new StringFiltersProvider(filters);
+                .collect(toMap(StringConverter::getName, identity()));
+        return new StringConvertersProvider(converters);
     }
 
     @Bean
     public FileTableGeneratorsProvider fileTableServicesProvider(List<FileTableGenerator> generators) {
-        Map<FileType, FileTableGenerator> filters = generators
+        Map<FileType, FileTableGenerator> converters = generators
                 .stream()
                 .collect(toMap(FileTableGenerator::getType, identity()));
-        return new FileTableGeneratorsProvider(filters);
+        return new FileTableGeneratorsProvider(converters);
     }
 
     @Bean
@@ -126,11 +126,11 @@ public class ProvidersConfig {
     }
 
     @Bean
-    public FilterServicesProvider filterServicesProvider(List<FilterService> filterServices) {
-        Map<BaseType, FilterService> filterServicesMap = filterServices
+    public ConverterConvertersProvider converterServicesProvider(List<ConverterService> converterServices) {
+        Map<BaseType, ConverterService> converterServicesMap = converterServices
                 .stream()
-                .collect(toMap(FilterService::getType, identity()));
-        return new FilterServicesProvider(filterServicesMap);
+                .collect(toMap(ConverterService::getType, identity()));
+        return new ConverterConvertersProvider(converterServicesMap);
     }
 
     @Bean
