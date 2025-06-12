@@ -28,6 +28,8 @@ public class GeneratorValidator {
     private int maxDictionariesPerColumn;
     @Value("${max.dictionary.elements.count}")
     private int maxDictionaryElementsCount;
+    @Value("${max.generation.rows.size}")
+    private int maxGenerationRowsSize;
 
     public void verifyGenerateTableRequest(GenerateTableRequest request) {
         Asserts.isNotNull(request);
@@ -38,6 +40,13 @@ public class GeneratorValidator {
         StringBuilder sb = new StringBuilder();
         if (rowsCount < 0) {
             sb.append("size can't be less than 0");
+        }
+
+        if (rowsCount > maxGenerationRowsSize) {
+            String message = String.format(
+                    "Can't generate rows size = [%s] more than max = [%s]",
+                    rowsCount, maxGenerationRowsSize);
+            sb.append(message);
         }
 
         try {
