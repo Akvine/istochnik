@@ -102,6 +102,8 @@ public class GeneratorConverter {
                 .setValid(configDto.isValid())
                 .setDictionaries(configDto.getDictionaries())
                 .setConstant(configDto.getConstant())
+                .setTopics(configDto.getTopics().stream().map(Topic::safeFrom).toList())
+                .setLang(configDto.getLanguage())
                 .setRegexps(configDto.getRegexps());
     }
 }

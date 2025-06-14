@@ -11,7 +11,8 @@ public enum GenerationStrategy {
     CONSTANT("constant"),
     ALGORITHM("algorithm"),
     DICTIONARY("dictionary"),
-    REGEXP("regexp");
+    REGEXP("regexp"),
+    FAKER("faker");
 
     private final String name;
 

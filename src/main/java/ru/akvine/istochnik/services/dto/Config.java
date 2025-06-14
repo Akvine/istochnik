@@ -3,6 +3,7 @@ package ru.akvine.istochnik.services.dto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.enums.Topic;
 
 import java.util.List;
 import java.util.Set;
@@ -35,4 +36,11 @@ public class Config {
     private Set<Set<String>> dictionaries;
 
     private Set<String> regexps;
+
+    /**
+     * Используется только для GenerationType = Faker
+     */
+    private List<Topic> topics;
+
+    private String lang;
 }

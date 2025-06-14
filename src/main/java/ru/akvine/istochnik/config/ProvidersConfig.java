@@ -4,19 +4,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.akvine.istochnik.enums.*;
 import ru.akvine.istochnik.providers.*;
-import ru.akvine.istochnik.providers.converters.DoubleConvertersProvider;
 import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
+import ru.akvine.istochnik.providers.converters.DoubleConvertersProvider;
 import ru.akvine.istochnik.providers.converters.IntegerConvertersProvider;
 import ru.akvine.istochnik.providers.converters.StringConvertersProvider;
-import ru.akvine.istochnik.services.BaseTypeGeneratorService;
-import ru.akvine.istochnik.services.ConverterService;
-import ru.akvine.istochnik.services.CustomTypeGeneratorService;
-import ru.akvine.istochnik.services.GenerationHandler;
-import ru.akvine.istochnik.services.file.FileTableGenerator;
-import ru.akvine.istochnik.services.file.excel.factory.CellConfigurer;
+import ru.akvine.istochnik.services.*;
 import ru.akvine.istochnik.services.converters.doubles.DoubleConverter;
 import ru.akvine.istochnik.services.converters.integer.IntegerConverter;
 import ru.akvine.istochnik.services.converters.string.StringConverter;
+import ru.akvine.istochnik.services.file.FileTableGenerator;
+import ru.akvine.istochnik.services.file.excel.factory.CellConfigurer;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.custom.date.shift.AbstractDateRangeService;
 import ru.akvine.istochnik.services.generators.custom.datetime.shift.AbstractDateTimeRangeService;
@@ -147,5 +144,13 @@ public class ProvidersConfig {
                 .stream()
                 .collect(toMap(CellConfigurer::getType, identity()));
         return new CellConfigurersProvider(factories);
+    }
+
+    @Bean
+    public FakerGeneratorServicesProvider fakerGeneratorServicesProvider(List<FakerGeneratorService> fakerGeneratorServices) {
+        Map<Topic, FakerGeneratorService> generatorServices = fakerGeneratorServices
+                .stream()
+                .collect(toMap(FakerGeneratorService::getByTopic, identity()));
+        return new FakerGeneratorServicesProvider(generatorServices);
     }
 }
