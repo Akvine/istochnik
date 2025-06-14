@@ -4,7 +4,9 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.config.async.TaskExecutor;
 import ru.akvine.istochnik.enums.BaseType;
@@ -29,18 +31,43 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
     private final ConverterConvertersProvider converterConvertersProvider;
     private final TaskExecutor taskExecutor;
 
+    @Value("${log.total.generation.data.benchmark.enabled}")
+    private boolean logTotalEnabled;
+    @Value("${log.column.generation.data.benchmark.enabled}")
+    private boolean logColumnEnabled;
+
     @Override
     public Table generate(GenerateData generateData) {
         Asserts.isNotNull(generateData, "generateData is null");
 
         Table table = new Table(generateData.getSize());
         List<CompletableFuture<Void>> futures = new ArrayList<>();
+
+        StopWatch watch = null;
+        if (logTotalEnabled) {
+            watch = new StopWatch();
+            watch.start();
+        }
+
         for (GenerateColumn generateColumn : generateData.getGenerateColumns()) {
             try {
                 CompletableFuture<Void> result = CompletableFuture.runAsync(
                         () -> {
                             GenerationStrategy strategy = generateColumn.getGenerationStrategy();
+
+                            StopWatch columnWatch = null;
+                            if (logColumnEnabled) {
+                                columnWatch = new StopWatch();
+                                columnWatch.start();
+                            }
+
                             List<?> generatedValues = generationHandlersProvider.getByType(strategy).handle(generateColumn);
+
+                            if (logColumnEnabled) {
+                                columnWatch.stop();
+                                log.info("Data generating for column = [{}] completed successfully in [{}] seconds.",
+                                        generateColumn.getName(), columnWatch.getTotalTimeSeconds());
+                            }
 
                             if (strategy == GenerationStrategy.ALGORITHM &&
                                     generateColumn.isConvertToString() &&
@@ -63,6 +90,11 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
         }
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+        if (logTotalEnabled) {
+            watch.stop();
+            log.info("Data generating completed successfully in [{}] seconds.", watch.getTotalTimeSeconds());
+        }
         return table;
     }
 
