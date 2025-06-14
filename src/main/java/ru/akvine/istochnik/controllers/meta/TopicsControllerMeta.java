@@ -8,5 +8,5 @@ import ru.akvine.compozit.commons.dto.Response;
 @RequestMapping(value = "/topics")
 public interface TopicsControllerMeta {
     @GetMapping
-    Response list(@RequestParam(required = false, defaultValue = "en") String lang);
+    Response list(@RequestParam(required = false, defaultValue = "ru") String lang);
 }

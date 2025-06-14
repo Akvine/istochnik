@@ -14,12 +14,12 @@ public class TypesController implements TypesControllerMeta {
     private final TypesConverter typesConverter;
 
     @Override
-    public Response listCustom(@RequestParam(required = false, defaultValue = "en") String lang) {
+    public Response listCustom(@RequestParam(required = false, defaultValue = "ru") String lang) {
         return typesConverter.convertToCustomTypesListResponse(Language.from(lang));
     }
 
     @Override
-    public Response listBase(@RequestParam(required = false, defaultValue = "en") String lang) {
+    public Response listBase(@RequestParam(required = false, defaultValue = "ru") String lang) {
         return typesConverter.convertToBaseTypesListResponse(Language.from(lang));
     }
 }
