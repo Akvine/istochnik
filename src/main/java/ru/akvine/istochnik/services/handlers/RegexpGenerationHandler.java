@@ -7,6 +7,7 @@ import ru.akvine.compozit.commons.utils.CollectionUtils;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.exceptions.DefaultException;
 import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.dto.Converter;

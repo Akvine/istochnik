@@ -38,17 +38,19 @@ public class GeneratorConverter {
                 }
             }
 
-            generateColumns.add(new GenerateColumn()
-                    .setName(column.getName())
-                    .setBaseType(baseType)
-                    .setCustomType(customType)
-                    .setConfig(buildConfig(size, column.getConfig()))
-                    .setGenerationStrategy(strategy)
-                    .setConvertToString(column.isConvertToString())
-                    .setPostConverters(CollectionUtils.isEmpty(column.getPostConverters()) ?
-                            List.of() : column.getPostConverters().stream().map(this::buildConverter).toList())
-                    .setConverters(CollectionUtils.isEmpty(column.getConverters()) ?
-                            List.of() : column.getConverters().stream().map(this::buildConverter).toList()));
+            generateColumns.add(
+                    new GenerateColumn()
+                            .setName(column.getName())
+                            .setBaseType(baseType)
+                            .setCustomType(customType)
+                            .setConfig(buildConfig(size, column.getConfig()))
+                            .setGenerationStrategy(strategy)
+                            .setErrorResolveInfo(column.getErrorResolveInfo())
+                            .setConvertToString(column.isConvertToString())
+                            .setPostConverters(CollectionUtils.isEmpty(column.getPostConverters()) ?
+                                    List.of() : column.getPostConverters().stream().map(this::buildConverter).toList())
+                            .setConverters(CollectionUtils.isEmpty(column.getConverters()) ?
+                                    List.of() : column.getConverters().stream().map(this::buildConverter).toList()));
         }
 
         return new GenerateData()

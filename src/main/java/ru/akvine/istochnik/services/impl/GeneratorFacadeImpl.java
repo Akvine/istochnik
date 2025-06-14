@@ -7,10 +7,13 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
+import ru.akvine.compozit.commons.istochnik.ErrorResolveInfo;
+import ru.akvine.compozit.commons.istochnik.ErrorResolvePolicy;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.config.async.TaskExecutor;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
+import ru.akvine.istochnik.exceptions.DefaultException;
 import ru.akvine.istochnik.providers.GenerationHandlersProvider;
 import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.GeneratorFacade;
@@ -19,6 +22,7 @@ import ru.akvine.istochnik.services.dto.GenerateData;
 import ru.akvine.istochnik.services.dto.Table;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.RejectedExecutionException;
@@ -40,7 +44,8 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
     public Table generate(GenerateData generateData) {
         Asserts.isNotNull(generateData, "generateData is null");
 
-        Table table = new Table(generateData.getSize());
+        int size = generateData.getSize();
+        Table table = new Table(size);
         List<CompletableFuture<Void>> futures = new ArrayList<>();
 
         StopWatch watch = null;
@@ -82,7 +87,21 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
                             table.addColumn(generateColumn.getName(), generatedValues);
                         },
                         taskExecutor.executor()
-                );
+                ).exceptionally(exception -> {
+                    if (exception.getCause() instanceof DefaultException) {
+                        ErrorResolveInfo info = ((DefaultException) exception.getCause()).getErrorResolveInfo();
+                        if (info.getPolicy() == ErrorResolvePolicy.INTERRUPT) {
+                            throw new RuntimeException(exception);
+                        }
+
+                        String defaultValue = info.getDefaultValue();
+                        table.addColumn(
+                                generateColumn.getName(),
+                                Collections.nCopies(size, defaultValue));
+                    }
+
+                    return null;
+                });
                 futures.add(result);
             } catch (RejectedExecutionException exception) {
                 log.info("Executor [{}] is full. Task was rejected");
