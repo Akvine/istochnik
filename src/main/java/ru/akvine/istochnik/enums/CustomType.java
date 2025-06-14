@@ -16,7 +16,8 @@ public enum CustomType {
     SNILS(BaseType.INTEGER, "custom.type.snils.code","snils"),
     INN_ORG(BaseType.INTEGER, "custom.type.inn.org.code","inn_org"),
     INN_PERSONAL(BaseType.INTEGER, "custom.type.inn.pers.code","inn_pers"),
-    OGRN(BaseType.INTEGER, "custom.type.ogrn.code","ogrn");
+    OGRN(BaseType.INTEGER, "custom.type.ogrn.code","ogrn"),
+    IMEI(BaseType.STRING, "custom.type.imei.code", "imei");
 
     private final BaseType baseType;
     private final String code;
