@@ -53,7 +53,22 @@ public enum Topic {
     IPV6("topic.internet.ip_v6.code"),
     MAC("topic.internet.mac.code"),
     URL("topic.internet.url.code"),
-    PASSWORD("topic.internet.password.code");
+    PASSWORD("topic.internet.password.code"),
+
+    /**
+     * Топики по теме "Автомобили"
+     */
+    VIN("topic.vehicle.vin.code"),
+    VEHICLE_NUMBER("topic.vehicle.number.code"),
+
+    /**
+     * Топики по теме "Паспорт"
+     */
+    INTERNATIONAL_RUSSIAN_PASSPORT("topic.passport.international.russian.code"),
+    INTERNATIONAL_US_PASSPORT("topic.passport.international.us.code"),
+    INTERNATIONAL_COMMON_PASSPORT("topic.passport.international.common.code"),
+    RUSSIAN_PASSPORT("topic.passport.russian.code"),
+    US_PASSPORT("topic.passport.us.code");
 
     private final String code;
 
