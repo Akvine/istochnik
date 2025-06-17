@@ -1,10 +1,10 @@
 package ru.akvine.istochnik.controllers.converters;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
 import ru.akvine.compozit.commons.istochnik.ConverterDto;
@@ -18,6 +18,7 @@ import ru.akvine.istochnik.services.dto.GenerateData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class GeneratorConverter {
@@ -100,10 +101,21 @@ public class GeneratorConverter {
                 .setStep(configDto.getStep())
                 .setLength(configDto.getLength())
                 .setValid(configDto.isValid())
-                .setDictionaries(configDto.getDictionaries())
+                .setDictionaries(mapDictionaries(configDto.getDictionaries()))
                 .setConstant(configDto.getConstant())
                 .setTopics(configDto.getTopics().stream().map(Topic::safeFrom).toList())
                 .setLang(configDto.getLanguage())
                 .setRegexps(configDto.getRegexps());
+    }
+
+    private List<List<String>> mapDictionaries(Set<Set<String>> dictionaries) {
+        if (CollectionUtils.isEmpty(dictionaries)) {
+            return List.of();
+        }
+
+        return dictionaries.stream()
+                .map(dictionary -> dictionary.stream()
+                        .toList())
+                .toList();
     }
 }

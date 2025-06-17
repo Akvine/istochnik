@@ -33,7 +33,7 @@ public class Config {
 
     private Object constant;
 
-    private Set<Set<String>> dictionaries;
+    private List<List<String>> dictionaries;
 
     private Set<String> regexps;
 
