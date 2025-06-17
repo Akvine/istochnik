@@ -38,6 +38,9 @@ public class RegexpGenerationHandler implements GenerationHandler {
                 generatedValues.add(generated);
             } else {
                 regexps.forEach(regexp -> {
+                    if (generatedValues.size() == size) {
+                        return;
+                    }
                     Xeger generator = new Xeger(regexp);
                     String generated = generator.generate();
                     generatedValues.add(generated);
