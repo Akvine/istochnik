@@ -35,7 +35,6 @@ public enum ConverterType {
     NEGATIVE("negative", "converter.negative.code"),
     FACTORIAL("factorial", "converter.factorial.code"),
 
-
     /**
      * Конвертеры для строк
      */
@@ -60,7 +59,13 @@ public enum ConverterType {
     TRANSLIT("translit", "converter.translit.code"),
     RANDOM_CASE("randomCase", "converter.random.case.code"),
     MD5("md5", "converter.md5.code"),
-    SHA256("sha256", "converter.sha256.code");
+    SHA256("sha256", "converter.sha256.code"),
+
+
+    /**
+     * Общие конвертеры
+     */
+    SHUFFLE("shuffle", "converter.shuffle.code");
 
     private final String name;
     private final String descriptionCode;

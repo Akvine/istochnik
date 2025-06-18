@@ -19,7 +19,8 @@ public enum BaseType {
             ConverterType.POW,
             ConverterType.MOD,
             ConverterType.NEGATIVE,
-            ConverterType.FACTORIAL
+            ConverterType.FACTORIAL,
+            ConverterType.SHUFFLE
     )),
     DOUBLE("double", "base.type.double.code", List.of(
             ConverterType.ABS,
@@ -42,7 +43,8 @@ public enum BaseType {
             ConverterType.ARCTAN,
             ConverterType.ZSCORE,
             ConverterType.MINMAXSCALING,
-            ConverterType.NEGATIVE
+            ConverterType.NEGATIVE,
+            ConverterType.SHUFFLE
 
     )),
     STRING("str", "base.type.string.code", List.of(
@@ -63,7 +65,8 @@ public enum BaseType {
             ConverterType.ADD_BEFORE,
             ConverterType.REPEAT,
             ConverterType.REVERSE,
-            ConverterType.TRANSLIT
+            ConverterType.TRANSLIT,
+            ConverterType.SHUFFLE
     )),
     BOOLEAN("bool", "base.type.boolean.code", List.of());
 
