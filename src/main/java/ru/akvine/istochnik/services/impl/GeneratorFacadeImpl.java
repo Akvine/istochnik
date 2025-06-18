@@ -100,6 +100,7 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
                                 Collections.nCopies(size, defaultValue));
                     }
 
+                    log.info("For column with name = [{}] has been occurred error: [{}]", generateColumn.getName(), exception.getMessage());
                     return null;
                 });
                 futures.add(result);

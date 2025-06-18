@@ -18,7 +18,8 @@ public enum BaseType {
             ConverterType.PLUS,
             ConverterType.POW,
             ConverterType.MOD,
-            ConverterType.NEGATIVE
+            ConverterType.NEGATIVE,
+            ConverterType.FACTORIAL
     )),
     DOUBLE("double", "base.type.double.code", List.of(
             ConverterType.ABS,

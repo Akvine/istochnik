@@ -33,6 +33,7 @@ public enum ConverterType {
     ZSCORE("zscore", "converter.zscore.code"),
     MINMAXSCALING("minMaxScaling", "converter.minMaxScaling.code"),
     NEGATIVE("negative", "converter.negative.code"),
+    FACTORIAL("factorial", "converter.factorial.code"),
 
 
     /**
