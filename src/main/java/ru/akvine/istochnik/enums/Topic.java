@@ -54,6 +54,7 @@ public enum Topic {
     MAC("topic.internet.mac.code"),
     URL("topic.internet.url.code"),
     PASSWORD("topic.internet.password.code"),
+    EMAIL("topic.email.code"),
 
     /**
      * Топики по теме "Автомобили"
