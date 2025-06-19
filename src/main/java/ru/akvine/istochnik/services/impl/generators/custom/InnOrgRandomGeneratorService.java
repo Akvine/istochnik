@@ -29,7 +29,7 @@ public class InnOrgRandomGeneratorService extends AbstractCustomTypeGeneratorSer
                 .configMappers()
                 .get(getType().getName());
         InnOrgGeneratorConfig mappedConfig = (InnOrgGeneratorConfig) configMapper.map(config);
-        return apply((List<?>) innOrgGenerator.generate(mappedConfig), converters);
+        return apply((List<?>) innOrgGenerator.generate(mappedConfig), converters, config.getRandomGenerator());
     }
 
     @Override

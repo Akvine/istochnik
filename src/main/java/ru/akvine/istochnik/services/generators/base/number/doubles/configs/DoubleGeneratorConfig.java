@@ -7,6 +7,8 @@ import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.base.number.doubles.DoubleShiftRange;
 
+import java.util.random.RandomGenerator;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -20,8 +22,9 @@ public class DoubleGeneratorConfig extends Config {
                                  boolean notNull,
                                  boolean unique,
                                  RangeType rangeType,
-                                 DoubleShiftRange doubleShiftRange) {
-        super(size);
+                                 DoubleShiftRange doubleShiftRange,
+                                 RandomGenerator randomGenerator) {
+        super(size, randomGenerator);
         this.notNull = notNull;
         this.unique = unique;
         this.rangeType = rangeType;

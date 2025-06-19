@@ -28,7 +28,7 @@ public class ImeiRandomGeneratorService extends AbstractCustomTypeGeneratorServi
                 .configMappers()
                 .get(getType().getName());
         ImeiGeneratorConfig mappedConfig = (ImeiGeneratorConfig) configMapper.map(config);
-        return apply((List<?>) imeiRandomGenerator.generate(mappedConfig), converters);
+        return apply((List<?>) imeiRandomGenerator.generate(mappedConfig), converters, config.getRandomGenerator());
     }
 
     @Override

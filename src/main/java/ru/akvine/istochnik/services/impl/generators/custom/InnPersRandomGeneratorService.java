@@ -31,7 +31,7 @@ public class InnPersRandomGeneratorService extends AbstractCustomTypeGeneratorSe
                 .configMappers()
                 .get(getType().getName());
         InnPersGeneratorConfig mappedConfig = (InnPersGeneratorConfig) configMapper.map(config);
-        return apply((List<?>) innPersGenerator.generate(mappedConfig), converters);
+        return apply((List<?>) innPersGenerator.generate(mappedConfig), converters, config.getRandomGenerator());
     }
 
     @Override

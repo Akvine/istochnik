@@ -20,6 +20,7 @@ public class StringRandomGeneratorService extends AbstractBaseTypeGeneratorServi
     }
 
     @Override
+    // TODO: сделать рандомную генерацию строк
     public List<?> generate(Config config, List<Converter> converters) {
         return List.of();
     }

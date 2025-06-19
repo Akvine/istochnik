@@ -32,7 +32,8 @@ public class DateRandomGeneratorService extends AbstractCustomTypeGeneratorServi
                 .configMappers()
                 .get(getType().getName());
         DateGeneratorConfig mappedConfig = (DateGeneratorConfig) configMapper.map(config);
-        return apply(transformToString(dateGeneratorService.generate(mappedConfig)), converters);
+        return apply(transformToString(dateGeneratorService.generate(mappedConfig)), converters,
+                config.getRandomGenerator());
     }
 
     @Override

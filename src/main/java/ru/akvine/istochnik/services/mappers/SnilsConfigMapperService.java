@@ -15,7 +15,8 @@ public class SnilsConfigMapperService implements ConfigMapperService<SnilsGenera
                 config.getSize(),
                 config.isNotNull(),
                 config.isUnique(),
-                config.isValid()
+                config.isValid(),
+                config.getRandomGenerator()
         );
     }
 

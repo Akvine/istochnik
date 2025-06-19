@@ -6,6 +6,8 @@ import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.base.bool.BooleanShiftRange;
 
+import java.util.random.RandomGenerator;
+
 @Data
 @Accessors(chain = true)
 public class BooleanGeneratorConfig extends Config {
@@ -18,8 +20,9 @@ public class BooleanGeneratorConfig extends Config {
                                   boolean notNull,
                                   boolean unique,
                                   RangeType rangeType,
-                                  BooleanShiftRange booleanShiftRange) {
-        super(size);
+                                  BooleanShiftRange booleanShiftRange,
+                                  RandomGenerator randomGenerator) {
+        super(size, randomGenerator);
         this.notNull = notNull;
         this.unique = unique;
         this.rangeType = rangeType;

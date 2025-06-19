@@ -29,7 +29,8 @@ public class DoubleRandomGeneratorService extends AbstractBaseTypeGeneratorServi
                 .configMappers()
                 .get(getType().getValue());
         DoubleGeneratorConfig mappedConfig = (DoubleGeneratorConfig) configMapper.map(config);
-        return apply(doubleGeneratorService.generate(mappedConfig), converters);
+        return apply(doubleGeneratorService.generate(mappedConfig), converters,
+                config.getRandomGenerator());
     }
 
     @Override

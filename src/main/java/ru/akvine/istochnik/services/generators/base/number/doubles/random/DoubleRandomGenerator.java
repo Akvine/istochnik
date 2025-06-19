@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, DoubleGeneratorConfig> {
+
     @Override
     public List<Double> generate(DoubleGeneratorConfig config) {
         List<Double> generatedValues = new ArrayList<>();
@@ -24,7 +25,7 @@ public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, Doubl
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
@@ -42,7 +43,7 @@ public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, Doubl
                 }
             }
 
-            double generatedValue = randomGenerator.nextDouble(start, end);
+            double generatedValue = config.getRandomGenerator().nextDouble(start, end);
 
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
                 iteration++;

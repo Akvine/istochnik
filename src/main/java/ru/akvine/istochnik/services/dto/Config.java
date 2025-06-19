@@ -7,6 +7,7 @@ import ru.akvine.istochnik.enums.Topic;
 
 import java.util.List;
 import java.util.Set;
+import java.util.random.RandomGenerator;
 
 @Data
 @Accessors(chain = true)
@@ -43,4 +44,6 @@ public class Config {
     private List<Topic> topics;
 
     private String lang;
+
+    private RandomGenerator randomGenerator;
 }

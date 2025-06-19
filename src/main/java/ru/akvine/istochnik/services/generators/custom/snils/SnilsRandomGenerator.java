@@ -1,6 +1,5 @@
 package ru.akvine.istochnik.services.generators.custom.snils;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.services.generators.custom.snils.configs.SnilsGeneratorConfig;
@@ -10,7 +9,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGeneratorConfig> {
     private static final long MIN_SNILS_LEFT_BOUND = 10000000000L;
     private static final long MIN_SNILS_RIGHT_BOUND = 99999999999L;
@@ -24,7 +22,7 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
@@ -42,7 +40,7 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
                 }
             }
 
-            long generatedValue = randomGenerator.nextLong(MIN_SNILS_LEFT_BOUND, MIN_SNILS_RIGHT_BOUND);
+            long generatedValue = config.getRandomGenerator().nextLong(MIN_SNILS_LEFT_BOUND, MIN_SNILS_RIGHT_BOUND);
 
             if (config.isValid() && !isValidSnils(generatedValue)) {
                 iteration++;

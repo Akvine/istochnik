@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class BooleanRandomGenerator extends AbstractRandomGenerator<Boolean, BooleanGeneratorConfig> {
+
     @Override
     public List<Boolean> generate(BooleanGeneratorConfig config) {
         List<Boolean> generatedValues = new ArrayList<>();
@@ -18,7 +19,7 @@ public class BooleanRandomGenerator extends AbstractRandomGenerator<Boolean, Boo
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
@@ -36,7 +37,7 @@ public class BooleanRandomGenerator extends AbstractRandomGenerator<Boolean, Boo
                 }
             }
 
-            boolean generatedValue = randomGenerator.nextBoolean();
+            boolean generatedValue = config.getRandomGenerator().nextBoolean();
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
                 iteration++;
                 continue;

@@ -3,11 +3,7 @@ package ru.akvine.istochnik.services.generators;
 import org.springframework.beans.factory.annotation.Value;
 import ru.akvine.istochnik.exceptions.GenerationException;
 
-import java.security.SecureRandom;
-import java.util.random.RandomGenerator;
-
 public abstract class AbstractRandomGenerator<T, C extends Config> implements Generator<T, C> {
-    protected final RandomGenerator randomGenerator = new SecureRandom();
 
     @Value("${max.generation.attempts}")
     private int maxGenerationAttempts;

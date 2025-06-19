@@ -1,6 +1,5 @@
 package ru.akvine.istochnik.services.generators.custom.inn.org;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 
@@ -9,8 +8,8 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGeneratorConfig> {
+
     @Override
     public Collection<Long> generate(InnOrgGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
@@ -20,7 +19,7 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
@@ -38,8 +37,8 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
                 }
             }
 
-            int taxOfficeCode = 100 + randomGenerator.nextInt(9900);
-            int uniqueNumber = randomGenerator.nextInt(100000);
+            int taxOfficeCode = 100 + config.getRandomGenerator().nextInt(9900);
+            int uniqueNumber = config.getRandomGenerator().nextInt(100000);
 
             String innWithoutControl = String.format("%04d%05d", taxOfficeCode, uniqueNumber);
             int controlDigit = calculateControlDigit(innWithoutControl);

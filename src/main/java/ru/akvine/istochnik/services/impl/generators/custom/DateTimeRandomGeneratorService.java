@@ -32,7 +32,9 @@ public class DateTimeRandomGeneratorService extends AbstractCustomTypeGeneratorS
                 .configMappers()
                 .get(getType().getName());
         DateTimeGeneratorConfig mappedConfig = (DateTimeGeneratorConfig) configMapper.map(config);
-        return apply(transformToString(dateTimeGeneratorService.generate(mappedConfig)), converters);
+        return apply(transformToString(dateTimeGeneratorService.generate(mappedConfig)),
+                converters,
+                config.getRandomGenerator());
     }
 
     @Override

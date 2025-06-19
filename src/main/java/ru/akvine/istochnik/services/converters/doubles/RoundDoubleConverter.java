@@ -5,11 +5,12 @@ import ru.akvine.compozit.commons.utils.MathUtils;
 import ru.akvine.istochnik.enums.ConverterType;
 
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 @Service
 public class RoundDoubleConverter extends DoubleConverter<Double, Double> {
     @Override
-    public List<Double> convert(List<Double> input, Double[] arguments) {
+    public List<Double> convert(List<Double> input, Double[] arguments, RandomGenerator randomGenerator) {
         int accuracy = arguments[0].intValue();
         return input.stream().map(value -> MathUtils.round(value, accuracy)).toList();
     }

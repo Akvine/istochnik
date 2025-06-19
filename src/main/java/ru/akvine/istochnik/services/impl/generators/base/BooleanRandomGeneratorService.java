@@ -31,7 +31,8 @@ public class BooleanRandomGeneratorService extends AbstractBaseTypeGeneratorServ
                 .configMappers()
                 .get(getType().getValue());
         BooleanGeneratorConfig mappedConfig = (BooleanGeneratorConfig) configMapper.map(config);
-        return apply(booleanGeneratorService.generate(mappedConfig), converters);
+        return apply(booleanGeneratorService.generate(mappedConfig), converters,
+                config.getRandomGenerator());
     }
 
     @Override

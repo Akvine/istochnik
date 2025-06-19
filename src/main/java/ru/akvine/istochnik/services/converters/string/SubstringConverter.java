@@ -4,11 +4,12 @@ import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.ConverterType;
 
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 @Service
 public class SubstringConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments) {
+    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
         int beginIndex = Integer.parseInt(arguments[0]);
         int endIndex = Integer.parseInt(arguments[1]);
 

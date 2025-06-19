@@ -6,6 +6,8 @@ import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.custom.time.TimeShiftRange;
 
+import java.util.random.RandomGenerator;
+
 @Data
 @Accessors(chain = true)
 public class TimeGeneratorConfig extends Config {
@@ -18,8 +20,9 @@ public class TimeGeneratorConfig extends Config {
                                boolean notNull,
                                boolean unique,
                                RangeType rangeType,
-                               TimeShiftRange timeShiftRange) {
-        super(size);
+                               TimeShiftRange timeShiftRange,
+                               RandomGenerator randomGenerator) {
+        super(size, randomGenerator);
         this.notNull = notNull;
         this.unique = unique;
         this.rangeType = rangeType;

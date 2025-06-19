@@ -23,7 +23,7 @@ public class UuidRandomGeneratorService extends AbstractCustomTypeGeneratorServi
 
     @Override
     public List<?> generate(Config config, List<Converter> converters) {
-        return apply(uuidGeneratorService.generate(config.getSize()), converters);
+        return apply(uuidGeneratorService.generate(config.getSize()), converters, config.getRandomGenerator());
     }
 
     @Override

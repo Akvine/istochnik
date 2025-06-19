@@ -31,7 +31,7 @@ public class SnilsRandomGeneratorService extends AbstractCustomTypeGeneratorServ
                 .configMappers()
                 .get(getType().getName());
         SnilsGeneratorConfig mappedConfig = (SnilsGeneratorConfig) configMapper.map(config);
-        return apply((List<?>) snilsRandomGenerator.generate(mappedConfig), converters);
+        return apply((List<?>) snilsRandomGenerator.generate(mappedConfig), converters, config.getRandomGenerator());
     }
 
     @Override

@@ -15,7 +15,8 @@ public class InnPersonalConfigMapperService implements ConfigMapperService<InnPe
                 config.getSize(),
                 config.isNotNull(),
                 config.isUnique(),
-                config.isValid()
+                config.isValid(),
+                config.getRandomGenerator()
         );
     }
 

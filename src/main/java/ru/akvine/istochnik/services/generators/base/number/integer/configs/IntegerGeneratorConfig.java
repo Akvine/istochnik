@@ -8,6 +8,7 @@ import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.base.number.integer.IntegerShiftRange;
 
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 @Data
 @Accessors(chain = true)
@@ -23,8 +24,9 @@ public class IntegerGeneratorConfig extends Config {
                                   boolean unique,
                                   RangeType rangeType,
                                   IntegerShiftRange integerShiftRange,
-                                  List<Converter> converters) {
-        super(size);
+                                  List<Converter> converters,
+                                  RandomGenerator randomGenerator) {
+        super(size, randomGenerator);
         this.notNull = notNull;
         this.unique = unique;
         this.rangeType = rangeType;

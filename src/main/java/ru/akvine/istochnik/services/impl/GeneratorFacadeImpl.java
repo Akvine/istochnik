@@ -81,7 +81,8 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
                                 List<String> converted = generatedValues.stream().map(String::valueOf).toList();
                                 generatedValues = converterConvertersProvider
                                         .getByType(BaseType.STRING)
-                                        .apply(converted, generateColumn.getPostConverters());
+                                        .apply(converted, generateColumn.getPostConverters(),
+                                                generateColumn.getConfig().getRandomGenerator());
                             }
 
                             table.addColumn(generateColumn.getName(), generatedValues);

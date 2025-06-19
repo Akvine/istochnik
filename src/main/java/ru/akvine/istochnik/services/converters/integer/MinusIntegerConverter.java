@@ -4,11 +4,12 @@ import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.ConverterType;
 
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 @Service
 public class MinusIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
-    public List<Long> convert(List<Long> input, Double[] arguments) {
+    public List<Long> convert(List<Long> input, Double[] arguments, RandomGenerator randomGenerator) {
         return input.stream().map(value -> (long) (value - arguments[0])).toList();
     }
 

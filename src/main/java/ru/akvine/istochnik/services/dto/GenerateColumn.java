@@ -9,6 +9,7 @@ import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 @Data
 @Accessors(chain = true)

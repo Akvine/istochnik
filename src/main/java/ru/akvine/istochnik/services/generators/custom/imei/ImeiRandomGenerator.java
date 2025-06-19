@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGeneratorConfig> {
+
     @Override
     public Collection<String> generate(ImeiGeneratorConfig config) {
         List<String> generatedValues = new ArrayList<>();
@@ -18,7 +19,7 @@ public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGen
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
@@ -39,13 +40,13 @@ public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGen
             StringBuilder imei = new StringBuilder();
 
             for (int i = 0; i < 14; i++) {
-                imei.append(randomGenerator.nextInt(10));
+                imei.append(config.getRandomGenerator().nextInt(10));
             }
 
             if (config.isValid()) {
                 imei.append(calculateCheckDigit(imei.toString()));
             } else {
-                imei.append(randomGenerator.nextInt(10));
+                imei.append(config.getRandomGenerator().nextInt(10));
             }
 
             if (config.isUnique() && generatedValues.contains(imei.toString())) {

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGeneratorConfig> {
+
     @Override
     public Collection<Long> generate(OgrnGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
@@ -18,7 +19,7 @@ public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGener
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
@@ -39,7 +40,7 @@ public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGener
             StringBuilder ogrnBuilder = new StringBuilder("1");
 
             while (ogrnBuilder.length() < 12) {
-                ogrnBuilder.append(randomGenerator.nextInt(10));
+                ogrnBuilder.append(config.getRandomGenerator().nextInt(10));
             }
 
             long ogrn12 = Long.parseLong(ogrnBuilder.toString());

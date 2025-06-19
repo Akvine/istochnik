@@ -15,7 +15,8 @@ public class OgrnConfigMapperService implements ConfigMapperService<OgrnGenerato
                 config.getSize(),
                 config.isNotNull(),
                 config.isUnique(),
-                config.isValid()
+                config.isValid(),
+                config.getRandomGenerator()
         );
     }
 

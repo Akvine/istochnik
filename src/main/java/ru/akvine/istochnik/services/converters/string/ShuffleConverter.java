@@ -6,11 +6,12 @@ import ru.akvine.istochnik.enums.ConverterType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 @Service
 public class ShuffleConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments) {
+    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
         List<String> result = new ArrayList<>(input);
         Collections.shuffle(result);
         return result;

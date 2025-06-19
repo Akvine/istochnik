@@ -30,7 +30,7 @@ public class TimeRandomGeneratorService extends AbstractCustomTypeGeneratorServi
                 .configMappers()
                 .get(getType().getName());
         TimeGeneratorConfig mappedConfig = (TimeGeneratorConfig) configMapper.map(config);
-        return apply(transformToString(timeGeneratorService.generate(mappedConfig)), converters);
+        return apply(transformToString(timeGeneratorService.generate(mappedConfig)), converters, config.getRandomGenerator());
     }
 
     @Override

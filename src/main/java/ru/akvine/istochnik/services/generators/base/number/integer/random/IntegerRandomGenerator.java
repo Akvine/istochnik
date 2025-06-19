@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class IntegerRandomGenerator extends AbstractRandomGenerator<Integer, IntegerGeneratorConfig> {
+
     @Override
     public Collection<Integer> generate(IntegerGeneratorConfig config) {
         List<Integer> generatedValues = new ArrayList<>();
@@ -25,7 +26,7 @@ public class IntegerRandomGenerator extends AbstractRandomGenerator<Integer, Int
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
@@ -43,7 +44,7 @@ public class IntegerRandomGenerator extends AbstractRandomGenerator<Integer, Int
                 }
             }
 
-            int generatedValue = randomGenerator.nextInt(start, end);
+            int generatedValue = config.getRandomGenerator().nextInt(start, end);
 
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
                 iteration++;

@@ -6,6 +6,8 @@ import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.custom.date.DateShiftRange;
 
+import java.util.random.RandomGenerator;
+
 @Data
 @Accessors(chain = true)
 public class DateGeneratorConfig extends Config {
@@ -18,8 +20,9 @@ public class DateGeneratorConfig extends Config {
                                boolean notNull,
                                boolean unique,
                                RangeType rangeType,
-                               DateShiftRange dateShiftRange) {
-        super(size);
+                               DateShiftRange dateShiftRange,
+                               RandomGenerator randomGenerator) {
+        super(size, randomGenerator);
         this.notNull = notNull;
         this.unique = unique;
         this.rangeType = rangeType;

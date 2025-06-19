@@ -4,11 +4,12 @@ import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.ConverterType;
 
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 @Service
 public class Log10DoubleConverter extends DoubleConverter<Double, Double> {
     @Override
-    public List<Double> convert(List<Double> input, Double[] arguments) {
+    public List<Double> convert(List<Double> input, Double[] arguments, RandomGenerator randomGenerator) {
         return input.stream().map(Math::log10).toList();
     }
 

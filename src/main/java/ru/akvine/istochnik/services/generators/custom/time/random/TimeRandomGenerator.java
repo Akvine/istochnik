@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class TimeRandomGenerator extends AbstractRandomGenerator<LocalTime, TimeGeneratorConfig> {
+
     @Override
     public List<LocalTime> generate(TimeGeneratorConfig config) {
         List<LocalTime> generatedDates = new ArrayList<>();
@@ -23,7 +24,7 @@ public class TimeRandomGenerator extends AbstractRandomGenerator<LocalTime, Time
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
                 if (isNull) {
                     generatedDates.add(null);
                     iteration++;

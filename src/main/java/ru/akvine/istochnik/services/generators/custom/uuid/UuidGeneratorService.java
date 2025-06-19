@@ -13,7 +13,7 @@ import java.util.UUID;
 public class UuidGeneratorService {
 
     public List<String> generate(int size) {
-        return generate(new Config(size));
+        return generate(new Config(size, null));
     }
 
     public List<String> generate(Config config) {

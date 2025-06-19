@@ -24,7 +24,7 @@ public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTi
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
                 if (isNull) {
                     generatedDates.add(null);
                     iteration++;

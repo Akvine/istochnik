@@ -22,7 +22,8 @@ public class TimeConfigMapperService implements ConfigMapperService<TimeGenerato
                 new TimeShiftRange()
                         .setStart(DateTimeUtils.toLocalTime(config.getStart()))
                         .setEnd(DateTimeUtils.toLocalTime((config.getEnd())))
-                        .setShiftCount(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep()))
+                        .setShiftCount(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep())),
+                config.getRandomGenerator()
         );
     }
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGeneratorConfig> {
+
     @Override
     public Collection<Long> generate(InnPersGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
@@ -18,7 +19,7 @@ public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGener
             checkGenerationCountAttempts(iteration, config.getSize());
 
             if (!config.isNotNull()) {
-                boolean isNull = randomGenerator.nextBoolean();
+                boolean isNull = config.getRandomGenerator().nextBoolean();
 
                 if (isNull) {
                     if (config.isUnique()) {
@@ -36,8 +37,8 @@ public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGener
                 }
             }
 
-            int taxOfficeCode = 100 + randomGenerator.nextInt(9900);
-            int uniqueNumber = randomGenerator.nextInt(1_000_000);
+            int taxOfficeCode = 100 + config.getRandomGenerator().nextInt(9900);
+            int uniqueNumber = config.getRandomGenerator().nextInt(1_000_000);
 
             String innWithoutControl = String.format("%04d%06d", taxOfficeCode, uniqueNumber);
 

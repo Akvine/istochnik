@@ -44,7 +44,10 @@ public class DictionaryGenerationHandler implements GenerationHandler {
             }
         }
 
-        return converterConvertersProvider.getByType(BaseType.STRING).apply(generatedValues, converters);
+        return converterConvertersProvider.getByType(BaseType.STRING).apply(
+                generatedValues,
+                converters,
+                generateColumn.getConfig().getRandomGenerator());
     }
 
     @Override

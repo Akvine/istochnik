@@ -29,7 +29,7 @@ public class OgrnRandomGeneratorService extends AbstractCustomTypeGeneratorServi
                 .configMappers()
                 .get(getType().getName());
         OgrnGeneratorConfig mappedConfig = (OgrnGeneratorConfig) configMapper.map(config);
-        return apply((List<?>) ogrnRandomGenerator.generate(mappedConfig), converters);
+        return apply((List<?>) ogrnRandomGenerator.generate(mappedConfig), converters, config.getRandomGenerator());
     }
 
     @Override

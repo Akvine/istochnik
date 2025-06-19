@@ -31,7 +31,8 @@ public class IntegerRandomGeneratorService extends AbstractBaseTypeGeneratorServ
                 .configMappers()
                 .get(getType().getValue());
         IntegerGeneratorConfig mappedConfig = (IntegerGeneratorConfig) configMapper.map(config);
-        return apply(integerGeneratorService.generate(mappedConfig), converters);
+        return apply(integerGeneratorService.generate(mappedConfig), converters,
+                config.getRandomGenerator());
     }
 
     @Override

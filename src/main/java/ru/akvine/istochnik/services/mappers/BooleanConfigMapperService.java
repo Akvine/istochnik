@@ -18,7 +18,8 @@ public class BooleanConfigMapperService implements ConfigMapperService<BooleanGe
                 config.isUnique(),
                 config.getRangeType(),
                 new BooleanShiftRange()
-                        .setStart(Boolean.parseBoolean(config.getStart()))
+                        .setStart(Boolean.parseBoolean(config.getStart())),
+                config.getRandomGenerator()
         );
     }
 

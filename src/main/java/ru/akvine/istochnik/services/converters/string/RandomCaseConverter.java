@@ -1,24 +1,24 @@
 package ru.akvine.istochnik.services.converters.string;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.ConverterType;
 
-import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 @Service
+@RequiredArgsConstructor
 public class RandomCaseConverter extends StringConverter<String, String> {
-    private final static Random random = new SecureRandom();
 
     @Override
-    public List<String> convert(List<String> input, String[] arguments) {
+    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
         return input.stream().map(value -> {
             StringBuilder sb = new StringBuilder();
             char[] chars = value.toCharArray();
             for (char charValue : chars) {
                 if (Character.isAlphabetic(charValue)) {
-                    boolean changeCase = random.nextBoolean();
+                    boolean changeCase = randomGenerator.nextBoolean();
 
                     if (changeCase && Character.isUpperCase(charValue)) {
                         sb.append(Character.toLowerCase(charValue));
