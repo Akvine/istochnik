@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.api;
+package ru.akvine.istochnik.api.generator;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
-import ru.akvine.compozit.commons.utils.DateTimeUtils;
+import ru.akvine.istochnik.api.ApiBaseTest;
+import ru.akvine.istochnik.api.RestMethods;
 import ru.akvine.istochnik.enums.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,166 +20,6 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 @DisplayName("GeneratorController tests")
 public class GeneratorControllerTest extends ApiBaseTest {
-
-    @Test
-    @DisplayName("Generate random integers successful")
-    void successful_generate_random_int_values() {
-        List<ColumnDto> columnsToGenerate = List.of(
-                new ColumnDto()
-                        .setName("int_column")
-                        .setType(BaseType.INTEGER.getValue())
-                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
-                        .setConfig(new ConfigDto()
-                                .setRangeType(RangeType.RANDOM.toString().toUpperCase())
-                                .setStart("0")
-                                .setEnd("20")
-                        )
-        );
-
-        GenerateTableRequest request = new GenerateTableRequest()
-                .setSize(1000)
-                .setFileType(FileType.CSV.name())
-                .setColumns(columnsToGenerate);
-
-        byte[] response = RestAssured
-                .given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(request)
-                .when()
-                .post(RestMethods.GENERATE_DATA_ENDPOINT)
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .extract()
-                .asByteArray();
-
-        assertThat(response).isNotNull();
-        assertThat(response).isNotEmpty();
-
-        assertThatNoException().isThrownBy(() -> asLong(response));
-
-        List<Long> values = asLong(response);
-        assertThat(isRandom(values)).isTrue();
-    }
-
-    @Test
-    @DisplayName("Generate shifted integers successful")
-    void successful_generate_shifted_int_values() {
-        List<ColumnDto> columnsToGenerate = List.of(
-                new ColumnDto()
-                        .setName("int_column")
-                        .setType(BaseType.INTEGER.getValue())
-                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
-                        .setConfig(new ConfigDto()
-                                .setRangeType(RangeType.SHIFT.toString().toUpperCase())
-                                .setStart("0")
-                                .setEnd("10")
-                                .setStep("1")
-                        )
-        );
-
-        GenerateTableRequest request = new GenerateTableRequest()
-                .setSize(10)
-                .setFileType(FileType.CSV.name())
-                .setColumns(columnsToGenerate);
-
-        byte[] response = RestAssured
-                .given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(request)
-                .when()
-                .post(RestMethods.GENERATE_DATA_ENDPOINT)
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .extract()
-                .asByteArray();
-
-        assertThat(response).isNotNull();
-        assertThat(response).isNotEmpty();
-
-        assertThatNoException().isThrownBy(() -> asLong(response));
-
-        List<Long> values = asLong(response);
-        assertThat(isShifted(values)).isTrue();
-    }
-
-    @Test
-    @DisplayName("Generate random doubles successful")
-    void successful_generate_random_double_values() {
-        List<ColumnDto> columnsToGenerate = List.of(
-                new ColumnDto()
-                        .setName("double_column")
-                        .setType(BaseType.DOUBLE.getValue())
-                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
-                        .setConfig(new ConfigDto()
-                                .setRangeType(RangeType.RANDOM.toString().toUpperCase())
-                                .setStart("0")
-                                .setEnd("50")
-                        )
-        );
-
-        GenerateTableRequest request = new GenerateTableRequest()
-                .setSize(10)
-                .setFileType(FileType.CSV.name())
-                .setColumns(columnsToGenerate);
-
-        byte[] response = RestAssured
-                .given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(request)
-                .when()
-                .post(RestMethods.GENERATE_DATA_ENDPOINT)
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .extract()
-                .asByteArray();
-
-        assertThat(response).isNotNull();
-        assertThat(response).isNotEmpty();
-
-        assertThatNoException().isThrownBy(() -> asDouble(response));
-    }
-
-    @Test
-    @DisplayName("Generate shifted doubles successful")
-    void successful_generate_shifted_double_values() {
-        List<ColumnDto> columnsToGenerate = List.of(
-                new ColumnDto()
-                        .setName("double_column")
-                        .setType(BaseType.DOUBLE.getValue())
-                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
-                        .setConfig(new ConfigDto()
-                                .setRangeType(RangeType.SHIFT.toString().toUpperCase())
-                                .setStart("0")
-                                .setEnd("10")
-                                .setStep("1")
-                        )
-        );
-
-        GenerateTableRequest request = new GenerateTableRequest()
-                .setSize(10)
-                .setFileType(FileType.CSV.name())
-                .setColumns(columnsToGenerate);
-
-        byte[] response = RestAssured
-                .given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .body(request)
-                .when()
-                .post(RestMethods.GENERATE_DATA_ENDPOINT)
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .extract()
-                .asByteArray();
-
-        assertThat(response).isNotNull();
-        assertThat(response).isNotEmpty();
-
-        assertThatNoException().isThrownBy(() -> asDouble(response));
-    }
 
     @Test
     @DisplayName("Generate constant string values successful")

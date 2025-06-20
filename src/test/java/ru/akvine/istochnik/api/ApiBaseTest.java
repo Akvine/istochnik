@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.CollectionUtils;
 import org.testcontainers.shaded.org.checkerframework.checker.nullness.qual.Nullable;
+import ru.akvine.compozit.commons.utils.MathUtils;
 import ru.akvine.istochnik.IstochnikApplication;
 
 import java.io.BufferedReader;
@@ -33,16 +34,37 @@ public abstract class ApiBaseTest {
     protected List<Long> asLong(byte[] response) {
         List<String> values = asString(response);
         return values.stream()
-                .filter(StringUtils::isNotBlank)
-                .map(Long::parseLong)
+                .map(value -> {
+                    if (StringUtils.isBlank(value)) {
+                        return null;
+                    } else {
+                        return Long.parseLong(value);
+                    }
+                })
                 .toList();
     }
 
     protected List<Double> asDouble(byte[] response) {
+        return asDouble(response, 3);
+    }
+
+    protected List<Double> asDouble(byte[] response, int accuracy) {
         List<String> values = asString(response);
         return values.stream()
-                .filter(StringUtils::isNotBlank)
-                .map(Double::parseDouble)
+                .map(value -> {
+                    if (StringUtils.isBlank(value)) {
+                        return null;
+                    } else {
+                        return Double.parseDouble(value);
+                    }
+                })
+                .map(value -> {
+                    if (value == null) {
+                        return null;
+                    } else {
+                        return MathUtils.round(value, accuracy);
+                    }
+                })
                 .toList();
     }
 
@@ -67,26 +89,50 @@ public abstract class ApiBaseTest {
             throw new RuntimeException(exception);
         }
 
-        if (lines.isEmpty()) {
-            return List.of();
-        }
-
         return lines.subList(1, lines.size());
     }
 
     @Nullable
-    public Boolean isRandom(List<Long> values) {
-       return !isShifted(values);
+    public Boolean isRandomLong(List<Long> values) {
+       return !isShiftedLong(values);
     }
 
     @Nullable
-    public Boolean isShifted(List<Long> values) {
+    public Boolean isRandomDouble(List<Double> values) {
+        return !isShiftedDouble(values);
+    }
+
+    @Nullable
+    public Boolean isShiftedLong(List<Long> values) {
         if (CollectionUtils.isEmpty(values) || values.size() == 1) {
             return null;
         }
 
         boolean shifted = true;
         long diff = values.get(1) - values.get(0);
+
+        for (int i = 1; i < values.size(); i++) {
+            if (values.get(i) == null) {
+                continue;
+            }
+
+            if (values.get(i) - values.get(i - 1) != diff) {
+                shifted = false;
+                break;
+            }
+        }
+
+        return shifted;
+    }
+
+    @Nullable
+    public Boolean isShiftedDouble(List<Double> values) {
+        if (CollectionUtils.isEmpty(values) || values.size() == 1) {
+            return null;
+        }
+
+        boolean shifted = true;
+        double diff = values.get(1) - values.get(0);
 
         for (int i = 1; i < values.size(); i++) {
             if (values.get(i) - values.get(i - 1) != diff) {
