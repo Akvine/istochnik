@@ -10,6 +10,8 @@ import ru.akvine.compozit.commons.istochnik.ConfigDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.api.ApiBaseTest;
 import ru.akvine.istochnik.api.RestMethods;
+import ru.akvine.istochnik.api.providers.DetectorsProvider;
+import ru.akvine.istochnik.api.providers.TypeConvertersProvider;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
@@ -23,13 +25,20 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 @DisplayName("Base types tests")
 public class GenerateBaseTypesTest extends ApiBaseTest {
+    public GenerateBaseTypesTest(TypeConvertersProvider typeConvertersProvider,
+                                 DetectorsProvider detectorsProvider) {
+        super(typeConvertersProvider, detectorsProvider);
+    }
+
     @Test
     @DisplayName("Generate random integers successful [not null = true, unique = false]")
     void successful_generate_random_int_values() {
+        BaseType type = BaseType.INTEGER;
+
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("int_column")
-                        .setType(BaseType.INTEGER.getValue())
+                        .setType(type.getValue())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setRangeType(RangeType.RANDOM.toString())
@@ -60,21 +69,22 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asLong(response));
+        assertThatNoException().isThrownBy(() -> convert(type, response));
 
-        List<Long> result = asLong(response);
-
+        List<?> result = convert(type, response);
         assertThat(result).isEqualTo(expected);
-        assertThat(isRandomLong(result)).isTrue();
+        assertThat(isRandom(type, result)).isTrue();
     }
 
     @Test
     @DisplayName("Generate shifted integers successful [not null = false, unique = false]")
     void successful_generate_shifted_int_values() {
+        BaseType type = BaseType.INTEGER;
+
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("int_column")
-                        .setType(BaseType.INTEGER.getValue())
+                        .setType(type.getValue())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setRangeType(RangeType.SHIFT.toString().toUpperCase())
@@ -105,21 +115,22 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asLong(response));
+        assertThatNoException().isThrownBy(() -> convert(type, response));
 
-        List<Long> result = asLong(response);
+        List<?> result = convert(type, response);
 
         assertThat(result).isEqualTo(expected);
-        assertThat(isShiftedLong(result)).isTrue();
+        assertThat(isShifted(type, result)).isTrue();
     }
 
     @Test
     @DisplayName("Generate random doubles successful [not null = false, unique = false]")
     void successful_generate_random_double_values() {
+        BaseType type = BaseType.DOUBLE;
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("double_column")
-                        .setType(BaseType.DOUBLE.getValue())
+                        .setType(type.getValue())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setRangeType(RangeType.RANDOM.toString().toUpperCase())
@@ -151,21 +162,22 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asDouble(response));
+        assertThatNoException().isThrownBy(() -> convert(type, response));
 
-        List<Double> result = asDouble(response);
+        List<?> result = convert(type, response);
 
         assertThat(result).isEqualTo(expected);
-        assertThat(isRandomDouble(result)).isTrue();
+        assertThat(isRandom(type, result)).isTrue();
     }
 
     @Test
     @DisplayName("Generate shifted doubles successful [not null = false, unique = false]")
     void successful_generate_shifted_double_values() {
+        BaseType type = BaseType.DOUBLE;
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("double_column")
-                        .setType(BaseType.DOUBLE.getValue())
+                        .setType(type.getValue())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setRangeType(RangeType.SHIFT.toString().toUpperCase())
@@ -198,11 +210,11 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asDouble(response));
+        assertThatNoException().isThrownBy(() -> convert(type, response));
 
-        List<Double> result = asDouble(response);
+        List<?> result = convert(type, response);
 
         assertThat(result).isEqualTo(expected);
-        assertThat(isRandomDouble(result)).isTrue();
+        assertThat(isRandom(type, result)).isTrue();
     }
 }
