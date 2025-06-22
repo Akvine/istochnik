@@ -15,19 +15,20 @@ public class IntegerDetector extends AbstractDetector<Long> {
 
     @Override
     public boolean isShifted(List<Long> values) {
-        if (values.size() == 1) {
+        List<Long> cleared = clearOfNull(values);
+        if (cleared.size() == 1) {
             return true;
         }
 
         boolean shifted = true;
-        long diff = values.get(1) - values.get(0);
+        long diff = cleared.get(1) - cleared.get(0);
 
-        for (int i = 1; i < values.size(); i++) {
-            if (values.get(i) == null) {
+        for (int i = 1; i < cleared.size(); i++) {
+            if (cleared.get(i) == null) {
                 continue;
             }
 
-            if (values.get(i) - values.get(i - 1) != diff) {
+            if (cleared.get(i) - cleared.get(i - 1) != diff) {
                 shifted = false;
                 break;
             }

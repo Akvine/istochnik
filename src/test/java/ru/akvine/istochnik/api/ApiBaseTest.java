@@ -1,30 +1,40 @@
 package ru.akvine.istochnik.api;
 
 import io.restassured.RestAssured;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.akvine.istochnik.IstochnikApplication;
-import ru.akvine.istochnik.api.detectors.Detector;
 import ru.akvine.istochnik.api.providers.DetectorsProvider;
 import ru.akvine.istochnik.api.providers.TypeConvertersProvider;
 import ru.akvine.istochnik.enums.BaseType;
 
 import java.util.List;
 
-@SpringBootTest(classes = IstochnikApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(
+        classes = IstochnikApplication.class,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@RequiredArgsConstructor
+
+@ComponentScan({
+        "ru.akvine.istochnik"
+})
 public abstract class ApiBaseTest {
     @LocalServerPort
     private int port;
 
-    private final TypeConvertersProvider typeConvertersProvider;
-    private final DetectorsProvider detectorsProvider;
+    @Autowired
+    private TypeConvertersProvider typeConvertersProvider;
+    @Autowired
+    private DetectorsProvider detectorsProvider;
 
     @BeforeEach
     void setup() {

@@ -14,15 +14,16 @@ public class DoubleDetector extends AbstractDetector<Double> {
 
     @Override
     public boolean isShifted(List<Double> values) {
+        List<Double> cleared = clearOfNull(values);
         if (values.size() == 1) {
             return true;
         }
 
         boolean shifted = true;
-        double diff = values.get(1) - values.get(0);
+        double diff = cleared.get(1) - cleared.get(0);
 
-        for (int i = 1; i < values.size(); i++) {
-            if (values.get(i) - values.get(i - 1) != diff) {
+        for (int i = 1; i < cleared.size(); i++) {
+            if (cleared.get(i) - cleared.get(i - 1) != diff) {
                 shifted = false;
                 break;
             }

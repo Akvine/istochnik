@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.api.generator;
+package ru.akvine.istochnik.api;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
-import ru.akvine.istochnik.api.ApiBaseTest;
-import ru.akvine.istochnik.api.RestMethods;
-import ru.akvine.istochnik.api.providers.DetectorsProvider;
-import ru.akvine.istochnik.api.providers.TypeConvertersProvider;
+import ru.akvine.istochnik.api.configs.RestMethods;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
@@ -25,10 +22,6 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 @DisplayName("Base types tests")
 public class GenerateBaseTypesTest extends ApiBaseTest {
-    public GenerateBaseTypesTest(TypeConvertersProvider typeConvertersProvider,
-                                 DetectorsProvider detectorsProvider) {
-        super(typeConvertersProvider, detectorsProvider);
-    }
 
     @Test
     @DisplayName("Generate random integers successful [not null = true, unique = false]")
@@ -215,6 +208,6 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
         List<?> result = convert(type, response);
 
         assertThat(result).isEqualTo(expected);
-        assertThat(isRandom(type, result)).isTrue();
+        assertThat(isShifted(type, result)).isTrue();
     }
 }

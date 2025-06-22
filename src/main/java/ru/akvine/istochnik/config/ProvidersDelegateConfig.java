@@ -32,7 +32,11 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 @Configuration
-public class ProvidersConfig {
+/*
+    Сделал переименование из ProvidersConfig в ProvidersDelegateConfig,
+    чтобы не конфиликтовали имена классов ProvidersConfig из тестовых пакетов и и тут
+ */
+public class ProvidersDelegateConfig {
 
     @Bean
     public DateTimeRangeServicesProvider dateTimeShiftServicesProvider(Collection<AbstractDateTimeRangeService<LocalDateTime, Long>> services) {

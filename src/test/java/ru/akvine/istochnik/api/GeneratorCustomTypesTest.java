@@ -1,18 +1,16 @@
-package ru.akvine.istochnik.api.generator;
+package ru.akvine.istochnik.api;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.StringUtils;
 import org.springframework.http.HttpStatus;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.compozit.commons.utils.DateTimeUtils;
-import ru.akvine.istochnik.api.ApiBaseTest;
-import ru.akvine.istochnik.api.RestMethods;
-import ru.akvine.istochnik.api.providers.DetectorsProvider;
-import ru.akvine.istochnik.api.providers.TypeConvertersProvider;
+import ru.akvine.istochnik.api.configs.RestMethods;
 import ru.akvine.istochnik.enums.*;
 
 import java.util.List;
@@ -21,13 +19,8 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
-@DisplayName("GeneratorController tests")
-public class GeneratorControllerTest extends ApiBaseTest {
-
-    public GeneratorControllerTest(TypeConvertersProvider typeConvertersProvider,
-                                   DetectorsProvider detectorsProvider) {
-        super(typeConvertersProvider, detectorsProvider);
-    }
+@DisplayName("Custom types tests")
+public class GeneratorCustomTypesTest extends ApiBaseTest {
 
     @Test
     @DisplayName("Generate constant string values successful")
@@ -181,14 +174,9 @@ public class GeneratorControllerTest extends ApiBaseTest {
         assertThat(response).isNotEmpty();
 
         assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response));
-        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response)
-                .forEach(value -> {
-                    if (value instanceof String) {
-                       UUID.fromString((String) value);
-                    } else {
-                        throw new RuntimeException("Value is not " + String.class.getSimpleName() + " instance!");
-                    }
-                }));
+        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response).stream()
+                .map(String.class::cast)
+                .forEach(UUID::fromString));
     }
 
     @Test
@@ -240,10 +228,11 @@ public class GeneratorControllerTest extends ApiBaseTest {
     @Test
     @DisplayName("Generate date successful")
     void successful_date_values() {
+        CustomType type = CustomType.DATE;
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("date_column")
-                        .setType(CustomType.DATE.getName())
+                        .setType(type.getName())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setRangeType(RangeType.RANDOM.getType().toUpperCase())
@@ -272,16 +261,23 @@ public class GeneratorControllerTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asString(response));
+        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response));
+        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response).stream()
+                .map(String.class::cast)
+                .filter(StringUtils::isNotBlank)
+                .forEach(DateTimeUtils::toLocalDate));
+
+
     }
 
     @Test
     @DisplayName("Generate time successful")
     void successful_time_values() {
+        CustomType type = CustomType.TIME;
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("time_column")
-                        .setType(CustomType.TIME.getName())
+                        .setType(type.getName())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setNotNull(true)
@@ -311,16 +307,20 @@ public class GeneratorControllerTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asString(response));
+        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response));
+        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response).stream()
+                .map(String.class::cast)
+                .forEach(DateTimeUtils::toLocalTime));
     }
 
     @Test
     @DisplayName("Generate snils values successful")
     void successful_snils_values() {
+        CustomType type = CustomType.SNILS;
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("snils_column")
-                        .setType(CustomType.SNILS.getName())
+                        .setType(type.getName())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setNotNull(true)
@@ -350,16 +350,17 @@ public class GeneratorControllerTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asLong(response));
+        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response));
     }
 
     @Test
     @DisplayName("Generate valid snils values successful")
     void successful_valid_snils_values() {
+        CustomType type = CustomType.SNILS;
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("snils_column")
-                        .setType(CustomType.SNILS.getName())
+                        .setType(type.getName())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setRangeType(RangeType.RANDOM.getType().toUpperCase())
@@ -389,16 +390,17 @@ public class GeneratorControllerTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asLong(response));
+        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response));
     }
 
     @Test
     @DisplayName("Generate personal inn values successful")
     void successful_personal_inn_values() {
+        CustomType type = CustomType.INN_PERSONAL;
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("personal_inn_column")
-                        .setType(CustomType.INN_PERSONAL.getName())
+                        .setType(type.getName())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setNotNull(true)
@@ -428,16 +430,17 @@ public class GeneratorControllerTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asLong(response));
+        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response));
     }
 
     @Test
     @DisplayName("Generate organization inn values successful")
     void successful_organization_inn_values() {
+        CustomType type = CustomType.INN_ORG;
         List<ColumnDto> columnsToGenerate = List.of(
                 new ColumnDto()
                         .setName("organization_inn_column")
-                        .setType(CustomType.INN_ORG.getName())
+                        .setType(type.getName())
                         .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
                         .setConfig(new ConfigDto()
                                 .setRangeType(RangeType.RANDOM.getType().toUpperCase())
@@ -467,6 +470,6 @@ public class GeneratorControllerTest extends ApiBaseTest {
         assertThat(response).isNotNull();
         assertThat(response).isNotEmpty();
 
-        assertThatNoException().isThrownBy(() -> asLong(response));
+        assertThatNoException().isThrownBy(() -> convert(type.getBaseType(), response));
     }
 }
