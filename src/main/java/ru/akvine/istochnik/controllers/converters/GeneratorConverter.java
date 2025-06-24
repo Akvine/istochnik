@@ -129,7 +129,7 @@ public class GeneratorConverter {
                 .setNotNull(configDto.isNotNull())
                 .setUnique(configDto.isUnique())
                 .setRangeType(StringUtils.isBlank(configDto.getRangeType()) ?
-                        null : RangeType.valueOf(configDto.getRangeType()))
+                        null : RangeType.from(configDto.getRangeType()))
                 .setStart(configDto.getStart())
                 .setEnd(configDto.getEnd())
                 .setStep(configDto.getStep())

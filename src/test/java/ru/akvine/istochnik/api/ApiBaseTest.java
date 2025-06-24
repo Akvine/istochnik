@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.api;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.IstochnikApplication;
+import ru.akvine.istochnik.api.configs.RestMethods;
 import ru.akvine.istochnik.api.providers.DetectorsProvider;
 import ru.akvine.istochnik.api.providers.TypeConvertersProvider;
 import ru.akvine.istochnik.enums.BaseType;
@@ -52,5 +56,19 @@ public abstract class ApiBaseTest {
 
     protected boolean isShifted(BaseType type, List values) {
         return detectorsProvider.get(type).isShifted(values);
+    }
+
+    protected byte[] sendGenerateRequest(GenerateTableRequest request) {
+        return RestAssured
+                .given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(request)
+                .when()
+                .post(RestMethods.GENERATE_DATA_ENDPOINT)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .asByteArray();
     }
 }

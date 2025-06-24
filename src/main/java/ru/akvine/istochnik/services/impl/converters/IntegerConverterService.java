@@ -37,7 +37,7 @@ public class IntegerConverterService implements ConverterService {
     private Double[] mapArguments(Object[] arguments) {
         Double[] array = new Double[arguments.length];
         for (int i = 0; i < arguments.length; ++i) {
-            array[i] = (Double) arguments[i];
+            array[i] = Double.parseDouble((String) arguments[i]);
         }
 
         return array;

@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.api;
+package ru.akvine.istochnik.api.generators.algorithm;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
+import ru.akvine.istochnik.api.ApiBaseTest;
 import ru.akvine.istochnik.api.configs.RestMethods;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.FileType;
