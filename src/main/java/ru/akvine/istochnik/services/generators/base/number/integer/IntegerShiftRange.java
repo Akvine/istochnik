@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class IntegerShiftRange {
-    private Integer start;
-    private int end;
-    private Integer step;
+    private Long start;
+    private Long end;
+    private Long step;
 }

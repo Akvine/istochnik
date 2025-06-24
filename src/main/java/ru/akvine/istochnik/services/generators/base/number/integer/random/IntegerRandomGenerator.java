@@ -9,16 +9,16 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class IntegerRandomGenerator extends AbstractRandomGenerator<Integer, IntegerGeneratorConfig> {
+public class IntegerRandomGenerator extends AbstractRandomGenerator<Long, IntegerGeneratorConfig> {
 
     @Override
-    public Collection<Integer> generate(IntegerGeneratorConfig config) {
-        List<Integer> generatedValues = new ArrayList<>();
+    public Collection<Long> generate(IntegerGeneratorConfig config) {
+        List<Long> generatedValues = new ArrayList<>();
 
-        Integer start = config.getIntegerShiftRange().getStart();
-        int end = config.getIntegerShiftRange().getEnd();
+        Long start = config.getIntegerShiftRange().getStart();
+        Long end = config.getIntegerShiftRange().getEnd();
         if (start == null) {
-            start = 0;
+            start = 0L;
         }
 
         int iteration = 0;
@@ -44,7 +44,7 @@ public class IntegerRandomGenerator extends AbstractRandomGenerator<Integer, Int
                 }
             }
 
-            int generatedValue = config.getRandomGenerator().nextInt(start, end);
+            long generatedValue = config.getRandomGenerator().nextLong(start, end);
 
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
                 iteration++;

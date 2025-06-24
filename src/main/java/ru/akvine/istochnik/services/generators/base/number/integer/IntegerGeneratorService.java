@@ -3,9 +3,9 @@ package ru.akvine.istochnik.services.generators.base.number.integer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.RangeType;
-import ru.akvine.istochnik.services.generators.base.number.integer.shift.AbstractIntegerRangeService;
 import ru.akvine.istochnik.services.generators.base.number.integer.configs.IntegerGeneratorConfig;
 import ru.akvine.istochnik.services.generators.base.number.integer.random.IntegerRandomGenerator;
+import ru.akvine.istochnik.services.generators.base.number.integer.shift.AbstractIntegerRangeService;
 
 import java.util.List;
 
@@ -13,15 +13,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IntegerGeneratorService {
     private final IntegerRandomGenerator integerRandomGenerator;
-    private final AbstractIntegerRangeService<Integer, Integer> integerRangeService;
+    private final AbstractIntegerRangeService<Long, Long> integerRangeService;
 
-    public List<Integer> generate(IntegerGeneratorConfig config) {
-        List<Integer> generatedValues;
+    public List<Long> generate(IntegerGeneratorConfig config) {
+        List<Long> generatedValues;
 
         if (config.getRangeType() == RangeType.RANDOM) {
-            generatedValues = (List<Integer>) integerRandomGenerator.generate(config);
+            generatedValues = (List<Long>) integerRandomGenerator.generate(config);
         } else {
-            generatedValues = (List<Integer>) integerRangeService.range(
+            generatedValues = (List<Long>) integerRangeService.range(
                     config.getIntegerShiftRange().getStart(),
                     config.getIntegerShiftRange().getEnd(),
                     config.getIntegerShiftRange().getStep());

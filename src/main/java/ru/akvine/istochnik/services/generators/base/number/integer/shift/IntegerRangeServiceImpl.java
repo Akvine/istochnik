@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class IntegerRangeServiceImpl extends AbstractIntegerRangeService<Integer, Integer> {
+public class IntegerRangeServiceImpl extends AbstractIntegerRangeService<Long, Long> {
     @Override
-    public List<Integer> range(Integer start, Integer end, Integer step) {
-        List<Integer> range = new ArrayList<>();
-        for (int value = start; value < end; value += step) {
+    public List<Long> range(Long start, Long end, Long step) {
+        List<Long> range = new ArrayList<>();
+        for (long value = start; value < end; value += step) {
             range.add(value);
         }
         return range;

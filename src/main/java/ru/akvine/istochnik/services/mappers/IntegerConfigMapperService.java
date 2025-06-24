@@ -19,9 +19,9 @@ public class IntegerConfigMapperService implements ConfigMapperService<IntegerGe
                 config.isUnique(),
                 config.getRangeType(),
                 new IntegerShiftRange()
-                        .setStart(Integer.parseInt(config.getStart()))
-                        .setEnd(Integer.parseInt(config.getEnd()))
-                        .setStep(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep())),
+                        .setStart(Long.parseLong(config.getStart()))
+                        .setEnd(Long.parseLong(config.getEnd()))
+                        .setStep(StringUtils.isBlank(config.getStep()) ? 1 : Long.parseLong(config.getStep())),
                 config.getConverters(),
                 config.getRandomGenerator()
         );

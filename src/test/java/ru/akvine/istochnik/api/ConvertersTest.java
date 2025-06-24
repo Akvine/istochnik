@@ -57,45 +57,45 @@ public class ConvertersTest extends ApiBaseTest {
         assertThat(isRandom(type, result)).isTrue();
     }
 
-//    @Test
-//    @DisplayName("Apply DIVIDE converter to INTEGER - successfully")
-//    void successful_apply_divide_at_int_values() {
-//        BaseType type = BaseType.INTEGER;
-//
-//        List<ColumnDto> columnsToGenerate = List.of(
-//                new ColumnDto()
-//                        .setName("int_column")
-//                        .setType(type.getValue())
-//                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
-//                        .setConfig(new ConfigDto()
-//                                .setRangeType(RangeType.RANDOM.toString())
-//                                .setStart("0")
-//                                .setNotNull(true)
-//                                .setEnd("10")
-//                        )
-//                        .setConverters(List.of(
-//                                new ConverterDto()
-//                                        .setName(ConverterType.DIVIDE.getName())
-//                                        .setArguments(new Object[]{"2.0D"})
-//                        ))
-//        );
-//
-//        GenerateTableRequest request = new GenerateTableRequest()
-//                .setSize(10)
-//                .setFileType(FileType.CSV.name())
-//                .setColumns(columnsToGenerate);
-//
-//        List<Long> expected = List.of(0L, 8L, 9L, 7L, 5L, 3L, 1L, 1L, 9L, 4L);
-//        byte[] response = sendGenerateRequest(request);
-//
-//        assertThat(response).isNotNull();
-//        assertThat(response).isNotEmpty();
-//
-//        assertThatNoException().isThrownBy(() -> convert(type, response));
-//
-//        List<?> result = convert(type, response);
-//        assertThat(result).isEqualTo(expected);
-//        assertThat(isRandom(type, result)).isTrue();
-//    }
+    @Test
+    @DisplayName("Apply DIVIDE converter to INTEGER - successfully")
+    void successful_apply_divide_at_int_values() {
+        BaseType type = BaseType.INTEGER;
+
+        List<ColumnDto> columnsToGenerate = List.of(
+                new ColumnDto()
+                        .setName("int_column")
+                        .setType(type.getValue())
+                        .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
+                        .setConfig(new ConfigDto()
+                                .setRangeType(RangeType.RANDOM.toString())
+                                .setStart("0")
+                                .setNotNull(true)
+                                .setEnd("10")
+                        )
+                        .setConverters(List.of(
+                                new ConverterDto()
+                                        .setName(ConverterType.DIVIDE.getName())
+                                        .setArguments(new Object[]{"2.0D"})
+                        ))
+        );
+
+        GenerateTableRequest request = new GenerateTableRequest()
+                .setSize(10)
+                .setFileType(FileType.CSV.name())
+                .setColumns(columnsToGenerate);
+
+        List<Long> expected = List.of(0L, 1L, 1L, 2L, 0L, 3L, 0L, 2L, 4L, 3L);
+        byte[] response = sendGenerateRequest(request);
+
+        assertThat(response).isNotNull();
+        assertThat(response).isNotEmpty();
+
+        assertThatNoException().isThrownBy(() -> convert(type, response));
+
+        List<?> result = convert(type, response);
+        assertThat(result).isEqualTo(expected);
+        assertThat(isRandom(type, result)).isTrue();
+    }
 
 }

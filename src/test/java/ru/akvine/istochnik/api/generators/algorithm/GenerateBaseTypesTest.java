@@ -42,7 +42,7 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
                         )
         );
 
-        List<Long> expected = List.of(0L, 8L, 9L, 7L, 5L, 3L, 1L, 1L, 9L, 4L);
+        List<Long> expected = List.of(0L, 3L, 3L, 5L, 0L, 7L, 0L, 4L, 9L, 6L);
         GenerateTableRequest request = new GenerateTableRequest()
                 .setSize(10)
                 .setFileType(FileType.CSV.name())
