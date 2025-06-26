@@ -14,9 +14,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.IstochnikApplication;
-import ru.akvine.istochnik.api.configs.RestMethods;
-import ru.akvine.istochnik.api.providers.DetectorsProvider;
-import ru.akvine.istochnik.api.providers.TypeConvertersProvider;
+import ru.akvine.istochnik.api.common.configs.RestMethods;
+import ru.akvine.istochnik.api.common.providers.DetectorsProvider;
+import ru.akvine.istochnik.api.common.providers.TypeConvertersProvider;
 import ru.akvine.istochnik.enums.BaseType;
 
 import java.util.List;

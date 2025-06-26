@@ -1,6 +1,6 @@
-package ru.akvine.istochnik.api.providers;
+package ru.akvine.istochnik.api.common.providers;
 
-import ru.akvine.istochnik.api.detectors.Detector;
+import ru.akvine.istochnik.api.common.detectors.Detector;
 import ru.akvine.istochnik.enums.BaseType;
 
 import java.util.Map;

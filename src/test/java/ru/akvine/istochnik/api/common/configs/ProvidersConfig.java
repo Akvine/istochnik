@@ -1,12 +1,12 @@
-package ru.akvine.istochnik.api.configs;
+package ru.akvine.istochnik.api.common.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import ru.akvine.istochnik.api.converters.TypeConverter;
-import ru.akvine.istochnik.api.detectors.Detector;
-import ru.akvine.istochnik.api.providers.DetectorsProvider;
-import ru.akvine.istochnik.api.providers.TypeConvertersProvider;
+import ru.akvine.istochnik.api.common.converters.TypeConverter;
+import ru.akvine.istochnik.api.common.detectors.Detector;
+import ru.akvine.istochnik.api.common.providers.DetectorsProvider;
+import ru.akvine.istochnik.api.common.providers.TypeConvertersProvider;
 import ru.akvine.istochnik.enums.BaseType;
 
 import java.util.List;

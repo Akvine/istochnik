@@ -9,7 +9,7 @@ import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
 import ru.akvine.compozit.commons.istochnik.ConverterDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
-import ru.akvine.istochnik.api.configs.RestMethods;
+import ru.akvine.istochnik.api.common.configs.RestMethods;
 import ru.akvine.istochnik.enums.*;
 
 import java.util.List;

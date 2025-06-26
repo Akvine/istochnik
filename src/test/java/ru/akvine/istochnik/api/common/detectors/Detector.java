@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.api.detectors;
+package ru.akvine.istochnik.api.common.detectors;
 
 import ru.akvine.istochnik.enums.BaseType;
 

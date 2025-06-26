@@ -11,7 +11,7 @@ import ru.akvine.compozit.commons.istochnik.ConfigDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.compozit.commons.utils.DateTimeUtils;
 import ru.akvine.istochnik.api.ApiBaseTest;
-import ru.akvine.istochnik.api.configs.RestMethods;
+import ru.akvine.istochnik.api.common.configs.RestMethods;
 import ru.akvine.istochnik.enums.*;
 
 import java.util.List;

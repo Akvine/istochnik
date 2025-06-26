@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.api.converters;
+package ru.akvine.istochnik.api.common.converters;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

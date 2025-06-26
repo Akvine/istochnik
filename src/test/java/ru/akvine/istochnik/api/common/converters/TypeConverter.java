@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.api.converters;
+package ru.akvine.istochnik.api.common.converters;
 
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;

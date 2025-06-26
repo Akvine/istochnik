@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.api.converters;
+package ru.akvine.istochnik.api.common.converters;
 
 import org.springframework.stereotype.Component;
 import ru.akvine.istochnik.enums.BaseType;

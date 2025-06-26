@@ -1,7 +1,6 @@
-package ru.akvine.istochnik.api.detectors;
+package ru.akvine.istochnik.api.common.detectors;
 
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.enums.BaseType;
 
 import java.util.List;

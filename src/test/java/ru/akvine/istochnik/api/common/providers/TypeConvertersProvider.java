@@ -1,6 +1,6 @@
-package ru.akvine.istochnik.api.providers;
+package ru.akvine.istochnik.api.common.providers;
 
-import ru.akvine.istochnik.api.converters.TypeConverter;
+import ru.akvine.istochnik.api.common.converters.TypeConverter;
 import ru.akvine.istochnik.enums.BaseType;
 
 import java.util.Map;
