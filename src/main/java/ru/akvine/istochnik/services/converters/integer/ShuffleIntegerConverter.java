@@ -14,7 +14,7 @@ public class ShuffleIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
     public List<Long> convert(List<Long> input, Double[] arguments, RandomGenerator randomGenerator) {
         List<Long> result = new ArrayList<>(input);
-        Collections.shuffle(result);
+        Collections.shuffle(result, randomGenerator);
         return result;
     }
 

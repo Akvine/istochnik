@@ -10,7 +10,13 @@ import java.util.random.RandomGenerator;
 public class PlusIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
     public List<Long> convert(List<Long> input, Double[] argument, RandomGenerator randomGenerator) {
-        return input.stream().map(value -> (long) (value + argument[0])).toList();
+        return input.stream().map(value -> {
+            if (value == null) {
+                return null;
+            } else {
+                return (long) (value + argument[0]);
+            }
+        }).toList();
     }
 
     @Override

@@ -10,7 +10,13 @@ import java.util.random.RandomGenerator;
 public class NegativeIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
     public List<Long> convert(List<Long> input, Double[] arguments, RandomGenerator randomGenerator) {
-        return input.stream().map(value -> value * (-1)).toList();
+        return input.stream().map(value -> {
+            if (value == null) {
+                return null;
+            } else {
+                return value * (-1);
+            }
+        }).toList();
     }
 
     @Override

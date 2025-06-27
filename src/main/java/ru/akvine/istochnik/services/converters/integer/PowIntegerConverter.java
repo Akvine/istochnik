@@ -10,7 +10,13 @@ import java.util.random.RandomGenerator;
 public class PowIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
     public List<Long> convert(List<Long> input, Double[] argument, RandomGenerator randomGenerator) {
-        return input.stream().map(value -> (long) Math.pow(value, argument[0])).toList();
+        return input.stream().map(value -> {
+            if (value == null) {
+                return null;
+            } else {
+                return (long) Math.pow(value, argument[0]);
+            }
+        }).toList();
     }
 
     @Override
