@@ -10,9 +10,14 @@ import java.util.random.RandomGenerator;
 public class Config {
     protected final int size;
     protected RandomGenerator randomGenerator;
+    protected String seed;
+
+    public Config(int size, RandomGenerator randomGenerator) {
+        this.size = size;
+        this.randomGenerator = randomGenerator;
+    }
 
     public Config() {
         this.size = 0;
-        this.randomGenerator = null;
     }
 }

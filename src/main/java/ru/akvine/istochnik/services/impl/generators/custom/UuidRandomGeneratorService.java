@@ -23,7 +23,9 @@ public class UuidRandomGeneratorService extends AbstractCustomTypeGeneratorServi
 
     @Override
     public List<?> generate(Config config, List<Converter> converters) {
-        return apply(uuidGeneratorService.generate(config.getSize()), converters, config.getRandomGenerator());
+        ru.akvine.istochnik.services.generators.Config mappedConfig = new ru.akvine.istochnik.services.generators
+                .Config(config.getSize(), config.getRandomGenerator(), config.getSeed());
+        return apply(uuidGeneratorService.generate(mappedConfig), converters, config.getRandomGenerator());
     }
 
     @Override

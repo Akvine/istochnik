@@ -19,12 +19,13 @@ import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 import ru.akvine.istochnik.services.dto.GenerateData;
 
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.random.RandomGenerator;
 
 @Component
 @Slf4j
@@ -35,7 +36,7 @@ public class GeneratorConverter {
     @Value("${test.randomizer.seed:#{null}}")
     private Integer seed;
 
-    private static final RandomGenerator SECURE_RANDOM_GENERATOR = new SecureRandom();
+    private static final SecureRandom SECURE_RANDOM_GENERATOR = new SecureRandom();
 
     @PostConstruct
     public void init() {
@@ -113,15 +114,18 @@ public class GeneratorConverter {
     }
 
     private Config buildConfig(int size, ConfigDto configDto) {
-        RandomGenerator randomGenerator;
-        if (testRandomizerEnabled) {
-            if (seed == null) {
-                randomGenerator = new Random();
-            } else {
-                randomGenerator = new Random(seed);
-            }
-        } else {
+        SecureRandom randomGenerator;
+        if (StringUtils.isBlank(configDto.getSeed())) {
             randomGenerator = SECURE_RANDOM_GENERATOR;
+        } else {
+            try {
+                randomGenerator = SecureRandom.getInstance("SHA1PRNG");
+                randomGenerator.setSeed(configDto.getSeed().getBytes(StandardCharsets.UTF_8));
+            } catch (NoSuchAlgorithmException exception) {
+                // TODO: сделать осмысленный Runtime Exception
+                throw new RuntimeException(exception);
+            }
+
         }
 
         return new Config()
@@ -140,7 +144,8 @@ public class GeneratorConverter {
                 .setRandomGenerator(randomGenerator)
                 .setTopics(configDto.getTopics().stream().map(Topic::safeFrom).toList())
                 .setLang(configDto.getLanguage())
-                .setRegexps(configDto.getRegexps());
+                .setRegexps(configDto.getRegexps())
+                .setSeed(configDto.getSeed());
     }
 
     private List<List<String>> mapDictionaries(Set<Set<String>> dictionaries) {

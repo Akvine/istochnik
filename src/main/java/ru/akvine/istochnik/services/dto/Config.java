@@ -46,4 +46,6 @@ public class Config {
     private String lang;
 
     private RandomGenerator randomGenerator;
+
+    private String seed;
 }

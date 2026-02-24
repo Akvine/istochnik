@@ -7,30 +7,42 @@ import ru.akvine.istochnik.services.generators.Config;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.random.RandomGenerator;
 
 @Service
 @RequiredArgsConstructor
 public class UuidGeneratorService {
 
-    public List<String> generate(int size) {
-        return generate(new Config(size, null));
-    }
-
     public List<String> generate(Config config) {
         List<String> generatedValues = new ArrayList<>();
+        if (config.getSeed() == null) {
+            for (int i = 0; i < config.getSize(); ++i) {
+                generatedValues.add(UUID.randomUUID().toString());
+            }
+        } else {
+            RandomGenerator random = config.getRandomGenerator();
+            for (int i = 0; i < config.getSize(); ++i) {
+                byte[] randomBytes = new byte[16];
+                random.nextBytes(randomBytes);
 
-        for (int i = 0; i < config.getSize(); ++i) {
-            generatedValues.add(UUID.randomUUID().toString());
-        }
+                // Установка версии 4 и варианта
+                randomBytes[6] &= 0x0f;  // очищаем версию
+                randomBytes[6] |= 0x40;  // устанавливаем версию 4
+                randomBytes[8] &= 0x3f;  // очищаем вариант
+                randomBytes[8] |= 0x80;  // устанавливаем вариант RFC 4122
 
-        return generatedValues;
-    }
+                long msb = 0;
+                long lsb = 0;
+                for (int k = 0; k < 8; k++) {
+                    msb = (msb << 8) | (randomBytes[k] & 0xff);
+                }
 
-    public List<String> generate(Config config, String value) {
-        List<String> generatedValues = new ArrayList<>();
+                for (int k = 8; k < 16; k++) {
+                    lsb = (lsb << 8) | (randomBytes[k] & 0xff);
+                }
 
-        for (int i = 0; i < config.getSize(); ++i) {
-            generatedValues.add(value);
+                generatedValues.add(new UUID(msb, lsb).toString());
+            }
         }
 
         return generatedValues;
