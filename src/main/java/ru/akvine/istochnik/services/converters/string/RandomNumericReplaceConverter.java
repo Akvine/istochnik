@@ -13,20 +13,27 @@ public class RandomNumericReplaceConverter extends StringConverter<String, Strin
     private final static char[] DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         return input.stream().map(value -> {
-            StringBuilder sb = new StringBuilder();
-            char[] chars = value.toCharArray();
-            for (char charValue : chars) {
-                if (Character.isDigit(charValue)) {
-                    int randomIndex = randomGenerator.nextInt(DIGITS.length);
-                    sb.append(DIGITS[randomIndex]);
-                } else {
-                    sb.append(charValue);
+            if (randomGenerator.nextDouble() < probability) {
+                StringBuilder sb = new StringBuilder();
+                char[] chars = value.toCharArray();
+                for (char charValue : chars) {
+                    if (Character.isDigit(charValue)) {
+                        int randomIndex = randomGenerator.nextInt(DIGITS.length);
+                        sb.append(DIGITS[randomIndex]);
+                    } else {
+                        sb.append(charValue);
+                    }
                 }
-            }
 
-            return sb.toString();
+                return sb.toString();
+            } else {
+                return value;
+            }
         }).toList();
     }
 

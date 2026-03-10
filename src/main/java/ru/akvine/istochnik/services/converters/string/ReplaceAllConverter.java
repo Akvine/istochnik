@@ -9,8 +9,13 @@ import java.util.random.RandomGenerator;
 @Service
 public class ReplaceAllConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
-        return input.stream().map(value -> value.replaceAll(arguments[0], arguments[1])).toList();
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
+        return input.stream().map(value -> randomGenerator.nextDouble() < probability ?
+                        value.replaceAll(arguments[0], arguments[1]) : value)
+                .toList();
     }
 
     @Override

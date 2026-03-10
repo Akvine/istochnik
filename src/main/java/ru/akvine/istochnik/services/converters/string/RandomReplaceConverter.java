@@ -20,26 +20,33 @@ public class RandomReplaceConverter extends StringConverter<String, String> {
 
 
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         return input.stream().map(value -> {
-            StringBuilder sb = new StringBuilder();
-            char[] chars = value.toCharArray();
-            for (char charValue : chars) {
-                int type = randomGenerator.nextInt(3);
+            if (randomGenerator.nextDouble() < probability) {
+                StringBuilder sb = new StringBuilder();
+                char[] chars = value.toCharArray();
+                for (char charValue : chars) {
+                    int type = randomGenerator.nextInt(3);
 
-                if (type == 0) {
-                    int randomIndex = randomGenerator.nextInt(ENGLISH_CHARS.size());
-                    sb.append(ENGLISH_CHARS.get(randomIndex));
-                } else if (type == 1) {
-                    int randomIndex = randomGenerator.nextInt(SPECIAL_CHARACTERS.length);
-                    sb.append(SPECIAL_CHARACTERS[randomIndex]);
-                } else {
-                    int randomIndex = randomGenerator.nextInt(DIGITS.length);
-                    sb.append(DIGITS[randomIndex]);
+                    if (type == 0) {
+                        int randomIndex = randomGenerator.nextInt(ENGLISH_CHARS.size());
+                        sb.append(ENGLISH_CHARS.get(randomIndex));
+                    } else if (type == 1) {
+                        int randomIndex = randomGenerator.nextInt(SPECIAL_CHARACTERS.length);
+                        sb.append(SPECIAL_CHARACTERS[randomIndex]);
+                    } else {
+                        int randomIndex = randomGenerator.nextInt(DIGITS.length);
+                        sb.append(DIGITS[randomIndex]);
+                    }
                 }
-            }
 
-            return sb.toString();
+                return sb.toString();
+            } else {
+                return value;
+            }
         }).toList();
     }
 

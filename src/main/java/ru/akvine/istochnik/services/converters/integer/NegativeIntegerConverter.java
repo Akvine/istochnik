@@ -9,12 +9,19 @@ import java.util.random.RandomGenerator;
 @Service
 public class NegativeIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
-    public List<Long> convert(List<Long> input, Double[] arguments, RandomGenerator randomGenerator) {
+    public List<Long> convert(List<Long> input,
+                              Double[] arguments,
+                              RandomGenerator randomGenerator,
+                              double probability) {
         return input.stream().map(value -> {
-            if (value == null) {
-                return null;
+            if (randomGenerator.nextDouble() < probability) {
+                if (value == null) {
+                    return null;
+                } else {
+                    return value * (-1);
+                }
             } else {
-                return value * (-1);
+                return value;
             }
         }).toList();
     }

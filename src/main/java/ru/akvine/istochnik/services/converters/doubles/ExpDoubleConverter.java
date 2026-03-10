@@ -9,8 +9,13 @@ import java.util.random.RandomGenerator;
 @Service
 public class ExpDoubleConverter extends DoubleConverter<Double, Double> {
     @Override
-    public List<Double> convert(List<Double> input, Double[] arguments, RandomGenerator randomGenerator) {
-        return input.stream().map(Math::exp).toList();
+    public List<Double> convert(List<Double> input,
+                                Double[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
+        return input.stream().map(value ->
+                        randomGenerator.nextDouble() < probability ? Math.exp(value) : value)
+                .toList();
     }
 
     @Override

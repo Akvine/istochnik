@@ -22,7 +22,8 @@ public class StringConverterService implements ConverterService {
             values = stringConvertersProvider.getConverter(converter.getName()).convert(
                     (List<String>) values,
                     mapArguments(converter.getArguments()),
-                    randomGenerator
+                    randomGenerator,
+                    (double) converter.getProbability() / 100
             );
         }
 

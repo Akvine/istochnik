@@ -10,7 +10,10 @@ import java.util.stream.Collectors;
 @Service
 public class MinMaxScalingDoubleConverter extends DoubleConverter<Double, Double> {
     @Override
-    public List<Double> convert(List<Double> input, Double[] arguments, RandomGenerator randomGenerator) {
+    public List<Double> convert(List<Double> input,
+                                Double[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         double min = input.stream().mapToDouble(Double::doubleValue).min().orElse(0.0);
         double max = input.stream().mapToDouble(Double::doubleValue).max().orElse(1.0);
         double range = max - min;
@@ -20,7 +23,7 @@ public class MinMaxScalingDoubleConverter extends DoubleConverter<Double, Double
         }
 
         return input.stream()
-                .map(v -> (v - min) / range)
+                .map(v -> randomGenerator.nextDouble() < probability ? (v - min) / range : v)
                 .collect(Collectors.toList());
     }
 

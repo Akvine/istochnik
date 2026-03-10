@@ -10,11 +10,18 @@ import java.util.random.RandomGenerator;
 public class CapitalizeConverter extends StringConverter<String, String> {
 
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         return input.stream().map(value -> {
-            String firstCharacter = value.substring(0, 1).toUpperCase();
-            String otherCharacters = value.substring(1);
-            return firstCharacter + otherCharacters;
+            if (randomGenerator.nextDouble() < probability) {
+                String firstCharacter = value.substring(0, 1).toUpperCase();
+                String otherCharacters = value.substring(1);
+                return firstCharacter + otherCharacters;
+            } else {
+                return value;
+            }
         }).toList();
     }
 

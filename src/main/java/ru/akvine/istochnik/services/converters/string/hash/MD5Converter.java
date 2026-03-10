@@ -11,8 +11,13 @@ import java.util.random.RandomGenerator;
 @Service
 public class MD5Converter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
-        return input.stream().map(CryptoUtils::hashMD5).toList();
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
+        return input.stream().map(value -> randomGenerator.nextDouble() < probability ?
+                        CryptoUtils.hashMD5(value) : value)
+                .toList();
     }
 
     @Override

@@ -11,7 +11,10 @@ import java.util.random.RandomGenerator;
 @Service
 public class DateFormatConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         DateTimeFormatter format = DateTimeFormatter.ofPattern(arguments[0]);
 
         return input.stream().map(value -> {
@@ -21,7 +24,11 @@ public class DateFormatConverter extends StringConverter<String, String> {
                             return value;
                         }
 
-                        return DateTimeUtils.toLocalDate(value, originalFormatter).format(format);
+                        if (randomGenerator.nextDouble() < probability) {
+                            return DateTimeUtils.toLocalDate(value, originalFormatter).format(format);
+                        }
+
+                        return value;
                     }
                     if (DateTimeUtils.isDateTime(value)) {
                         DateTimeFormatter originalFormatter = DateTimeUtils.extractFromLocalDateTime(value);
@@ -29,7 +36,11 @@ public class DateFormatConverter extends StringConverter<String, String> {
                             return value;
                         }
 
-                        return DateTimeUtils.toLocalDateTime(value, originalFormatter).format(format);
+                        if (randomGenerator.nextDouble() < probability) {
+                            return DateTimeUtils.toLocalDate(value, originalFormatter).format(format);
+                        }
+
+                        return value;
                     }
 
                     return value;

@@ -14,20 +14,27 @@ public class RandomEnglishReplaceConverter extends StringConverter<String, Strin
     private final static List<Character> ENGLISH_CHARS = Alphabets.ENGLISH.getChars();
 
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         return input.stream().map(value -> {
-            StringBuilder sb = new StringBuilder();
-            char[] chars = value.toCharArray();
-            for (char charValue : chars) {
-                if (Character.isAlphabetic(charValue) && ENGLISH_CHARS.contains(charValue)) {
-                    int randomIndex = randomGenerator.nextInt(ENGLISH_CHARS.size());
-                    sb.append(ENGLISH_CHARS.get(randomIndex));
-                } else {
-                    sb.append(charValue);
+            if (randomGenerator.nextDouble() < probability) {
+                StringBuilder sb = new StringBuilder();
+                char[] chars = value.toCharArray();
+                for (char charValue : chars) {
+                    if (Character.isAlphabetic(charValue) && ENGLISH_CHARS.contains(charValue)) {
+                        int randomIndex = randomGenerator.nextInt(ENGLISH_CHARS.size());
+                        sb.append(ENGLISH_CHARS.get(randomIndex));
+                    } else {
+                        sb.append(charValue);
+                    }
                 }
-            }
 
-            return sb.toString();
+                return sb.toString();
+            } else {
+                return value;
+            }
         }).toList();
     }
 

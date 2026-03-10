@@ -92,6 +92,13 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator {
                     ));
                 }
 
+                if (converterDto.getProbability() < 0 || converterDto.getProbability() > 100) {
+                    errorMessages.add(String.format(
+                            IntegerBaseTypeValidator.ErrorMessages.CONVERTER_PROBABILITY_ERROR,
+                            converterName, converterDto.getProbability()
+                    ));
+                }
+
                 doubleConvertersProvider.getConverter(converterType).validateArgument(
                         mapArguments(converterDto.getArguments()));
             } catch (UnsupportedTypeGenerationException exception) {
@@ -124,6 +131,7 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator {
         String CONVERTER_NOT_SUPPORTED_ERROR = "converter with name [%s] is not supported by app";
         String CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR = "converter with name [%s] is not supported for type = [%s]";
         String CONVERTER_HAS_INVALID_ARGUMENTS = "converter with name [%s] has invalid arguments: [%s]";
+        String CONVERTER_PROBABILITY_ERROR = "for converter with name [%s] invalid probability = [%s]. Can be only between 0 and 100";
     }
 
     // TODO: дублирование кода тут и в DoubleConverterService

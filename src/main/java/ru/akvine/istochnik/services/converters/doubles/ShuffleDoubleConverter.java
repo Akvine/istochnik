@@ -11,7 +11,10 @@ import java.util.random.RandomGenerator;
 @Service
 public class ShuffleDoubleConverter extends DoubleConverter<Double, Double> {
     @Override
-    public List<Double> convert(List<Double> input, Double[] arguments, RandomGenerator randomGenerator) {
+    public List<Double> convert(List<Double> input,
+                                Double[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         List<Double> result = new ArrayList<>(input);
         Collections.shuffle(result);
         return result;

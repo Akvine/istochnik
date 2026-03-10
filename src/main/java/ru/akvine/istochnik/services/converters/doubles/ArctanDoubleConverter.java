@@ -9,8 +9,13 @@ import java.util.random.RandomGenerator;
 @Service
 public class ArctanDoubleConverter extends DoubleConverter<Double, Double> {
     @Override
-    public List<Double> convert(List<Double> input, Double[] arguments, RandomGenerator randomGenerator) {
-        return input.stream().map(Math::atan).toList();
+    public List<Double> convert(List<Double> input,
+                                Double[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
+        return input.stream().map(value ->
+                        randomGenerator.nextDouble() < probability ? Math.atan(value) : value)
+                .toList();
     }
 
     @Override

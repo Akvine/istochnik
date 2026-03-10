@@ -10,7 +10,10 @@ import java.util.random.RandomGenerator;
 @Service
 public class RepeatConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         int count;
         if (arguments.length != 0 && StringUtils.isNotBlank(arguments[0])) {
             count = Integer.parseInt(arguments[0]);
@@ -18,7 +21,9 @@ public class RepeatConverter extends StringConverter<String, String> {
             count = 1;
         }
 
-        return input.stream().map(value -> String.valueOf(value).repeat(Math.max(0, count))).toList();
+        return input.stream().map(value -> randomGenerator.nextDouble() < probability ?
+                        String.valueOf(value).repeat(Math.max(0, count)) : value)
+                .toList();
     }
 
     @Override

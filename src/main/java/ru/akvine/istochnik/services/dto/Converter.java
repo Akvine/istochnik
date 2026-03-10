@@ -10,4 +10,6 @@ public class Converter {
     private ConverterType name;
 
     private Object[] arguments;
+
+    private int probability = 100;
 }

@@ -10,17 +10,24 @@ import java.util.random.RandomGenerator;
 @Service
 public class TranslitConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         return input.stream().map(value -> {
-            StringBuilder sb = new StringBuilder();
-            char[] chars = value.toCharArray();
-            for (char charValue : chars) {
-                if (Character.isAlphabetic(charValue) && Alphabets.RUSSIAN.getChars().contains(charValue)) {
-                    sb.append(Alphabets.TRANSLIT_MAP.get(charValue));
+            if (randomGenerator.nextDouble() < probability) {
+                StringBuilder sb = new StringBuilder();
+                char[] chars = value.toCharArray();
+                for (char charValue : chars) {
+                    if (Character.isAlphabetic(charValue) && Alphabets.RUSSIAN.getChars().contains(charValue)) {
+                        sb.append(Alphabets.TRANSLIT_MAP.get(charValue));
+                    }
                 }
-            }
 
-            return sb.toString();
+                return sb.toString();
+            } else {
+                return value;
+            }
         }).toList();
     }
 

@@ -10,9 +10,14 @@ import java.util.random.RandomGenerator;
 @Service
 public class RoundDoubleConverter extends DoubleConverter<Double, Double> {
     @Override
-    public List<Double> convert(List<Double> input, Double[] arguments, RandomGenerator randomGenerator) {
+    public List<Double> convert(List<Double> input,
+                                Double[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         int accuracy = arguments[0].intValue();
-        return input.stream().map(value -> MathUtils.round(value, accuracy)).toList();
+        return input.stream().map(value ->
+                        randomGenerator.nextDouble() < probability ? MathUtils.round(value, accuracy) : value)
+                .toList();
     }
 
     @Override

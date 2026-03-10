@@ -10,8 +10,13 @@ import java.util.random.RandomGenerator;
 @Service
 public class ReverseConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
-        return input.stream().map(StringUtils::reverse).toList();
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
+        return input.stream().map(value -> randomGenerator.nextDouble() < probability ?
+                        StringUtils.reverse(value) : value)
+                .toList();
     }
 
     @Override

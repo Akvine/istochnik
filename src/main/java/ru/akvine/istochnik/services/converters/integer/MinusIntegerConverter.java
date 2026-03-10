@@ -9,8 +9,13 @@ import java.util.random.RandomGenerator;
 @Service
 public class MinusIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
-    public List<Long> convert(List<Long> input, Double[] arguments, RandomGenerator randomGenerator) {
-        return input.stream().map(value -> (long) (value - arguments[0])).toList();
+    public List<Long> convert(List<Long> input,
+                              Double[] arguments,
+                              RandomGenerator randomGenerator,
+                              double probability) {
+        return input.stream().map(value -> randomGenerator.nextDouble() < probability ?
+                        (long) (value - arguments[0]) : value)
+                .toList();
     }
 
     @Override

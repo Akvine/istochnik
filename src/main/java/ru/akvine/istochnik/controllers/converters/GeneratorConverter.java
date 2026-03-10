@@ -110,7 +110,8 @@ public class GeneratorConverter {
     private Converter buildConverter(ConverterDto converterDto) {
         return new Converter()
                 .setName(ConverterType.safeFrom(converterDto.getName()))
-                .setArguments(converterDto.getArguments());
+                .setArguments(converterDto.getArguments())
+                .setProbability(converterDto.getProbability());
     }
 
     private Config buildConfig(int size, ConfigDto configDto) {

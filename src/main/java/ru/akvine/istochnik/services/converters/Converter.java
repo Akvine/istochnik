@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.random.RandomGenerator;
 
 public abstract class Converter<T, A> {
-    public abstract List<T> convert(List<T> input, A[] arguments, RandomGenerator randomGenerator);
+    public abstract List<T> convert(List<T> input,
+                                    A[] arguments,
+                                    RandomGenerator randomGenerator,
+                                    double probability);
 
     public abstract ConverterType getName();
 

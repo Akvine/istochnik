@@ -22,7 +22,8 @@ public class DoubleConverterService implements ConverterService {
             values = doubleConvertersProvider.getConverter(converter.getName()).convert(
                     (List<Double>) values,
                     mapArguments(converter.getArguments()),
-                    randomGenerator
+                    randomGenerator,
+                    (double) converter.getProbability() / 100
             );
         }
 

@@ -9,8 +9,13 @@ import java.util.random.RandomGenerator;
 @Service
 public class PowDoubleConverter extends DoubleConverter<Double, Double> {
     @Override
-    public List<Double> convert(List<Double> input, Double[] arguments, RandomGenerator randomGenerator) {
-        return input.stream().map(value -> Math.pow(value, arguments[0])).toList();
+    public List<Double> convert(List<Double> input,
+                                Double[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
+        return input.stream().map(value ->
+                        randomGenerator.nextDouble() < probability ? Math.pow(value, arguments[0]) : value)
+                .toList();
     }
 
     @Override

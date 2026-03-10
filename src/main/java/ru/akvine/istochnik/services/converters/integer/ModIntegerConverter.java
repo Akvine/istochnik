@@ -9,9 +9,14 @@ import java.util.random.RandomGenerator;
 @Service
 public class ModIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
-    public List<Long> convert(List<Long> input, Double[] arguments, RandomGenerator randomGenerator) {
+    public List<Long> convert(List<Long> input,
+                              Double[] arguments,
+                              RandomGenerator randomGenerator,
+                              double probability) {
         Double operand = arguments[0];
-        return input.stream().map(value -> (long) (value % operand)).toList();
+        return input.stream().map(value -> randomGenerator.nextDouble() < probability ?
+                        (long) (value % operand) : value)
+                .toList();
     }
 
     @Override

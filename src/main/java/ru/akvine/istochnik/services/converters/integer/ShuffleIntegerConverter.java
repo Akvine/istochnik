@@ -12,7 +12,10 @@ import java.util.random.RandomGenerator;
 public class ShuffleIntegerConverter extends IntegerConverter<Long, Double> {
 
     @Override
-    public List<Long> convert(List<Long> input, Double[] arguments, RandomGenerator randomGenerator) {
+    public List<Long> convert(List<Long> input,
+                              Double[] arguments,
+                              RandomGenerator randomGenerator,
+                              double probability) {
         List<Long> result = new ArrayList<>(input);
         Collections.shuffle(result, randomGenerator);
         return result;

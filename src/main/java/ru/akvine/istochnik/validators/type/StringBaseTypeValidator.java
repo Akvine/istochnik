@@ -41,6 +41,13 @@ public class StringBaseTypeValidator implements BaseTypeValidator {
                     ));
                 }
 
+                if (converterDto.getProbability() < 0 || converterDto.getProbability() > 100) {
+                    errorMessages.add(String.format(
+                            ErrorMessages.CONVERTER_PROBABILITY_ERROR,
+                            converterName, converterDto.getProbability()
+                    ));
+                }
+
                 stringConvertersProvider.getConverter(converterType).validateArgument(
                         mapArguments(converterDto.getArguments()));
             } catch (UnsupportedTypeGenerationException exception) {
@@ -54,6 +61,10 @@ public class StringBaseTypeValidator implements BaseTypeValidator {
         }
 
         return errorMessages;
+    }
+
+    interface ErrorMessages {
+        String CONVERTER_PROBABILITY_ERROR = "for converter with name [%s] invalid probability = [%s]. Can be only between 0 and 100";
     }
 
     @Override

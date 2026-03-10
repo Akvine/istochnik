@@ -9,8 +9,13 @@ import java.util.random.RandomGenerator;
 @Service
 public class AbsIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
-    public List<Long> convert(List<Long> input, Double[] argument, RandomGenerator randomGenerator) {
-        return input.stream().map(Math::abs).toList();
+    public List<Long> convert(List<Long> input,
+                              Double[] argument,
+                              RandomGenerator randomGenerator,
+                              double probability) {
+        return input.stream()
+                .map(value -> randomGenerator.nextDouble() < probability ? Math.abs(value) : value)
+                .toList();
     }
 
     @Override

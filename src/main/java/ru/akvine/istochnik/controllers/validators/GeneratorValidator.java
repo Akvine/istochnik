@@ -85,6 +85,13 @@ public class GeneratorValidator {
                         }
                     });
                 }
+
+                List<String> errors = baseTypeValidatorsProvider
+                        .get(BaseType.STRING)
+                        .validate(columnName, buildValidateAction(rowsCount, column));
+                if (CollectionUtils.isNotEmpty(errors)) {
+                    validationColumnsInfo.put(columnName, errors);
+                }
             }
 
             if (strategy == GenerationStrategy.ALGORITHM) {

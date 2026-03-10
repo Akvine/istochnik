@@ -10,9 +10,13 @@ import java.util.random.RandomGenerator;
 @Service
 public class Base64Converter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         return input.stream()
-                .map(value -> new String(Base64.getEncoder().encode(value.getBytes())))
+                .map(value -> randomGenerator.nextDouble() < probability ?
+                        new String(Base64.getEncoder().encode(value.getBytes())) : value)
                 .toList();
     }
 

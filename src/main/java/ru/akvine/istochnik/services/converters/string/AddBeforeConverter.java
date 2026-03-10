@@ -9,9 +9,14 @@ import java.util.random.RandomGenerator;
 @Service
 public class AddBeforeConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input, String[] arguments, RandomGenerator randomGenerator) {
+    public List<String> convert(List<String> input,
+                                String[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         String arg = arguments[0];
-        return input.stream().map(value -> arg + value).toList();
+        return input.stream().map(value ->
+                        randomGenerator.nextDouble() < probability ? arg + value : value)
+                .toList();
     }
 
     @Override

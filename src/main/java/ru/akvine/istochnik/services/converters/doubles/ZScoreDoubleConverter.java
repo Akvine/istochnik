@@ -10,7 +10,10 @@ import java.util.stream.Collectors;
 @Service
 public class ZScoreDoubleConverter extends DoubleConverter<Double, Double> {
     @Override
-    public List<Double> convert(List<Double> input, Double[] arguments, RandomGenerator randomGenerator) {
+    public List<Double> convert(List<Double> input,
+                                Double[] arguments,
+                                RandomGenerator randomGenerator,
+                                double probability) {
         double mean = input.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
         double stdDev = Math.sqrt(input.stream()
                 .mapToDouble(v -> Math.pow(v - mean, 2))
@@ -22,7 +25,7 @@ public class ZScoreDoubleConverter extends DoubleConverter<Double, Double> {
         }
 
         return input.stream()
-                .map(v -> (v - mean) / stdDev)
+                .map(v -> randomGenerator.nextDouble() < probability ? (v - mean) / stdDev : v)
                 .collect(Collectors.toList());
     }
 
