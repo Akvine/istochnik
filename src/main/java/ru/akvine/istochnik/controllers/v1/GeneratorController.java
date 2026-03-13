@@ -1,4 +1,4 @@
-package ru.akvine.istochnik.controllers;
+package ru.akvine.istochnik.controllers.v1;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.controllers.converters.GeneratorConverter;
-import ru.akvine.istochnik.controllers.meta.GeneratorControllerMeta;
+import ru.akvine.istochnik.controllers.v1.meta.GeneratorControllerMeta;
 import ru.akvine.istochnik.controllers.validators.GeneratorValidator;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.services.FileTableService;
