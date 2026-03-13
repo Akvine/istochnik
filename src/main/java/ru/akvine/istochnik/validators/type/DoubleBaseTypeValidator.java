@@ -1,5 +1,7 @@
 package ru.akvine.istochnik.validators.type;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.ConverterDto;
@@ -10,9 +12,6 @@ import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.providers.converters.DoubleConvertersProvider;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -54,7 +53,6 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator {
             errorMessages.add(IntegerBaseTypeValidator.ErrorMessages.END_LESS_START_ERROR);
         }
 
-
         if (rangeType == RangeType.SHIFT) {
             try {
                 step = Double.parseDouble(action.getStep());
@@ -88,26 +86,24 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator {
                     errorMessages.add(String.format(
                             ErrorMessages.CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR,
                             converterName,
-                            getBaseType().getValue()
-                    ));
+                            getBaseType().getValue()));
                 }
 
                 if (converterDto.getProbability() < 0 || converterDto.getProbability() > 100) {
                     errorMessages.add(String.format(
                             IntegerBaseTypeValidator.ErrorMessages.CONVERTER_PROBABILITY_ERROR,
-                            converterName, converterDto.getProbability()
-                    ));
+                            converterName,
+                            converterDto.getProbability()));
                 }
 
-                doubleConvertersProvider.getConverter(converterType).validateArgument(
-                        mapArguments(converterDto.getArguments()));
+                doubleConvertersProvider
+                        .getConverter(converterType)
+                        .validateArgument(mapArguments(converterDto.getArguments()));
             } catch (UnsupportedTypeGenerationException exception) {
                 errorMessages.add(String.format(ErrorMessages.CONVERTER_NOT_SUPPORTED_ERROR, converterName));
             } catch (IllegalArgumentException argumentException) {
-                errorMessages.add(
-                        String.format(ErrorMessages.CONVERTER_HAS_INVALID_ARGUMENTS,
-                                converterName,
-                                argumentException.getMessage()));
+                errorMessages.add(String.format(
+                        ErrorMessages.CONVERTER_HAS_INVALID_ARGUMENTS, converterName, argumentException.getMessage()));
             }
         }
 
@@ -129,9 +125,11 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator {
         String INVALID_RANGE_OR_STEP_ERROR = "field [end] or [step] is invalid. Possible generated rows less than size";
 
         String CONVERTER_NOT_SUPPORTED_ERROR = "converter with name [%s] is not supported by app";
-        String CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR = "converter with name [%s] is not supported for type = [%s]";
+        String CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR =
+                "converter with name [%s] is not supported for type = [%s]";
         String CONVERTER_HAS_INVALID_ARGUMENTS = "converter with name [%s] has invalid arguments: [%s]";
-        String CONVERTER_PROBABILITY_ERROR = "for converter with name [%s] invalid probability = [%s]. Can be only between 0 and 100";
+        String CONVERTER_PROBABILITY_ERROR =
+                "for converter with name [%s] invalid probability = [%s]. Can be only between 0 and 100";
     }
 
     // TODO: дублирование кода тут и в DoubleConverterService

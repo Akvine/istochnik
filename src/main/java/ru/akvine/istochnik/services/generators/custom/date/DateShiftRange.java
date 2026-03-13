@@ -1,10 +1,9 @@
 package ru.akvine.istochnik.services.generators.custom.date;
 
+import java.time.LocalDate;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.DateShiftType;
-
-import java.time.LocalDate;
 
 @Data
 @Accessors(chain = true)

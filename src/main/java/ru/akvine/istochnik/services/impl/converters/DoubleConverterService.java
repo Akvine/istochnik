@@ -1,14 +1,13 @@
 package ru.akvine.istochnik.services.impl.converters;
 
+import java.util.List;
+import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.providers.converters.DoubleConvertersProvider;
 import ru.akvine.istochnik.services.ConverterService;
 import ru.akvine.istochnik.services.dto.Converter;
-
-import java.util.List;
-import java.util.random.RandomGenerator;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +18,13 @@ public class DoubleConverterService implements ConverterService {
     public List<?> apply(List<?> generatedValues, List<Converter> converters, RandomGenerator randomGenerator) {
         List<?> values = generatedValues;
         for (Converter converter : converters) {
-            values = doubleConvertersProvider.getConverter(converter.getName()).convert(
-                    (List<Double>) values,
-                    mapArguments(converter.getArguments()),
-                    randomGenerator,
-                    (double) converter.getProbability() / 100
-            );
+            values = doubleConvertersProvider
+                    .getConverter(converter.getName())
+                    .convert(
+                            (List<Double>) values,
+                            mapArguments(converter.getArguments()),
+                            randomGenerator,
+                            (double) converter.getProbability() / 100);
         }
 
         return generatedValues;

@@ -1,11 +1,10 @@
 package ru.akvine.istochnik.services.generators.base.number.doubles.random;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.services.generators.base.number.doubles.configs.DoubleGeneratorConfig;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, DoubleGeneratorConfig> {

@@ -1,18 +1,19 @@
 package ru.akvine.istochnik.controllers.converters;
 
+import java.util.Arrays;
 import org.springframework.stereotype.Component;
 import ru.akvine.istochnik.controllers.dto.converters.ConverterTypeDto;
 import ru.akvine.istochnik.controllers.dto.converters.ConvertersListResponse;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.ConverterType;
 
-import java.util.Arrays;
-
 @Component
 public class ConvertersMapper {
     public ConvertersListResponse convertToConvertersListResponse() {
         return new ConvertersListResponse()
-                .setConverters(Arrays.stream(BaseType.values()).map(this::buildConverterDto).toList());
+                .setConverters(Arrays.stream(BaseType.values())
+                        .map(this::buildConverterDto)
+                        .toList());
     }
 
     private ConverterTypeDto buildConverterDto(BaseType type) {

@@ -1,13 +1,12 @@
 package ru.akvine.istochnik.services.generators.base.bool;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.base.bool.configs.BooleanGeneratorConfig;
 import ru.akvine.istochnik.services.generators.base.bool.random.BooleanRandomGenerator;
 import ru.akvine.istochnik.services.generators.base.bool.shift.BooleanShiftRangeService;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

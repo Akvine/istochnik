@@ -1,9 +1,8 @@
 package ru.akvine.istochnik.api.common.providers;
 
+import java.util.Map;
 import ru.akvine.istochnik.api.common.detectors.Detector;
 import ru.akvine.istochnik.enums.BaseType;
-
-import java.util.Map;
 
 public record DetectorsProvider(Map<BaseType, Detector<?>> detectors) {
     public Detector<?> get(BaseType type) {

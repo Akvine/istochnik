@@ -2,72 +2,77 @@ package ru.akvine.istochnik.enums;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.Nullable;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 
-import java.util.List;
-
 @AllArgsConstructor
 @Getter
 public enum BaseType {
-    INTEGER("int", "base.type.integer.code", List.of(
-            ConverterType.ABS,
-            ConverterType.DIVIDE,
-            ConverterType.MINUS,
-            ConverterType.PLUS,
-            ConverterType.POW,
-            ConverterType.MOD,
-            ConverterType.NEGATIVE,
-            ConverterType.FACTORIAL,
-            ConverterType.SHUFFLE
-    )),
-    DOUBLE("double", "base.type.double.code", List.of(
-            ConverterType.ABS,
-            ConverterType.CEIL,
-            ConverterType.COS,
-            ConverterType.DIVIDE,
-            ConverterType.FLOOR,
-            ConverterType.MINUS,
-            ConverterType.PLUS,
-            ConverterType.POW,
-            ConverterType.ROUND,
-            ConverterType.SIN,
-            ConverterType.TAN,
-            ConverterType.LOG,
-            ConverterType.LOG10,
-            ConverterType.EXP,
-            ConverterType.COT,
-            ConverterType.ARCSIN,
-            ConverterType.ARCCOS,
-            ConverterType.ARCTAN,
-            ConverterType.ZSCORE,
-            ConverterType.MINMAXSCALING,
-            ConverterType.NEGATIVE,
-            ConverterType.SHUFFLE
+    INTEGER(
+            "int",
+            "base.type.integer.code",
+            List.of(
+                    ConverterType.ABS,
+                    ConverterType.DIVIDE,
+                    ConverterType.MINUS,
+                    ConverterType.PLUS,
+                    ConverterType.POW,
+                    ConverterType.MOD,
+                    ConverterType.NEGATIVE,
+                    ConverterType.FACTORIAL,
+                    ConverterType.SHUFFLE)),
+    DOUBLE(
+            "double",
+            "base.type.double.code",
+            List.of(
+                    ConverterType.ABS,
+                    ConverterType.CEIL,
+                    ConverterType.COS,
+                    ConverterType.DIVIDE,
+                    ConverterType.FLOOR,
+                    ConverterType.MINUS,
+                    ConverterType.PLUS,
+                    ConverterType.POW,
+                    ConverterType.ROUND,
+                    ConverterType.SIN,
+                    ConverterType.TAN,
+                    ConverterType.LOG,
+                    ConverterType.LOG10,
+                    ConverterType.EXP,
+                    ConverterType.COT,
+                    ConverterType.ARCSIN,
+                    ConverterType.ARCCOS,
+                    ConverterType.ARCTAN,
+                    ConverterType.ZSCORE,
+                    ConverterType.MINMAXSCALING,
+                    ConverterType.NEGATIVE,
+                    ConverterType.SHUFFLE)),
 
-    )),
-    STRING("str", "base.type.string.code", List.of(
-            ConverterType.BASE64,
-            ConverterType.LOWER_CASE,
-            ConverterType.REPLACE_ALL,
-            ConverterType.SUBSTRING,
-            ConverterType.TRIM,
-            ConverterType.UPPER_CASE,
-            ConverterType.DATE_FORMAT,
-            ConverterType.CAPITALIZE,
-            ConverterType.REMOVE_WHITESPACES,
-            ConverterType.RANDOM_NUMERIC_REPLACE,
-            ConverterType.RANDOM_RUSSIAN_REPLACE,
-            ConverterType.RANDOM_ENGLISH_REPLACE,
-            ConverterType.RANDOM_REPLACE,
-            ConverterType.ADD_AFTER,
-            ConverterType.ADD_BEFORE,
-            ConverterType.REPEAT,
-            ConverterType.REVERSE,
-            ConverterType.TRANSLIT,
-            ConverterType.SHUFFLE
-    )),
+    STRING(
+            "str",
+            "base.type.string.code",
+            List.of(
+                    ConverterType.BASE64,
+                    ConverterType.LOWER_CASE,
+                    ConverterType.REPLACE_ALL,
+                    ConverterType.SUBSTRING,
+                    ConverterType.TRIM,
+                    ConverterType.UPPER_CASE,
+                    ConverterType.DATE_FORMAT,
+                    ConverterType.CAPITALIZE,
+                    ConverterType.REMOVE_WHITESPACES,
+                    ConverterType.RANDOM_NUMERIC_REPLACE,
+                    ConverterType.RANDOM_RUSSIAN_REPLACE,
+                    ConverterType.RANDOM_ENGLISH_REPLACE,
+                    ConverterType.RANDOM_REPLACE,
+                    ConverterType.ADD_AFTER,
+                    ConverterType.ADD_BEFORE,
+                    ConverterType.REPEAT,
+                    ConverterType.REVERSE,
+                    ConverterType.TRANSLIT,
+                    ConverterType.SHUFFLE)),
     BOOLEAN("bool", "base.type.boolean.code", List.of());
 
     private final String value;

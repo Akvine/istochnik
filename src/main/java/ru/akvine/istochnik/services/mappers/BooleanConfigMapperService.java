@@ -8,7 +8,7 @@ import ru.akvine.istochnik.services.generators.base.bool.BooleanShiftRange;
 import ru.akvine.istochnik.services.generators.base.bool.configs.BooleanGeneratorConfig;
 
 @Service
-public class BooleanConfigMapperService implements ConfigMapperService<BooleanGeneratorConfig>{
+public class BooleanConfigMapperService implements ConfigMapperService<BooleanGeneratorConfig> {
     @Override
     public BooleanGeneratorConfig map(Config config) {
         Asserts.isNotNull(config, "config is null");
@@ -17,10 +17,8 @@ public class BooleanConfigMapperService implements ConfigMapperService<BooleanGe
                 config.isNotNull(),
                 config.isUnique(),
                 config.getRangeType(),
-                new BooleanShiftRange()
-                        .setStart(Boolean.parseBoolean(config.getStart())),
-                config.getRandomGenerator()
-        );
+                new BooleanShiftRange().setStart(Boolean.parseBoolean(config.getStart())),
+                config.getRandomGenerator());
     }
 
     @Override

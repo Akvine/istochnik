@@ -1,11 +1,10 @@
 package ru.akvine.istochnik.utils;
 
-import lombok.experimental.UtilityClass;
-import ru.akvine.istochnik.exceptions.CryptoException;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import lombok.experimental.UtilityClass;
+import ru.akvine.istochnik.exceptions.CryptoException;
 
 @UtilityClass
 public class CryptoUtils {

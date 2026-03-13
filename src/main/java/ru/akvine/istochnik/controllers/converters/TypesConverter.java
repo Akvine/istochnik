@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.controllers.converters;
 
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.BaseTypeDto;
@@ -11,8 +12,6 @@ import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.Language;
 import ru.akvine.istochnik.services.MessageResolverService;
 
-import java.util.Arrays;
-
 @Component
 @RequiredArgsConstructor
 public class TypesConverter {
@@ -20,9 +19,9 @@ public class TypesConverter {
 
     public CustomTypesListResponse convertToCustomTypesListResponse(Language language) {
         return new CustomTypesListResponse()
-                .setTypes(Arrays.stream(CustomType.values()).map(
-                        customType -> buildCustomTypeDto(customType, language)
-                ).toList());
+                .setTypes(Arrays.stream(CustomType.values())
+                        .map(customType -> buildCustomTypeDto(customType, language))
+                        .toList());
     }
 
     public BaseTypesListResponse convertToBaseTypesListResponse(Language language) {

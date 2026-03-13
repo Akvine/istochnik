@@ -1,25 +1,26 @@
 package ru.akvine.istochnik.services.impl.generators.custom;
 
+import java.util.List;
+import java.util.random.RandomGenerator;
 import ru.akvine.istochnik.providers.ConfigMapperServicesProvider;
 import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.CustomTypeGeneratorService;
 import ru.akvine.istochnik.services.dto.Converter;
 
-import java.util.List;
-import java.util.random.RandomGenerator;
-
 public abstract class AbstractCustomTypeGeneratorService implements CustomTypeGeneratorService {
     protected final ConfigMapperServicesProvider configMappersProvider;
     protected final ConverterConvertersProvider converterConvertersProvider;
 
-    protected AbstractCustomTypeGeneratorService(ConfigMapperServicesProvider configMappersProvider, ConverterConvertersProvider converterConvertersProvider) {
+    protected AbstractCustomTypeGeneratorService(
+            ConfigMapperServicesProvider configMappersProvider,
+            ConverterConvertersProvider converterConvertersProvider) {
         this.configMappersProvider = configMappersProvider;
         this.converterConvertersProvider = converterConvertersProvider;
     }
 
     protected List<?> apply(List<?> generatedValues, List<Converter> converters, RandomGenerator randomGenerator) {
-        return converterConvertersProvider.getByType(getType().getBaseType())
+        return converterConvertersProvider
+                .getByType(getType().getBaseType())
                 .apply(generatedValues, converters, randomGenerator);
     }
-
 }

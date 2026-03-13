@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.controllers.dto.converters;
 
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.istochnik.controllers.dto.topics.ListTopicsResponse;
@@ -7,8 +8,6 @@ import ru.akvine.istochnik.controllers.dto.topics.TopicDto;
 import ru.akvine.istochnik.enums.Language;
 import ru.akvine.istochnik.enums.Topic;
 import ru.akvine.istochnik.services.MessageResolverService;
-
-import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor

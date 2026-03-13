@@ -12,10 +12,7 @@ public class TypeValidator implements Validator<String> {
         try {
             BaseType.safeFrom(type);
         } catch (RuntimeException exception) {
-            throw new ValidationException(
-                    ErrorConstants.Validation.TYPE_INVALID_ERROR,
-                    exception.getMessage()
-            );
+            throw new ValidationException(ErrorConstants.Validation.TYPE_INVALID_ERROR, exception.getMessage());
         }
     }
 }

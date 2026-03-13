@@ -1,5 +1,10 @@
 package ru.akvine.istochnik.services.file;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.stereotype.Service;
@@ -8,12 +13,6 @@ import ru.akvine.istochnik.exceptions.FileTableGenerationException;
 import ru.akvine.istochnik.services.dto.Column;
 import ru.akvine.istochnik.services.dto.Table;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class CsvFileTableGenerator implements FileTableGenerator {
     @Override
@@ -21,9 +20,10 @@ public class CsvFileTableGenerator implements FileTableGenerator {
         CSVFormat format = CSVFormat.DEFAULT.builder().setDelimiter(";").build();
 
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-             CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), format)) {
+                CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), format)) {
 
-            List<String> headers = table.getColumns().stream().map(Column::getName).toList();
+            List<String> headers =
+                    table.getColumns().stream().map(Column::getName).toList();
             csvPrinter.printRecord(headers);
 
             int rowsCount = table.getRowsCount();
@@ -37,15 +37,11 @@ public class CsvFileTableGenerator implements FileTableGenerator {
                 csvPrinter.printRecord(values);
             }
 
-
             csvPrinter.flush();
             return out.toByteArray();
         } catch (IOException exception) {
             String errorMessage = String.format(
-                    "Fail convert records to %s file type. Message = [%s]",
-                    getType(),
-                    exception.getMessage()
-            );
+                    "Fail convert records to %s file type. Message = [%s]", getType(), exception.getMessage());
             throw new FileTableGenerationException(errorMessage);
         }
     }

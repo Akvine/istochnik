@@ -1,13 +1,12 @@
 package ru.akvine.istochnik.api.common.converters;
 
-import ru.akvine.compozit.commons.utils.Asserts;
-import ru.akvine.istochnik.enums.BaseType;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import ru.akvine.compozit.commons.utils.Asserts;
+import ru.akvine.istochnik.enums.BaseType;
 
 public interface TypeConverter<T> {
     List<T> convert(byte[] response);
@@ -16,12 +15,10 @@ public interface TypeConverter<T> {
         Asserts.isNotNull(response);
         List<String> lines;
 
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new ByteArrayInputStream(response), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader =
+                new BufferedReader(new InputStreamReader(new ByteArrayInputStream(response), StandardCharsets.UTF_8))) {
 
-            lines = reader.lines()
-                    .map(line -> line.split(";", -1)[0])
-                    .toList();
+            lines = reader.lines().map(line -> line.split(";", -1)[0]).toList();
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }

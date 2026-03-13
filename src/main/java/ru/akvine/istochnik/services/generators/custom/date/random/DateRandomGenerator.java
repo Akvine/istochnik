@@ -1,13 +1,12 @@
 package ru.akvine.istochnik.services.generators.custom.date.random;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
-import ru.akvine.istochnik.services.generators.custom.date.configs.DateGeneratorConfig;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
+import ru.akvine.istochnik.services.generators.custom.date.configs.DateGeneratorConfig;
 
 @Service
 public class DateRandomGenerator extends AbstractRandomGenerator<LocalDate, DateGeneratorConfig> {
@@ -34,9 +33,8 @@ public class DateRandomGenerator extends AbstractRandomGenerator<LocalDate, Date
 
             long startEpochDay = startDate.toEpochDay();
             long endEpochDay = endDate.toEpochDay();
-            LocalDate generateDate = LocalDate.ofEpochDay(
-                    ThreadLocalRandom.current().nextLong(startEpochDay, endEpochDay)
-            );
+            LocalDate generateDate =
+                    LocalDate.ofEpochDay(ThreadLocalRandom.current().nextLong(startEpochDay, endEpochDay));
 
             if (generateDate.isAfter(endDate)) {
                 iteration++;
@@ -53,7 +51,6 @@ public class DateRandomGenerator extends AbstractRandomGenerator<LocalDate, Date
             iteration++;
             generatedDates.add(generateDate);
         }
-
 
         return generatedDates;
     }

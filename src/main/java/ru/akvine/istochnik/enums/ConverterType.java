@@ -11,13 +11,13 @@ public enum ConverterType {
     /**
      * Конвертеры для чисел
      */
-    ABS("abs","converter.abs.code"),
+    ABS("abs", "converter.abs.code"),
     CEIL("ceil", "converter.ceil.code"),
-    COS("cos","converter.cos.code"),
+    COS("cos", "converter.cos.code"),
     SIN("sin", "converter.sin.code"),
-    DIVIDE("divide","converter.divide.code"),
-    FLOOR("floor","converter.floor.code"),
-    MINUS("minus","converter.minus.code"),
+    DIVIDE("divide", "converter.divide.code"),
+    FLOOR("floor", "converter.floor.code"),
+    MINUS("minus", "converter.minus.code"),
     PLUS("plus", "converter.plus.code"),
     POW("pow", "converter.pow.code"),
     ROUND("round", "converter.round.code"),
@@ -60,7 +60,6 @@ public enum ConverterType {
     RANDOM_CASE("randomCase", "converter.random.case.code"),
     MD5("md5", "converter.md5.code"),
     SHA256("sha256", "converter.sha256.code"),
-
 
     /**
      * Общие конвертеры

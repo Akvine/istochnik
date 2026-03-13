@@ -1,11 +1,10 @@
 package ru.akvine.istochnik.services.generators.custom.inn.personal;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 
 @Service
 public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGeneratorConfig> {
@@ -74,9 +73,8 @@ public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGener
     }
 
     private static int calculateControlDigit(String innPart, boolean first) {
-        int[] weights = first
-                ? new int[]{2, 4, 10, 3, 5, 9, 4, 6, 8, 0}
-                : new int[]{3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8};
+        int[] weights =
+                first ? new int[] {2, 4, 10, 3, 5, 9, 4, 6, 8, 0} : new int[] {3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8};
 
         int sum = 0;
         for (int i = 0; i < weights.length; i++) {

@@ -1,11 +1,10 @@
 package ru.akvine.istochnik.services.generators.custom.inn.org;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 
 @Service
 public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGeneratorConfig> {
@@ -77,5 +76,4 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
 
         return (sum % 11) % 10;
     }
-
 }

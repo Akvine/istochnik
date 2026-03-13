@@ -1,15 +1,14 @@
 package ru.akvine.istochnik.config;
 
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.akvine.compozit.commons.utils.ThreadsUtils;
 import ru.akvine.istochnik.config.async.ParallelExecutorProperties;
 import ru.akvine.istochnik.config.async.TaskExecutor;
-
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 @Configuration
 @RequiredArgsConstructor

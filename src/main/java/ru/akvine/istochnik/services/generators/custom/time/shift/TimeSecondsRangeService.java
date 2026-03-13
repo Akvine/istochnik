@@ -1,11 +1,10 @@
 package ru.akvine.istochnik.services.generators.custom.time.shift;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.enums.DateShiftType;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.enums.DateShiftType;
 
 @Service
 public class TimeSecondsRangeService extends AbstractTimeRangeService<LocalTime, Integer> {

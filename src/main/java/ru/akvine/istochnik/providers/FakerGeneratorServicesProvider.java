@@ -1,9 +1,8 @@
 package ru.akvine.istochnik.providers;
 
+import java.util.Map;
 import ru.akvine.istochnik.enums.Topic;
 import ru.akvine.istochnik.services.FakerGeneratorService;
-
-import java.util.Map;
 
 public record FakerGeneratorServicesProvider(Map<Topic, FakerGeneratorService> fakeGeneratorServices) {
     public FakerGeneratorService getByTopic(Topic topic) {

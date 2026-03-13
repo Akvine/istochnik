@@ -1,13 +1,12 @@
 package ru.akvine.istochnik.services.dto;
 
+import java.util.List;
+import java.util.Set;
+import java.util.random.RandomGenerator;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.enums.Topic;
-
-import java.util.List;
-import java.util.Set;
-import java.util.random.RandomGenerator;
 
 @Data
 @Accessors(chain = true)

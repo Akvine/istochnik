@@ -23,8 +23,7 @@ public class DateTimeConfigMapperService implements ConfigMapperService<DateTime
                         .setStart(DateTimeUtils.toLocalDateTime(config.getStart()))
                         .setEnd(DateTimeUtils.toLocalDateTime(config.getEnd()))
                         .setShiftCount(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep())),
-                config.getRandomGenerator()
-        );
+                config.getRandomGenerator());
     }
 
     @Override

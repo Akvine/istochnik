@@ -1,10 +1,9 @@
 package ru.akvine.istochnik.utils;
 
+import java.io.ByteArrayOutputStream;
 import lombok.experimental.UtilityClass;
 import org.apache.poi.ss.usermodel.Workbook;
 import ru.akvine.istochnik.exceptions.WorkbookMappingException;
-
-import java.io.ByteArrayOutputStream;
 
 @UtilityClass
 public class POIUtils {

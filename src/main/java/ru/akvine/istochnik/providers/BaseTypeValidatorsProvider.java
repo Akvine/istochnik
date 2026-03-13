@@ -1,10 +1,9 @@
 package ru.akvine.istochnik.providers;
 
+import java.util.Map;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.validators.type.BaseTypeValidator;
-
-import java.util.Map;
 
 public record BaseTypeValidatorsProvider(Map<BaseType, BaseTypeValidator> validators) {
 

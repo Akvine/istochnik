@@ -1,19 +1,16 @@
 package ru.akvine.istochnik.services.converters.string;
 
+import java.util.List;
+import java.util.random.RandomGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.ConverterType;
 
-import java.util.List;
-import java.util.random.RandomGenerator;
-
 @Service
 public class RepeatConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input,
-                                String[] arguments,
-                                RandomGenerator randomGenerator,
-                                double probability) {
+    public List<String> convert(
+            List<String> input, String[] arguments, RandomGenerator randomGenerator, double probability) {
         int count;
         if (arguments.length != 0 && StringUtils.isNotBlank(arguments[0])) {
             count = Integer.parseInt(arguments[0]);
@@ -21,8 +18,10 @@ public class RepeatConverter extends StringConverter<String, String> {
             count = 1;
         }
 
-        return input.stream().map(value -> randomGenerator.nextDouble() < probability ?
-                        String.valueOf(value).repeat(Math.max(0, count)) : value)
+        return input.stream()
+                .map(value -> randomGenerator.nextDouble() < probability
+                        ? String.valueOf(value).repeat(Math.max(0, count))
+                        : value)
                 .toList();
     }
 

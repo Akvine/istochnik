@@ -12,12 +12,7 @@ public class OgrnConfigMapperService implements ConfigMapperService<OgrnGenerato
     public OgrnGeneratorConfig map(Config config) {
         Asserts.isNotNull(config);
         return new OgrnGeneratorConfig(
-                config.getSize(),
-                config.isNotNull(),
-                config.isUnique(),
-                config.isValid(),
-                config.getRandomGenerator()
-        );
+                config.getSize(), config.isNotNull(), config.isUnique(), config.isValid(), config.getRandomGenerator());
     }
 
     @Override

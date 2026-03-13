@@ -1,11 +1,10 @@
 package ru.akvine.istochnik.api.common.converters;
 
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.utils.MathUtils;
 import ru.akvine.istochnik.enums.BaseType;
-
-import java.util.List;
 
 @Component
 public class DoubleTypeConverter implements TypeConverter<Double> {

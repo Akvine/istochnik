@@ -1,13 +1,12 @@
 package ru.akvine.istochnik.services.generators.custom.datetime.configs;
 
+import java.util.random.RandomGenerator;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.custom.datetime.DateTimeShiftRange;
-
-import java.util.random.RandomGenerator;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -18,12 +17,13 @@ public class DateTimeGeneratorConfig extends Config {
     private final RangeType rangeType;
     private final DateTimeShiftRange dateTimeShiftRange;
 
-    public DateTimeGeneratorConfig(int size,
-                                   boolean notNull,
-                                   boolean unique,
-                                   RangeType rangeType,
-                                   DateTimeShiftRange dateTimeShiftRange,
-                                   RandomGenerator randomGenerator) {
+    public DateTimeGeneratorConfig(
+            int size,
+            boolean notNull,
+            boolean unique,
+            RangeType rangeType,
+            DateTimeShiftRange dateTimeShiftRange,
+            RandomGenerator randomGenerator) {
         super(size, randomGenerator);
         this.notNull = notNull;
         this.unique = unique;

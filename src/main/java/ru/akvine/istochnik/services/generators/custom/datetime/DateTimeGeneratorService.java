@@ -1,21 +1,21 @@
 package ru.akvine.istochnik.services.generators.custom.datetime;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.providers.DateTimeRangeServicesProvider;
 import ru.akvine.istochnik.services.generators.custom.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.custom.datetime.random.DateTimeRandomGenerator;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Service
 public class DateTimeGeneratorService {
     private final DateTimeRandomGenerator dateTimeRandomGenerator;
     private final DateTimeRangeServicesProvider dateTimeRangeServicesProvider;
 
-    public DateTimeGeneratorService(DateTimeRandomGenerator dateTimeRandomGenerator,
-                                    DateTimeRangeServicesProvider dateTimeRangeServicesProvider) {
+    public DateTimeGeneratorService(
+            DateTimeRandomGenerator dateTimeRandomGenerator,
+            DateTimeRangeServicesProvider dateTimeRangeServicesProvider) {
         this.dateTimeRandomGenerator = dateTimeRandomGenerator;
         this.dateTimeRangeServicesProvider = dateTimeRangeServicesProvider;
     }
@@ -25,7 +25,8 @@ public class DateTimeGeneratorService {
             return dateTimeRandomGenerator.generate(config);
         } else {
             DateTimeShiftRange shiftRange = config.getDateTimeShiftRange();
-            return (List<LocalDateTime>) dateTimeRangeServicesProvider.getByType(shiftRange.getDateShiftType())
+            return (List<LocalDateTime>) dateTimeRangeServicesProvider
+                    .getByType(shiftRange.getDateShiftType())
                     .range(shiftRange.getStart(), shiftRange.getEnd(), shiftRange.getShiftCount());
         }
     }

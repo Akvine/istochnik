@@ -11,11 +11,8 @@ public class ImeiConfigMapperService implements ConfigMapperService<ImeiGenerato
     @Override
     public ImeiGeneratorConfig map(Config config) {
         Asserts.isNotNull(config);
-        return new ImeiGeneratorConfig(config.getSize(),
-                config.isNotNull(),
-                config.isUnique(),
-                config.isValid(),
-                config.getRandomGenerator());
+        return new ImeiGeneratorConfig(
+                config.getSize(), config.isNotNull(), config.isUnique(), config.isValid(), config.getRandomGenerator());
     }
 
     @Override

@@ -1,9 +1,8 @@
 package ru.akvine.istochnik.api.common.detectors;
 
+import java.util.List;
 import org.springframework.stereotype.Component;
 import ru.akvine.istochnik.enums.BaseType;
-
-import java.util.List;
 
 @Component
 public class DoubleDetector extends AbstractDetector<Double> {

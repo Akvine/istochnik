@@ -1,14 +1,12 @@
 package ru.akvine.istochnik.controllers.dto.validation;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)

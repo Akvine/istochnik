@@ -1,12 +1,11 @@
 package ru.akvine.istochnik.services.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.exceptions.AddColumnException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Accessors(chain = true)
@@ -26,16 +25,11 @@ public class Table {
 
         if (values.size() != rowsCount) {
             String errorMessage = String.format(
-                    "Column size = [%s] is not equal to init rows count = [%s]",
-                    values.size(), rowsCount
-            );
+                    "Column size = [%s] is not equal to init rows count = [%s]", values.size(), rowsCount);
             throw new AddColumnException(errorMessage);
         }
 
-        columns.add(new Column()
-                .setName(columnName)
-                .setValues(values)
-        );
+        columns.add(new Column().setName(columnName).setValues(values));
     }
 
     public int getColumnsCount() {

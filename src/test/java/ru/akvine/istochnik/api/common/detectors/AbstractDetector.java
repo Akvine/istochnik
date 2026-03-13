@@ -1,9 +1,8 @@
 package ru.akvine.istochnik.api.common.detectors;
 
-import org.springframework.util.CollectionUtils;
-
 import java.util.List;
 import java.util.Objects;
+import org.springframework.util.CollectionUtils;
 
 public abstract class AbstractDetector<T> implements Detector<T> {
     protected List<T> clearOfNull(List<T> values) {
@@ -11,8 +10,6 @@ public abstract class AbstractDetector<T> implements Detector<T> {
             throw new IllegalArgumentException("Values is empty!");
         }
 
-        return values.stream()
-                .filter(Objects::nonNull)
-                .toList();
+        return values.stream().filter(Objects::nonNull).toList();
     }
 }

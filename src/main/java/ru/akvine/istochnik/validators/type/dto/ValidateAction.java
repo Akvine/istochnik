@@ -1,11 +1,10 @@
 package ru.akvine.istochnik.validators.type.dto;
 
+import java.util.Collection;
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.compozit.commons.istochnik.ConverterDto;
-
-import java.util.Collection;
-import java.util.List;
 
 @Data
 @Accessors(chain = true)

@@ -1,13 +1,12 @@
 package ru.akvine.istochnik.services.generators.base.number.doubles;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.base.number.doubles.configs.DoubleGeneratorConfig;
 import ru.akvine.istochnik.services.generators.base.number.doubles.random.DoubleRandomGenerator;
 import ru.akvine.istochnik.services.generators.base.number.doubles.shift.DoubleRangeService;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

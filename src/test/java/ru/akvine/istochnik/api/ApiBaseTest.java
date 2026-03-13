@@ -2,6 +2,7 @@ package ru.akvine.istochnik.api;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,24 +20,18 @@ import ru.akvine.istochnik.api.common.providers.DetectorsProvider;
 import ru.akvine.istochnik.api.common.providers.TypeConvertersProvider;
 import ru.akvine.istochnik.enums.BaseType;
 
-import java.util.List;
-
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(
-        classes = IstochnikApplication.class,
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = IstochnikApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-
-@ComponentScan({
-        "ru.akvine.istochnik"
-})
+@ComponentScan({"ru.akvine.istochnik"})
 public abstract class ApiBaseTest {
     @LocalServerPort
     private int port;
 
     @Autowired
     private TypeConvertersProvider typeConvertersProvider;
+
     @Autowired
     private DetectorsProvider detectorsProvider;
 
@@ -59,8 +54,7 @@ public abstract class ApiBaseTest {
     }
 
     protected byte[] sendGenerateRequest(GenerateTableRequest request) {
-        return RestAssured
-                .given()
+        return RestAssured.given()
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
                 .body(request)

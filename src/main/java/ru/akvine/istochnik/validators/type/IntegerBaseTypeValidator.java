@@ -1,5 +1,7 @@
 package ru.akvine.istochnik.validators.type;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.ConverterDto;
@@ -10,9 +12,6 @@ import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.providers.converters.IntegerConvertersProvider;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -52,7 +51,7 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
             errorMessages.add(exception.getMessage());
         }
 
-        if (start != null &&  end != null && start > end) {
+        if (start != null && end != null && start > end) {
             errorMessages.add(ErrorMessages.END_LESS_START_ERROR);
         }
 
@@ -62,7 +61,6 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
             } catch (NumberFormatException exception) {
                 errorMessages.add(ErrorMessages.STEP_FIELD_ERROR);
             }
-
 
             if (step != null && step < 0) {
                 errorMessages.add(ErrorMessages.STEP_FIELD_INVALID_ERROR);
@@ -75,7 +73,6 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
             }
         }
 
-
         for (ConverterDto converterDto : action.getConverters()) {
 
             String converterName = converterDto.getName();
@@ -87,26 +84,24 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
                     errorMessages.add(String.format(
                             ErrorMessages.CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR,
                             converterName,
-                            getBaseType().getValue()
-                    ));
+                            getBaseType().getValue()));
                 }
 
                 if (converterDto.getProbability() < 0 || converterDto.getProbability() > 100) {
                     errorMessages.add(String.format(
-                       ErrorMessages.CONVERTER_PROBABILITY_ERROR,
-                       converterName, converterDto.getProbability()
-                    ));
+                            ErrorMessages.CONVERTER_PROBABILITY_ERROR, converterName, converterDto.getProbability()));
                 }
 
-                integerConvertersProvider.getConverter(converterType).validateArgument(
-                        mapArguments(converterDto.getArguments()));
+                integerConvertersProvider
+                        .getConverter(converterType)
+                        .validateArgument(mapArguments(converterDto.getArguments()));
             } catch (UnsupportedTypeGenerationException exception) {
                 errorMessages.add(String.format(ErrorMessages.CONVERTER_NOT_SUPPORTED_ERROR, converterName));
             } catch (IllegalArgumentException argumentException) {
-                errorMessages.add(
-                        String.format(DoubleBaseTypeValidator.ErrorMessages.CONVERTER_HAS_INVALID_ARGUMENTS,
-                                converterName,
-                                argumentException.getMessage()));
+                errorMessages.add(String.format(
+                        DoubleBaseTypeValidator.ErrorMessages.CONVERTER_HAS_INVALID_ARGUMENTS,
+                        converterName,
+                        argumentException.getMessage()));
             }
         }
 
@@ -129,8 +124,10 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
         String INVALID_RANGE_OR_STEP_ERROR = "field [end] or [step] is invalid. Possible generated rows less than size";
 
         String CONVERTER_NOT_SUPPORTED_ERROR = "converter with name [%s] is not supported by app";
-        String CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR = "converter with name [%s] is not supported for type = [%s]";
-        String CONVERTER_PROBABILITY_ERROR = "for converter with name [%s] invalid probability = [%s]. Can be only between 0 and 100";
+        String CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR =
+                "converter with name [%s] is not supported for type = [%s]";
+        String CONVERTER_PROBABILITY_ERROR =
+                "for converter with name [%s] invalid probability = [%s]. Can be only between 0 and 100";
     }
 
     // TODO: дублирование кода тут и в IntegerConverterService

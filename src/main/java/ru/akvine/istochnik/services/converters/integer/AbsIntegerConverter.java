@@ -1,18 +1,15 @@
 package ru.akvine.istochnik.services.converters.integer;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.enums.ConverterType;
-
 import java.util.List;
 import java.util.random.RandomGenerator;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.enums.ConverterType;
 
 @Service
 public class AbsIntegerConverter extends IntegerConverter<Long, Double> {
     @Override
-    public List<Long> convert(List<Long> input,
-                              Double[] argument,
-                              RandomGenerator randomGenerator,
-                              double probability) {
+    public List<Long> convert(
+            List<Long> input, Double[] argument, RandomGenerator randomGenerator, double probability) {
         return input.stream()
                 .map(value -> randomGenerator.nextDouble() < probability ? Math.abs(value) : value)
                 .toList();

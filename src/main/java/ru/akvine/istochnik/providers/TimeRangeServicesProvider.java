@@ -1,10 +1,9 @@
 package ru.akvine.istochnik.providers;
 
-import ru.akvine.istochnik.enums.DateShiftType;
-import ru.akvine.istochnik.services.generators.custom.time.shift.AbstractTimeRangeService;
-
 import java.time.LocalTime;
 import java.util.Map;
+import ru.akvine.istochnik.enums.DateShiftType;
+import ru.akvine.istochnik.services.generators.custom.time.shift.AbstractTimeRangeService;
 
 public record TimeRangeServicesProvider(Map<DateShiftType, AbstractTimeRangeService<LocalTime, Integer>> services) {
     public AbstractTimeRangeService<LocalTime, Integer> getByType(DateShiftType type) {

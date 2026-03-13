@@ -1,23 +1,21 @@
 package ru.akvine.istochnik.services.converters.string;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.enums.ConverterType;
-
 import java.util.List;
 import java.util.random.RandomGenerator;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.enums.ConverterType;
 
 @Service
 public class SubstringConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input,
-                                String[] arguments,
-                                RandomGenerator randomGenerator,
-                                double probability) {
+    public List<String> convert(
+            List<String> input, String[] arguments, RandomGenerator randomGenerator, double probability) {
         int beginIndex = Integer.parseInt(arguments[0]);
         int endIndex = Integer.parseInt(arguments[1]);
 
-        return input.stream().map(value -> randomGenerator.nextDouble() < probability ?
-                        value.substring(beginIndex, endIndex) : value)
+        return input.stream()
+                .map(value ->
+                        randomGenerator.nextDouble() < probability ? value.substring(beginIndex, endIndex) : value)
                 .toList();
     }
 

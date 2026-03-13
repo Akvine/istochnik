@@ -1,12 +1,11 @@
 package ru.akvine.istochnik.services.generators.custom.snils;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
-import ru.akvine.istochnik.services.generators.custom.snils.configs.SnilsGeneratorConfig;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
+import ru.akvine.istochnik.services.generators.custom.snils.configs.SnilsGeneratorConfig;
 
 @Service
 public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGeneratorConfig> {

@@ -12,12 +12,7 @@ public class InnOrgConfigMapperService implements ConfigMapperService<InnOrgGene
     public InnOrgGeneratorConfig map(Config config) {
         Asserts.isNotNull(config);
         return new InnOrgGeneratorConfig(
-                config.getSize(),
-                config.isNotNull(),
-                config.isUnique(),
-                config.isValid(),
-                config.getRandomGenerator()
-        );
+                config.getSize(), config.isNotNull(), config.isUnique(), config.isValid(), config.getRandomGenerator());
     }
 
     @Override

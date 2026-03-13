@@ -1,12 +1,11 @@
 package ru.akvine.istochnik.services.impl;
 
+import java.util.Locale;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import ru.akvine.istochnik.enums.Language;
 import ru.akvine.istochnik.services.MessageResolverService;
-
-import java.util.Locale;
-import java.util.Map;
 
 @RequiredArgsConstructor
 public class MessageResolverServiceImpl implements MessageResolverService {

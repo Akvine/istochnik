@@ -23,8 +23,7 @@ public class IntegerConfigMapperService implements ConfigMapperService<IntegerGe
                         .setEnd(Long.parseLong(config.getEnd()))
                         .setStep(StringUtils.isBlank(config.getStep()) ? 1 : Long.parseLong(config.getStep())),
                 config.getConverters(),
-                config.getRandomGenerator()
-        );
+                config.getRandomGenerator());
     }
 
     @Override

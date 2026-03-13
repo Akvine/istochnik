@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.services.impl.generators.custom;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.CustomType;
@@ -11,25 +12,23 @@ import ru.akvine.istochnik.services.generators.custom.inn.personal.InnPersGenera
 import ru.akvine.istochnik.services.generators.custom.inn.personal.InnPersGeneratorConfig;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
 
-import java.util.List;
-
 @Service
 public class InnPersRandomGeneratorService extends AbstractCustomTypeGeneratorService {
     private final InnPersGenerator innPersGenerator;
 
     @Autowired
-    protected InnPersRandomGeneratorService(ConfigMapperServicesProvider configMappersProvider,
-                                            InnPersGenerator innPersGenerator,
-                                            ConverterConvertersProvider converterConvertersProvider) {
+    protected InnPersRandomGeneratorService(
+            ConfigMapperServicesProvider configMappersProvider,
+            InnPersGenerator innPersGenerator,
+            ConverterConvertersProvider converterConvertersProvider) {
         super(configMappersProvider, converterConvertersProvider);
         this.innPersGenerator = innPersGenerator;
     }
 
     @Override
     public List<?> generate(Config config, List<Converter> converters) {
-        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper = configMappersProvider
-                .configMappers()
-                .get(getType().getName());
+        ConfigMapperService<? extends ru.akvine.istochnik.services.generators.Config> configMapper =
+                configMappersProvider.configMappers().get(getType().getName());
         InnPersGeneratorConfig mappedConfig = (InnPersGeneratorConfig) configMapper.map(config);
         return apply((List<?>) innPersGenerator.generate(mappedConfig), converters, config.getRandomGenerator());
     }

@@ -1,5 +1,10 @@
 package ru.akvine.istochnik.services.handlers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.apache.commons.lang3.StringUtils;
@@ -15,12 +20,6 @@ import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.random.RandomGenerator;
 
 @Service
 @RequiredArgsConstructor
@@ -50,10 +49,7 @@ public class FakerGenerationHandler implements GenerationHandler {
             }
         } else {
             if (testRandomizerEnabled) {
-                faker = new Faker(
-                        new Locale(language),
-                        (Random) randomGenerator
-                );
+                faker = new Faker(new Locale(language), (Random) randomGenerator);
             } else {
                 faker = new Faker(new Locale(language));
             }
@@ -65,27 +61,33 @@ public class FakerGenerationHandler implements GenerationHandler {
             if (rangeType == RangeType.SHIFT) {
                 if (notNull) {
                     Topic currentTopic = topics.get(iterationCount % topics.size());
-                    generatedValues.add(fakerGeneratorServicesProvider.getByTopic(currentTopic).generate(faker));
+                    generatedValues.add(fakerGeneratorServicesProvider
+                            .getByTopic(currentTopic)
+                            .generate(faker));
                 } else {
                     boolean isNull = randomGenerator.nextBoolean();
                     if (isNull) {
                         generatedValues.add(null);
                     } else {
                         Topic currentTopic = topics.get(iterationCount % topics.size());
-                        generatedValues.add(fakerGeneratorServicesProvider.getByTopic(currentTopic).generate(faker));
+                        generatedValues.add(fakerGeneratorServicesProvider
+                                .getByTopic(currentTopic)
+                                .generate(faker));
                     }
                 }
             } else {
                 if (notNull) {
                     Topic topic = CollectionUtils.getRandomElement(topics);
-                    generatedValues.add(fakerGeneratorServicesProvider.getByTopic(topic).generate(faker));
+                    generatedValues.add(
+                            fakerGeneratorServicesProvider.getByTopic(topic).generate(faker));
                 } else {
                     boolean isNull = randomGenerator.nextBoolean();
                     if (isNull) {
                         generatedValues.add(null);
                     } else {
                         Topic topic = CollectionUtils.getRandomElement(topics);
-                        generatedValues.add(fakerGeneratorServicesProvider.getByTopic(topic).generate(faker));
+                        generatedValues.add(
+                                fakerGeneratorServicesProvider.getByTopic(topic).generate(faker));
                     }
                 }
             }
@@ -93,10 +95,9 @@ public class FakerGenerationHandler implements GenerationHandler {
             iterationCount++;
         }
 
-        return converterConvertersProvider.getByType(BaseType.STRING).apply(
-                generatedValues,
-                converters,
-                generateColumn.getConfig().getRandomGenerator());
+        return converterConvertersProvider
+                .getByType(BaseType.STRING)
+                .apply(generatedValues, converters, generateColumn.getConfig().getRandomGenerator());
     }
 
     @Override

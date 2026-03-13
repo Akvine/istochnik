@@ -1,9 +1,8 @@
 package ru.akvine.istochnik.services.generators.base.number.doubles.shift;
 
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DoubleRangeService extends AbstractDoubleRangeService<Double, Double> {

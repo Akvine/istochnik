@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.services.handlers;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
@@ -12,14 +13,11 @@ import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class AlgorithmGenerationHandler implements GenerationHandler {
     private final CustomTypeGeneratorServicesProvider customTypeGeneratorServicesProvider;
     private final BaseTypeGeneratorServicesProvider baseTypeGeneratorServicesProvider;
-
 
     @Override
     public List<?> handle(GenerateColumn generateColumn) {
@@ -32,7 +30,8 @@ public class AlgorithmGenerationHandler implements GenerationHandler {
         if (baseType != null) {
             generatedValues = baseTypeGeneratorServicesProvider.get(baseType).generate(config, converters);
         } else {
-            generatedValues = customTypeGeneratorServicesProvider.get(customType).generate(config, converters);
+            generatedValues =
+                    customTypeGeneratorServicesProvider.get(customType).generate(config, converters);
         }
         return generatedValues;
     }

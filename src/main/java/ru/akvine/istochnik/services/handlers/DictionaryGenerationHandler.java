@@ -1,5 +1,8 @@
 package ru.akvine.istochnik.services.handlers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.compozit.commons.utils.CollectionUtils;
@@ -10,10 +13,6 @@ import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,10 +43,9 @@ public class DictionaryGenerationHandler implements GenerationHandler {
             }
         }
 
-        return converterConvertersProvider.getByType(BaseType.STRING).apply(
-                generatedValues,
-                converters,
-                generateColumn.getConfig().getRandomGenerator());
+        return converterConvertersProvider
+                .getByType(BaseType.STRING)
+                .apply(generatedValues, converters, generateColumn.getConfig().getRandomGenerator());
     }
 
     @Override

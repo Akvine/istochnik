@@ -1,5 +1,7 @@
 package ru.akvine.istochnik.services.file.excel;
 
+import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,13 +18,10 @@ import ru.akvine.istochnik.services.dto.Table;
 import ru.akvine.istochnik.services.file.FileTableGenerator;
 import ru.akvine.istochnik.utils.POIUtils;
 
-import java.io.IOException;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class XlsxFileTableGenerator implements FileTableGenerator {
-    private final static String SHEET_NAME = "sheet";
+    private static final String SHEET_NAME = "sheet";
 
     private final CellConfigurersProvider cellConfigurersProvider;
 
@@ -48,11 +47,8 @@ public class XlsxFileTableGenerator implements FileTableGenerator {
                         createdCell.setCellValue("");
                         createdCell.setCellValue(createdCell.getStringCellValue());
                     } else {
-                        cellConfigurersProvider
-                                .getByClass(value.getClass())
-                                .configure(createdCell, value);
+                        cellConfigurersProvider.getByClass(value.getClass()).configure(createdCell, value);
                     }
-
                 }
             }
 

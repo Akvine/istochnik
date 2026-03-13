@@ -9,14 +9,14 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 @Getter
 @AllArgsConstructor
 public enum CustomType {
-    UUID(BaseType.STRING, "custom.type.uuid.code","uuid"),
-    DATETIME(BaseType.STRING, "custom.type.datetime.code","datetime"),
-    TIME(BaseType.STRING, "custom.type.time.code","time"),
-    DATE(BaseType.STRING, "custom.type.date.code","date"),
-    SNILS(BaseType.INTEGER, "custom.type.snils.code","snils"),
-    INN_ORG(BaseType.INTEGER, "custom.type.inn.org.code","inn_org"),
-    INN_PERSONAL(BaseType.INTEGER, "custom.type.inn.pers.code","inn_pers"),
-    OGRN(BaseType.INTEGER, "custom.type.ogrn.code","ogrn"),
+    UUID(BaseType.STRING, "custom.type.uuid.code", "uuid"),
+    DATETIME(BaseType.STRING, "custom.type.datetime.code", "datetime"),
+    TIME(BaseType.STRING, "custom.type.time.code", "time"),
+    DATE(BaseType.STRING, "custom.type.date.code", "date"),
+    SNILS(BaseType.INTEGER, "custom.type.snils.code", "snils"),
+    INN_ORG(BaseType.INTEGER, "custom.type.inn.org.code", "inn_org"),
+    INN_PERSONAL(BaseType.INTEGER, "custom.type.inn.pers.code", "inn_pers"),
+    OGRN(BaseType.INTEGER, "custom.type.ogrn.code", "ogrn"),
     IMEI(BaseType.STRING, "custom.type.imei.code", "imei");
 
     private final BaseType baseType;

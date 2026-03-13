@@ -1,5 +1,7 @@
 package ru.akvine.istochnik.validators.type;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.ConverterDto;
@@ -9,9 +11,6 @@ import ru.akvine.istochnik.enums.ConverterType;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.providers.converters.StringConvertersProvider;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -23,10 +22,9 @@ public class StringBaseTypeValidator implements BaseTypeValidator {
         Asserts.isNotNull(columnName);
         Asserts.isNotNull(action);
 
-
         List<String> errorMessages = new ArrayList<>();
 
-        for (ConverterDto converterDto: action.getConverters()) {
+        for (ConverterDto converterDto : action.getConverters()) {
 
             String converterName = converterDto.getName();
             ConverterType converterType;
@@ -37,26 +35,25 @@ public class StringBaseTypeValidator implements BaseTypeValidator {
                     errorMessages.add(String.format(
                             DoubleBaseTypeValidator.ErrorMessages.CONVERTER_NOT_SUPPORTED_FOR_BASE_TYPE_ERROR,
                             converterName,
-                            getBaseType().getValue()
-                    ));
+                            getBaseType().getValue()));
                 }
 
                 if (converterDto.getProbability() < 0 || converterDto.getProbability() > 100) {
                     errorMessages.add(String.format(
-                            ErrorMessages.CONVERTER_PROBABILITY_ERROR,
-                            converterName, converterDto.getProbability()
-                    ));
+                            ErrorMessages.CONVERTER_PROBABILITY_ERROR, converterName, converterDto.getProbability()));
                 }
 
-                stringConvertersProvider.getConverter(converterType).validateArgument(
-                        mapArguments(converterDto.getArguments()));
+                stringConvertersProvider
+                        .getConverter(converterType)
+                        .validateArgument(mapArguments(converterDto.getArguments()));
             } catch (UnsupportedTypeGenerationException exception) {
-                errorMessages.add(String.format(DoubleBaseTypeValidator.ErrorMessages.CONVERTER_NOT_SUPPORTED_ERROR, converterName));
+                errorMessages.add(String.format(
+                        DoubleBaseTypeValidator.ErrorMessages.CONVERTER_NOT_SUPPORTED_ERROR, converterName));
             } catch (IllegalArgumentException argumentException) {
-                errorMessages.add(
-                        String.format(DoubleBaseTypeValidator.ErrorMessages.CONVERTER_HAS_INVALID_ARGUMENTS,
-                                converterName,
-                                argumentException.getMessage()));
+                errorMessages.add(String.format(
+                        DoubleBaseTypeValidator.ErrorMessages.CONVERTER_HAS_INVALID_ARGUMENTS,
+                        converterName,
+                        argumentException.getMessage()));
             }
         }
 
@@ -64,7 +61,8 @@ public class StringBaseTypeValidator implements BaseTypeValidator {
     }
 
     interface ErrorMessages {
-        String CONVERTER_PROBABILITY_ERROR = "for converter with name [%s] invalid probability = [%s]. Can be only between 0 and 100";
+        String CONVERTER_PROBABILITY_ERROR =
+                "for converter with name [%s] invalid probability = [%s]. Can be only between 0 and 100";
     }
 
     @Override

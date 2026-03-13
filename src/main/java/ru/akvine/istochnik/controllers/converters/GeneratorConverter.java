@@ -1,6 +1,13 @@
 package ru.akvine.istochnik.controllers.converters;
 
 import jakarta.annotation.PostConstruct;
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,20 +26,13 @@ import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 import ru.akvine.istochnik.services.dto.GenerateData;
 
-import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
 @Component
 @Slf4j
 public class GeneratorConverter {
 
     @Value("${test.randomizer.enabled}")
     private boolean testRandomizerEnabled;
+
     @Value("${test.randomizer.seed:#{null}}")
     private Integer seed;
 
@@ -41,7 +41,8 @@ public class GeneratorConverter {
     @PostConstruct
     public void init() {
         if (testRandomizerEnabled) {
-            log.info("Test randomizer implementation by {} class is using! Use only for TEST environment!!!",
+            log.info(
+                    "Test randomizer implementation by {} class is using! Use only for TEST environment!!!",
                     Random.class.getSimpleName());
         }
     }
@@ -63,24 +64,29 @@ public class GeneratorConverter {
                 }
             }
 
-            generateColumns.add(
-                    new GenerateColumn()
-                            .setName(column.getName())
-                            .setBaseType(baseType)
-                            .setCustomType(customType)
-                            .setConfig(buildConfig(size, column.getConfig()))
-                            .setGenerationStrategy(strategy)
-                            .setErrorResolveInfo(column.getErrorResolveInfo())
-                            .setConvertToString(column.isConvertToString())
-                            .setPostConverters(CollectionUtils.isEmpty(column.getPostConverters()) ?
-                                    List.of() : column.getPostConverters().stream().map(this::buildConverter).toList())
-                            .setConverters(CollectionUtils.isEmpty(column.getConverters()) ?
-                                    List.of() : column.getConverters().stream().map(this::buildConverter).toList()));
+            generateColumns.add(new GenerateColumn()
+                    .setName(column.getName())
+                    .setBaseType(baseType)
+                    .setCustomType(customType)
+                    .setConfig(buildConfig(size, column.getConfig()))
+                    .setGenerationStrategy(strategy)
+                    .setErrorResolveInfo(column.getErrorResolveInfo())
+                    .setConvertToString(column.isConvertToString())
+                    .setPostConverters(
+                            CollectionUtils.isEmpty(column.getPostConverters())
+                                    ? List.of()
+                                    : column.getPostConverters().stream()
+                                            .map(this::buildConverter)
+                                            .toList())
+                    .setConverters(
+                            CollectionUtils.isEmpty(column.getConverters())
+                                    ? List.of()
+                                    : column.getConverters().stream()
+                                            .map(this::buildConverter)
+                                            .toList()));
         }
 
-        return new GenerateData()
-                .setSize(size)
-                .setGenerateColumns(generateColumns);
+        return new GenerateData().setSize(size).setGenerateColumns(generateColumns);
     }
 
     public ResponseEntity<?> convertToResponse(byte[] file, String reportType) {
@@ -101,10 +107,7 @@ public class GeneratorConverter {
                 throw new UnsupportedOperationException("Mime type = [" + reportType + "] is not supported!");
         }
 
-        return ResponseEntity
-                .ok()
-                .header(HttpHeaders.CONTENT_TYPE, mimeType)
-                .body(file);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, mimeType).body(file);
     }
 
     private Converter buildConverter(ConverterDto converterDto) {
@@ -126,15 +129,14 @@ public class GeneratorConverter {
                 // TODO: сделать осмысленный Runtime Exception
                 throw new RuntimeException(exception);
             }
-
         }
 
         return new Config()
                 .setSize(size)
                 .setNotNull(configDto.isNotNull())
                 .setUnique(configDto.isUnique())
-                .setRangeType(StringUtils.isBlank(configDto.getRangeType()) ?
-                        null : RangeType.from(configDto.getRangeType()))
+                .setRangeType(
+                        StringUtils.isBlank(configDto.getRangeType()) ? null : RangeType.from(configDto.getRangeType()))
                 .setStart(configDto.getStart())
                 .setEnd(configDto.getEnd())
                 .setStep(configDto.getStep())
@@ -155,8 +157,7 @@ public class GeneratorConverter {
         }
 
         return dictionaries.stream()
-                .map(dictionary -> dictionary.stream()
-                        .toList())
+                .map(dictionary -> dictionary.stream().toList())
                 .toList();
     }
 }

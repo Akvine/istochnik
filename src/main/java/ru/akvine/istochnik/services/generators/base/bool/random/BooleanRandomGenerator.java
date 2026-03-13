@@ -1,11 +1,10 @@
 package ru.akvine.istochnik.services.generators.base.bool.random;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.services.generators.base.bool.configs.BooleanGeneratorConfig;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class BooleanRandomGenerator extends AbstractRandomGenerator<Boolean, BooleanGeneratorConfig> {

@@ -1,12 +1,11 @@
 package ru.akvine.istochnik.services.generators.base.number.integer.random;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
-import ru.akvine.istochnik.services.generators.base.number.integer.configs.IntegerGeneratorConfig;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
+import ru.akvine.istochnik.services.generators.base.number.integer.configs.IntegerGeneratorConfig;
 
 @Service
 public class IntegerRandomGenerator extends AbstractRandomGenerator<Long, IntegerGeneratorConfig> {

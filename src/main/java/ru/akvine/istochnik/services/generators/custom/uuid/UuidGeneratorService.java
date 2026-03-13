@@ -1,13 +1,12 @@
 package ru.akvine.istochnik.services.generators.custom.uuid;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.services.generators.Config;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.random.RandomGenerator;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.services.generators.Config;
 
 @Service
 @RequiredArgsConstructor
@@ -26,10 +25,10 @@ public class UuidGeneratorService {
                 random.nextBytes(randomBytes);
 
                 // Установка версии 4 и варианта
-                randomBytes[6] &= 0x0f;  // очищаем версию
-                randomBytes[6] |= 0x40;  // устанавливаем версию 4
-                randomBytes[8] &= 0x3f;  // очищаем вариант
-                randomBytes[8] |= 0x80;  // устанавливаем вариант RFC 4122
+                randomBytes[6] &= 0x0f; // очищаем версию
+                randomBytes[6] |= 0x40; // устанавливаем версию 4
+                randomBytes[8] &= 0x3f; // очищаем вариант
+                randomBytes[8] |= 0x80; // устанавливаем вариант RFC 4122
 
                 long msb = 0;
                 long lsb = 0;

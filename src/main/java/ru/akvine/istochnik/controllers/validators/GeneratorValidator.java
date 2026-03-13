@@ -1,23 +1,20 @@
 package ru.akvine.istochnik.controllers.validators;
 
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
-import ru.akvine.compozit.commons.istochnik.ConverterDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.controllers.dto.validation.ValidationColumnsInfo;
 import ru.akvine.istochnik.enums.*;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 import ru.akvine.istochnik.providers.BaseTypeValidatorsProvider;
-import ru.akvine.istochnik.validators.type.DoubleBaseTypeValidator;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
-
-import java.util.List;
-import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -26,8 +23,10 @@ public class GeneratorValidator {
 
     @Value("${max.dictionaries.per.column}")
     private int maxDictionariesPerColumn;
+
     @Value("${max.dictionary.elements.count}")
     private int maxDictionaryElementsCount;
+
     @Value("${max.generation.rows.size}")
     private int maxGenerationRowsSize;
 
@@ -44,8 +43,7 @@ public class GeneratorValidator {
 
         if (rowsCount > maxGenerationRowsSize) {
             String message = String.format(
-                    "Can't generate rows size = [%s] more than max = [%s]",
-                    rowsCount, maxGenerationRowsSize);
+                    "Can't generate rows size = [%s] more than max = [%s]", rowsCount, maxGenerationRowsSize);
             sb.append(message);
         }
 
@@ -79,8 +77,7 @@ public class GeneratorValidator {
                         if (dictionary.size() > maxDictionaryElementsCount) {
                             String errorMessage = String.format(
                                     "Dictionary has more max limit = [%s] elements count = [%s]",
-                                    dictionary.size(), maxDictionaryElementsCount
-                            );
+                                    dictionary.size(), maxDictionaryElementsCount);
                             validationColumnsInfo.put(columnName, errorMessage);
                         }
                     });
@@ -117,7 +114,8 @@ public class GeneratorValidator {
             }
         }
 
-        if (StringUtils.isNotBlank(sb.toString()) || !validationColumnsInfo.getColumnNamesPerErrorMessages().isEmpty()) {
+        if (StringUtils.isNotBlank(sb.toString())
+                || !validationColumnsInfo.getColumnNamesPerErrorMessages().isEmpty()) {
             throw new ConfigValidationException(sb.toString(), validationColumnsInfo);
         }
     }

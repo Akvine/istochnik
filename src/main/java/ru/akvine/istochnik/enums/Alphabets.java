@@ -1,26 +1,28 @@
 package ru.akvine.istochnik.enums;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.util.List;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public enum Alphabets {
-    ENGLISH("en", List.of('A','B','C','D','E','F','G','H','I','J','K','L','M',
-            'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-            'a','b','c','d','e','f','g','h','i','j','k','l','m',
-            'n','o','p','q','r','s','t','u','v','w','x','y','z')),
-    RUSSIAN("ru", List.of('А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й','К','Л','М',
-            'Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ъ',
-            'Ы','Ь','Э','Ю','Я',
-            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м',
-            'н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ',
-            'ы','ь','э','ю','я'));
+    ENGLISH(
+            "en",
+            List.of(
+                    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                    'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                    'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z')),
+    RUSSIAN(
+            "ru",
+            List.of(
+                    'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т',
+                    'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё',
+                    'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
+                    'ъ', 'ы', 'ь', 'э', 'ю', 'я'));
 
-    public final static Map<Character, String> TRANSLIT_MAP = Map.<Character, String>ofEntries(
+    public static final Map<Character, String> TRANSLIT_MAP = Map.<Character, String>ofEntries(
             Map.entry('А', "A"), Map.entry('а', "a"),
             Map.entry('Б', "B"), Map.entry('б', "b"),
             Map.entry('В', "V"), Map.entry('в', "v"),
@@ -53,8 +55,7 @@ public enum Alphabets {
             Map.entry('Ь', ""), Map.entry('ь', ""),
             Map.entry('Э', "E"), Map.entry('э', "e"),
             Map.entry('Ю', "Yu"), Map.entry('ю', "yu"),
-            Map.entry('Я', "Ya"), Map.entry('я', "ya")
-    );
+            Map.entry('Я', "Ya"), Map.entry('я', "ya"));
 
     private final String code;
     private final List<Character> chars;

@@ -1,13 +1,12 @@
 package ru.akvine.istochnik.services.generators.base.number.integer;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.services.generators.base.number.integer.configs.IntegerGeneratorConfig;
 import ru.akvine.istochnik.services.generators.base.number.integer.random.IntegerRandomGenerator;
 import ru.akvine.istochnik.services.generators.base.number.integer.shift.AbstractIntegerRangeService;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

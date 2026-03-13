@@ -12,12 +12,7 @@ public class InnPersonalConfigMapperService implements ConfigMapperService<InnPe
     public InnPersGeneratorConfig map(Config config) {
         Asserts.isNotNull(config);
         return new InnPersGeneratorConfig(
-                config.getSize(),
-                config.isNotNull(),
-                config.isUnique(),
-                config.isValid(),
-                config.getRandomGenerator()
-        );
+                config.getSize(), config.isNotNull(), config.isUnique(), config.isValid(), config.getRandomGenerator());
     }
 
     @Override

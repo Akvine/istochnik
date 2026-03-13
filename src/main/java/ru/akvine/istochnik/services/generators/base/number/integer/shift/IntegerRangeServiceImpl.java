@@ -1,9 +1,8 @@
 package ru.akvine.istochnik.services.generators.base.number.integer.shift;
 
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class IntegerRangeServiceImpl extends AbstractIntegerRangeService<Long, Long> {

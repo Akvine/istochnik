@@ -12,12 +12,7 @@ public class SnilsConfigMapperService implements ConfigMapperService<SnilsGenera
     public SnilsGeneratorConfig map(Config config) {
         Asserts.isNotNull(config);
         return new SnilsGeneratorConfig(
-                config.getSize(),
-                config.isNotNull(),
-                config.isUnique(),
-                config.isValid(),
-                config.getRandomGenerator()
-        );
+                config.getSize(), config.isNotNull(), config.isUnique(), config.isValid(), config.getRandomGenerator());
     }
 
     @Override

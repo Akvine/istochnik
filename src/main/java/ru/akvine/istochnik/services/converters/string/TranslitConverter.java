@@ -1,34 +1,34 @@
 package ru.akvine.istochnik.services.converters.string;
 
+import java.util.List;
+import java.util.random.RandomGenerator;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.Alphabets;
 import ru.akvine.istochnik.enums.ConverterType;
 
-import java.util.List;
-import java.util.random.RandomGenerator;
-
 @Service
 public class TranslitConverter extends StringConverter<String, String> {
     @Override
-    public List<String> convert(List<String> input,
-                                String[] arguments,
-                                RandomGenerator randomGenerator,
-                                double probability) {
-        return input.stream().map(value -> {
-            if (randomGenerator.nextDouble() < probability) {
-                StringBuilder sb = new StringBuilder();
-                char[] chars = value.toCharArray();
-                for (char charValue : chars) {
-                    if (Character.isAlphabetic(charValue) && Alphabets.RUSSIAN.getChars().contains(charValue)) {
-                        sb.append(Alphabets.TRANSLIT_MAP.get(charValue));
-                    }
-                }
+    public List<String> convert(
+            List<String> input, String[] arguments, RandomGenerator randomGenerator, double probability) {
+        return input.stream()
+                .map(value -> {
+                    if (randomGenerator.nextDouble() < probability) {
+                        StringBuilder sb = new StringBuilder();
+                        char[] chars = value.toCharArray();
+                        for (char charValue : chars) {
+                            if (Character.isAlphabetic(charValue)
+                                    && Alphabets.RUSSIAN.getChars().contains(charValue)) {
+                                sb.append(Alphabets.TRANSLIT_MAP.get(charValue));
+                            }
+                        }
 
-                return sb.toString();
-            } else {
-                return value;
-            }
-        }).toList();
+                        return sb.toString();
+                    } else {
+                        return value;
+                    }
+                })
+                .toList();
     }
 
     @Override

@@ -1,11 +1,10 @@
 package ru.akvine.istochnik.services.generators.custom.imei;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 
 @Service
 public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGeneratorConfig> {

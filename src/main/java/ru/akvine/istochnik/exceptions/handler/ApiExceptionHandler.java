@@ -20,8 +20,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 ErrorConstants.Validation.REQUEST_FIELDS_INVALID_ERROR,
                 "Request fields have invalid states",
                 exception.getGeneralInfo(),
-                exception.getValidationColumnsInfo().getColumnNamesPerErrorMessages()
-        );
+                exception.getValidationColumnsInfo().getColumnNamesPerErrorMessages());
         return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 }

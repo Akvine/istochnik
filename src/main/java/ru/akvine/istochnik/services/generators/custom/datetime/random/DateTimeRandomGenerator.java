@@ -1,13 +1,12 @@
 package ru.akvine.istochnik.services.generators.custom.datetime.random;
 
-import org.springframework.stereotype.Service;
-import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
-import ru.akvine.istochnik.services.generators.custom.datetime.configs.DateTimeGeneratorConfig;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import org.springframework.stereotype.Service;
+import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
+import ru.akvine.istochnik.services.generators.custom.datetime.configs.DateTimeGeneratorConfig;
 
 @Service
 public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTime, DateTimeGeneratorConfig> {
@@ -52,7 +51,6 @@ public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTi
             iteration++;
             generatedDates.add(generateDate);
         }
-
 
         return generatedDates;
     }
