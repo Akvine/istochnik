@@ -9,7 +9,6 @@ import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.controllers.converters.GeneratorConverter;
 import ru.akvine.istochnik.controllers.v1.meta.GeneratorControllerMeta;
 import ru.akvine.istochnik.controllers.validators.GeneratorValidator;
-import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.services.FileTableService;
 import ru.akvine.istochnik.services.GeneratorFacade;
 import ru.akvine.istochnik.services.dto.GenerateData;
@@ -28,7 +27,7 @@ public class GeneratorController implements GeneratorControllerMeta {
         generatorValidator.verifyGenerateTableRequest(request);
         GenerateData generateData = generatorConverter.convertToGenerateData(request);
         Table table = generatorFacade.generate(generateData);
-        return generatorConverter.convertToResponse(
-                fileTableService.generateFile(FileType.from(request.getFileType()), table), request.getFileType());
+        byte[] file = fileTableService.generateFile(generateData.getFileType(), table);
+        return generatorConverter.convertToResponse(file, generateData.getFileType());
     }
 }

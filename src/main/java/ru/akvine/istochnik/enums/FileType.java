@@ -7,22 +7,23 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum FileType {
-    CSV,
-    XLSX;
+    CSV("application/csv"),
+    XLSX("application/xlsx"),
+    SQL("application/sql");
+
+    private final String mimeType;
 
     public static FileType from(String value) {
         if (StringUtils.isBlank(value)) {
             throw new IllegalArgumentException("FileType can't be blank or null");
         }
 
-        switch (value.toLowerCase()) {
-            case "csv" -> {
-                return CSV;
+        for (FileType type : values()) {
+            if (type.toString().equalsIgnoreCase(value)) {
+                return type;
             }
-            case "xlsx" -> {
-                return XLSX;
-            }
-            default -> throw new UnsupportedOperationException("FileType = [" + value + "] is not supported!");
         }
+
+        throw new UnsupportedOperationException("Target file type = [" + value + "] is not supported by app");
     }
 }
