@@ -3,6 +3,8 @@ package ru.akvine.istochnik.api;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import java.util.List;
+import java.util.Objects;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ import ru.akvine.istochnik.enums.BaseType;
 @ActiveProfiles("test")
 @ComponentScan({"ru.akvine.istochnik"})
 public abstract class ApiBaseTest {
+    protected final String SEED = "0";
+
     @LocalServerPort
     private int port;
 
@@ -47,6 +51,16 @@ public abstract class ApiBaseTest {
 
     protected boolean isRandom(BaseType type, List values) {
         return detectorsProvider.get(type).isRandom(values);
+    }
+
+    protected boolean containsNull(List values) {
+        for (Object value : values) {
+            if (value == null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected boolean isShifted(BaseType type, List values) {

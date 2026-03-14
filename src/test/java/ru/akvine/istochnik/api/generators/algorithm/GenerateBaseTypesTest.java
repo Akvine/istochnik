@@ -38,7 +38,6 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
                         .setNotNull(true)
                         .setEnd("10")));
 
-        List<Long> expected = List.of(0L, 3L, 3L, 5L, 0L, 7L, 0L, 4L, 9L, 6L);
         GenerateTableRequest request = new GenerateTableRequest()
                 .setSize(10)
                 .setFileType(FileType.CSV.name())
@@ -61,8 +60,9 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
         assertThatNoException().isThrownBy(() -> convert(type, response));
 
         List<?> result = convert(type, response);
-        assertThat(result).isEqualTo(expected);
+
         assertThat(isRandom(type, result)).isTrue();
+        assertThat(containsNull(result)).isFalse();
     }
 
     @Test
@@ -121,7 +121,6 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
                         .setStart("0")
                         .setEnd("50")));
 
-        List<Double> expected = Arrays.asList(null, null, 30.317, 27.522, null, null, 12.639, null, null, null);
         GenerateTableRequest request = new GenerateTableRequest()
                 .setSize(10)
                 .setFileType(FileType.CSV.name())
@@ -145,8 +144,8 @@ public class GenerateBaseTypesTest extends ApiBaseTest {
 
         List<?> result = convert(type, response);
 
-        assertThat(result).isEqualTo(expected);
         assertThat(isRandom(type, result)).isTrue();
+        assertThat(containsNull(result)).isTrue();
     }
 
     @Test

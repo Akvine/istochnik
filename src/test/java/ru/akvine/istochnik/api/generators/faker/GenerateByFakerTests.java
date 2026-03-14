@@ -27,6 +27,7 @@ public class GenerateByFakerTests extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setNotNull(true)
                         .setLanguage("ru")
+                        .setSeed(SEED)
                         .setTopics(List.of(Topic.PHONE_NUMBER.name()))));
 
         GenerateTableRequest request = new GenerateTableRequest()
@@ -35,16 +36,16 @@ public class GenerateByFakerTests extends ApiBaseTest {
                 .setColumns(columnsToGenerate);
 
         List<String> expected = List.of(
-                "8 (381) 753-11-94",
-                "8 (835) 254-45-10",
-                "8 (401) 472-03-22",
-                "8 (815) 772-25-38",
-                "8 (352) 508-14-62",
-                "8 (347) 667-68-73",
-                "8 (493) 588-71-88",
-                "8 (352) 716-07-25",
-                "8 (415) 795-29-31",
-                "8 (471) 846-37-25");
+                "8 (863) 786-40-27",
+                "8 (485) 371-06-63",
+                "8 (472) 906-11-42",
+                "8 (861) 438-14-74",
+                "8 (855) 141-72-84",
+                "8 (383) 181-47-07",
+                "8 (390) 432-48-08",
+                "8 (492) 515-22-14",
+                "8 (848) 771-28-27",
+                "8 (395) 540-86-64");
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();
@@ -68,6 +69,7 @@ public class GenerateByFakerTests extends ApiBaseTest {
                 .setConfig(new ConfigDto()
                         .setRangeType(RangeType.RANDOM.toString())
                         .setNotNull(true)
+                        .setSeed(SEED)
                         .setTopics(List.of(Topic.PHONE_NUMBER.name()))));
 
         GenerateTableRequest request = new GenerateTableRequest()
@@ -76,16 +78,16 @@ public class GenerateByFakerTests extends ApiBaseTest {
                 .setColumns(columnsToGenerate);
 
         List<String> expected = List.of(
-                "(505) 625-3119",
-                "(480) 654-4510",
-                "(730) 647-2032",
-                "(730) 205-7722",
-                "(730) 235-0550",
-                "(472) 462-2976",
-                "(305) 287-3778",
-                "(730) 687-1888",
-                "(786) 407-2507",
-                "(305) 212-9311");
+                "(916) 364-0278",
+                "(505) 771-0663",
+                "(730) 669-0611",
+                "(505) 228-4381",
+                "(505) 282-1141",
+                "(730) 234-7611",
+                "(915) 876-3643",
+                "(983) 808-9125",
+                "(305) 721-4195",
+                "(305) 268-2799");
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();

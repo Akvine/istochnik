@@ -67,7 +67,8 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10"))
+                        .setEnd("10")
+                        .setSeed(SEED))
                 .setConverters(List.of(new ConverterDto()
                         .setName(ConverterType.DIVIDE.getName())
                         .setArguments(new Object[] {"2.0D"}))));
@@ -77,7 +78,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
-        List<Long> expected = List.of(0L, 1L, 1L, 2L, 0L, 3L, 0L, 2L, 4L, 3L);
+        List<Long> expected = List.of(1L, 2L, 2L, 1L, 4L, 3L, 2L, 0L, 3L, 0L);
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();
@@ -172,7 +173,8 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10"))
+                        .setEnd("10")
+                        .setSeed(SEED))
                 .setConverters(List.of(
                         new ConverterDto().setName(ConverterType.PLUS.getName()).setArguments(new Object[] {"1.0D"}))));
 
@@ -181,7 +183,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
-        List<Long> expected = List.of(1L, 4L, 4L, 6L, 1L, 8L, 1L, 5L, 10L, 7L);
+        List<Long> expected = List.of(4L, 6L, 5L, 3L, 10L, 7L, 6L, 2L, 7L, 2L);
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();
@@ -241,7 +243,8 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10"))
+                        .setEnd("10")
+                        .setSeed(SEED))
                 .setConverters(List.of(new ConverterDto()
                         .setName(ConverterType.MINUS.getName())
                         .setArguments(new Object[] {"1.0D"}))));
@@ -251,7 +254,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
-        List<Long> expected = List.of(-1L, 2L, 2L, 4L, -1L, 6L, -1L, 3L, 8L, 5L);
+        List<Long> expected = List.of(2L, 4L, 3L, 1L, 8L, 5L, 4L, 0L, 5L, 0L);
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();
@@ -378,7 +381,8 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10"))
+                        .setEnd("10")
+                        .setSeed(SEED))
                 .setConverters(List.of(new ConverterDto()
                         .setName(ConverterType.FACTORIAL.getName())
                         .setArguments(new Object[] {"1.0D"}))));
@@ -388,7 +392,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
-        List<Long> expected = List.of(1L, 6L, 6L, 120L, 1L, 5040L, 1L, 24L, 362880L, 720L);
+        List<Long> expected = List.of(6L, 120L, 24L, 2L, 362880L, 720L, 120L, 1L, 720L, 1L);
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();
@@ -402,7 +406,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
 
     @Test
     @DisplayName("Apply NEGATIVE converter to INTEGER [notNull = true] - successfully")
-    void successful_apply_negative_converter_at_int_values_witn_notNull() {
+    void successful_apply_negative_converter_at_int_values_with_notNull() {
         BaseType type = BaseType.INTEGER;
 
         List<ColumnDto> columnsToGenerate = List.of(new ColumnDto()
@@ -412,7 +416,8 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setConfig(new ConfigDto()
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
-                        .setEnd("10"))
+                        .setEnd("10")
+                        .setSeed(SEED))
                 .setConverters(List.of(new ConverterDto().setName(ConverterType.NEGATIVE.getName()))));
 
         GenerateTableRequest request = new GenerateTableRequest()
@@ -420,15 +425,16 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
+        // TODO: можно заменить на Arrays.asList(...);
         List<Long> expected = new ArrayList<>();
         expected.add(null);
-        expected.add(null);
-        expected.add(-9L);
+        expected.add(-4L);
+        expected.add(0L);
+        expected.add(0L);
+        expected.add(-6L);
         expected.add(-5L);
         expected.add(null);
-        expected.add(null);
-        expected.add(-3L);
-        expected.add(null);
+        expected.add(-5L);
         expected.add(null);
         expected.add(null);
         byte[] response = sendGenerateRequest(request);
@@ -455,7 +461,8 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10"))
+                        .setEnd("10")
+                        .setSeed(SEED))
                 .setConverters(List.of(new ConverterDto().setName(ConverterType.NEGATIVE.getName()))));
 
         GenerateTableRequest request = new GenerateTableRequest()
@@ -463,7 +470,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
-        List<Long> expected = List.of(0L, -3L, -3L, -5L, 0L, -7L, 0L, -4L, -9L, -6L);
+        List<Long> expected = List.of(-3L, -5L, -4L, -2L, -9L, -6L, -5L, -1L, -6L, -1L);
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();
@@ -488,7 +495,8 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10"))
+                        .setEnd("10")
+                        .setSeed(SEED))
                 .setConverters(List.of(
                         new ConverterDto().setName(ConverterType.POW.getName()).setArguments(new Object[] {"2.0D"}))));
 
@@ -497,7 +505,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
-        List<Long> expected = List.of(0L, 9L, 9L, 25L, 0L, 49L, 0L, 16L, 81L, 36L);
+        List<Long> expected = List.of(9L, 25L, 16L, 4L, 81L, 36L, 25L, 1L, 36L, 1L);
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();
@@ -522,7 +530,8 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setConfig(new ConfigDto()
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
-                        .setEnd("10"))
+                        .setEnd("10")
+                        .setSeed(SEED))
                 .setConverters(List.of(
                         new ConverterDto().setName(ConverterType.POW.getName()).setArguments(new Object[] {"2.0D"}))));
 
@@ -531,7 +540,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
-        List<Long> expected = Arrays.asList(null, null, 81L, 25L, null, null, 9L, null, null, null);
+        List<Long> expected = Arrays.asList(null, 16L, 0L, 0L, 36L, 25L, null, 25L, null, null);
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();
@@ -590,7 +599,8 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10"))
+                        .setEnd("10")
+                        .setSeed(SEED))
                 .setConverters(List.of(new ConverterDto().setName(ConverterType.SHUFFLE.getName()))));
 
         GenerateTableRequest request = new GenerateTableRequest()
@@ -598,7 +608,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
-        List<Long> expected = List.of(6L, 7L, 4L, 0L, 9L, 3L, 0L, 3L, 0L, 5L);
+        List<Long> expected = List.of(6L, 5L, 6L, 1L, 5L, 1L, 4L, 3L, 2L, 9L);
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();

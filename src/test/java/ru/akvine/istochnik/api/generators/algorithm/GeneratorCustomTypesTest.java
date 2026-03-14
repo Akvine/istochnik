@@ -255,7 +255,8 @@ public class GeneratorCustomTypesTest extends ApiBaseTest {
                         .setNotNull(true)
                         .setRangeType(RangeType.RANDOM.getType().toUpperCase())
                         .setStart("14:00:00")
-                        .setEnd("19:00:00")));
+                        .setEnd("19:00:00")
+                        .setSeed(SEED)));
 
         GenerateTableRequest request = new GenerateTableRequest()
                 .setSize(10)
