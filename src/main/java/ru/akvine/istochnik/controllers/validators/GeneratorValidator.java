@@ -1,5 +1,6 @@
 package ru.akvine.istochnik.controllers.validators;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +15,6 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 import ru.akvine.istochnik.providers.GenerationStrategyValidatorsProvider;
 import ru.akvine.istochnik.validators.strategy.GenerationStrategyValidator;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

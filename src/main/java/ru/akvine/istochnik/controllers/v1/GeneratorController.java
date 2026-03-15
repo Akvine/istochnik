@@ -24,8 +24,9 @@ public class GeneratorController implements GeneratorControllerMeta {
     private final FileTableService fileTableService;
 
     @Override
-    public ResponseEntity<?> generate(@RequestParam(value = "tableName", required = false, defaultValue = "response") String tableName,
-                                      @RequestBody @Valid GenerateTableRequest request) {
+    public ResponseEntity<?> generate(
+            @RequestParam(value = "tableName", required = false, defaultValue = "response") String tableName,
+            @RequestBody @Valid GenerateTableRequest request) {
         generatorValidator.verifyGenerateTableRequest(request);
         GenerateData generateData = generatorConverter.convertToGenerateData(request);
         Table table = generatorFacade.generate(generateData);

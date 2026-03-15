@@ -3,7 +3,6 @@ package ru.akvine.istochnik.services.handlers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import lombok.RequiredArgsConstructor;
 import nl.flotsam.xeger.Xeger;
 import org.springframework.stereotype.Service;
@@ -43,9 +42,8 @@ public class RegexpGenerationHandler implements GenerationHandler {
                 .apply(generatedValues, converters, generateColumn.getConfig().getRandomGenerator());
     }
 
-    private void generateByRandomRangeType(List<String> generatedValues,
-                                           GenerateColumn generateColumn,
-                                           Set<String> regexps) {
+    private void generateByRandomRangeType(
+            List<String> generatedValues, GenerateColumn generateColumn, Set<String> regexps) {
         if (generateColumn.getConfig().isNotNull()) {
             String regexp = CollectionUtils.getRandomElement(regexps);
             Xeger generator = new Xeger(regexp);
@@ -64,9 +62,8 @@ public class RegexpGenerationHandler implements GenerationHandler {
         }
     }
 
-    private void generateByShiftRangeType(List<String> generatedValues,
-                                          GenerateColumn generateColumn,
-                                          Set<String> regexps) {
+    private void generateByShiftRangeType(
+            List<String> generatedValues, GenerateColumn generateColumn, Set<String> regexps) {
         regexps.forEach(regexp -> {
             if (generatedValues.size() == generateColumn.getConfig().getSize()) {
                 return;

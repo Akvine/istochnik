@@ -1,9 +1,8 @@
 package ru.akvine.istochnik.providers;
 
+import java.util.Map;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.validators.strategy.GenerationStrategyValidator;
-
-import java.util.Map;
 
 public record GenerationStrategyValidatorsProvider(Map<GenerationStrategy, GenerationStrategyValidator> validators) {
     public GenerationStrategyValidator getByType(GenerationStrategy type) {

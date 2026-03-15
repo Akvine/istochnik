@@ -1,5 +1,8 @@
 package ru.akvine.istochnik.services.handlers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.akvine.compozit.commons.utils.CollectionUtils;
@@ -10,10 +13,6 @@ import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,9 +42,8 @@ public class DictionaryGenerationHandler implements GenerationHandler {
                 .apply(generatedValues, converters, generateColumn.getConfig().getRandomGenerator());
     }
 
-    private void generateByShiftRange(List<String> generatedValues,
-                                      GenerateColumn generateColumn,
-                                      List<String> dictionary) {
+    private void generateByShiftRange(
+            List<String> generatedValues, GenerateColumn generateColumn, List<String> dictionary) {
         dictionary.forEach(element -> {
             if (generatedValues.size() == generateColumn.getConfig().getSize()) {
                 return;
@@ -72,9 +70,8 @@ public class DictionaryGenerationHandler implements GenerationHandler {
         });
     }
 
-    private void generateByRandomRange(List<String> generatedValues,
-                                       GenerateColumn generateColumn,
-                                       List<String> dictionary) {
+    private void generateByRandomRange(
+            List<String> generatedValues, GenerateColumn generateColumn, List<String> dictionary) {
         if (generateColumn.getConfig().isUnique()) {
             if (generateColumn.getConfig().isNotNull()) {
                 String element = CollectionUtils.getRandomElement(dictionary);

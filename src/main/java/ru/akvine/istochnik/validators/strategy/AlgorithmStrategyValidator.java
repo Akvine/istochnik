@@ -1,5 +1,7 @@
 package ru.akvine.istochnik.validators.strategy;
 
+import java.util.List;
+import java.util.Objects;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,9 +11,6 @@ import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.providers.BaseTypeValidatorsProvider;
-
-import java.util.List;
-import java.util.Objects;
 
 @Component
 public class AlgorithmStrategyValidator extends AbstractGenerationStrategyValidator {
@@ -36,9 +35,8 @@ public class AlgorithmStrategyValidator extends AbstractGenerationStrategyValida
             baseType = customType.getBaseType();
         }
 
-        List<String> errors = baseTypeValidatorsProvider
-                .get(baseType)
-                .validate(columnName, buildValidateAction(rowsCount, column));
+        List<String> errors =
+                baseTypeValidatorsProvider.get(baseType).validate(columnName, buildValidateAction(rowsCount, column));
 
         if (CollectionUtils.isNotEmpty(errors)) {
             validationColumnsInfo.put(columnName, errors);

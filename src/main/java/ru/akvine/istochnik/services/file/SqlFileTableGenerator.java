@@ -1,10 +1,9 @@
 package ru.akvine.istochnik.services.file;
 
+import java.nio.charset.StandardCharsets;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.services.dto.Table;
-
-import java.nio.charset.StandardCharsets;
 
 @Service
 public class SqlFileTableGenerator implements FileTableGenerator {
@@ -16,12 +15,7 @@ public class SqlFileTableGenerator implements FileTableGenerator {
         String columnNames = extractColumnNames(table);
 
         StringBuilder sql = new StringBuilder();
-        sql
-                .append("INSERT INTO ")
-                .append(" (")
-                .append(columnNames)
-                .append(") VALUES\n");
-
+        sql.append("INSERT INTO ").append(" (").append(columnNames).append(") VALUES\n");
 
         // Перебираем строки
         for (int row = 0; row < rowsCount; row++) {
@@ -78,8 +72,7 @@ public class SqlFileTableGenerator implements FileTableGenerator {
             case Boolean b -> {
                 return b ? "TRUE" : "FALSE";
             }
-            default -> {
-            }
+            default -> {}
         }
 
         throw new IllegalArgumentException("Unsupported value type: " + value.getClass());

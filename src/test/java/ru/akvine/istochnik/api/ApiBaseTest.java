@@ -3,8 +3,6 @@ package ru.akvine.istochnik.api;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import java.util.List;
-import java.util.Objects;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

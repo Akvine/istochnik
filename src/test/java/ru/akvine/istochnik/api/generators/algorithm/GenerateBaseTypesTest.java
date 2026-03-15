@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

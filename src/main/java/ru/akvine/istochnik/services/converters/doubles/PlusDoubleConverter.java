@@ -5,7 +5,8 @@ import java.util.random.RandomGenerator;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.ConverterType;
 
-// TODO: добавить второй необязательный параметр. Если он добавлен - должно генерироваться число для суммирования между ними
+// TODO: добавить второй необязательный параметр. Если он добавлен - должно генерироваться число для суммирования между
+// ними
 @Service
 public class PlusDoubleConverter extends DoubleConverter<Double, Double> {
     @Override

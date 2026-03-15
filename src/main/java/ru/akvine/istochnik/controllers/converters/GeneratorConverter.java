@@ -1,6 +1,13 @@
 package ru.akvine.istochnik.controllers.converters;
 
 import jakarta.annotation.PostConstruct;
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,14 +25,6 @@ import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 import ru.akvine.istochnik.services.dto.GenerateData;
-
-import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 @Component
 @Slf4j
@@ -77,17 +76,19 @@ public class GeneratorConverter {
                             CollectionUtils.isEmpty(column.getPostConverters())
                                     ? List.of()
                                     : column.getPostConverters().stream()
-                                    .map(this::buildConverter)
-                                    .toList())
+                                            .map(this::buildConverter)
+                                            .toList())
                     .setConverters(
                             CollectionUtils.isEmpty(column.getConverters())
                                     ? List.of()
                                     : column.getConverters().stream()
-                                    .map(this::buildConverter)
-                                    .toList()));
+                                            .map(this::buildConverter)
+                                            .toList()));
         }
 
-        return new GenerateData().setSize(size).setGenerateColumns(generateColumns)
+        return new GenerateData()
+                .setSize(size)
+                .setGenerateColumns(generateColumns)
                 .setFileType(FileType.from(request.getFileType()));
     }
 
@@ -95,10 +96,12 @@ public class GeneratorConverter {
         Asserts.isNotNull(file);
         Asserts.isNotNull(fileType);
 
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE,
-                        fileType.getMimeType())
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + tableName + fileType.getExtensionWithDot() + "\"").body(file);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, fileType.getMimeType())
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + tableName + fileType.getExtensionWithDot() + "\"")
+                .body(file);
     }
 
     private Converter buildConverter(ConverterDto converterDto) {
