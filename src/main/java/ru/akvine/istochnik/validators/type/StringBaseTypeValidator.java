@@ -12,6 +12,7 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.providers.converters.StringConvertersProvider;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
 
+// TODO: вынести одинаковый код в абстрактный класс AbstractBaseTypeValidator
 @Component
 @RequiredArgsConstructor
 public class StringBaseTypeValidator implements BaseTypeValidator {
@@ -38,7 +39,7 @@ public class StringBaseTypeValidator implements BaseTypeValidator {
                             getBaseType().getValue()));
                 }
 
-                if (converterDto.getProbability() < 0 || converterDto.getProbability() > 100) {
+                if (converterDto.getProbability() <= 0 || converterDto.getProbability() > 100) {
                     errorMessages.add(String.format(
                             ErrorMessages.CONVERTER_PROBABILITY_ERROR, converterName, converterDto.getProbability()));
                 }

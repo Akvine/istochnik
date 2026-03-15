@@ -11,6 +11,7 @@ import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.providers.BaseTypeValidatorsProvider;
 
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class DictionaryStrategyValidator extends AbstractGenerationStrategyValidator {
@@ -45,6 +46,26 @@ public class DictionaryStrategyValidator extends AbstractGenerationStrategyValid
                     validationColumnsInfo.put(columnName, errorMessage);
                 }
             });
+        }
+
+        if (column.getConfig().isUnique()) {
+            int allElementsCount = 0;
+            for (Set<String> dictionary : column.getConfig().getDictionaries()) {
+                allElementsCount += dictionary.size();
+            }
+
+            // Если колонока может содержать null, но unique = true, то добавляем доп. значение
+            if (!column.getConfig().isNotNull()) {
+                allElementsCount += 1;
+            }
+
+            if (rowsCount > allElementsCount) {
+                String errorMessage = String.format(
+                        "Rows count = [%s] greater than available unique elements = [%s]. " +
+                                "Disable field \"unique\": \"true\", increase dictionaries elements or reduce rows count",
+                        rowsCount, allElementsCount);
+                validationColumnsInfo.put(columnName, errorMessage);
+            }
         }
 
         List<String> errors = baseTypeValidatorsProvider

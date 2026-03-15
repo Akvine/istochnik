@@ -89,7 +89,7 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator {
                             getBaseType().getValue()));
                 }
 
-                if (converterDto.getProbability() < 0 || converterDto.getProbability() > 100) {
+                if (converterDto.getProbability() <= 0 || converterDto.getProbability() > 100) {
                     errorMessages.add(String.format(
                             IntegerBaseTypeValidator.ErrorMessages.CONVERTER_PROBABILITY_ERROR,
                             converterName,

@@ -22,12 +22,6 @@ import java.util.List;
 public class GeneratorValidator {
     private final GenerationStrategyValidatorsProvider generationStrategyValidatorsProvider;
 
-    @Value("${max.dictionaries.per.column}")
-    private int maxDictionariesPerColumn;
-
-    @Value("${max.dictionary.elements.count}")
-    private int maxDictionaryElementsCount;
-
     @Value("${max.generation.rows.size}")
     private int maxGenerationRowsSize;
 

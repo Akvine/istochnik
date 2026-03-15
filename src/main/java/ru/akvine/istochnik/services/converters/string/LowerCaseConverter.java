@@ -11,7 +11,13 @@ public class LowerCaseConverter extends StringConverter<String, String> {
     public List<String> convert(
             List<String> input, String[] arguments, RandomGenerator randomGenerator, double probability) {
         return input.stream()
-                .map(value -> randomGenerator.nextDouble() < probability ? value.toLowerCase() : value)
+                .map(value -> {
+                    if (value == null) {
+                        return null;
+                    } else {
+                        return randomGenerator.nextDouble() < probability ? value.toLowerCase() : value;
+                    }
+                })
                 .toList();
     }
 
