@@ -1,9 +1,6 @@
 package ru.akvine.istochnik.controllers.validators;
 
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,15 +8,19 @@ import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.controllers.dto.validation.ValidationColumnsInfo;
-import ru.akvine.istochnik.enums.*;
+import ru.akvine.istochnik.enums.FileType;
+import ru.akvine.istochnik.enums.GenerationStrategy;
+import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
-import ru.akvine.istochnik.providers.BaseTypeValidatorsProvider;
-import ru.akvine.istochnik.validators.type.dto.ValidateAction;
+import ru.akvine.istochnik.providers.GenerationStrategyValidatorsProvider;
+import ru.akvine.istochnik.validators.strategy.GenerationStrategyValidator;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class GeneratorValidator {
-    private final BaseTypeValidatorsProvider baseTypeValidatorsProvider;
+    private final GenerationStrategyValidatorsProvider generationStrategyValidatorsProvider;
 
     @Value("${max.dictionaries.per.column}")
     private int maxDictionariesPerColumn;
@@ -60,57 +61,16 @@ public class GeneratorValidator {
         for (ColumnDto column : columns) {
             String columnName = column.getName();
 
-            GenerationStrategy strategy = null;
+            GenerationStrategy strategy;
             try {
                 strategy = GenerationStrategy.from(column.getGenerationStrategy());
-            } catch (RuntimeException exception) {
+                GenerationStrategyValidator validator = generationStrategyValidatorsProvider.getByType(strategy);
+                if (validator != null) {
+                    validator.validate(validationColumnsInfo, column, rowsCount);
+                }
+
+            } catch (UnsupportedTypeGenerationException | IllegalArgumentException exception) {
                 validationColumnsInfo.put(columnName, exception.getMessage());
-            }
-
-            if (strategy == GenerationStrategy.DICTIONARY) {
-                if (column.getConfig().getDictionaries().size() > maxDictionariesPerColumn) {
-                    validationColumnsInfo.put(
-                            columnName,
-                            "dictionaries count can't be more than max = [" + maxDictionariesPerColumn + "]");
-                } else {
-                    column.getConfig().getDictionaries().forEach(dictionary -> {
-                        if (dictionary.size() > maxDictionaryElementsCount) {
-                            String errorMessage = String.format(
-                                    "Dictionary has more max limit = [%s] elements count = [%s]",
-                                    dictionary.size(), maxDictionaryElementsCount);
-                            validationColumnsInfo.put(columnName, errorMessage);
-                        }
-                    });
-                }
-
-                List<String> errors = baseTypeValidatorsProvider
-                        .get(BaseType.STRING)
-                        .validate(columnName, buildValidateAction(rowsCount, column));
-                if (CollectionUtils.isNotEmpty(errors)) {
-                    validationColumnsInfo.put(columnName, errors);
-                }
-            }
-
-            if (strategy == GenerationStrategy.ALGORITHM) {
-                BaseType baseType = BaseType.from(column.getType());
-                CustomType customType = CustomType.from(column.getType());
-
-                if (Objects.isNull(baseType) && Objects.isNull(customType)) {
-                    validationColumnsInfo.put(columnName, "field [type] has invalid value");
-                    continue;
-                }
-
-                if (baseType == null) {
-                    baseType = customType.getBaseType();
-                }
-
-                List<String> errors = baseTypeValidatorsProvider
-                        .get(baseType)
-                        .validate(columnName, buildValidateAction(rowsCount, column));
-
-                if (CollectionUtils.isNotEmpty(errors)) {
-                    validationColumnsInfo.put(columnName, errors);
-                }
             }
         }
 
@@ -118,20 +78,5 @@ public class GeneratorValidator {
                 || !validationColumnsInfo.getColumnNamesPerErrorMessages().isEmpty()) {
             throw new ConfigValidationException(sb.toString(), validationColumnsInfo);
         }
-    }
-
-    private ValidateAction buildValidateAction(int rowsCount, ColumnDto columnDto) {
-        ValidateAction action = new ValidateAction()
-                .setRowsCount(rowsCount)
-                .setStart(columnDto.getConfig().getStart())
-                .setEnd(columnDto.getConfig().getEnd())
-                .setStep(columnDto.getConfig().getStep())
-                .setRangeType(columnDto.getConfig().getRangeType());
-
-        if (CollectionUtils.isNotEmpty(columnDto.getConverters())) {
-            action.setConverters(columnDto.getConverters());
-        }
-
-        return action;
     }
 }
