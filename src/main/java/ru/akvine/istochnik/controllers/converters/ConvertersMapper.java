@@ -17,6 +17,7 @@ public class ConvertersMapper {
     }
 
     private ConverterTypeDto buildConverterDto(BaseType type) {
+        // TODO: добавить описание каждого из конвертеров
         return new ConverterTypeDto()
                 .setType(type.getValue())
                 .setSize(type.getSupportedConverterType().size())

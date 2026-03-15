@@ -57,6 +57,7 @@ public class FakerGenerationHandler implements GenerationHandler {
 
         List<String> generatedValues = new ArrayList<>();
         int iterationCount = 0;
+        // TODO: добавить поддерку unique
         while (generatedValues.size() != size) {
             if (rangeType == RangeType.SHIFT) {
                 if (notNull) {

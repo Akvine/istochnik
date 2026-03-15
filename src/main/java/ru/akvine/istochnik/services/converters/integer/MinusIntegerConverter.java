@@ -5,6 +5,7 @@ import java.util.random.RandomGenerator;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.ConverterType;
 
+// TODO: добавить второй необязательный параметр. Если он добавлен - должно генерироваться число для разницы между ними
 @Service
 public class MinusIntegerConverter extends IntegerConverter<Long, Double> {
     @Override

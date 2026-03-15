@@ -29,6 +29,7 @@ public class RegexpGenerationHandler implements GenerationHandler {
         List<String> generatedValues = new ArrayList<>();
         RangeType rangeType = generateColumn.getConfig().getRangeType();
 
+        // TODO: добавить поддерку unique
         while (generatedValues.size() != size) {
             if (rangeType == RangeType.RANDOM) {
                 generateByRandomRangeType(generatedValues, generateColumn, regexps);
