@@ -3,6 +3,7 @@ package ru.akvine.istochnik.services.handlers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import lombok.RequiredArgsConstructor;
 import nl.flotsam.xeger.Xeger;
 import org.springframework.stereotype.Service;
@@ -30,25 +31,61 @@ public class RegexpGenerationHandler implements GenerationHandler {
 
         while (generatedValues.size() != size) {
             if (rangeType == RangeType.RANDOM) {
-                String regexp = CollectionUtils.getRandomElement(regexps);
-                Xeger generator = new Xeger(regexp);
-                String generated = generator.generate();
-                generatedValues.add(generated);
+                generateByRandomRangeType(generatedValues, generateColumn, regexps);
             } else {
-                regexps.forEach(regexp -> {
-                    if (generatedValues.size() == size) {
-                        return;
-                    }
-                    Xeger generator = new Xeger(regexp);
-                    String generated = generator.generate();
-                    generatedValues.add(generated);
-                });
+                generateByShiftRangeType(generatedValues, generateColumn, regexps);
             }
         }
 
         return converterConvertersProvider
                 .getByType(BaseType.STRING)
                 .apply(generatedValues, converters, generateColumn.getConfig().getRandomGenerator());
+    }
+
+    private void generateByRandomRangeType(List<String> generatedValues,
+                                           GenerateColumn generateColumn,
+                                           Set<String> regexps) {
+        if (generateColumn.getConfig().isNotNull()) {
+            String regexp = CollectionUtils.getRandomElement(regexps);
+            Xeger generator = new Xeger(regexp);
+            String generated = generator.generate();
+            generatedValues.add(generated);
+        } else {
+            boolean isNull = generateColumn.getConfig().getRandomGenerator().nextBoolean();
+            if (isNull) {
+                generatedValues.add(null);
+            } else {
+                String regexp = CollectionUtils.getRandomElement(regexps);
+                Xeger generator = new Xeger(regexp);
+                String generated = generator.generate();
+                generatedValues.add(generated);
+            }
+        }
+    }
+
+    private void generateByShiftRangeType(List<String> generatedValues,
+                                          GenerateColumn generateColumn,
+                                          Set<String> regexps) {
+        regexps.forEach(regexp -> {
+            if (generatedValues.size() == generateColumn.getConfig().getSize()) {
+                return;
+            }
+
+            if (generateColumn.getConfig().isNotNull()) {
+                Xeger generator = new Xeger(regexp);
+                String generated = generator.generate();
+                generatedValues.add(generated);
+            } else {
+                boolean isNull = generateColumn.getConfig().getRandomGenerator().nextBoolean();
+                if (isNull) {
+                    generatedValues.add(null);
+                } else {
+                    Xeger generator = new Xeger(regexp);
+                    String generated = generator.generate();
+                    generatedValues.add(generated);
+                }
+            }
+        });
     }
 
     @Override
