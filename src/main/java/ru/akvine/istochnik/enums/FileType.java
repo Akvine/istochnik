@@ -7,11 +7,13 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum FileType {
-    CSV("application/csv"),
-    XLSX("application/xlsx"),
-    SQL("application/sql");
+    CSV("application/csv", "csv", ".csv"),
+    XLSX("application/xlsx", "xlsx", ".xlsx"),
+    SQL("application/sql", "sql", ".sql");
 
     private final String mimeType;
+    private final String extension;
+    private final String extensionWithDot;
 
     public static FileType from(String value) {
         if (StringUtils.isBlank(value)) {

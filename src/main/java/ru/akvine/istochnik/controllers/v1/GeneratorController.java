@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.controllers.converters.GeneratorConverter;
@@ -23,11 +24,12 @@ public class GeneratorController implements GeneratorControllerMeta {
     private final FileTableService fileTableService;
 
     @Override
-    public ResponseEntity<?> generate(@RequestBody @Valid GenerateTableRequest request) {
+    public ResponseEntity<?> generate(@RequestParam(value = "tableName", required = false, defaultValue = "response") String tableName,
+                                      @RequestBody @Valid GenerateTableRequest request) {
         generatorValidator.verifyGenerateTableRequest(request);
         GenerateData generateData = generatorConverter.convertToGenerateData(request);
         Table table = generatorFacade.generate(generateData);
         byte[] file = fileTableService.generateFile(generateData.getFileType(), table);
-        return generatorConverter.convertToResponse(file, generateData.getFileType());
+        return generatorConverter.convertToResponse(file, generateData.getFileType(), tableName);
     }
 }

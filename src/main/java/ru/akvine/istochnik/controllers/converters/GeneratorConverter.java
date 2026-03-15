@@ -91,12 +91,14 @@ public class GeneratorConverter {
                 .setFileType(FileType.from(request.getFileType()));
     }
 
-    public ResponseEntity<?> convertToResponse(byte[] file, FileType fileType) {
+    public ResponseEntity<?> convertToResponse(byte[] file, FileType fileType, String tableName) {
         Asserts.isNotNull(file);
         Asserts.isNotNull(fileType);
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE,
-                fileType.getMimeType()).body(file);
+                        fileType.getMimeType())
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + tableName + fileType.getExtensionWithDot() + "\"").body(file);
     }
 
     private Converter buildConverter(ConverterDto converterDto) {
