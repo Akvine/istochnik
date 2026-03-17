@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.akvine.compozit.commons.dto.ErrorResponse;
 import ru.akvine.istochnik.constants.ErrorConstants;
 import ru.akvine.istochnik.controllers.dto.GenerateDataErrorResponse;
+import ru.akvine.istochnik.exceptions.LanguageNotSupportedException;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 
 @RestControllerAdvice
@@ -21,6 +22,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 "Request fields have invalid states",
                 exception.getGeneralInfo(),
                 exception.getValidationColumnsInfo().getColumnNamesPerErrorMessages());
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({LanguageNotSupportedException.class})
+    public ResponseEntity<?> handleLanguageNotSupportedException(LanguageNotSupportedException exception) {
+        ErrorResponse errorResponse =
+                new ErrorResponse(ErrorConstants.LANGUAGE_NOT_SUPPORTED_BY_APP, exception.getMessage());
         return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 }

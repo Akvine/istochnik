@@ -8,13 +8,17 @@ import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 @Getter
 @AllArgsConstructor
 public enum GenerationStrategy {
-    CONSTANT("constant"),
-    ALGORITHM("algorithm"),
-    DICTIONARY("dictionary"),
-    REGEXP("regexp"),
-    FAKER("faker");
+    CONSTANT("constant", "constant.strategy.description", false, false, false),
+    ALGORITHM("algorithm", "algorithm.strategy.description", true, true, true),
+    DICTIONARY("dictionary", "dictionary.strategy.description", true, true, false),
+    REGEXP("regexp", "regexp.strategy.description", false, true, false),
+    FAKER("faker", "faker.strategy.description", false, true, false);
 
     private final String name;
+    private final String code;
+    private final boolean supportsUnique;
+    private final boolean supportsNotNull;
+    private final boolean supportsValid;
 
     public static GenerationStrategy from(String value) {
         if (StringUtils.isBlank(value)) {

@@ -3,6 +3,7 @@ package ru.akvine.istochnik.enums;
 import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import ru.akvine.istochnik.exceptions.LanguageNotSupportedException;
 
 @AllArgsConstructor
 @Getter
@@ -23,6 +24,6 @@ public enum Language {
             }
         }
 
-        throw new IllegalArgumentException("Language = [" + value + "] is not supported by app!");
+        throw new LanguageNotSupportedException("Language = [" + value + "] is not supported by app!");
     }
 }
