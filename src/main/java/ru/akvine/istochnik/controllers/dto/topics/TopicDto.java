@@ -8,4 +8,5 @@ import lombok.experimental.Accessors;
 public class TopicDto {
     private String name;
     private String description;
+    private String example;
 }

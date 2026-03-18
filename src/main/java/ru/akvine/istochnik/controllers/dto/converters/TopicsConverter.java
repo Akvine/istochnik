@@ -12,6 +12,9 @@ import ru.akvine.istochnik.services.MessageResolverService;
 @Component
 @RequiredArgsConstructor
 public class TopicsConverter {
+    private final static String TOPIC_EXAMPLE_PREFIX_CODE = "topic.";
+    private final static String TOPIC_EXAMPLE_POSTFIX_CODE = ".example.code";
+
     private final MessageResolverService messageResolverService;
 
     public ListTopicsResponse convertToListTopicsResponse(Language language) {
@@ -24,6 +27,8 @@ public class TopicsConverter {
     private TopicDto buildTopicDto(Topic topic, Language language) {
         return new TopicDto()
                 .setName(topic.name().toLowerCase())
-                .setDescription(messageResolverService.message(topic.getCode(), language));
+                .setDescription(messageResolverService.message(topic.getCode(), language))
+                .setExample(messageResolverService.message(
+                        TOPIC_EXAMPLE_PREFIX_CODE + topic.name().toLowerCase() + TOPIC_EXAMPLE_POSTFIX_CODE, language));
     }
 }
