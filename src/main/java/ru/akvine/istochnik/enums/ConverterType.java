@@ -66,7 +66,10 @@ public enum ConverterType {
     /**
      * Общие конвертеры
      */
-    SHUFFLE("shuffle", "converter.shuffle.code");
+    SHUFFLE("shuffle", "converter.shuffle.code"),
+    TO_NULL("to_null", "converter.to_null.code"),
+    SORT_ASC("sort_asc", "converter.sort_asc.code"),
+    SORT_DESC("sort_desc", "converter.sort_desc.code");
 
     private final String name;
     private final String descriptionCode;

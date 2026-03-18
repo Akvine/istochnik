@@ -35,6 +35,8 @@ public class AlgorithmStrategyValidator extends AbstractGenerationStrategyValida
             baseType = customType.getBaseType();
         }
 
+        // TODO: добавить валидацию для boolean касательно unique = true и notNull
+
         List<String> errors =
                 baseTypeValidatorsProvider.get(baseType).validate(columnName, buildValidateAction(rowsCount, column));
 

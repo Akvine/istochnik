@@ -22,7 +22,10 @@ public enum BaseType {
                     ConverterType.MOD,
                     ConverterType.NEGATIVE,
                     ConverterType.FACTORIAL,
-                    ConverterType.SHUFFLE)),
+                    ConverterType.SHUFFLE,
+                    ConverterType.TO_NULL,
+                    ConverterType.SORT_ASC,
+                    ConverterType.SORT_DESC)),
     DOUBLE(
             "double",
             "base.type.double.code",
@@ -48,7 +51,10 @@ public enum BaseType {
                     ConverterType.ZSCORE,
                     ConverterType.MINMAXSCALING,
                     ConverterType.NEGATIVE,
-                    ConverterType.SHUFFLE)),
+                    ConverterType.SHUFFLE,
+                    ConverterType.TO_NULL,
+                    ConverterType.SORT_ASC,
+                    ConverterType.SORT_DESC)),
 
     STRING(
             "str",
@@ -72,7 +78,10 @@ public enum BaseType {
                     ConverterType.REPEAT,
                     ConverterType.REVERSE,
                     ConverterType.TRANSLIT,
-                    ConverterType.SHUFFLE)),
+                    ConverterType.SHUFFLE,
+                    ConverterType.TO_NULL,
+                    ConverterType.SORT_ASC,
+                    ConverterType.SORT_DESC)),
     BOOLEAN("bool", "base.type.boolean.code", List.of());
 
     private final String value;
