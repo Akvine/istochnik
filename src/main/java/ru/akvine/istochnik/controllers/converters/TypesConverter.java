@@ -36,6 +36,7 @@ public class TypesConverter {
         customTypeDto.setCustomType(customType.getName());
         customTypeDto.setBaseType(customType.getBaseType().getValue());
         customTypeDto.setDescription(messageResolverService.message(customType.getCode(), language));
+        customTypeDto.setExample(customType.getExample());
         return customTypeDto;
     }
 
