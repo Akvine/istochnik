@@ -26,7 +26,6 @@ import ru.akvine.istochnik.enums.BaseType;
 @ActiveProfiles("test")
 @ComponentScan({"ru.akvine.istochnik"})
 public abstract class ApiBaseTest {
-    protected final String SEED = "0";
 
     @LocalServerPort
     private int port;

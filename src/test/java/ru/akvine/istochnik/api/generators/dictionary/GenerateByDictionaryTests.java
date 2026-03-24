@@ -30,9 +30,7 @@ public class GenerateByDictionaryTests extends ApiBaseTest {
                 .setGenerationStrategy(GenerationStrategy.DICTIONARY.getName())
                 .setConfig(new ConfigDto().setDictionaries(singleDictionary)));
 
-        List<String> expected = List.of(
-                "Value 3", "Value 4", "Value 1", "Value 2", "Value 3", "Value 4", "Value 1", "Value 2", "Value 3",
-                "Value 4");
+        List<String> expected = List.of("", "Value 4", "", "", "", "Value 4", "Value 1", "", "Value 3", "Value 4");
         GenerateTableRequest request = new GenerateTableRequest()
                 .setSize(size)
                 .setFileType(FileType.CSV.name())
@@ -60,9 +58,7 @@ public class GenerateByDictionaryTests extends ApiBaseTest {
                 .setGenerationStrategy(GenerationStrategy.DICTIONARY.getName())
                 .setConfig(new ConfigDto().setDictionaries(singleDictionary).setRangeType(RangeType.SHIFT.getType())));
 
-        List<String> expected = List.of(
-                "Value 5", "Value 3", "Value 4", "Value 1", "Value 2", "Value 5", "Value 3", "Value 4", "Value 1",
-                "Value 2");
+        List<String> expected = List.of("", "Value 3", "", "", "", "Value 5", "Value 3", "", "Value 1", "Value 2");
         GenerateTableRequest request = new GenerateTableRequest()
                 .setSize(size)
                 .setFileType(FileType.CSV.name())

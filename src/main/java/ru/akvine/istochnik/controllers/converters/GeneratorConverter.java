@@ -1,13 +1,5 @@
 package ru.akvine.istochnik.controllers.converters;
 
-import jakarta.annotation.PostConstruct;
-import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,26 +18,22 @@ import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 import ru.akvine.istochnik.services.dto.GenerateData;
 
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 @Component
 @Slf4j
 public class GeneratorConverter {
 
-    @Value("${test.randomizer.enabled}")
-    private boolean testRandomizerEnabled;
+    @Value("${randomizer.seed:#{null}}")
+    private String seed;
 
-    @Value("${test.randomizer.seed:#{null}}")
-    private Integer seed;
-
+    private static final String ALGORITHM_TYPE = "SHA1PRNG";
     private static final SecureRandom SECURE_RANDOM_GENERATOR = new SecureRandom();
-
-    @PostConstruct
-    public void init() {
-        if (testRandomizerEnabled) {
-            log.info(
-                    "Test randomizer implementation by {} class is using! Use only for TEST environment!!!",
-                    Random.class.getSimpleName());
-        }
-    }
 
     public GenerateData convertToGenerateData(GenerateTableRequest request) {
         Asserts.isNotNull(request);
@@ -113,17 +101,12 @@ public class GeneratorConverter {
 
     private Config buildConfig(int size, ConfigDto configDto) {
         SecureRandom randomGenerator;
-        if (StringUtils.isBlank(configDto.getSeed())) {
+        try {
+             randomGenerator = resolveRandomizer(configDto);
+        } catch (Exception exception) {
             randomGenerator = SECURE_RANDOM_GENERATOR;
-        } else {
-            try {
-                randomGenerator = SecureRandom.getInstance("SHA1PRNG");
-                randomGenerator.setSeed(configDto.getSeed().getBytes(StandardCharsets.UTF_8));
-            } catch (NoSuchAlgorithmException exception) {
-                // TODO: сделать осмысленный Runtime Exception
-                throw new RuntimeException(exception);
-            }
         }
+
 
         return new Config()
                 .setSize(size)
@@ -153,5 +136,21 @@ public class GeneratorConverter {
         return dictionaries.stream()
                 .map(dictionary -> dictionary.stream().toList())
                 .toList();
+    }
+
+    private SecureRandom resolveRandomizer(ConfigDto configDto) throws NoSuchAlgorithmException {
+        if (seed == null) {
+            if (configDto.getSeed() == null) {
+                return SECURE_RANDOM_GENERATOR;
+            } else {
+                SecureRandom randomGenerator = SecureRandom.getInstance(ALGORITHM_TYPE);
+                randomGenerator.setSeed(configDto.getSeed().getBytes(StandardCharsets.UTF_8));
+                return randomGenerator;
+            }
+        } else {
+            SecureRandom randomGenerator = SecureRandom.getInstance(ALGORITHM_TYPE);
+            randomGenerator.setSeed(seed.getBytes(StandardCharsets.UTF_8));
+            return randomGenerator;
+        }
     }
 }

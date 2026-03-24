@@ -1,13 +1,7 @@
 package ru.akvine.istochnik.api;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.hamcrest.Matchers.*;
-
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -17,6 +11,13 @@ import ru.akvine.compozit.commons.istochnik.ConverterDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.api.common.configs.RestMethods;
 import ru.akvine.istochnik.enums.*;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.hamcrest.Matchers.*;
 
 @DisplayName("Integer converters tests")
 public class IntegerConvertersTest extends ApiBaseTest {
@@ -67,8 +68,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10")
-                        .setSeed(SEED))
+                        .setEnd("10"))
                 .setConverters(List.of(new ConverterDto()
                         .setName(ConverterType.DIVIDE.getName())
                         .setArguments(new Object[] {"2.0D"}))));
@@ -173,8 +173,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10")
-                        .setSeed(SEED))
+                        .setEnd("10"))
                 .setConverters(List.of(
                         new ConverterDto().setName(ConverterType.PLUS.getName()).setArguments(new Object[] {"1.0D"}))));
 
@@ -243,8 +242,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10")
-                        .setSeed(SEED))
+                        .setEnd("10"))
                 .setConverters(List.of(new ConverterDto()
                         .setName(ConverterType.MINUS.getName())
                         .setArguments(new Object[] {"1.0D"}))));
@@ -381,8 +379,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10")
-                        .setSeed(SEED))
+                        .setEnd("10"))
                 .setConverters(List.of(new ConverterDto()
                         .setName(ConverterType.FACTORIAL.getName())
                         .setArguments(new Object[] {"1.0D"}))));
@@ -416,8 +413,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setConfig(new ConfigDto()
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
-                        .setEnd("10")
-                        .setSeed(SEED))
+                        .setEnd("10"))
                 .setConverters(List.of(new ConverterDto().setName(ConverterType.NEGATIVE.getName()))));
 
         GenerateTableRequest request = new GenerateTableRequest()
@@ -425,18 +421,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setFileType(FileType.CSV.name())
                 .setColumns(columnsToGenerate);
 
-        // TODO: можно заменить на Arrays.asList(...);
-        List<Long> expected = new ArrayList<>();
-        expected.add(null);
-        expected.add(-4L);
-        expected.add(0L);
-        expected.add(0L);
-        expected.add(-6L);
-        expected.add(-5L);
-        expected.add(null);
-        expected.add(-5L);
-        expected.add(null);
-        expected.add(null);
+        List<Long> expected = Arrays.asList(null, -4L, 0L, 0L, -6L, -5L, null, -5L, null, null);
         byte[] response = sendGenerateRequest(request);
 
         assertThat(response).isNotNull();
@@ -461,8 +446,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10")
-                        .setSeed(SEED))
+                        .setEnd("10"))
                 .setConverters(List.of(new ConverterDto().setName(ConverterType.NEGATIVE.getName()))));
 
         GenerateTableRequest request = new GenerateTableRequest()
@@ -495,8 +479,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10")
-                        .setSeed(SEED))
+                        .setEnd("10"))
                 .setConverters(List.of(
                         new ConverterDto().setName(ConverterType.POW.getName()).setArguments(new Object[] {"2.0D"}))));
 
@@ -530,8 +513,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                 .setConfig(new ConfigDto()
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
-                        .setEnd("10")
-                        .setSeed(SEED))
+                        .setEnd("10"))
                 .setConverters(List.of(
                         new ConverterDto().setName(ConverterType.POW.getName()).setArguments(new Object[] {"2.0D"}))));
 
@@ -599,8 +581,7 @@ public class IntegerConvertersTest extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setStart("0")
                         .setNotNull(true)
-                        .setEnd("10")
-                        .setSeed(SEED))
+                        .setEnd("10"))
                 .setConverters(List.of(new ConverterDto().setName(ConverterType.SHUFFLE.getName()))));
 
         GenerateTableRequest request = new GenerateTableRequest()

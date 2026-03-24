@@ -1,14 +1,8 @@
 package ru.akvine.istochnik.services.handlers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.akvine.compozit.commons.utils.CollectionUtils;
 import ru.akvine.istochnik.enums.BaseType;
@@ -21,14 +15,18 @@ import ru.akvine.istochnik.services.GenerationHandler;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+import java.util.random.RandomGenerator;
+
 @Service
 @RequiredArgsConstructor
 public class FakerGenerationHandler implements GenerationHandler {
     private final FakerGeneratorServicesProvider fakerGeneratorServicesProvider;
     private final ConverterConvertersProvider converterConvertersProvider;
 
-    @Value("${test.randomizer.enabled}")
-    private boolean testRandomizerEnabled;
 
     @Override
     public List<?> handle(GenerateColumn generateColumn) {
@@ -42,17 +40,9 @@ public class FakerGenerationHandler implements GenerationHandler {
         RandomGenerator randomGenerator = generateColumn.getConfig().getRandomGenerator();
         Faker faker;
         if (StringUtils.isBlank(language)) {
-            if (testRandomizerEnabled) {
-                faker = new Faker((Random) randomGenerator);
-            } else {
-                faker = new Faker();
-            }
+            faker = new Faker((Random) randomGenerator);
         } else {
-            if (testRandomizerEnabled) {
-                faker = new Faker(new Locale(language), (Random) randomGenerator);
-            } else {
-                faker = new Faker(new Locale(language));
-            }
+            faker = new Faker(new Locale(language), (Random) randomGenerator);
         }
 
         List<String> generatedValues = new ArrayList<>();

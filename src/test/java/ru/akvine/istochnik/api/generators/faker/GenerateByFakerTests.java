@@ -27,7 +27,6 @@ public class GenerateByFakerTests extends ApiBaseTest {
                         .setRangeType(RangeType.RANDOM.toString())
                         .setNotNull(true)
                         .setLanguage("ru")
-                        .setSeed(SEED)
                         .setTopics(List.of(Topic.PHONE_NUMBER.name()))));
 
         GenerateTableRequest request = new GenerateTableRequest()
@@ -69,7 +68,6 @@ public class GenerateByFakerTests extends ApiBaseTest {
                 .setConfig(new ConfigDto()
                         .setRangeType(RangeType.RANDOM.toString())
                         .setNotNull(true)
-                        .setSeed(SEED)
                         .setTopics(List.of(Topic.PHONE_NUMBER.name()))));
 
         GenerateTableRequest request = new GenerateTableRequest()
