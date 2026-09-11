@@ -10,11 +10,13 @@ import ru.akvine.istochnik.exceptions.AddColumnException;
 @Data
 @Accessors(chain = true)
 public class Table {
+    private String tableName;
     private final int rowsCount;
     private List<Column> columns;
 
-    public Table(int rowsCount) {
+    public Table(int rowsCount, String tableName) {
         this.rowsCount = rowsCount;
+        this.tableName = tableName;
         columns = new ArrayList<>();
     }
 

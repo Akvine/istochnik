@@ -45,7 +45,8 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
         Asserts.isNotNull(generateData, "generateData is null");
 
         int size = generateData.getSize();
-        Table table = new Table(size);
+        String tableName = generateData.getTableName();
+        Table table = new Table(size, tableName);
         List<CompletableFuture<Void>> futures = new ArrayList<>();
 
         StopWatch watch = null;

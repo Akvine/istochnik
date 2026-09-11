@@ -15,7 +15,7 @@ public class SqlFileTableGenerator implements FileTableGenerator {
         String columnNames = extractColumnNames(table);
 
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO ").append(" (").append(columnNames).append(") VALUES\n");
+        sql.append("INSERT INTO ").append(table.getTableName()).append(" (").append(columnNames).append(") VALUES\n");
 
         // Перебираем строки
         for (int row = 0; row < rowsCount; row++) {

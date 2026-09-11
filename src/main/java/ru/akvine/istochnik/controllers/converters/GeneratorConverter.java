@@ -39,6 +39,7 @@ public class GeneratorConverter {
         Asserts.isNotNull(request);
 
         int size = request.getSize();
+        String tableName = request.getTableName();
         List<GenerateColumn> generateColumns = new ArrayList<>();
         for (ColumnDto column : request.getColumns()) {
 
@@ -77,7 +78,8 @@ public class GeneratorConverter {
         return new GenerateData()
                 .setSize(size)
                 .setGenerateColumns(generateColumns)
-                .setFileType(FileType.from(request.getFileType()));
+                .setFileType(FileType.from(request.getFileType()))
+                .setTableName(tableName);
     }
 
     public ResponseEntity<?> convertToResponse(byte[] file, FileType fileType, String tableName) {

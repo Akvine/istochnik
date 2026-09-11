@@ -41,13 +41,19 @@ public class GeneratorValidator {
             sb.append(message);
         }
 
+        FileType fileType = null;
         try {
-            FileType.from(request.getFileType());
+            fileType = FileType.from(request.getFileType());
         } catch (RuntimeException exception) {
             if (StringUtils.isNotBlank(sb.toString())) {
                 sb.append(". ");
             }
             sb.append(exception.getMessage());
+        }
+
+        // TODO: добавить валидацию для каждого из fileType через providers
+        if (FileType.SQL == fileType && StringUtils.isBlank(request.getTableName())) {
+            sb.append("Field 'tableName' can't be blank for file type = SQL");
         }
 
         ValidationColumnsInfo validationColumnsInfo = new ValidationColumnsInfo();

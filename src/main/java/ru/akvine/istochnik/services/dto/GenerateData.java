@@ -11,4 +11,5 @@ public class GenerateData {
     private List<GenerateColumn> generateColumns;
     private int size;
     private FileType fileType;
+    private String tableName;
 }
