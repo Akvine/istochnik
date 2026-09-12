@@ -3,6 +3,7 @@ package ru.akvine.istochnik.validators.type;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.ConverterDto;
 import ru.akvine.compozit.commons.utils.Asserts;
@@ -38,21 +39,11 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
         }
 
         try {
-            end = Integer.parseInt(action.getEnd());
-        } catch (NumberFormatException exception) {
-            errorMessages.add(ErrorMessages.END_FIELD_ERROR);
-        }
-
-        try {
             rangeType = RangeType.from(action.getRangeType());
         } catch (IllegalArgumentException exception) {
             errorMessages.add(ErrorMessages.RANGE_TYPE_IS_BLANK_ERROR);
         } catch (UnsupportedTypeGenerationException exception) {
             errorMessages.add(exception.getMessage());
-        }
-
-        if (start != null && end != null && start > end) {
-            errorMessages.add(ErrorMessages.END_LESS_START_ERROR);
         }
 
         if (rangeType == RangeType.SHIFT) {
@@ -62,14 +53,31 @@ public class IntegerBaseTypeValidator implements BaseTypeValidator {
                 errorMessages.add(ErrorMessages.STEP_FIELD_ERROR);
             }
 
-            if (step != null && step < 0) {
-                errorMessages.add(ErrorMessages.STEP_FIELD_INVALID_ERROR);
+            if (StringUtils.isNotBlank(action.getEnd())) {
+                try {
+                    end = Integer.parseInt(action.getEnd());
+                } catch (NumberFormatException exception) {
+                    errorMessages.add(ErrorMessages.END_FIELD_ERROR);
+                }
+            } else {
+                if (step != null)
+                    end = rowsCount * step + start;
             }
 
             if (step != null && start != null && end != null) {
                 if ((end - start) / step < rowsCount) {
                     errorMessages.add(ErrorMessages.INVALID_RANGE_OR_STEP_ERROR);
                 }
+            }
+        } else {
+            try {
+                end = Integer.parseInt(action.getEnd());
+            } catch (NumberFormatException exception) {
+                errorMessages.add(ErrorMessages.END_FIELD_ERROR);
+            }
+
+            if (start != null && end != null && start > end) {
+                errorMessages.add(ErrorMessages.END_LESS_START_ERROR);
             }
         }
 

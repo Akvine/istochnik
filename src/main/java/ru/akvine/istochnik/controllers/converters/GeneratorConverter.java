@@ -57,7 +57,7 @@ public class GeneratorConverter {
                     .setName(column.getName())
                     .setBaseType(baseType)
                     .setCustomType(customType)
-                    .setConfig(buildConfig(size, column.getConfig()))
+                    .setConfig(buildConfig(size, column.getConfig(), strategy))
                     .setGenerationStrategy(strategy)
                     .setErrorResolveInfo(column.getErrorResolveInfo())
                     .setConvertToString(column.isConvertToString())
@@ -101,34 +101,60 @@ public class GeneratorConverter {
                 .setProbability(converterDto.getProbability());
     }
 
-    private Config buildConfig(int size, ConfigDto configDto) {
+    private Config buildConfig(int size, ConfigDto from, GenerationStrategy strategy) {
         SecureRandom randomGenerator;
         try {
-             randomGenerator = resolveRandomizer(configDto);
+             randomGenerator = resolveRandomizer(from);
         } catch (Exception exception) {
             randomGenerator = SECURE_RANDOM_GENERATOR;
         }
 
-
-        return new Config()
+        Config to = new Config()
                 .setSize(size)
-                .setNotNull(configDto.isNotNull())
-                .setUnique(configDto.isUnique())
+                .setNotNull(from.isNotNull())
+                .setUnique(from.isUnique())
                 .setRangeType(
-                        StringUtils.isBlank(configDto.getRangeType()) ? null : RangeType.from(configDto.getRangeType()))
-                .setStart(configDto.getStart())
-                .setEnd(configDto.getEnd())
-                .setStep(configDto.getStep())
-                .setLength(configDto.getLength())
-                .setValid(configDto.isValid())
-                .setDictionaries(mapDictionaries(configDto.getDictionaries()))
-                .setConstant(configDto.getConstant())
+                        StringUtils.isBlank(from.getRangeType()) ? null : RangeType.from(from.getRangeType()))
+                .setStart(from.getStart())
+                .setEnd(from.getEnd())
+                .setStep(from.getStep())
+                .setLength(from.getLength())
+                .setValid(from.isValid())
+                .setDictionaries(mapDictionaries(from.getDictionaries()))
+                .setConstant(from.getConstant())
                 .setRandomGenerator(randomGenerator)
-                .setTopics(configDto.getTopics().stream().map(Topic::safeFrom).toList())
-                .setLang(configDto.getLanguage())
-                .setRegexps(configDto.getRegexps())
-                .setSeed(configDto.getSeed());
+                .setTopics(from.getTopics().stream().map(Topic::safeFrom).toList())
+                .setLang(from.getLanguage())
+                .setRegexps(from.getRegexps())
+                .setSeed(from.getSeed());
+
+        // TODO: добавить инициализацию ConfigDto в провайдер в зависимости от RangeType / Типа данных
+        if (GenerationStrategy.ALGORITHM == strategy && RangeType.SHIFT.getType().equalsIgnoreCase(from.getRangeType())) {
+            String end = from.getEnd();
+            Integer startInteger = Integer.parseInt(from.getStart());
+            Integer stepInteger = Integer.parseInt(from.getStep());
+            Integer endInteger;
+            if (StringUtils.isBlank(end)) {
+                endInteger = size * stepInteger + startInteger;
+
+                if (endInteger < startInteger) {
+                    Integer tmp = endInteger;
+                    endInteger = startInteger;
+                    startInteger = tmp;
+
+                    to.setStart(String.valueOf(startInteger));
+                    to.setStep(String.valueOf(Math.abs(stepInteger)));
+                }
+
+                to.setEnd(String.valueOf(endInteger));
+            }
+
+        }
+
+
+        return to;
     }
+
 
     private List<List<String>> mapDictionaries(Set<Set<String>> dictionaries) {
         if (CollectionUtils.isEmpty(dictionaries)) {
