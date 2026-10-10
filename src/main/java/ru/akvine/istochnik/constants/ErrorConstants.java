@@ -7,6 +7,7 @@ public final class ErrorConstants {
 
     public static final String LANGUAGE_NOT_SUPPORTED_BY_APP = "language.notSupported.error";
     public static final String GENERATION_ERROR = "generation.error";
+    public static final String RATE_LIMIT_EXCEEDED_ERROR = "rate.limit.exceeded.error";
 
     public interface Validation {
         String REQUEST_FIELDS_INVALID_ERROR = "request.fields.invalid.error";

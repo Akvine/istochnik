@@ -1,7 +1,9 @@
 package ru.akvine.istochnik.controllers.validators;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -24,39 +26,60 @@ public class GeneratorValidator {
     @Value("${max.generation.rows.size}")
     private int maxGenerationRowsSize;
 
+    @Value("${max.generation.columns.size}")
+    private int maxGenerationColumnsSize;
+
     public void verifyGenerateTableRequest(GenerateTableRequest request) {
         Asserts.isNotNull(request);
 
         int rowsCount = request.getSize();
         List<ColumnDto> columns = request.getColumns();
 
-        StringBuilder sb = new StringBuilder();
+        List<String> generalErrors = new ArrayList<>();
         if (rowsCount < 0) {
-            sb.append("size can't be less than 0");
+            generalErrors.add("size can't be less than 0");
         }
 
         if (rowsCount > maxGenerationRowsSize) {
             String message = String.format(
                     "Can't generate rows size = [%s] more than max = [%s]", rowsCount, maxGenerationRowsSize);
-            sb.append(message);
+            generalErrors.add(message);
+        }
+
+        if (CollectionUtils.isEmpty(columns)) {
+            generalErrors.add("Field 'columns' can't be empty");
+        } else if (columns.size() > maxGenerationColumnsSize) {
+            String message = String.format(
+                    "Can't generate columns count = [%s] more than max = [%s]",
+                    columns.size(), maxGenerationColumnsSize);
+            generalErrors.add(message);
         }
 
         FileType fileType = null;
         try {
             fileType = FileType.from(request.getFileType());
         } catch (RuntimeException exception) {
-            if (StringUtils.isNotBlank(sb.toString())) {
-                sb.append(". ");
-            }
-            sb.append(exception.getMessage());
+            generalErrors.add(exception.getMessage());
         }
 
         // TODO: добавить валидацию для каждого из fileType через providers
         if (FileType.SQL == fileType && StringUtils.isBlank(request.getTableName())) {
-            sb.append("Field 'tableName' can't be blank for file type = SQL");
+            generalErrors.add("Field 'tableName' can't be blank for file type = SQL");
         }
 
         ValidationColumnsInfo validationColumnsInfo = new ValidationColumnsInfo();
+        // Колонки сверх лимита не проверяются: запрос уже отклонён, а проверка каждой колонки стоит ресурсов
+        if (CollectionUtils.isNotEmpty(columns) && columns.size() <= maxGenerationColumnsSize) {
+            validateColumns(columns, rowsCount, validationColumnsInfo);
+        }
+
+        if (!generalErrors.isEmpty()
+                || !validationColumnsInfo.getColumnNamesPerErrorMessages().isEmpty()) {
+            throw new ConfigValidationException(String.join(". ", generalErrors), validationColumnsInfo);
+        }
+    }
+
+    private void validateColumns(List<ColumnDto> columns, int rowsCount, ValidationColumnsInfo validationColumnsInfo) {
         for (ColumnDto column : columns) {
             String columnName = column.getName();
 
@@ -71,11 +94,6 @@ public class GeneratorValidator {
             } catch (UnsupportedTypeGenerationException | IllegalArgumentException exception) {
                 validationColumnsInfo.put(columnName, exception.getMessage());
             }
-        }
-
-        if (StringUtils.isNotBlank(sb.toString())
-                || !validationColumnsInfo.getColumnNamesPerErrorMessages().isEmpty()) {
-            throw new ConfigValidationException(sb.toString(), validationColumnsInfo);
         }
     }
 }

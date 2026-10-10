@@ -11,6 +11,7 @@ import ru.akvine.istochnik.constants.ErrorConstants;
 import ru.akvine.istochnik.controllers.dto.GenerateDataErrorResponse;
 import ru.akvine.istochnik.exceptions.GenerationException;
 import ru.akvine.istochnik.exceptions.LanguageNotSupportedException;
+import ru.akvine.istochnik.exceptions.RateLimitExceededException;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 
 @RestControllerAdvice
@@ -30,6 +31,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleGenerationException(GenerationException exception) {
         ErrorResponse errorResponse = new ErrorResponse(ErrorConstants.GENERATION_ERROR, exception.getMessage());
         return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler({RateLimitExceededException.class})
+    public ResponseEntity<?> handleRateLimitExceededException(RateLimitExceededException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(ErrorConstants.RATE_LIMIT_EXCEEDED_ERROR, exception.getMessage());
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.RETRY_AFTER, String.valueOf(exception.getRetryAfterSeconds()));
+        return new ResponseEntity<>(errorResponse, headers, HttpStatus.TOO_MANY_REQUESTS);
     }
 
     @ExceptionHandler({LanguageNotSupportedException.class})

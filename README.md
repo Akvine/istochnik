@@ -78,11 +78,15 @@ java -jar target\istochnik-0.0.1-SNAPSHOT.jar
 | Свойство | По умолчанию | Описание |
 |---|---|---|
 | `max.generation.rows.size` | `100000` | Максимальное число строк в одном запросе |
+| `max.generation.columns.size` | `200` | Максимальное число колонок в одном запросе |
 | `max.generation.attempts` | `100` | Сколько попыток в среднем на строку есть у случайного генератора, чтобы выполнить ограничения (`unique`, `valid`). При превышении генерация колонки завершается ошибкой |
 | `max.dictionaries.per.column` | `10` | Максимальное число словарей в одной колонке |
 | `max.dictionary.elements.count` | `10000` | Максимальное число элементов в одном словаре |
 | `randomizer.seed` | пусто | Глобальный seed. Если задан, имеет приоритет над `seed` колонок: все запросы становятся детерминированными |
 | `sql.insert.batch.size` | `1000` | Максимальное число строк в одном `INSERT`. Значение `0` или меньше отключает разбиение |
+| `generation.rate.limiter.enabled` | `true` | Ограничивать частоту запросов на генерацию |
+| `generation.rate.limiter.limit-for-period` | `20` | Сколько запросов на генерацию принимается за один период |
+| `generation.rate.limiter.refresh-period-seconds` | `1` | Длительность периода в секундах |
 | `parallel.executor.threads-count` | `100` | Размер пула потоков. Каждая колонка генерируется отдельной задачей |
 | `parallel.executor.queue-capacity` | `1000` | Размер очереди задач пула |
 | `log.total.generation.data.benchmark.enabled` | `false` | Писать в лог время генерации всего запроса |
@@ -100,6 +104,25 @@ java -jar target\istochnik-0.0.1-SNAPSHOT.jar
 | `GET` | `/v1/topics` | Топики стратегии `faker` с примерами |
 
 Справочные методы (кроме `/v1/converters`) принимают параметр `lang` — язык описаний: `en` (по умолчанию) или `ru`.
+
+### Swagger
+
+Описание всех методов с примерами запросов доступно в Swagger UI запущенного сервиса:
+
+| Адрес | Что там |
+|---|---|
+| `/swagger-ui.html` | Swagger UI |
+| `/v3/api-docs` | Спецификация OpenAPI в формате JSON |
+
+Например, при запуске на порту 8103: `http://localhost:8103/swagger-ui.html`.
+
+При `SECURITY_ENABLED=true` оба адреса, как и остальные методы, требуют JWT. Отключить их совсем можно стандартными свойствами springdoc: `springdoc.swagger-ui.enabled=false` и `springdoc.api-docs.enabled=false`.
+
+### Ограничение частоты запросов
+
+Метод `POST /v1/generator` защищён ограничителем частоты запросов: за период `generation.rate.limiter.refresh-period-seconds` принимается не больше `generation.rate.limiter.limit-for-period` запросов. Запрос сверх лимита сразу отклоняется с кодом `429`, заголовок `Retry-After` содержит время ожидания в секундах.
+
+Лимит общий для всех клиентов и считается отдельно в каждом экземпляре приложения. На справочные методы он не распространяется.
 
 ## Запрос на генерацию
 
@@ -459,6 +482,16 @@ INSERT INTO users (ID, FULL_NAME, STATUS, BALANCE, CREATED_AT) VALUES
   "columnErrors": {
     "id": ["field [end] can't be less than field [start]"]
   }
+}
+```
+
+Если превышен лимит запросов на генерацию, возвращается код `429` и заголовок `Retry-After`:
+
+```json
+{
+  "status": "FAIL",
+  "code": "rate.limit.exceeded.error",
+  "message": "Too many generation requests. Limit = [20] requests per [1] seconds"
 }
 ```
 
