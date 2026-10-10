@@ -32,7 +32,14 @@ public enum CustomType {
     OGRNIP(BaseType.STRING, "custom.type.ogrnip.code", "ogrnip", "304500116000157"),
     OKPO(BaseType.STRING, "custom.type.okpo.code", "okpo", "00032537"),
     BIK(BaseType.STRING, "custom.type.bik.code", "bik", "044525225"),
-    BANK_ACCOUNT(BaseType.STRING, "custom.type.bank.account.code", "bank_account", "40702810938000012345");
+    BANK_ACCOUNT(BaseType.STRING, "custom.type.bank.account.code", "bank_account", "40702810938000012345"),
+    OKVED(BaseType.STRING, "custom.type.okved.code", "okved", "62.01"),
+    OKTMO(BaseType.STRING, "custom.type.oktmo.code", "oktmo", "45382000"),
+    OKATO(BaseType.STRING, "custom.type.okato.code", "okato", "45286585000"),
+    KBK(BaseType.STRING, "custom.type.kbk.code", "kbk", "18210102010011000110"),
+    OMS(BaseType.STRING, "custom.type.oms.code", "oms", "1234567890123452"),
+    STS(BaseType.STRING, "custom.type.sts.code", "sts", "9912345678"),
+    PTS(BaseType.STRING, "custom.type.pts.code", "pts", "77УН123456");
 
     private final BaseType baseType;
     private final String code;
