@@ -13,7 +13,13 @@ public class MD5Converter extends StringConverter<String, String> {
     public List<String> convert(
             List<String> input, String[] arguments, RandomGenerator randomGenerator, double probability) {
         return input.stream()
-                .map(value -> randomGenerator.nextDouble() < probability ? CryptoUtils.hashMD5(value) : value)
+                .map(value -> {
+                    if (value == null) {
+                        return null;
+                    }
+
+                    return randomGenerator.nextDouble() < probability ? CryptoUtils.hashMD5(value) : value;
+                })
                 .toList();
     }
 

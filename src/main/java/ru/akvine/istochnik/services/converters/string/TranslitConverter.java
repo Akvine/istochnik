@@ -20,6 +20,9 @@ public class TranslitConverter extends StringConverter<String, String> {
                             if (Character.isAlphabetic(charValue)
                                     && Alphabets.RUSSIAN.getChars().contains(charValue)) {
                                 sb.append(Alphabets.TRANSLIT_MAP.get(charValue));
+                            } else {
+                                // Символы не из русского алфавита остаются без изменений
+                                sb.append(charValue);
                             }
                         }
 

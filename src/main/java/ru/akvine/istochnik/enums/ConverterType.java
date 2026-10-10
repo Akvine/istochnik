@@ -11,13 +11,13 @@ public enum ConverterType {
     /**
      * Конвертеры для чисел
      */
-    // TODO: Добавить конвертер умножения для Integer и Double
     // TODO: Добавить поле с примером значения при применении конвертера
     ABS("abs", "converter.abs.code"),
     CEIL("ceil", "converter.ceil.code"),
     COS("cos", "converter.cos.code"),
     SIN("sin", "converter.sin.code"),
     DIVIDE("divide", "converter.divide.code"),
+    MULTIPLY("multiply", "converter.multiply.code"),
     FLOOR("floor", "converter.floor.code"),
     MINUS("minus", "converter.minus.code"),
     PLUS("plus", "converter.plus.code"),

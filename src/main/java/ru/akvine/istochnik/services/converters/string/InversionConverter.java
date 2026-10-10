@@ -12,6 +12,10 @@ public class InversionConverter extends StringConverter<String, String> {
             List<String> input, String[] arguments, RandomGenerator randomGenerator, double probability) {
         return input.stream()
                 .map(value -> {
+                    if (value == null) {
+                        return null;
+                    }
+
                     if (randomGenerator.nextDouble() < probability) {
                         StringBuilder sb = new StringBuilder();
                         char[] chars = value.toCharArray();

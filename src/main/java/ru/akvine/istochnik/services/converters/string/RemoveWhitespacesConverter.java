@@ -11,7 +11,7 @@ public class RemoveWhitespacesConverter extends StringConverter<String, String> 
     public List<String> convert(
             List<String> input, String[] arguments, RandomGenerator randomGenerator, double probability) {
         return input.stream()
-                .map(value -> randomGenerator.nextDouble() < probability ? value.replaceAll("\\\\s+", "") : value)
+                .map(value -> randomGenerator.nextDouble() < probability ? value.replaceAll("\\s+", "") : value)
                 .toList();
     }
 

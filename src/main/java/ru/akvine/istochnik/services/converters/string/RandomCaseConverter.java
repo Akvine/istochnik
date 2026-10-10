@@ -15,20 +15,28 @@ public class RandomCaseConverter extends StringConverter<String, String> {
             List<String> input, String[] arguments, RandomGenerator randomGenerator, double probability) {
         return input.stream()
                 .map(value -> {
+                    if (value == null) {
+                        return null;
+                    }
+
                     if (randomGenerator.nextDouble() < probability) {
                         StringBuilder sb = new StringBuilder();
                         char[] chars = value.toCharArray();
                         for (char charValue : chars) {
-                            if (Character.isAlphabetic(charValue)) {
-                                boolean changeCase = randomGenerator.nextBoolean();
+                            // Символы, не являющиеся буквами, остаются без изменений
+                            if (!Character.isAlphabetic(charValue)) {
+                                sb.append(charValue);
+                                continue;
+                            }
 
-                                if (changeCase && Character.isUpperCase(charValue)) {
-                                    sb.append(Character.toLowerCase(charValue));
-                                } else if (changeCase && Character.isLowerCase(charValue)) {
-                                    sb.append(Character.toUpperCase(charValue));
-                                } else {
-                                    sb.append(charValue);
-                                }
+                            boolean changeCase = randomGenerator.nextBoolean();
+
+                            if (changeCase && Character.isUpperCase(charValue)) {
+                                sb.append(Character.toLowerCase(charValue));
+                            } else if (changeCase && Character.isLowerCase(charValue)) {
+                                sb.append(Character.toUpperCase(charValue));
+                            } else {
+                                sb.append(charValue);
                             }
                         }
 
