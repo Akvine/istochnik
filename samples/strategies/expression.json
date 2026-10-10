@@ -1,0 +1,107 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "price",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "1.00", "end": "500.00" }
+    },
+    {
+      "name": "qty",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "1", "end": "10" }
+    },
+    {
+      "name": "total",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#price * #qty" }
+    },
+    {
+      "name": "total_with_discount",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#round(#price * #qty * (#qty >= 5 ? 0.9 : 1), 2)" }
+    },
+    {
+      "name": "total_rounded",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#price * #qty" }
+    },
+    {
+      "name": "is_wholesale",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#qty >= 5 and #toDouble(#total) > 1000" }
+    },
+    {
+      "name": "first_name",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["Иван", "Пётр", "Алексей", "Дмитрий"]] }
+    },
+    {
+      "name": "last_name",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["Иванов", "Петров", "Смирнов", "Кузнецов"]] }
+    },
+    {
+      "name": "middle_name",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": false, "dictionaries": [["Иванович", "Петрович", "Алексеевич"]] }
+    },
+    {
+      "name": "email",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#substring(#first_name, 0, 1) + '.' + #last_name + '@example.com'" },
+      "converters": [{ "name": "translit" }, { "name": "lowerCase" }]
+    },
+    {
+      "name": "initials_nullable",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#last_name + ' ' + #substring(#first_name, 0, 1) + '.' + #substring(#middle_name, 0, 1) + '.'" }
+    },
+    {
+      "name": "full_name_not_null",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": {
+        "notNull": true,
+        "expression": "#last_name + ' ' + #first_name + (#middle_name == null ? '' : ' ' + #middle_name)"
+      }
+    },
+    {
+      "name": "start date",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "2025-01-01", "end": "2025-12-31" }
+    },
+    {
+      "name": "duration_days",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "1", "end": "30" }
+    },
+    {
+      "name": "end_date",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#plusDays(#row['start date'], #duration_days)" }
+    },
+    {
+      "name": "end_date_formatted",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#end_date" },
+      "converters": [{ "name": "format", "arguments": ["dd.MM.yyyy"] }]
+    }
+  ]
+}

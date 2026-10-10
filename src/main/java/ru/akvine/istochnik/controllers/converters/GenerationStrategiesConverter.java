@@ -8,15 +8,19 @@ import ru.akvine.istochnik.controllers.dto.strategies.StrategiesListResponse;
 import ru.akvine.istochnik.controllers.dto.strategies.StrategyDto;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.enums.Language;
+import ru.akvine.istochnik.services.ExpressionColumnService;
 import ru.akvine.istochnik.services.MessageResolverService;
 
 @Component
 @RequiredArgsConstructor
 public class GenerationStrategiesConverter {
     private final MessageResolverService messageResolverService;
+    private final ExpressionColumnService expressionColumnService;
 
     public StrategiesListResponse convertToStrategiesListResponse(Language language) {
         List<StrategyDto> strategies = Arrays.stream(GenerationStrategy.values())
+                // Стратегия, отключённая в настройках, клиентам не показывается
+                .filter(value -> value != GenerationStrategy.EXPRESSION || expressionColumnService.isEnabled())
                 .map(value -> buildStrategyDto(value, language))
                 .toList();
         return new StrategiesListResponse().setStrategies(strategies).setCount(strategies.size());

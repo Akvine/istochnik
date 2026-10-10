@@ -53,11 +53,17 @@ public class GeneratorConverter {
                 }
             }
 
+            Config config = buildConfig(size, column.getConfig(), baseType);
+            if (strategy == GenerationStrategy.EXPRESSION) {
+                // У вычисляемой колонки диапазона нет: тип нужен только для приведения результата выражения
+                baseType = BaseType.safeFrom(column.getType());
+            }
+
             generateColumns.add(new GenerateColumn()
                     .setName(column.getName())
                     .setBaseType(baseType)
                     .setCustomType(customType)
-                    .setConfig(buildConfig(size, column.getConfig(), baseType))
+                    .setConfig(config)
                     .setGenerationStrategy(strategy)
                     .setErrorResolveInfo(column.getErrorResolveInfo())
                     .setConvertToString(column.isConvertToString())
@@ -126,6 +132,7 @@ public class GeneratorConverter {
                 .setTopics(from.getTopics().stream().map(Topic::safeFrom).toList())
                 .setLang(from.getLanguage())
                 .setRegexps(from.getRegexps())
+                .setExpression(from.getExpression())
                 // Действующий seed: глобальный из настроек имеет приоритет над seed колонки
                 .setSeed(StringUtils.isBlank(seed) ? StringUtils.defaultIfBlank(from.getSeed(), null) : seed);
 

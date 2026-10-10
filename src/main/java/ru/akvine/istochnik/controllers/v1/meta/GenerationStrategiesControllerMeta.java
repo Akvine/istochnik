@@ -19,7 +19,8 @@ public interface GenerationStrategiesControllerMeta {
     @Operation(
             summary = "Получить стратегии генерации",
             description = "Возвращает стратегии constant, algorithm, dictionary, regexp и faker с описанием и "
-                    + "признаками поддержки ограничений unique, notNull и valid. Имя стратегии передаётся "
+                    + "признаками поддержки ограничений unique, notNull и valid. Стратегия expression (вычисляемые "
+                    + "колонки) возвращается, только если включена в настройках сервиса. Имя стратегии передаётся "
                     + "в поле generationStrategy колонки")
     @ApiResponse(
             responseCode = "200",

@@ -38,6 +38,11 @@ public class Config {
     private Set<String> regexps;
 
     /**
+     * Используется только для GenerationType = Expression
+     */
+    private String expression;
+
+    /**
      * Используется только для GenerationType = Faker
      */
     private List<Topic> topics;

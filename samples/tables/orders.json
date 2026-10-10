@@ -1,0 +1,73 @@
+{
+  "size": 20,
+  "fileType": "sql",
+  "tableName": "orders",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "order_number",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "'ORD-' + (100000 + #id)" }
+    },
+    {
+      "name": "customer",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "price",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "50.00", "end": "5000.00" }
+    },
+    {
+      "name": "qty",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "1", "end": "20" }
+    },
+    {
+      "name": "discount_percent",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#qty >= 10 ? 10 : (#qty >= 5 ? 5 : 0)" }
+    },
+    {
+      "name": "total",
+      "type": "double",
+      "generationStrategy": "expression",
+      "config": { "expression": "#round(#price * #qty * (100 - #discount_percent) / 100, 2)" }
+    },
+    {
+      "name": "created_at",
+      "type": "datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "2025-01-01 00:00:00", "end": "2025-12-31 23:59:59" }
+    },
+    {
+      "name": "delivery_days",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "1", "end": "14" }
+    },
+    {
+      "name": "delivered_at",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#plusDays(#created_at, #delivery_days)" }
+    },
+    {
+      "name": "status",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#delivery_days > 10 ? 'DELAYED' : 'ON_TIME'" }
+    }
+  ]
+}

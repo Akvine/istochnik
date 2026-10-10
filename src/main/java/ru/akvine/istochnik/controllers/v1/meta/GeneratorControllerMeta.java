@@ -83,6 +83,40 @@ public interface GeneratorControllerMeta {
             }
             """;
 
+    String EXPRESSION_EXAMPLE =
+            """
+            {
+              "size": 10,
+              "fileType": "csv",
+              "columns": [
+                {
+                  "name": "price",
+                  "type": "decimal",
+                  "generationStrategy": "algorithm",
+                  "config": { "rangeType": "random", "notNull": true, "start": "1.00", "end": "500.00" }
+                },
+                {
+                  "name": "qty",
+                  "type": "int",
+                  "generationStrategy": "algorithm",
+                  "config": { "rangeType": "random", "notNull": true, "start": "1", "end": "10" }
+                },
+                {
+                  "name": "total",
+                  "type": "str",
+                  "generationStrategy": "expression",
+                  "config": { "expression": "#price * #qty" }
+                },
+                {
+                  "name": "is_large",
+                  "type": "bool",
+                  "generationStrategy": "expression",
+                  "config": { "expression": "#toDouble(#total) > 1000" }
+                }
+              ]
+            }
+            """;
+
     @Operation(
             summary = "Сгенерировать файл с данными",
             description = "Генерирует таблицу по описанию колонок и возвращает её файлом в формате CSV, XLSX или SQL. "
@@ -101,7 +135,10 @@ public interface GeneratorControllerMeta {
                                 @ExampleObject(
                                         name = "CSV: последовательность, словарь и десятичные числа",
                                         value = ALGORITHM_AND_DICTIONARY_EXAMPLE),
-                                @ExampleObject(name = "SQL: UUID, ФИО и дата с форматированием", value = SQL_EXAMPLE)
+                                @ExampleObject(name = "SQL: UUID, ФИО и дата с форматированием", value = SQL_EXAMPLE),
+                                @ExampleObject(
+                                        name = "CSV: колонки, вычисляемые по другим колонкам строки",
+                                        value = EXPRESSION_EXAMPLE)
                             }))
     @ApiResponse(
             responseCode = "200",

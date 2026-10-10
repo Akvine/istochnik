@@ -38,7 +38,7 @@ public class OpenApiDocsTest extends ApiBaseTest {
                 .body("paths.'/v1/generator'.post.responses", hasKey("400"))
                 .body("paths.'/v1/generator'.post.responses", hasKey("429"))
                 .body("paths.'/v1/generator'.post.responses", hasKey("500"))
-                .body("paths.'/v1/generator'.post.requestBody.content.'application/json'.examples.size()", equalTo(2))
+                .body("paths.'/v1/generator'.post.requestBody.content.'application/json'.examples.size()", equalTo(3))
                 .body("paths.'/v1/types/base'.get.summary", equalTo("Получить базовые типы"))
                 .body("paths.'/v1/types/custom'.get.summary", equalTo("Получить пользовательские типы"))
                 .body("paths.'/v1/strategies'.get.summary", equalTo("Получить стратегии генерации"))

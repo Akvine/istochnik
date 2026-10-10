@@ -16,12 +16,14 @@ import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 import ru.akvine.istochnik.providers.GenerationStrategyValidatorsProvider;
+import ru.akvine.istochnik.validators.strategy.ExpressionStrategyValidator;
 import ru.akvine.istochnik.validators.strategy.GenerationStrategyValidator;
 
 @Component
 @RequiredArgsConstructor
 public class GeneratorValidator {
     private final GenerationStrategyValidatorsProvider generationStrategyValidatorsProvider;
+    private final ExpressionStrategyValidator expressionStrategyValidator;
 
     @Value("${max.generation.rows.size}")
     private int maxGenerationRowsSize;
@@ -95,5 +97,8 @@ public class GeneratorValidator {
                 validationColumnsInfo.put(columnName, exception.getMessage());
             }
         }
+
+        // Ссылки вычисляемых колонок проверяются по всему запросу, а не по одной колонке
+        expressionStrategyValidator.validateDependencies(validationColumnsInfo, columns);
     }
 }
