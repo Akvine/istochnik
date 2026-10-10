@@ -1,0 +1,75 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "source",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "plus_100",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "plus", "arguments": [100] }]
+    },
+    {
+      "name": "minus_5",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "minus", "arguments": [5] }]
+    },
+    {
+      "name": "multiply_3",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "multiply", "arguments": [3] }]
+    },
+    {
+      "name": "divide_2",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "divide", "arguments": [2] }]
+    },
+    {
+      "name": "mod_3",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "mod", "arguments": [3] }]
+    },
+    {
+      "name": "pow_2",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "pow", "arguments": [2] }]
+    },
+    {
+      "name": "factorial",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "factorial" }]
+    },
+    {
+      "name": "negative",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "negative" }]
+    },
+    {
+      "name": "negative_then_abs",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "negative" }, { "name": "abs" }]
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "size": 3,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "source",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["  Hello World 123  "]] }
+    },
+    {
+      "name": "trim",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["  Hello World 123  "]] },
+      "converters": [{ "name": "trim" }]
+    },
+    {
+      "name": "remove_whitespaces",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["  Hello World 123  "]] },
+      "converters": [{ "name": "removeWhitespaces" }]
+    },
+    {
+      "name": "upper_case",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "upperCase" }]
+    },
+    {
+      "name": "lower_case",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "lowerCase" }]
+    },
+    {
+      "name": "capitalize",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["hello world"]] },
+      "converters": [{ "name": "capitalize" }]
+    },
+    {
+      "name": "inversion",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "inversion" }]
+    },
+    {
+      "name": "random_case",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "randomCase" }]
+    },
+    {
+      "name": "reverse",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "reverse" }]
+    },
+    {
+      "name": "add_before_and_after",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello"]] },
+      "converters": [
+        { "name": "addBefore", "arguments": ["<"] },
+        { "name": "addAfter", "arguments": [">"] }
+      ]
+    },
+    {
+      "name": "repeat",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["ab"]] },
+      "converters": [{ "name": "repeat", "arguments": ["3"] }]
+    },
+    {
+      "name": "substring",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "substring", "arguments": ["0", "5"] }]
+    },
+    {
+      "name": "replace_all",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "replaceAll", "arguments": ["[0-9]", "#"] }]
+    },
+    {
+      "name": "translit",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Иван Петров"]] },
+      "converters": [{ "name": "translit" }]
+    },
+    {
+      "name": "base64",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "base64" }]
+    },
+    {
+      "name": "md5",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "md5" }]
+    },
+    {
+      "name": "random_numeric_replace",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "randomNumericReplace" }]
+    },
+    {
+      "name": "random_english_replace",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "randomEnglishReplace" }]
+    },
+    {
+      "name": "random_russian_replace",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Иван Петров"]] },
+      "converters": [{ "name": "randomRussianReplace" }]
+    },
+    {
+      "name": "random_replace",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
+      "converters": [{ "name": "randomReplace" }]
+    }
+  ]
+}

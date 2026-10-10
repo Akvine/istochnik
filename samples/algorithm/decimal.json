@@ -1,0 +1,42 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "money",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0.00", "end": "10000.00", "notNull": true }
+    },
+    {
+      "name": "rate",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0.0000", "end": "1.0000", "notNull": true }
+    },
+    {
+      "name": "random_unique",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0.0", "end": "10.0", "notNull": true, "unique": true }
+    },
+    {
+      "name": "random_nullable",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "-100.00", "end": "100.00", "notNull": false }
+    },
+    {
+      "name": "shift",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "100.00", "step": "0.25" }
+    },
+    {
+      "name": "shift_with_end",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "0.1", "end": "1.1", "step": "0.1" }
+    }
+  ]
+}

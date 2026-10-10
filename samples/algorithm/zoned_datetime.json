@@ -1,0 +1,42 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "random_with_zone",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-01-01T00:00:00+03:00[Europe/Moscow]", "end": "2025-12-31T23:59:59+03:00[Europe/Moscow]", "notNull": true }
+    },
+    {
+      "name": "random_with_offset",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-01-01T00:00:00+05:00", "end": "2025-12-31T23:59:59+05:00", "notNull": true }
+    },
+    {
+      "name": "random_short_format",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-01-01 00:00:00 Asia/Tokyo", "end": "2025-12-31 23:59:59 Asia/Tokyo", "notNull": true, "unique": true }
+    },
+    {
+      "name": "random_nullable",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-01-01 00:00:00 UTC", "end": "2025-12-31 23:59:59 UTC", "notNull": false }
+    },
+    {
+      "name": "shift_by_day",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "2025-01-01 12:00:00 Europe/Moscow", "step": "86400" }
+    },
+    {
+      "name": "shift_with_end",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "2025-01-01 00:00:00 Europe/Moscow", "end": "2025-01-01 03:00:00 Europe/Moscow", "step": "900" }
+    }
+  ]
+}

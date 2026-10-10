@@ -1,0 +1,36 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "random",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1", "end": "1000", "notNull": true }
+    },
+    {
+      "name": "random_unique",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1", "end": "100", "notNull": true, "unique": true }
+    },
+    {
+      "name": "random_nullable",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "-50", "end": "50", "notNull": false }
+    },
+    {
+      "name": "shift",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "shift_with_end",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "100", "end": "200", "step": "10" }
+    }
+  ]
+}

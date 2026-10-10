@@ -1,0 +1,54 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "source",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "shuffle",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "shuffle" }]
+    },
+    {
+      "name": "sort_desc",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "sort_desc" }]
+    },
+    {
+      "name": "random_sorted_asc",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1", "end": "1000", "notNull": true },
+      "converters": [{ "name": "sort_asc" }]
+    },
+    {
+      "name": "to_null_30_percent",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "to_null", "probability": 30 }]
+    },
+    {
+      "name": "multiply_half_of_rows",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" },
+      "converters": [{ "name": "multiply", "arguments": [1000], "probability": 50 }]
+    },
+    {
+      "name": "names_sorted",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["LAST_NAME"] },
+      "converters": [{ "name": "sort_asc" }]
+    }
+  ]
+}

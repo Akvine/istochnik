@@ -1,0 +1,24 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "fixed_length",
+      "type": "str",
+      "generationStrategy": "algorithm",
+      "config": { "length": 8, "notNull": true }
+    },
+    {
+      "name": "unique",
+      "type": "str",
+      "generationStrategy": "algorithm",
+      "config": { "length": 4, "notNull": true, "unique": true }
+    },
+    {
+      "name": "nullable",
+      "type": "str",
+      "generationStrategy": "algorithm",
+      "config": { "length": 12, "notNull": false }
+    }
+  ]
+}

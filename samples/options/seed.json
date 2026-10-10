@@ -1,0 +1,36 @@
+{
+  "size": 5,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "seeded_int",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1", "end": "1000000", "notNull": true, "seed": "my-seed" }
+    },
+    {
+      "name": "seeded_uuid",
+      "type": "uuid",
+      "generationStrategy": "algorithm",
+      "config": { "seed": "my-seed" }
+    },
+    {
+      "name": "seeded_date",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-01-01", "end": "2025-12-31", "notNull": true, "seed": "my-seed" }
+    },
+    {
+      "name": "seeded_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"], "seed": "my-seed" }
+    },
+    {
+      "name": "not_seeded_int",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1", "end": "1000000", "notNull": true }
+    }
+  ]
+}

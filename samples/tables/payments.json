@@ -1,0 +1,54 @@
+{
+  "size": 20,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "payment_id",
+      "type": "uuid",
+      "generationStrategy": "algorithm",
+      "config": {}
+    },
+    {
+      "name": "card_number",
+      "type": "card_mir",
+      "generationStrategy": "algorithm",
+      "config": { "valid": true, "notNull": true }
+    },
+    {
+      "name": "amount",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1.00", "end": "50000.00", "notNull": true }
+    },
+    {
+      "name": "currency",
+      "type": "str",
+      "generationStrategy": "constant",
+      "config": { "constant": "RUB" }
+    },
+    {
+      "name": "status",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["CREATED", "PAID", "DECLINED", "REFUNDED"]] }
+    },
+    {
+      "name": "decline_reason",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": false, "dictionaries": [["Недостаточно средств", "Карта заблокирована", "Превышен лимит"]] }
+    },
+    {
+      "name": "paid_at",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-01-01 00:00:00 Europe/Moscow", "end": "2025-12-31 23:59:59 Europe/Moscow", "notNull": true }
+    },
+    {
+      "name": "client_time_zone",
+      "type": "zone_id",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true }
+    }
+  ]
+}

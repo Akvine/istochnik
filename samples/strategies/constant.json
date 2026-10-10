@@ -1,0 +1,30 @@
+{
+  "size": 5,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "string_constant",
+      "type": "str",
+      "generationStrategy": "constant",
+      "config": { "constant": "RUB" }
+    },
+    {
+      "name": "integer_constant",
+      "type": "str",
+      "generationStrategy": "constant",
+      "config": { "constant": 100 }
+    },
+    {
+      "name": "fractional_constant",
+      "type": "str",
+      "generationStrategy": "constant",
+      "config": { "constant": 0.5 }
+    },
+    {
+      "name": "boolean_constant",
+      "type": "str",
+      "generationStrategy": "constant",
+      "config": { "constant": true }
+    }
+  ]
+}

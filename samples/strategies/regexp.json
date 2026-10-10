@@ -1,0 +1,66 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "order_number",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "regexps": ["ORD-[0-9]{6}"]
+      }
+    },
+    {
+      "name": "phone",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "regexps": ["\\+7 \\(9[0-9]{2}\\) [0-9]{3}-[0-9]{2}-[0-9]{2}"]
+      }
+    },
+    {
+      "name": "car_number",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "regexps": ["[АВЕКМНОРСТУХ][0-9]{3}[АВЕКМНОРСТУХ]{2}(77|78|99|177)"]
+      }
+    },
+    {
+      "name": "random_from_several",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "regexps": ["[A-Z]{3}-[0-9]{3}", "[a-z]{5}\\@example\\.com"]
+      }
+    },
+    {
+      "name": "shift_between_several",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": {
+        "rangeType": "shift",
+        "notNull": true,
+        "regexps": ["IN-[0-9]{4}", "OUT-[0-9]{4}"]
+      }
+    },
+    {
+      "name": "nullable",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": {
+        "rangeType": "random",
+        "notNull": false,
+        "regexps": ["[0-9]{2}\\.[0-9]{2}"]
+      }
+    }
+  ]
+}

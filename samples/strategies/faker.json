@@ -1,0 +1,54 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "full_name_ru",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "full_name_en",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "en", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "email",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["EMAIL"] }
+    },
+    {
+      "name": "phone_ru",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["PHONE_NUMBER"] }
+    },
+    {
+      "name": "address_ru",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_ADDRESS"] }
+    },
+    {
+      "name": "random_topic",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["IPV4", "IPV6", "MAC"] }
+    },
+    {
+      "name": "shift_between_topics",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "shift", "notNull": true, "language": "ru", "topics": ["MALE_FIRST_NAME", "FEMALE_FIRST_NAME"] }
+    },
+    {
+      "name": "nullable",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": false, "topics": ["URL"] }
+    }
+  ]
+}

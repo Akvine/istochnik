@@ -1,0 +1,37 @@
+{
+  "size": 20,
+  "fileType": "xlsx",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "full_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "salary",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "50000", "end": "250000", "notNull": true },
+      "converters": [{ "name": "round", "arguments": [2] }]
+    },
+    {
+      "name": "is_remote",
+      "type": "bool",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true }
+    },
+    {
+      "name": "hired_at",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2015-01-01", "end": "2025-12-31", "notNull": true }
+    }
+  ]
+}

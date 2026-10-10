@@ -1,0 +1,19 @@
+{
+  "size": 100,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "impossible_unique_code",
+      "type": "str",
+      "generationStrategy": "algorithm",
+      "config": { "length": 1, "notNull": true, "unique": true },
+      "errorResolveInfo": { "policy": "IGNORE", "defaultValue": "N/A" }
+    }
+  ]
+}

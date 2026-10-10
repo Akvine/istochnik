@@ -1,0 +1,12 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "uuid",
+      "type": "uuid",
+      "generationStrategy": "algorithm",
+      "config": {}
+    }
+  ]
+}

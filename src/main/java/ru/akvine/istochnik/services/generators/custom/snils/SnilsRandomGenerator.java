@@ -11,6 +11,9 @@ import ru.akvine.istochnik.services.generators.custom.snils.configs.SnilsGenerat
 public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGeneratorConfig> {
     private static final long MIN_SNILS_LEFT_BOUND = 10000000000L;
     private static final long MIN_SNILS_RIGHT_BOUND = 99999999999L;
+    // Номер без контрольного числа: девять цифр, первая не ноль, чтобы СНИЛС как число сохранял 11 разрядов
+    private static final long MIN_NUMBER_LEFT_BOUND = 100000000L;
+    private static final long MIN_NUMBER_RIGHT_BOUND = 1000000000L;
 
     @Override
     public Collection<Long> generate(SnilsGeneratorConfig config) {
@@ -39,11 +42,13 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
                 }
             }
 
-            long generatedValue = config.getRandomGenerator().nextLong(MIN_SNILS_LEFT_BOUND, MIN_SNILS_RIGHT_BOUND);
-
-            if (config.isValid() && !isValidSnils(generatedValue)) {
-                iteration++;
-                continue;
+            long generatedValue;
+            if (config.isValid()) {
+                // Контрольное число вычисляется, а не подбирается перебором: случайный номер валиден лишь в 1% случаев
+                long number = config.getRandomGenerator().nextLong(MIN_NUMBER_LEFT_BOUND, MIN_NUMBER_RIGHT_BOUND);
+                generatedValue = number * 100 + calculateChecksum(number);
+            } else {
+                generatedValue = config.getRandomGenerator().nextLong(MIN_SNILS_LEFT_BOUND, MIN_SNILS_RIGHT_BOUND);
             }
 
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
@@ -58,33 +63,29 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
         return generatedValues;
     }
 
-    private boolean isValidSnils(long snils) {
-        String snilsStr = String.format("%011d", snils);
-
-        if (snilsStr.length() != 11) {
-            return false;
-        }
-
-        String numberPart = snilsStr.substring(0, 9);
-        int expectedChecksum = Integer.parseInt(snilsStr.substring(9, 11));
+    /**
+     * Контрольное число СНИЛС для девятизначного номера
+     */
+    private int calculateChecksum(long number) {
+        String numberPart = String.valueOf(number);
 
         int sum = 0;
         for (int i = 0; i < 9; i++) {
             sum += (numberPart.charAt(i) - '0') * (9 - i);
         }
 
-        int actualChecksum;
+        int checksum;
         if (sum < 100) {
-            actualChecksum = sum;
+            checksum = sum;
         } else if (sum == 100 || sum == 101) {
-            actualChecksum = 0;
+            checksum = 0;
         } else {
-            actualChecksum = sum % 101;
-            if (actualChecksum == 100) {
-                actualChecksum = 0;
+            checksum = sum % 101;
+            if (checksum == 100) {
+                checksum = 0;
             }
         }
 
-        return expectedChecksum == actualChecksum;
+        return checksum;
     }
 }

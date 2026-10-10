@@ -1,0 +1,103 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "source",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" }
+    },
+    {
+      "name": "plus_10",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "plus", "arguments": [10] }]
+    },
+    {
+      "name": "minus_1",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "minus", "arguments": [1] }]
+    },
+    {
+      "name": "multiply_1_5",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "multiply", "arguments": [1.5] }]
+    },
+    {
+      "name": "divide_4",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "divide", "arguments": [4] }]
+    },
+    {
+      "name": "pow_2",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "pow", "arguments": [2] }]
+    },
+    {
+      "name": "ceil",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "ceil" }]
+    },
+    {
+      "name": "floor",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "floor" }]
+    },
+    {
+      "name": "negative",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "negative" }]
+    },
+    {
+      "name": "log10_rounded",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "log10", "arguments": [1] }, { "name": "round", "arguments": [3] }]
+    },
+    {
+      "name": "sin_rounded",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "sin" }, { "name": "round", "arguments": [3] }]
+    },
+    {
+      "name": "min_max_scaling",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "minMaxScaling" }, { "name": "round", "arguments": [3] }]
+    },
+    {
+      "name": "zscore",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "end": "6", "step": "0.5" },
+      "converters": [{ "name": "zscore" }, { "name": "round", "arguments": [3] }]
+    },
+    {
+      "name": "random_rounded",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1000", "notNull": true },
+      "converters": [{ "name": "round", "arguments": [2] }]
+    }
+  ]
+}

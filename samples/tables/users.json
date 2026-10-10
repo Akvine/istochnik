@@ -1,0 +1,74 @@
+{
+  "size": 20,
+  "fileType": "sql",
+  "tableName": "users",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "external_id",
+      "type": "uuid",
+      "generationStrategy": "algorithm",
+      "config": {}
+    },
+    {
+      "name": "full_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "email",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["EMAIL"] }
+    },
+    {
+      "name": "phone",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": false, "regexps": ["\\+79[0-9]{9}"] }
+    },
+    {
+      "name": "snils",
+      "type": "snils",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "status",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["NEW", "ACTIVE", "BLOCKED"]] }
+    },
+    {
+      "name": "country",
+      "type": "str",
+      "generationStrategy": "constant",
+      "config": { "constant": "RU" }
+    },
+    {
+      "name": "balance",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0.00", "end": "10000.00", "notNull": true }
+    },
+    {
+      "name": "is_verified",
+      "type": "bool",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true }
+    },
+    {
+      "name": "created_at",
+      "type": "datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-01-01 00:00:00", "end": "2025-12-31 23:59:59", "notNull": true },
+      "converters": [{ "name": "format", "arguments": ["yyyy-MM-dd HH:mm:ss"] }]
+    }
+  ]
+}

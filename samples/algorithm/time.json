@@ -1,0 +1,24 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "random",
+      "type": "time",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "09:00:00", "end": "18:00:00", "notNull": true }
+    },
+    {
+      "name": "random_nullable",
+      "type": "time",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "00:00:00", "end": "23:59:59", "notNull": false }
+    },
+    {
+      "name": "shift_by_30_minutes",
+      "type": "time",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "09:00:00", "end": "18:00:00", "step": "1800" }
+    }
+  ]
+}

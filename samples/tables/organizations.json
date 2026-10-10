@@ -1,0 +1,61 @@
+{
+  "size": 20,
+  "fileType": "sql",
+  "tableName": "organizations",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "name",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["(ООО|АО|ПАО) «(Альфа|Вектор|Горизонт|Прогресс|Сфера)-[0-9]{3}»"] }
+    },
+    {
+      "name": "inn",
+      "type": "inn_org",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "kpp",
+      "type": "kpp",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true }
+    },
+    {
+      "name": "ogrn",
+      "type": "ogrn",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "okpo",
+      "type": "okpo",
+      "generationStrategy": "algorithm",
+      "config": { "valid": true, "notNull": true }
+    },
+    {
+      "name": "bik",
+      "type": "str",
+      "generationStrategy": "constant",
+      "config": { "constant": "044525225" }
+    },
+    {
+      "name": "account",
+      "type": "bank_account",
+      "generationStrategy": "algorithm",
+      "config": { "start": "044525225", "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "registered_at",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2005-01-01", "end": "2025-12-31", "notNull": true }
+    }
+  ]
+}

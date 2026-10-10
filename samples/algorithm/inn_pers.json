@@ -1,0 +1,30 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "valid",
+      "type": "inn_pers",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true }
+    },
+    {
+      "name": "valid_unique",
+      "type": "inn_pers",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "valid_nullable",
+      "type": "inn_pers",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": false }
+    },
+    {
+      "name": "any_check_digit",
+      "type": "inn_pers",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": false, "notNull": true }
+    }
+  ]
+}

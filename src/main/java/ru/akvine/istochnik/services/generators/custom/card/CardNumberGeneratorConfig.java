@@ -1,19 +1,12 @@
 package ru.akvine.istochnik.services.generators.custom.card;
 
 import java.util.random.RandomGenerator;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import lombok.Getter;
 import ru.akvine.istochnik.enums.PaymentSystem;
-import ru.akvine.istochnik.services.generators.Config;
+import ru.akvine.istochnik.services.generators.custom.requisite.RequisiteGeneratorConfig;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-@Accessors(chain = true)
-public class CardNumberGeneratorConfig extends Config {
-    private final boolean notNull;
-    private final boolean unique;
-    private final boolean valid;
+@Getter
+public class CardNumberGeneratorConfig extends RequisiteGeneratorConfig {
     private final PaymentSystem paymentSystem;
 
     public CardNumberGeneratorConfig(
@@ -23,10 +16,7 @@ public class CardNumberGeneratorConfig extends Config {
             boolean valid,
             PaymentSystem paymentSystem,
             RandomGenerator randomGenerator) {
-        super(size, randomGenerator);
-        this.notNull = notNull;
-        this.unique = unique;
-        this.valid = valid;
+        super(size, notNull, unique, valid, randomGenerator);
         this.paymentSystem = paymentSystem;
     }
 }

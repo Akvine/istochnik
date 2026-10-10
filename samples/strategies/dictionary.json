@@ -1,0 +1,60 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "random",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["NEW", "ACTIVE", "BLOCKED", "DELETED"]]
+      }
+    },
+    {
+      "name": "shift",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "shift",
+        "notNull": true,
+        "dictionaries": [["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"]]
+      }
+    },
+    {
+      "name": "random_unique",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "unique": true,
+        "dictionaries": [["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]]
+      }
+    },
+    {
+      "name": "random_nullable",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": false,
+        "dictionaries": [["да", "нет"]]
+      }
+    },
+    {
+      "name": "several_dictionaries",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [
+          ["Москва", "Санкт-Петербург", "Казань"],
+          ["Новосибирск", "Екатеринбург", "Владивосток"]
+        ]
+      }
+    }
+  ]
+}

@@ -27,7 +27,12 @@ public enum CustomType {
     IMEI(BaseType.STRING, "custom.type.imei.code", "imei", "865434044201239"),
     CARD_MIR(BaseType.STRING, "custom.type.card.mir.code", "card_mir", "2200123456789019"),
     CARD_VISA(BaseType.STRING, "custom.type.card.visa.code", "card_visa", "4111111111111111"),
-    CARD_MASTERCARD(BaseType.STRING, "custom.type.card.mastercard.code", "card_mastercard", "5555555555554444");
+    CARD_MASTERCARD(BaseType.STRING, "custom.type.card.mastercard.code", "card_mastercard", "5555555555554444"),
+    KPP(BaseType.STRING, "custom.type.kpp.code", "kpp", "770701001"),
+    OGRNIP(BaseType.STRING, "custom.type.ogrnip.code", "ogrnip", "304500116000157"),
+    OKPO(BaseType.STRING, "custom.type.okpo.code", "okpo", "00032537"),
+    BIK(BaseType.STRING, "custom.type.bik.code", "bik", "044525225"),
+    BANK_ACCOUNT(BaseType.STRING, "custom.type.bank.account.code", "bank_account", "40702810938000012345");
 
     private final BaseType baseType;
     private final String code;

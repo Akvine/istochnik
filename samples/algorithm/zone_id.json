@@ -1,0 +1,30 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "random",
+      "type": "zone_id",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true }
+    },
+    {
+      "name": "random_unique",
+      "type": "zone_id",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true, "unique": true }
+    },
+    {
+      "name": "random_nullable",
+      "type": "zone_id",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": false }
+    },
+    {
+      "name": "shift",
+      "type": "zone_id",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "notNull": true }
+    }
+  ]
+}
