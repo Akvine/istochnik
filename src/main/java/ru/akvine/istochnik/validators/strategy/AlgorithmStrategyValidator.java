@@ -11,12 +11,19 @@ import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.providers.BaseTypeValidatorsProvider;
+import ru.akvine.istochnik.providers.CustomTypeValidatorsProvider;
+import ru.akvine.istochnik.validators.custom.CustomTypeValidator;
 
 @Component
 public class AlgorithmStrategyValidator extends AbstractGenerationStrategyValidator {
+    private final CustomTypeValidatorsProvider customTypeValidatorsProvider;
+
     @Autowired
-    public AlgorithmStrategyValidator(BaseTypeValidatorsProvider baseTypeValidatorsProvider) {
+    public AlgorithmStrategyValidator(
+            BaseTypeValidatorsProvider baseTypeValidatorsProvider,
+            CustomTypeValidatorsProvider customTypeValidatorsProvider) {
         super(baseTypeValidatorsProvider);
+        this.customTypeValidatorsProvider = customTypeValidatorsProvider;
     }
 
     @Override
@@ -46,6 +53,16 @@ public class AlgorithmStrategyValidator extends AbstractGenerationStrategyValida
 
         if (CollectionUtils.isNotEmpty(errors)) {
             validationColumnsInfo.put(columnName, errors);
+        }
+
+        if (customType != null) {
+            CustomTypeValidator customTypeValidator = customTypeValidatorsProvider.getByType(customType);
+            if (customTypeValidator != null) {
+                List<String> customTypeErrors = customTypeValidator.validate(column, rowsCount);
+                if (CollectionUtils.isNotEmpty(customTypeErrors)) {
+                    validationColumnsInfo.put(columnName, customTypeErrors);
+                }
+            }
         }
     }
 

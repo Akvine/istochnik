@@ -28,6 +28,7 @@ import ru.akvine.istochnik.services.generators.custom.date.shift.AbstractDateRan
 import ru.akvine.istochnik.services.generators.custom.datetime.shift.AbstractDateTimeRangeService;
 import ru.akvine.istochnik.services.generators.custom.time.shift.AbstractTimeRangeService;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
+import ru.akvine.istochnik.validators.custom.CustomTypeValidator;
 import ru.akvine.istochnik.validators.strategy.GenerationStrategyValidator;
 import ru.akvine.istochnik.validators.type.BaseTypeValidator;
 
@@ -148,6 +149,13 @@ public class ProvidersDelegateConfig {
         Map<Topic, FakerGeneratorService> generatorServices =
                 fakerGeneratorServices.stream().collect(toMap(FakerGeneratorService::getByTopic, identity()));
         return new FakerGeneratorServicesProvider(generatorServices);
+    }
+
+    @Bean
+    public CustomTypeValidatorsProvider customTypeValidatorsProvider(List<CustomTypeValidator> customTypeValidators) {
+        Map<CustomType, CustomTypeValidator> validators =
+                customTypeValidators.stream().collect(toMap(CustomTypeValidator::getCustomType, identity()));
+        return new CustomTypeValidatorsProvider(validators);
     }
 
     @Bean

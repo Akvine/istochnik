@@ -13,6 +13,13 @@ public enum CustomType {
     DATETIME(BaseType.STRING, "custom.type.datetime.code", "datetime", "2025-12-25 10:30:00"),
     TIME(BaseType.STRING, "custom.type.time.code", "time", "14:00:00"),
     DATE(BaseType.STRING, "custom.type.date.code", "date", "2025-12-25"),
+    ZONED_DATETIME(
+            BaseType.STRING,
+            "custom.type.zoned.datetime.code",
+            "zoned_datetime",
+            "2025-12-25T10:30:00+03:00[Europe/Moscow]"),
+    ZONE_ID(BaseType.STRING, "custom.type.zone.id.code", "zone_id", "Europe/Moscow"),
+    DECIMAL(BaseType.STRING, "custom.type.decimal.code", "decimal", "1234.56"),
     SNILS(BaseType.INTEGER, "custom.type.snils.code", "snils", "12345678901"),
     INN_ORG(BaseType.INTEGER, "custom.type.inn.org.code", "inn_org", "7701206411"),
     INN_PERSONAL(BaseType.INTEGER, "custom.type.inn.pers.code", "inn_pers", "270903791924"),

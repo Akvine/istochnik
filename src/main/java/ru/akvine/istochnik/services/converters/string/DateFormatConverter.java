@@ -1,11 +1,13 @@
 package ru.akvine.istochnik.services.converters.string;
 
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.random.RandomGenerator;
 import org.springframework.stereotype.Service;
 import ru.akvine.compozit.commons.utils.DateTimeUtils;
 import ru.akvine.istochnik.enums.ConverterType;
+import ru.akvine.istochnik.utils.ZonedDateTimeUtils;
 
 @Service
 public class DateFormatConverter extends StringConverter<String, String> {
@@ -16,6 +18,14 @@ public class DateFormatConverter extends StringConverter<String, String> {
 
         return input.stream()
                 .map(value -> {
+                    ZonedDateTime zonedDateTime = ZonedDateTimeUtils.tryParseIso(value);
+                    if (zonedDateTime != null) {
+                        if (randomGenerator.nextDouble() < probability) {
+                            return zonedDateTime.format(format);
+                        }
+
+                        return value;
+                    }
                     if (DateTimeUtils.isDate(value)) {
                         DateTimeFormatter originalFormatter = DateTimeUtils.extractFromLocalDate(value);
                         if (originalFormatter == null) {
