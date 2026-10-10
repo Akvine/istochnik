@@ -24,7 +24,10 @@ public enum CustomType {
     INN_ORG(BaseType.INTEGER, "custom.type.inn.org.code", "inn_org", "7701206411"),
     INN_PERSONAL(BaseType.INTEGER, "custom.type.inn.pers.code", "inn_pers", "270903791924"),
     OGRN(BaseType.INTEGER, "custom.type.ogrn.code", "ogrn", "10277000673288"),
-    IMEI(BaseType.STRING, "custom.type.imei.code", "imei", "865434044201239");
+    IMEI(BaseType.STRING, "custom.type.imei.code", "imei", "865434044201239"),
+    CARD_MIR(BaseType.STRING, "custom.type.card.mir.code", "card_mir", "2200123456789019"),
+    CARD_VISA(BaseType.STRING, "custom.type.card.visa.code", "card_visa", "4111111111111111"),
+    CARD_MASTERCARD(BaseType.STRING, "custom.type.card.mastercard.code", "card_mastercard", "5555555555554444");
 
     private final BaseType baseType;
     private final String code;

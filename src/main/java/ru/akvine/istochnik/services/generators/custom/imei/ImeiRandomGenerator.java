@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
+import ru.akvine.istochnik.utils.LuhnUtils;
 
 @Service
 public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGeneratorConfig> {
@@ -43,7 +44,7 @@ public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGen
             }
 
             if (config.isValid()) {
-                imei.append(calculateCheckDigit(imei.toString()));
+                imei.append(LuhnUtils.calculateCheckDigit(imei));
             } else {
                 imei.append(config.getRandomGenerator().nextInt(10));
             }
@@ -58,23 +59,5 @@ public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGen
         }
 
         return generatedValues;
-    }
-
-    private static int calculateCheckDigit(String imei) {
-        int sum = 0;
-        for (int i = 0; i < imei.length(); i++) {
-            int digit = Character.getNumericValue(imei.charAt(i));
-
-            if (i % 2 == 1) {
-                digit *= 2;
-                if (digit > 9) {
-                    digit = (digit / 10) + (digit % 10);
-                }
-            }
-
-            sum += digit;
-        }
-
-        return (10 - (sum % 10)) % 10;
     }
 }
