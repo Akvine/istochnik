@@ -12,8 +12,8 @@ public class TimeMinutesRangeService extends AbstractTimeRangeService<LocalTime,
     @Override
     public Collection<LocalTime> range(LocalTime start, LocalTime end, Integer step) {
         List<LocalTime> range = new ArrayList<>();
-        for (LocalTime time = start; time.isBefore(end) || time.isAfter(end); time = time.plusMinutes(step)) {
-            range.add(time);
+        for (long seconds = start.toSecondOfDay(); seconds <= end.toSecondOfDay(); seconds += step * 60L) {
+            range.add(LocalTime.ofSecondOfDay(seconds));
         }
         return range;
     }

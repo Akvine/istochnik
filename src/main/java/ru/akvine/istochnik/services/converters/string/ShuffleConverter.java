@@ -13,7 +13,7 @@ public class ShuffleConverter extends StringConverter<String, String> {
     public List<String> convert(
             List<String> input, String[] arguments, RandomGenerator randomGenerator, double probability) {
         List<String> result = new ArrayList<>(input);
-        Collections.shuffle(result);
+        Collections.shuffle(result, randomGenerator);
         return result;
     }
 

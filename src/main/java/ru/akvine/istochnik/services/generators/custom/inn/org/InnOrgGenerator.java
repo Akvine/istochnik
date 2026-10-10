@@ -36,7 +36,8 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
                 }
             }
 
-            int taxOfficeCode = 100 + config.getRandomGenerator().nextInt(9900);
+            // ИНН хранится как число, поэтому код региона начинается с 10, чтобы не терять ведущий ноль
+            int taxOfficeCode = 1000 + config.getRandomGenerator().nextInt(9000);
             int uniqueNumber = config.getRandomGenerator().nextInt(100000);
 
             String innWithoutControl = String.format("%04d%05d", taxOfficeCode, uniqueNumber);
@@ -53,6 +54,7 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
                 continue;
             }
 
+            iteration++;
             generatedValues.add(Long.parseLong(generatedInn));
         }
 

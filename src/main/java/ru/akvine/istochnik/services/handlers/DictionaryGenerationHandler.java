@@ -2,15 +2,18 @@ package ru.akvine.istochnik.services.handlers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.akvine.compozit.commons.utils.CollectionUtils;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.exceptions.GenerationException;
 import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.GenerationHandler;
+import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 
@@ -21,94 +24,68 @@ public class DictionaryGenerationHandler implements GenerationHandler {
 
     @Override
     public List<?> handle(GenerateColumn generateColumn) {
+        Config config = generateColumn.getConfig();
         List<Converter> converters = generateColumn.getConverters();
-        List<String> dictionary = generateColumn.getConfig().getDictionaries().stream()
+        // Одинаковые элементы из разных словарей считаются одним значением
+        List<String> dictionary = config.getDictionaries().stream()
                 .flatMap(Collection::stream)
+                .distinct()
                 .toList();
-        int size = generateColumn.getConfig().getSize();
-        RangeType rangeType = generateColumn.getConfig().getRangeType();
 
-        List<String> generatedValues = new ArrayList<>();
-        while (generatedValues.size() != size) {
-            if (rangeType == RangeType.RANDOM) {
-                generateByRandomRange(generatedValues, generateColumn, dictionary);
-            } else {
-                generateByShiftRange(generatedValues, generateColumn, dictionary);
-            }
+        if (dictionary.isEmpty()) {
+            throw new GenerationException("dictionaries can't be empty");
+        }
+
+        List<String> generatedValues;
+        if (config.isUnique()) {
+            generatedValues = generateUnique(config, dictionary);
+        } else {
+            generatedValues = generateNonUnique(config, dictionary);
         }
 
         return converterConvertersProvider
                 .getByType(BaseType.STRING)
-                .apply(generatedValues, converters, generateColumn.getConfig().getRandomGenerator());
+                .apply(generatedValues, converters, config.getRandomGenerator());
     }
 
-    private void generateByShiftRange(
-            List<String> generatedValues, GenerateColumn generateColumn, List<String> dictionary) {
-        dictionary.forEach(element -> {
-            if (generatedValues.size() == generateColumn.getConfig().getSize()) {
-                return;
-            }
-
-            if (generateColumn.getConfig().isNotNull()) {
-                generatedValues.add(element);
-            } else {
-                boolean isNull = generateColumn.getConfig().getRandomGenerator().nextBoolean();
-                if (isNull) {
-                    if (generateColumn.getConfig().isUnique()) {
-                        if (!generatedValues.contains(null)) {
-                            generatedValues.add(null);
-                        } else {
-                            generatedValues.add(element);
-                        }
-                    } else {
-                        generatedValues.add(null);
-                    }
-                } else {
-                    generatedValues.add(element);
-                }
-            }
-        });
-    }
-
-    private void generateByRandomRange(
-            List<String> generatedValues, GenerateColumn generateColumn, List<String> dictionary) {
-        if (generateColumn.getConfig().isUnique()) {
-            if (generateColumn.getConfig().isNotNull()) {
-                String element = CollectionUtils.getRandomElement(dictionary);
-
-                if (generatedValues.contains(element)) {
-                    return;
-                }
-
-                generatedValues.add(element);
-            } else {
-                boolean isNull = generateColumn.getConfig().getRandomGenerator().nextBoolean();
-                if (isNull && !generatedValues.contains(null)) {
-                    generatedValues.add(null);
-                    return;
-                }
-
-                String element = CollectionUtils.getRandomElement(dictionary);
-                if (generatedValues.contains(element)) {
-                    return;
-                }
-
-                generatedValues.add(element);
-            }
-        } else {
-            if (generateColumn.getConfig().isNotNull()) {
-                String element = CollectionUtils.getRandomElement(dictionary);
-                generatedValues.add(element);
-            } else {
-                boolean isNull = generateColumn.getConfig().getRandomGenerator().nextBoolean();
-                if (isNull) {
-                    generatedValues.add(null);
-                } else {
-                    String element = CollectionUtils.getRandomElement(dictionary);
-                    generatedValues.add(element);
-                }
-            }
+    private List<String> generateUnique(Config config, List<String> dictionary) {
+        int size = config.getSize();
+        // Если колонка может содержать null, то он выступает ещё одним уникальным значением
+        List<String> candidates = new ArrayList<>(dictionary);
+        if (!config.isNotNull()) {
+            candidates.add(null);
         }
+
+        if (size > candidates.size()) {
+            String errorMessage = String.format(
+                    "Rows count = [%s] greater than available unique elements = [%s]", size, candidates.size());
+            throw new GenerationException(errorMessage);
+        }
+
+        if (config.getRangeType() == RangeType.RANDOM) {
+            Collections.shuffle(candidates, config.getRandomGenerator());
+        }
+
+        return new ArrayList<>(candidates.subList(0, size));
+    }
+
+    private List<String> generateNonUnique(Config config, List<String> dictionary) {
+        int size = config.getSize();
+        RandomGenerator randomGenerator = config.getRandomGenerator();
+        boolean random = config.getRangeType() == RangeType.RANDOM;
+
+        List<String> generatedValues = new ArrayList<>(size);
+        for (int i = 0; i < size; ++i) {
+            if (!config.isNotNull() && randomGenerator.nextBoolean()) {
+                generatedValues.add(null);
+                continue;
+            }
+
+            int index = random ? randomGenerator.nextInt(dictionary.size()) : i % dictionary.size();
+            generatedValues.add(dictionary.get(index));
+        }
+
+        return generatedValues;
     }
 
     @Override

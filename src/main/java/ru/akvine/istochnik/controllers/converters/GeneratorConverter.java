@@ -57,7 +57,7 @@ public class GeneratorConverter {
                     .setName(column.getName())
                     .setBaseType(baseType)
                     .setCustomType(customType)
-                    .setConfig(buildConfig(size, column.getConfig(), strategy))
+                    .setConfig(buildConfig(size, column.getConfig(), baseType))
                     .setGenerationStrategy(strategy)
                     .setErrorResolveInfo(column.getErrorResolveInfo())
                     .setConvertToString(column.isConvertToString())
@@ -101,7 +101,7 @@ public class GeneratorConverter {
                 .setProbability(converterDto.getProbability());
     }
 
-    private Config buildConfig(int size, ConfigDto from, GenerationStrategy strategy) {
+    private Config buildConfig(int size, ConfigDto from, BaseType baseType) {
         SecureRandom randomGenerator;
         try {
              randomGenerator = resolveRandomizer(from);
@@ -126,31 +126,29 @@ public class GeneratorConverter {
                 .setTopics(from.getTopics().stream().map(Topic::safeFrom).toList())
                 .setLang(from.getLanguage())
                 .setRegexps(from.getRegexps())
-                .setSeed(from.getSeed());
+                // Действующий seed: глобальный из настроек имеет приоритет над seed колонки
+                .setSeed(StringUtils.isBlank(seed) ? StringUtils.defaultIfBlank(from.getSeed(), null) : seed);
 
         // TODO: добавить инициализацию ConfigDto в провайдер в зависимости от RangeType / Типа данных
-        if (GenerationStrategy.ALGORITHM == strategy && RangeType.SHIFT.getType().equalsIgnoreCase(from.getRangeType())) {
-            String end = from.getEnd();
-            Integer startInteger = Integer.parseInt(from.getStart());
-            Integer stepInteger = Integer.parseInt(from.getStep());
-            Integer endInteger;
-            if (StringUtils.isBlank(end)) {
-                endInteger = size * stepInteger + startInteger;
+        // Вычисление end по start / step / size применимо только к целым числам
+        if (BaseType.INTEGER == baseType
+                && RangeType.SHIFT.getType().equalsIgnoreCase(from.getRangeType())
+                && StringUtils.isBlank(from.getEnd())) {
+            long start = Long.parseLong(from.getStart());
+            long step = Long.parseLong(from.getStep());
+            long end = size * step + start;
 
-                if (endInteger < startInteger) {
-                    Integer tmp = endInteger;
-                    endInteger = startInteger;
-                    startInteger = tmp;
+            if (end < start) {
+                long tmp = end;
+                end = start;
+                start = tmp;
 
-                    to.setStart(String.valueOf(startInteger));
-                    to.setStep(String.valueOf(Math.abs(stepInteger)));
-                }
-
-                to.setEnd(String.valueOf(endInteger));
+                to.setStart(String.valueOf(start));
+                to.setStep(String.valueOf(Math.abs(step)));
             }
 
+            to.setEnd(String.valueOf(end));
         }
-
 
         return to;
     }
@@ -167,8 +165,9 @@ public class GeneratorConverter {
     }
 
     private SecureRandom resolveRandomizer(ConfigDto configDto) throws NoSuchAlgorithmException {
-        if (seed == null) {
-            if (configDto.getSeed() == null) {
+        // Пустое значение randomizer.seed в properties приходит как "", а не null
+        if (StringUtils.isBlank(seed)) {
+            if (StringUtils.isBlank(configDto.getSeed())) {
                 return SECURE_RANDOM_GENERATOR;
             } else {
                 SecureRandom randomGenerator = SecureRandom.getInstance(ALGORITHM_TYPE);

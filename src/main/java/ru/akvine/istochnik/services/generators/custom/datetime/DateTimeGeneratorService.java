@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.exceptions.GenerationException;
 import ru.akvine.istochnik.providers.DateTimeRangeServicesProvider;
 import ru.akvine.istochnik.services.generators.custom.datetime.configs.DateTimeGeneratorConfig;
 import ru.akvine.istochnik.services.generators.custom.datetime.random.DateTimeRandomGenerator;
@@ -25,9 +26,14 @@ public class DateTimeGeneratorService {
             return dateTimeRandomGenerator.generate(config);
         } else {
             DateTimeShiftRange shiftRange = config.getDateTimeShiftRange();
-            return (List<LocalDateTime>) dateTimeRangeServicesProvider
+            if (shiftRange.getShiftCount() <= 0) {
+                throw new GenerationException("field [step] must be greater than 0");
+            }
+
+            List<LocalDateTime> range = (List<LocalDateTime>) dateTimeRangeServicesProvider
                     .getByType(shiftRange.getDateShiftType())
                     .range(shiftRange.getStart(), shiftRange.getEnd(), shiftRange.getShiftCount());
+            return range.size() > config.getSize() ? range.subList(0, config.getSize()) : range;
         }
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class BooleanCellTypeConfigurer implements CellConfigurer {
     @Override
     public void configure(Cell cell, Object object) {
-        cell.setCellValue(Boolean.parseBoolean((String) object));
+        cell.setCellValue((Boolean) object);
     }
 
     @Override

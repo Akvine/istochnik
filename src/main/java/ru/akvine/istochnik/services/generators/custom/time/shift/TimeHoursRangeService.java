@@ -11,8 +11,8 @@ public class TimeHoursRangeService extends AbstractTimeRangeService<LocalTime, I
     @Override
     public List<LocalTime> range(LocalTime start, LocalTime end, Integer step) {
         List<LocalTime> range = new ArrayList<>();
-        for (LocalTime time = start; time.isBefore(end) || time.isAfter(end); time = time.plusHours(step)) {
-            range.add(time);
+        for (long seconds = start.toSecondOfDay(); seconds <= end.toSecondOfDay(); seconds += step * 3600L) {
+            range.add(LocalTime.ofSecondOfDay(seconds));
         }
         return range;
     }

@@ -12,7 +12,7 @@ public class DateTimeYearsRangeService extends AbstractDateTimeRangeService<Loca
     @Override
     public Collection<LocalDateTime> range(LocalDateTime start, LocalDateTime end, Long step) {
         List<LocalDateTime> range = new ArrayList<>();
-        for (LocalDateTime date = start; date.isBefore(end) || date.isEqual(end); date = date.plusDays(step)) {
+        for (LocalDateTime date = start; date.isBefore(end) || date.isEqual(end); date = date.plusYears(step)) {
             range.add(date);
         }
         return range;

@@ -31,6 +31,10 @@ public class AlgorithmStrategyValidator extends AbstractGenerationStrategyValida
             return;
         }
 
+        if (baseType == BaseType.STRING && !hasValidStringLength(column)) {
+            validationColumnsInfo.put(columnName, "field [length] must be set and be greater than 0");
+        }
+
         if (baseType == null) {
             baseType = customType.getBaseType();
         }
@@ -42,6 +46,20 @@ public class AlgorithmStrategyValidator extends AbstractGenerationStrategyValida
 
         if (CollectionUtils.isNotEmpty(errors)) {
             validationColumnsInfo.put(columnName, errors);
+        }
+    }
+
+    // Длина строки задаётся полем length, для обратной совместимости допускается поле end
+    private boolean hasValidStringLength(ColumnDto column) {
+        Integer length = column.getConfig().getLength();
+        if (length != null) {
+            return length > 0;
+        }
+
+        try {
+            return Integer.parseInt(column.getConfig().getEnd().trim()) > 0;
+        } catch (NumberFormatException | NullPointerException exception) {
+            return false;
         }
     }
 

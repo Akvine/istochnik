@@ -3,7 +3,6 @@ package ru.akvine.istochnik.services.generators.custom.datetime.random;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.services.generators.custom.datetime.configs.DateTimeGeneratorConfig;
@@ -33,7 +32,7 @@ public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTi
 
             long startEpoch = startDate.toEpochSecond(java.time.ZoneOffset.UTC);
             long endEpoch = endDate.toEpochSecond(java.time.ZoneOffset.UTC);
-            long randomEpoch = ThreadLocalRandom.current().nextLong(startEpoch, endEpoch);
+            long randomEpoch = config.getRandomGenerator().nextLong(startEpoch, endEpoch);
             LocalDateTime generateDate = LocalDateTime.ofEpochSecond(randomEpoch, 0, java.time.ZoneOffset.UTC);
 
             if (generateDate.isAfter(endDate)) {

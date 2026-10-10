@@ -36,7 +36,7 @@ public class DateFormatConverter extends StringConverter<String, String> {
                         }
 
                         if (randomGenerator.nextDouble() < probability) {
-                            return DateTimeUtils.toLocalDate(value, originalFormatter)
+                            return DateTimeUtils.toLocalDateTime(value, originalFormatter)
                                     .format(format);
                         }
 

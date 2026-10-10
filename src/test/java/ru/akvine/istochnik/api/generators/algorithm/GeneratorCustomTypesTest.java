@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +15,7 @@ import org.junit.platform.commons.util.StringUtils;
 import org.springframework.http.HttpStatus;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
+import ru.akvine.compozit.commons.istochnik.ConverterDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.compozit.commons.utils.DateTimeUtils;
 import ru.akvine.istochnik.api.ApiBaseTest;
@@ -202,6 +205,43 @@ public class GeneratorCustomTypesTest extends ApiBaseTest {
                 .toList();
 
         assertThat(result.stream().allMatch(DateTimeUtils::isDateTime)).isTrue();
+    }
+
+    @Test
+    @DisplayName("Generate datetime with format converter successful")
+    void successful_datetime_values_with_format_converter() {
+        CustomType type = CustomType.DATETIME;
+        String pattern = "dd.MM.yyyy HH:mm:ss";
+        List<ColumnDto> columnsToGenerate = List.of(new ColumnDto()
+                .setName("datetime_column")
+                .setType(type.getName())
+                .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
+                .setConfig(new ConfigDto()
+                        .setNotNull(true)
+                        .setRangeType(RangeType.RANDOM.getType().toUpperCase())
+                        .setStart("2025-01-02 14:00:00")
+                        .setEnd("2025-11-02 14:00:00"))
+                .setConverters(List.of(new ConverterDto()
+                        .setName(ConverterType.DATE_FORMAT.getName())
+                        .setArguments(new Object[] {pattern}))));
+
+        GenerateTableRequest request = new GenerateTableRequest()
+                .setSize(10)
+                .setFileType(FileType.CSV.name())
+                .setColumns(columnsToGenerate);
+
+        byte[] response = sendGenerateRequest(request);
+
+        List<String> result = convert(type.getBaseType(), response).stream()
+                .map(String.class::cast)
+                .toList();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        assertThat(result).hasSize(10);
+        assertThatNoException().isThrownBy(() -> result.forEach(value -> LocalDateTime.parse(value, formatter)));
+        // Время не должно теряться при форматировании
+        assertThat(result.stream().anyMatch(value -> !value.endsWith("00:00:00")))
+                .isTrue();
     }
 
     @Test

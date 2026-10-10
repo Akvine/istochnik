@@ -30,6 +30,12 @@ public class DictionaryStrategyValidator extends AbstractGenerationStrategyValid
     public void validate(ValidationColumnsInfo validationColumnsInfo, ColumnDto column, int rowsCount) {
         String columnName = column.getName();
 
+        Set<Set<String>> dictionaries = column.getConfig().getDictionaries();
+        if (CollectionUtils.isEmpty(dictionaries) || dictionaries.stream().allMatch(CollectionUtils::isEmpty)) {
+            validationColumnsInfo.put(columnName, "field [dictionaries] can't be empty");
+            return;
+        }
+
         if (column.getConfig().getDictionaries().size() > maxDictionariesPerColumn) {
             validationColumnsInfo.put(
                     columnName, "dictionaries count can't be more than max = [" + maxDictionariesPerColumn + "]");
@@ -45,10 +51,9 @@ public class DictionaryStrategyValidator extends AbstractGenerationStrategyValid
         }
 
         if (column.getConfig().isUnique()) {
-            int allElementsCount = 0;
-            for (Set<String> dictionary : column.getConfig().getDictionaries()) {
-                allElementsCount += dictionary.size();
-            }
+            // Одинаковые элементы из разных словарей считаются одним значением
+            int allElementsCount = (int)
+                    dictionaries.stream().flatMap(Set::stream).distinct().count();
 
             // Если колонока может содержать null, но unique = true, то добавляем доп. значение
             if (!column.getConfig().isNotNull()) {

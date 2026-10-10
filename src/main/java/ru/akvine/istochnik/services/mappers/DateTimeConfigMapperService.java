@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.compozit.commons.utils.DateTimeUtils;
 import ru.akvine.istochnik.enums.CustomType;
+import ru.akvine.istochnik.enums.DateShiftType;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.generators.custom.datetime.DateTimeShiftRange;
 import ru.akvine.istochnik.services.generators.custom.datetime.configs.DateTimeGeneratorConfig;
@@ -22,6 +23,7 @@ public class DateTimeConfigMapperService implements ConfigMapperService<DateTime
                 new DateTimeShiftRange()
                         .setStart(DateTimeUtils.toLocalDateTime(config.getStart()))
                         .setEnd(DateTimeUtils.toLocalDateTime(config.getEnd()))
+                        .setDateShiftType(DateShiftType.SECOND)
                         .setShiftCount(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep())),
                 config.getRandomGenerator());
     }

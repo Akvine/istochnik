@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.akvine.compozit.commons.dto.ErrorResponse;
 import ru.akvine.istochnik.constants.ErrorConstants;
 import ru.akvine.istochnik.controllers.dto.GenerateDataErrorResponse;
+import ru.akvine.istochnik.exceptions.GenerationException;
 import ru.akvine.istochnik.exceptions.LanguageNotSupportedException;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 
@@ -23,6 +24,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 exception.getGeneralInfo(),
                 exception.getValidationColumnsInfo().getColumnNamesPerErrorMessages());
         return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({GenerationException.class})
+    public ResponseEntity<?> handleGenerationException(GenerationException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(ErrorConstants.GENERATION_ERROR, exception.getMessage());
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({LanguageNotSupportedException.class})

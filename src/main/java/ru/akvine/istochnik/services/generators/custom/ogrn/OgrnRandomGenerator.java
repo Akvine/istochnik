@@ -45,11 +45,10 @@ public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGener
             long ogrn12 = Long.parseLong(ogrnBuilder.toString());
             long controlDigit = (ogrn12 % 11) % 10;
 
-            ogrnBuilder.append(controlDigit);
-
             if (config.isValid()) {
-                iteration++;
-                continue;
+                ogrnBuilder.append(controlDigit);
+            } else {
+                ogrnBuilder.append(config.getRandomGenerator().nextInt(10));
             }
 
             if (config.isUnique() && generatedValues.contains(Long.parseLong(ogrnBuilder.toString()))) {

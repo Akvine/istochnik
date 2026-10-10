@@ -38,7 +38,7 @@ public class StringConverterService implements ConverterService {
     private String[] mapArguments(Object[] arguments) {
         String[] array = new String[arguments.length];
         for (int i = 0; i < arguments.length; ++i) {
-            array[i] = (String) arguments[i];
+            array[i] = arguments[i] == null ? null : String.valueOf(arguments[i]);
         }
 
         return array;

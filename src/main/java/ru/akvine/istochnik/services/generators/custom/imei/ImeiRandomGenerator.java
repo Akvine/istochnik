@@ -65,7 +65,7 @@ public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGen
         for (int i = 0; i < imei.length(); i++) {
             int digit = Character.getNumericValue(imei.charAt(i));
 
-            if (i % 2 == 0) {
+            if (i % 2 == 1) {
                 digit *= 2;
                 if (digit > 9) {
                     digit = (digit / 10) + (digit % 10);

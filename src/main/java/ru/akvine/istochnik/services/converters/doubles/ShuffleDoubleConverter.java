@@ -13,7 +13,7 @@ public class ShuffleDoubleConverter extends DoubleConverter<Double, Double> {
     public List<Double> convert(
             List<Double> input, Double[] arguments, RandomGenerator randomGenerator, double probability) {
         List<Double> result = new ArrayList<>(input);
-        Collections.shuffle(result);
+        Collections.shuffle(result, randomGenerator);
         return result;
     }
 

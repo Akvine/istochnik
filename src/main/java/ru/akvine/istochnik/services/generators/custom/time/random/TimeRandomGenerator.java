@@ -3,7 +3,6 @@ package ru.akvine.istochnik.services.generators.custom.time.random;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.services.generators.custom.time.configs.TimeGeneratorConfig;
@@ -34,7 +33,7 @@ public class TimeRandomGenerator extends AbstractRandomGenerator<LocalTime, Time
             int startSeconds = startDate.toSecondOfDay();
             int endSeconds = endDate.toSecondOfDay();
 
-            int randomSeconds = ThreadLocalRandom.current().nextInt(startSeconds, endSeconds);
+            int randomSeconds = config.getRandomGenerator().nextInt(startSeconds, endSeconds);
             LocalTime generateTime = LocalTime.ofSecondOfDay(randomSeconds);
 
             if (generateTime.isAfter(endDate)) {

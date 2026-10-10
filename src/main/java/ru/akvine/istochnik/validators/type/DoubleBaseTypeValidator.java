@@ -136,7 +136,9 @@ public class DoubleBaseTypeValidator implements BaseTypeValidator {
     private Double[] mapArguments(Object[] arguments) {
         Double[] array = new Double[arguments.length];
         for (int i = 0; i < arguments.length; ++i) {
-            array[i] = (Double) arguments[i];
+            array[i] = arguments[i] instanceof Number number
+                    ? Double.valueOf(number.doubleValue())
+                    : Double.valueOf(String.valueOf(arguments[i]));
         }
 
         return array;

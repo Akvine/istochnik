@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.springframework.util.CollectionUtils;
 import ru.akvine.istochnik.exceptions.AddColumnException;
 
 @Data
@@ -21,8 +20,8 @@ public class Table {
     }
 
     public void addColumn(String columnName, List<?> values) {
-        if (CollectionUtils.isEmpty(values)) {
-            throw new AddColumnException("Column is empty or null");
+        if (values == null) {
+            throw new AddColumnException("Column is null");
         }
 
         if (values.size() != rowsCount) {

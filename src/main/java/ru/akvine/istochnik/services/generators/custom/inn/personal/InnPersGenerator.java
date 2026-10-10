@@ -36,7 +36,8 @@ public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGener
                 }
             }
 
-            int taxOfficeCode = 100 + config.getRandomGenerator().nextInt(9900);
+            // ИНН хранится как число, поэтому код региона начинается с 10, чтобы не терять ведущий ноль
+            int taxOfficeCode = 1000 + config.getRandomGenerator().nextInt(9000);
             int uniqueNumber = config.getRandomGenerator().nextInt(1_000_000);
 
             String innWithoutControl = String.format("%04d%06d", taxOfficeCode, uniqueNumber);
@@ -74,7 +75,7 @@ public class InnPersGenerator extends AbstractRandomGenerator<Long, InnPersGener
 
     private static int calculateControlDigit(String innPart, boolean first) {
         int[] weights =
-                first ? new int[] {2, 4, 10, 3, 5, 9, 4, 6, 8, 0} : new int[] {3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8};
+                first ? new int[] {7, 2, 4, 10, 3, 5, 9, 4, 6, 8} : new int[] {3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8};
 
         int sum = 0;
         for (int i = 0; i < weights.length; i++) {

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import ru.akvine.compozit.commons.utils.CollectionUtils;
+import ru.akvine.istochnik.exceptions.GenerationException;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.enums.RangeType;
@@ -37,6 +37,10 @@ public class FakerGenerationHandler implements GenerationHandler {
         RangeType rangeType = generateColumn.getConfig().getRangeType();
         boolean notNull = generateColumn.getConfig().isNotNull();
 
+        if (topics == null || topics.isEmpty()) {
+            throw new GenerationException("topics can't be empty");
+        }
+
         RandomGenerator randomGenerator = generateColumn.getConfig().getRandomGenerator();
         Faker faker;
         if (StringUtils.isBlank(language)) {
@@ -68,7 +72,7 @@ public class FakerGenerationHandler implements GenerationHandler {
                 }
             } else {
                 if (notNull) {
-                    Topic topic = CollectionUtils.getRandomElement(topics);
+                    Topic topic = randomTopic(topics, randomGenerator);
                     generatedValues.add(
                             fakerGeneratorServicesProvider.getByTopic(topic).generate(faker));
                 } else {
@@ -76,7 +80,7 @@ public class FakerGenerationHandler implements GenerationHandler {
                     if (isNull) {
                         generatedValues.add(null);
                     } else {
-                        Topic topic = CollectionUtils.getRandomElement(topics);
+                        Topic topic = randomTopic(topics, randomGenerator);
                         generatedValues.add(
                                 fakerGeneratorServicesProvider.getByTopic(topic).generate(faker));
                     }
@@ -89,6 +93,11 @@ public class FakerGenerationHandler implements GenerationHandler {
         return converterConvertersProvider
                 .getByType(BaseType.STRING)
                 .apply(generatedValues, converters, generateColumn.getConfig().getRandomGenerator());
+    }
+
+    // Для единственного топика генератор не расходуется, чтобы не менять последовательность значений по seed
+    private Topic randomTopic(List<Topic> topics, RandomGenerator randomGenerator) {
+        return topics.size() == 1 ? topics.getFirst() : topics.get(randomGenerator.nextInt(topics.size()));
     }
 
     @Override
