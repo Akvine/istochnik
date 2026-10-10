@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.services.file;
 
 import java.nio.charset.StandardCharsets;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.services.dto.Table;
@@ -8,18 +9,23 @@ import ru.akvine.istochnik.services.dto.Table;
 @Service
 public class SqlFileTableGenerator implements FileTableGenerator {
 
+    @Value("${sql.insert.batch.size:1000}")
+    private int insertBatchSize;
+
     @Override
     public byte[] generate(Table table) {
         int rowsCount = table.getRowsCount();
+        int batchSize = insertBatchSize > 0 ? insertBatchSize : Math.max(rowsCount, 1);
 
-        String columnNames = extractColumnNames(table);
+        String insertHeader = "INSERT INTO " + table.getTableName() + " (" + extractColumnNames(table) + ") VALUES\n";
 
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO ").append(table.getTableName()).append(" (").append(columnNames).append(") VALUES\n");
 
         // Перебираем строки
         for (int row = 0; row < rowsCount; row++) {
-            if (row > 0) sql.append(",\n");
+            if (row % batchSize == 0) {
+                sql.append(insertHeader);
+            }
             sql.append("(");
 
             int lastColumnIndex = table.getColumns().size() - 1;
@@ -31,8 +37,10 @@ public class SqlFileTableGenerator implements FileTableGenerator {
                     sql.append(formatValue(value)).append(", ");
                 }
             }
+
+            boolean lastInBatch = (row + 1) % batchSize == 0 || row == rowsCount - 1;
+            sql.append(lastInBatch ? ";\n" : ",\n");
         }
-        sql.append(";\n");
 
         return sql.toString().getBytes(StandardCharsets.UTF_8);
     }
