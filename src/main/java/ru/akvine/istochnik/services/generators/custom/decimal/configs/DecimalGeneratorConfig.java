@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.services.distribution.Distribution;
+import ru.akvine.istochnik.services.distribution.UniformDistribution;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.custom.decimal.DecimalShiftRange;
 
@@ -21,6 +23,7 @@ public class DecimalGeneratorConfig extends Config {
      * Количество знаков после запятой у генерируемых значений
      */
     private final int scale;
+    private Distribution distribution = UniformDistribution.INSTANCE;
 
     public DecimalGeneratorConfig(
             int size,

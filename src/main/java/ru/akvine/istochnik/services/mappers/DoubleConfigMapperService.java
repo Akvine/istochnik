@@ -22,7 +22,8 @@ public class DoubleConfigMapperService implements ConfigMapperService<DoubleGene
                         .setStart(Double.parseDouble(config.getStart()))
                         .setEnd(Double.parseDouble(config.getEnd()))
                         .setStep(StringUtils.isBlank(config.getStep()) ? 1 : Double.parseDouble(config.getStep())),
-                config.getRandomGenerator());
+                config.getRandomGenerator())
+                .setDistribution(config.getDistribution());
     }
 
     @Override

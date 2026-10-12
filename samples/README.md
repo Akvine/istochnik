@@ -87,6 +87,7 @@ curl.exe -X POST "http://localhost:8103/v1/generator" -H "Content-Type: applicat
 | Файл | Что показано |
 |---|---|
 | [options/seed.json](options/seed.json) | Воспроизводимая генерация: колонки с `seed` дают одинаковые значения при каждом запуске, колонка без `seed` — разные |
+| [options/distribution.json](options/distribution.json) | Распределения случайных значений: нормальное для возраста и времени визита, экспоненциальное для суммы и для дат с преобладанием свежих, Ципфа для идентификатора клиента и оценки. Для сравнения — колонка с равномерным распределением |
 | [options/error_policy.json](options/error_policy.json) | Политика `IGNORE`: колонка, которую невозможно сгенерировать (100 уникальных строк из одного символа), заполняется значением `defaultValue` |
 | [output/sql.json](output/sql.json) | Выгрузка в SQL: имя таблицы, кавычки для строк, экранирование апострофа, `NULL` |
 | [output/xlsx.json](output/xlsx.json) | Выгрузка в XLSX |

@@ -5,6 +5,8 @@ import java.util.random.RandomGenerator;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.services.distribution.Distribution;
+import ru.akvine.istochnik.services.distribution.UniformDistribution;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.base.number.integer.IntegerShiftRange;
@@ -17,6 +19,7 @@ public class IntegerGeneratorConfig extends Config {
     private final RangeType rangeType;
     private final IntegerShiftRange integerShiftRange;
     private final List<Converter> converters;
+    private Distribution distribution = UniformDistribution.INSTANCE;
 
     public IntegerGeneratorConfig(
             int size,

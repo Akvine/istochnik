@@ -4,6 +4,8 @@ import java.util.random.RandomGenerator;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.services.distribution.Distribution;
+import ru.akvine.istochnik.services.distribution.UniformDistribution;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.custom.date.DateShiftRange;
 
@@ -14,6 +16,7 @@ public class DateGeneratorConfig extends Config {
     private final boolean unique;
     private final RangeType rangeType;
     private final DateShiftRange dateShiftRange;
+    private Distribution distribution = UniformDistribution.INSTANCE;
 
     public DateGeneratorConfig(
             int size,

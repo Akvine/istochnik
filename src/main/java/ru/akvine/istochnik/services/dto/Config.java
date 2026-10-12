@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
 import ru.akvine.istochnik.enums.Topic;
+import ru.akvine.istochnik.services.distribution.Distribution;
+import ru.akvine.istochnik.services.distribution.UniformDistribution;
 
 @Data
 @Accessors(chain = true)
@@ -26,6 +28,11 @@ public class Config {
     private String end;
 
     private String step;
+
+    /**
+     * Распределение случайных значений внутри диапазона от start до end
+     */
+    private Distribution distribution = UniformDistribution.INSTANCE;
 
     private List<Converter> converters;
 

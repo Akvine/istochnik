@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.services.distribution.Distribution;
+import ru.akvine.istochnik.services.distribution.UniformDistribution;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.generators.base.number.doubles.DoubleShiftRange;
 
@@ -16,6 +18,7 @@ public class DoubleGeneratorConfig extends Config {
     private final boolean unique;
     private final RangeType rangeType;
     private final DoubleShiftRange doubleShiftRange;
+    private Distribution distribution = UniformDistribution.INSTANCE;
 
     public DoubleGeneratorConfig(
             int size,

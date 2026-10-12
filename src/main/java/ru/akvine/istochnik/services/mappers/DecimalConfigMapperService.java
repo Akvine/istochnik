@@ -40,7 +40,8 @@ public class DecimalConfigMapperService implements ConfigMapperService<DecimalGe
                 config.getRangeType(),
                 new DecimalShiftRange().setStart(start).setEnd(end).setStep(step),
                 scale,
-                config.getRandomGenerator());
+                config.getRandomGenerator())
+                .setDistribution(config.getDistribution());
     }
 
     @Override

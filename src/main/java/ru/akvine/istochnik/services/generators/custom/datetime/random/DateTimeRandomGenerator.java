@@ -32,7 +32,7 @@ public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTi
 
             long startEpoch = startDate.toEpochSecond(java.time.ZoneOffset.UTC);
             long endEpoch = endDate.toEpochSecond(java.time.ZoneOffset.UTC);
-            long randomEpoch = config.getRandomGenerator().nextLong(startEpoch, endEpoch);
+            long randomEpoch = config.getDistribution().nextLong(startEpoch, endEpoch, config.getRandomGenerator());
             LocalDateTime generateDate = LocalDateTime.ofEpochSecond(randomEpoch, 0, java.time.ZoneOffset.UTC);
 
             if (generateDate.isAfter(endDate)) {

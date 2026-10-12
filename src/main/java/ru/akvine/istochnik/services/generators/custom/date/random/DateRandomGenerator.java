@@ -32,8 +32,8 @@ public class DateRandomGenerator extends AbstractRandomGenerator<LocalDate, Date
 
             long startEpochDay = startDate.toEpochDay();
             long endEpochDay = endDate.toEpochDay();
-            LocalDate generateDate =
-                    LocalDate.ofEpochDay(config.getRandomGenerator().nextLong(startEpochDay, endEpochDay));
+            LocalDate generateDate = LocalDate.ofEpochDay(
+                    config.getDistribution().nextLong(startEpochDay, endEpochDay, config.getRandomGenerator()));
 
             if (generateDate.isAfter(endDate)) {
                 iteration++;

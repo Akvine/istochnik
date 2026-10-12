@@ -26,7 +26,8 @@ public class ZonedDateTimeConfigMapperService implements ConfigMapperService<Zon
                                 StringUtils.isBlank(config.getStep())
                                         ? 1
                                         : Long.parseLong(config.getStep().trim())),
-                config.getRandomGenerator());
+                config.getRandomGenerator())
+                .setDistribution(config.getDistribution());
     }
 
     @Override

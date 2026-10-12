@@ -43,7 +43,7 @@ public class IntegerRandomGenerator extends AbstractRandomGenerator<Long, Intege
                 }
             }
 
-            long generatedValue = config.getRandomGenerator().nextLong(start, end);
+            long generatedValue = config.getDistribution().nextLong(start, end, config.getRandomGenerator());
 
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
                 iteration++;

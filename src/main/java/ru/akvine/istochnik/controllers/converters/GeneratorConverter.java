@@ -13,6 +13,8 @@ import ru.akvine.compozit.commons.istochnik.ConverterDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.*;
+import ru.akvine.istochnik.services.distribution.DistributionAxis;
+import ru.akvine.istochnik.services.distribution.DistributionFactory;
 import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
@@ -54,6 +56,13 @@ public class GeneratorConverter {
             }
 
             Config config = buildConfig(size, column.getConfig(), baseType);
+            if (strategy == GenerationStrategy.ALGORITHM) {
+                config.setDistribution(DistributionFactory.create(
+                        column.getConfig().getDistribution(),
+                        DistributionAxis.of(column.getType()),
+                        config.getStart(),
+                        config.getEnd()));
+            }
             if (strategy == GenerationStrategy.EXPRESSION) {
                 // У вычисляемой колонки диапазона нет: тип нужен только для приведения результата выражения
                 baseType = BaseType.safeFrom(column.getType());

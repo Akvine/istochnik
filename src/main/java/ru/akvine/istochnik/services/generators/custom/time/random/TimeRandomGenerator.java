@@ -33,7 +33,8 @@ public class TimeRandomGenerator extends AbstractRandomGenerator<LocalTime, Time
             int startSeconds = startDate.toSecondOfDay();
             int endSeconds = endDate.toSecondOfDay();
 
-            int randomSeconds = config.getRandomGenerator().nextInt(startSeconds, endSeconds);
+            int randomSeconds =
+                    config.getDistribution().nextInt(startSeconds, endSeconds, config.getRandomGenerator());
             LocalTime generateTime = LocalTime.ofSecondOfDay(randomSeconds);
 
             if (generateTime.isAfter(endDate)) {

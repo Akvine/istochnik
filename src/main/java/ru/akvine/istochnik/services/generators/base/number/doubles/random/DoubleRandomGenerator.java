@@ -42,7 +42,7 @@ public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, Doubl
                 }
             }
 
-            double generatedValue = config.getRandomGenerator().nextDouble(start, end);
+            double generatedValue = config.getDistribution().nextDouble(start, end, config.getRandomGenerator());
 
             if (config.isUnique() && generatedValues.contains(generatedValue)) {
                 iteration++;

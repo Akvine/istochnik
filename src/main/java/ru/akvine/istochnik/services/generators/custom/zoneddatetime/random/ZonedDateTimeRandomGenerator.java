@@ -54,7 +54,7 @@ public class ZonedDateTimeRandomGenerator extends AbstractRandomGenerator<ZonedD
                 continue;
             }
 
-            long randomEpoch = randomGenerator.nextLong(startEpoch, endEpoch);
+            long randomEpoch = config.getDistribution().nextLong(startEpoch, endEpoch, randomGenerator);
             if (config.isUnique() && !uniqueEpochs.add(randomEpoch)) {
                 continue;
             }

@@ -25,7 +25,8 @@ public class DateConfigMapperService implements ConfigMapperService<DateGenerato
                         .setEnd(DateTimeUtils.toLocalDate(config.getEnd()))
                         .setDateShiftType(DateShiftType.DAY)
                         .setShiftCount(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep())),
-                config.getRandomGenerator());
+                config.getRandomGenerator())
+                .setDistribution(config.getDistribution());
     }
 
     @Override

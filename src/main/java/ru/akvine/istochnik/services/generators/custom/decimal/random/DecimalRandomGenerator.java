@@ -25,7 +25,7 @@ public class DecimalRandomGenerator extends AbstractRandomGenerator<BigDecimal, 
             throw new GenerationException("field [end] is required");
         }
 
-        // Значения выбираются равномерно из [start, end) с шагом в одну единицу младшего разряда
+        // Значения выбираются из [start, end) с шагом в одну единицу младшего разряда
         BigInteger start =
                 config.getDecimalShiftRange().getStart().setScale(scale).unscaledValue();
         BigInteger end = config.getDecimalShiftRange().getEnd().setScale(scale).unscaledValue();
@@ -63,7 +63,8 @@ public class DecimalRandomGenerator extends AbstractRandomGenerator<BigDecimal, 
                 continue;
             }
 
-            BigDecimal generatedValue = new BigDecimal(start.add(nextBigInteger(valuesCount, randomGenerator)), scale);
+            BigDecimal generatedValue = new BigDecimal(
+                    start.add(config.getDistribution().nextOffset(valuesCount, randomGenerator)), scale);
             if (config.isUnique() && !uniqueValues.add(generatedValue)) {
                 continue;
             }
@@ -72,23 +73,5 @@ public class DecimalRandomGenerator extends AbstractRandomGenerator<BigDecimal, 
         }
 
         return generatedValues;
-    }
-
-    /**
-     * Равномерно распределённое значение из [0, bound)
-     */
-    private BigInteger nextBigInteger(BigInteger bound, RandomGenerator randomGenerator) {
-        int bitLength = bound.bitLength();
-        byte[] bytes = new byte[(bitLength + 7) / 8];
-        int excessBits = bytes.length * 8 - bitLength;
-
-        BigInteger value;
-        do {
-            randomGenerator.nextBytes(bytes);
-            bytes[0] &= (byte) (0xFF >>> excessBits);
-            value = new BigInteger(1, bytes);
-        } while (value.compareTo(bound) >= 0);
-
-        return value;
     }
 }

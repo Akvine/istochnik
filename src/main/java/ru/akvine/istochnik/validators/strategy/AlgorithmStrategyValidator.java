@@ -12,18 +12,22 @@ import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.providers.BaseTypeValidatorsProvider;
 import ru.akvine.istochnik.providers.CustomTypeValidatorsProvider;
+import ru.akvine.istochnik.validators.DistributionValidator;
 import ru.akvine.istochnik.validators.custom.CustomTypeValidator;
 
 @Component
 public class AlgorithmStrategyValidator extends AbstractGenerationStrategyValidator {
     private final CustomTypeValidatorsProvider customTypeValidatorsProvider;
+    private final DistributionValidator distributionValidator;
 
     @Autowired
     public AlgorithmStrategyValidator(
             BaseTypeValidatorsProvider baseTypeValidatorsProvider,
-            CustomTypeValidatorsProvider customTypeValidatorsProvider) {
+            CustomTypeValidatorsProvider customTypeValidatorsProvider,
+            DistributionValidator distributionValidator) {
         super(baseTypeValidatorsProvider);
         this.customTypeValidatorsProvider = customTypeValidatorsProvider;
+        this.distributionValidator = distributionValidator;
     }
 
     @Override
@@ -53,6 +57,11 @@ public class AlgorithmStrategyValidator extends AbstractGenerationStrategyValida
 
         if (CollectionUtils.isNotEmpty(errors)) {
             validationColumnsInfo.put(columnName, errors);
+        }
+
+        List<String> distributionErrors = distributionValidator.validate(column);
+        if (CollectionUtils.isNotEmpty(distributionErrors)) {
+            validationColumnsInfo.put(columnName, distributionErrors);
         }
 
         if (customType != null) {

@@ -25,7 +25,8 @@ public class TimeConfigMapperService implements ConfigMapperService<TimeGenerato
                         .setEnd(DateTimeUtils.toLocalTime((config.getEnd())))
                         .setDateShiftType(DateShiftType.SECOND)
                         .setShiftCount(StringUtils.isBlank(config.getStep()) ? 1 : Integer.parseInt(config.getStep())),
-                config.getRandomGenerator());
+                config.getRandomGenerator())
+                .setDistribution(config.getDistribution());
     }
 
     @Override

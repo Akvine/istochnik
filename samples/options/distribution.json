@@ -1,0 +1,97 @@
+{
+  "size": 20,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "age_uniform",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "18", "end": "90", "notNull": true }
+    },
+    {
+      "name": "age_normal",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "18",
+        "end": "90",
+        "notNull": true,
+        "distribution": { "type": "normal", "mean": "35", "stddev": "10" }
+      }
+    },
+    {
+      "name": "score_normal_default",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "0",
+        "end": "100",
+        "notNull": true,
+        "distribution": { "type": "normal" }
+      },
+      "converters": [{ "name": "round", "arguments": [1] }]
+    },
+    {
+      "name": "amount_exponential",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "10.00",
+        "end": "100000.00",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "1500" }
+      }
+    },
+    {
+      "name": "registered_recent",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "2023-01-01",
+        "end": "2026-01-01",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "60", "peak": "end" }
+      }
+    },
+    {
+      "name": "visit_time_normal",
+      "type": "time",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "08:00:00",
+        "end": "22:00:00",
+        "notNull": true,
+        "distribution": { "type": "normal", "mean": "13:00:00", "stddev": "5400" }
+      }
+    },
+    {
+      "name": "customer_id_zipf",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "1",
+        "end": "1001",
+        "notNull": true,
+        "distribution": { "type": "zipf" }
+      }
+    },
+    {
+      "name": "rating_zipf_from_end",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "1",
+        "end": "6",
+        "notNull": true,
+        "distribution": { "type": "zipf", "exponent": "1.5", "peak": "end" }
+      }
+    }
+  ]
+}
