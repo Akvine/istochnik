@@ -49,6 +49,18 @@
       "type": "str",
       "generationStrategy": "faker",
       "config": { "rangeType": "random", "notNull": false, "topics": ["URL"] }
+    },
+    {
+      "name": "text_of_60_characters",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["TEXT"], "length": 60 }
+    },
+    {
+      "name": "coordinates",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["COORDINATES"] }
     }
   ]
 }

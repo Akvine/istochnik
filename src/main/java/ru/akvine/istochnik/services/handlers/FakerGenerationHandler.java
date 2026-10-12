@@ -12,6 +12,7 @@ import ru.akvine.istochnik.enums.Topic;
 import ru.akvine.istochnik.providers.FakerGeneratorServicesProvider;
 import ru.akvine.istochnik.providers.converters.ConverterConvertersProvider;
 import ru.akvine.istochnik.services.GenerationHandler;
+import ru.akvine.istochnik.services.dto.Config;
 import ru.akvine.istochnik.services.dto.Converter;
 import ru.akvine.istochnik.services.dto.GenerateColumn;
 
@@ -30,6 +31,7 @@ public class FakerGenerationHandler implements GenerationHandler {
 
     @Override
     public List<?> handle(GenerateColumn generateColumn) {
+        Config config = generateColumn.getConfig();
         List<Converter> converters = generateColumn.getConverters();
         List<Topic> topics = generateColumn.getConfig().getTopics();
         int size = generateColumn.getConfig().getSize();
@@ -58,7 +60,7 @@ public class FakerGenerationHandler implements GenerationHandler {
                     Topic currentTopic = topics.get(iterationCount % topics.size());
                     generatedValues.add(fakerGeneratorServicesProvider
                             .getByTopic(currentTopic)
-                            .generate(faker));
+                            .generate(faker, config));
                 } else {
                     boolean isNull = randomGenerator.nextBoolean();
                     if (isNull) {
@@ -67,14 +69,14 @@ public class FakerGenerationHandler implements GenerationHandler {
                         Topic currentTopic = topics.get(iterationCount % topics.size());
                         generatedValues.add(fakerGeneratorServicesProvider
                                 .getByTopic(currentTopic)
-                                .generate(faker));
+                                .generate(faker, config));
                     }
                 }
             } else {
                 if (notNull) {
                     Topic topic = randomTopic(topics, randomGenerator);
                     generatedValues.add(
-                            fakerGeneratorServicesProvider.getByTopic(topic).generate(faker));
+                            fakerGeneratorServicesProvider.getByTopic(topic).generate(faker, config));
                 } else {
                     boolean isNull = randomGenerator.nextBoolean();
                     if (isNull) {
@@ -82,7 +84,7 @@ public class FakerGenerationHandler implements GenerationHandler {
                     } else {
                         Topic topic = randomTopic(topics, randomGenerator);
                         generatedValues.add(
-                                fakerGeneratorServicesProvider.getByTopic(topic).generate(faker));
+                                fakerGeneratorServicesProvider.getByTopic(topic).generate(faker, config));
                     }
                 }
             }

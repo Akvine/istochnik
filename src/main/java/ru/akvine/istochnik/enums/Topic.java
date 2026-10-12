@@ -69,7 +69,17 @@ public enum Topic {
     INTERNATIONAL_US_PASSPORT("topic.passport.international.us.code"),
     INTERNATIONAL_COMMON_PASSPORT("topic.passport.international.common.code"),
     RUSSIAN_PASSPORT("topic.passport.russian.code"),
-    US_PASSPORT("topic.passport.us.code");
+    US_PASSPORT("topic.passport.us.code"),
+
+    /**
+     * Топики по теме "Текст"
+     */
+    TEXT("topic.text.code"),
+
+    /**
+     * Топики по теме "Координаты"
+     */
+    COORDINATES("topic.geo.coordinates.code");
 
     private final String code;
 
