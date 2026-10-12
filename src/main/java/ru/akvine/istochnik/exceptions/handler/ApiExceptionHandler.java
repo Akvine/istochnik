@@ -12,6 +12,8 @@ import ru.akvine.istochnik.controllers.dto.GenerateDataErrorResponse;
 import ru.akvine.istochnik.exceptions.GenerationException;
 import ru.akvine.istochnik.exceptions.LanguageNotSupportedException;
 import ru.akvine.istochnik.exceptions.RateLimitExceededException;
+import ru.akvine.istochnik.exceptions.SchemaConversionDisabledException;
+import ru.akvine.istochnik.exceptions.SchemaConversionException;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 
 @RestControllerAdvice
@@ -39,6 +41,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.RETRY_AFTER, String.valueOf(exception.getRetryAfterSeconds()));
         return new ResponseEntity<>(errorResponse, headers, HttpStatus.TOO_MANY_REQUESTS);
+    }
+
+    @ExceptionHandler({SchemaConversionException.class})
+    public ResponseEntity<?> handleSchemaConversionException(SchemaConversionException exception) {
+        ErrorResponse errorResponse =
+                new ErrorResponse(ErrorConstants.SCHEMA_CONVERSION_ERROR, exception.getMessage());
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({SchemaConversionDisabledException.class})
+    public ResponseEntity<?> handleSchemaConversionDisabledException(SchemaConversionDisabledException exception) {
+        ErrorResponse errorResponse =
+                new ErrorResponse(ErrorConstants.SCHEMA_CONVERSION_DISABLED_ERROR, exception.getMessage());
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({LanguageNotSupportedException.class})

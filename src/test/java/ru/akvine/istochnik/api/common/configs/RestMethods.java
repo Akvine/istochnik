@@ -2,4 +2,5 @@ package ru.akvine.istochnik.api.common.configs;
 
 public final class RestMethods {
     public static final String GENERATE_DATA_ENDPOINT = "/v1/generator";
+    public static final String CONVERT_SCHEMA_ENDPOINT = "/v1/schemas/convert";
 }

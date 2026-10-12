@@ -28,6 +28,7 @@ import ru.akvine.istochnik.services.generators.custom.date.shift.AbstractDateRan
 import ru.akvine.istochnik.services.generators.custom.datetime.shift.AbstractDateTimeRangeService;
 import ru.akvine.istochnik.services.generators.custom.time.shift.AbstractTimeRangeService;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;
+import ru.akvine.istochnik.services.schema.SchemaParser;
 import ru.akvine.istochnik.validators.custom.CustomTypeValidator;
 import ru.akvine.istochnik.validators.strategy.GenerationStrategyValidator;
 import ru.akvine.istochnik.validators.type.BaseTypeValidator;
@@ -89,6 +90,13 @@ public class ProvidersDelegateConfig {
         Map<FileType, FileTableGenerator> converters =
                 generators.stream().collect(toMap(FileTableGenerator::getType, identity()));
         return new FileTableGeneratorsProvider(converters);
+    }
+
+    @Bean
+    public SchemaParsersProvider schemaParsersProvider(List<SchemaParser> schemaParsers) {
+        Map<SchemaType, SchemaParser> parsers =
+                schemaParsers.stream().collect(toMap(SchemaParser::getType, identity()));
+        return new SchemaParsersProvider(parsers);
     }
 
     @Bean

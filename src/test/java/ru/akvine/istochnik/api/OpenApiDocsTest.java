@@ -31,7 +31,8 @@ public class OpenApiDocsTest extends ApiBaseTest {
                                 "/v1/types/custom",
                                 "/v1/strategies",
                                 "/v1/converters",
-                                "/v1/topics"))
+                                "/v1/topics",
+                                "/v1/schemas/convert"))
                 .body("paths.'/v1/generator'.post.summary", equalTo("Сгенерировать файл с данными"))
                 .body("paths.'/v1/generator'.post.description", not(emptyOrNullString()))
                 .body("paths.'/v1/generator'.post.responses", hasKey("200"))
@@ -44,7 +45,13 @@ public class OpenApiDocsTest extends ApiBaseTest {
                 .body("paths.'/v1/strategies'.get.summary", equalTo("Получить стратегии генерации"))
                 .body("paths.'/v1/converters'.get.summary", equalTo("Получить конвертеры"))
                 .body("paths.'/v1/topics'.get.summary", equalTo("Получить топики"))
-                .body("paths.'/v1/topics'.get.parameters[0].description", not(emptyOrNullString()));
+                .body("paths.'/v1/topics'.get.parameters[0].description", not(emptyOrNullString()))
+                .body("paths.'/v1/schemas/convert'.post.summary", equalTo("Построить запросы на генерацию по схеме"))
+                .body("paths.'/v1/schemas/convert'.post.description", not(emptyOrNullString()))
+                .body("paths.'/v1/schemas/convert'.post.responses", hasKey("200"))
+                .body("paths.'/v1/schemas/convert'.post.responses", hasKey("400"))
+                .body("paths.'/v1/schemas/convert'.post.responses", hasKey("404"))
+                .body("paths.'/v1/schemas/convert'.post.requestBody.content", hasKey("multipart/form-data"));
     }
 
     @Test

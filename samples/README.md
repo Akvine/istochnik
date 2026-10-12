@@ -2,6 +2,8 @@
 
 Готовые тела запросов для `POST /v1/generator`. Каждый файл — самостоятельный запрос: его можно отправить как есть и посмотреть результат.
 
+Отдельно лежат [схемы](#схемы) для `POST /v1/schemas/convert` — по ним сервис строит такие запросы сам.
+
 ## Как запустить
 
 Сервис должен быть запущен (см. [README](../README.md#сборка-и-запуск)). Команды выполняются из корня репозитория.
@@ -102,3 +104,26 @@ curl.exe -X POST "http://localhost:8103/v1/generator" -H "Content-Type: applicat
 | [organizations.json](tables/organizations.json) | Организации: название, ИНН, КПП, ОГРН, ОКПО, БИК и расчётный счёт с ключом под этот БИК. Выгрузка в SQL |
 | [payments.json](tables/payments.json) | Платежи: номер карты, сумма, валюта, статус, причина отказа, время с часовым поясом |
 | [orders.json](tables/orders.json) | Заказы: номер заказа по идентификатору, скидка по количеству, сумма по цене, количеству и скидке, дата доставки по дате создания, статус по сроку доставки. Выгрузка в SQL |
+
+## Схемы
+
+Папка [`schemas`](schemas) — файлы миграций для `POST /v1/schemas/convert`. В ответ на каждый сервис возвращает запросы на генерацию, по одному на таблицу, и предупреждения о том, что в схеме учтено неточно.
+
+bash:
+
+```bash
+curl -X POST "http://localhost:8103/v1/schemas/convert?size=50" -F "file=@samples/schemas/V1__shop.sql"
+```
+
+PowerShell:
+
+```powershell
+curl.exe -X POST "http://localhost:8103/v1/schemas/convert?size=50" -F "file=@samples/schemas/V1__shop.sql"
+```
+
+Параметр `size` задаёт количество строк в запросах на генерацию, `fileType` — формат файла (по умолчанию `sql`). Любой элемент массива `requests` из ответа можно отправить в `POST /v1/generator` как есть.
+
+| Файл | Формат | Что показано |
+|---|---|---|
+| [V1__shop.sql](schemas/V1__shop.sql) | SQL-скрипт | Три таблицы: первичные и уникальные ключи, `serial` и `IDENTITY`, внешние ключи, составной ключ, перечисление, `jsonb`, вычисляемая колонка, изменения через `ALTER TABLE` и `CREATE UNIQUE INDEX` |
+| [changelog.xml](schemas/changelog.xml) | Журнал изменений Liquibase | Две таблицы: `autoIncrement`, ограничения в `constraints`, внешний ключ, изменения через `addColumn`, `addNotNullConstraint`, `addUniqueConstraint` и `dropColumn` |
