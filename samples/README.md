@@ -77,10 +77,10 @@ curl.exe -X POST "http://localhost:8103/v1/generator" -H "Content-Type: applicat
 |---|---|
 | [int.json](converters/int.json) | Арифметика над целыми числами и цепочка из двух конвертеров |
 | [double.json](converters/double.json) | Арифметика, округление, логарифм, синус, нормализация значений колонки |
-| [str.json](converters/str.json) | Все строковые конвертеры: регистр, пробелы, подстрока, замена, транслитерация, Base64, MD5, случайная замена символов |
+| [str.json](converters/str.json) | Все строковые конвертеры: регистр, пробелы, дополнение до длины, подстрока и обрезка, замена, маскирование, транслитерация, Base64, MD5, случайная замена символов |
 | [common.json](converters/common.json) | Перемешивание, сортировка, замена на `null`, применение конвертера к части строк через `probability` |
 | [date_format.json](converters/date_format.json) | Форматирование дат, даты и времени, даты и времени с часовым поясом |
-| [post_converters.json](converters/post_converters.json) | Строковые конвертеры для нестроковых типов через `convertToString` и `postConverters`: префикс к числу, валюта, маскирование ИНН |
+| [post_converters.json](converters/post_converters.json) | Строковые конвертеры для нестроковых типов через `convertToString` и `postConverters`: номер с ведущими нулями и префиксом, валюта, маскирование ИНН |
 
 ## Параметры запроса
 

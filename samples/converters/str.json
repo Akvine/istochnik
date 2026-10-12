@@ -82,6 +82,20 @@
       "converters": [{ "name": "repeat", "arguments": ["3"] }]
     },
     {
+      "name": "pad_left",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["7", "42", "1234"]] },
+      "converters": [{ "name": "padLeft", "arguments": [6, "0"] }]
+    },
+    {
+      "name": "pad_right",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["A", "AB", "ABC"]] },
+      "converters": [{ "name": "padRight", "arguments": [6, "_"] }]
+    },
+    {
       "name": "substring",
       "type": "str",
       "generationStrategy": "dictionary",
@@ -89,11 +103,25 @@
       "converters": [{ "name": "substring", "arguments": ["0", "5"] }]
     },
     {
+      "name": "truncate",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hi", "Hello World 123"]] },
+      "converters": [{ "name": "truncate", "arguments": [5] }]
+    },
+    {
       "name": "replace_all",
       "type": "str",
       "generationStrategy": "dictionary",
       "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["Hello World 123"]] },
       "converters": [{ "name": "replaceAll", "arguments": ["[0-9]", "#"] }]
+    },
+    {
+      "name": "mask",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "shift", "notNull": true, "dictionaries": [["2200123456789019"]] },
+      "converters": [{ "name": "mask", "arguments": [4, 4] }]
     },
     {
       "name": "translit",

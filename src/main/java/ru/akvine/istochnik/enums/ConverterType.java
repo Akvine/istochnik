@@ -62,6 +62,10 @@ public enum ConverterType {
     RANDOM_CASE("randomCase", "converter.random.case.code"),
     MD5("md5", "converter.md5.code"),
     SHA256("sha256", "converter.sha256.code"),
+    MASK("mask", "converter.mask.code"),
+    PAD_LEFT("padLeft", "converter.pad.left.code"),
+    PAD_RIGHT("padRight", "converter.pad.right.code"),
+    TRUNCATE("truncate", "converter.truncate.code"),
 
     /**
      * Общие конвертеры

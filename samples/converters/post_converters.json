@@ -8,7 +8,10 @@
       "generationStrategy": "algorithm",
       "convertToString": true,
       "config": { "rangeType": "shift", "start": "1001", "step": "1" },
-      "postConverters": [{ "name": "addBefore", "arguments": ["ORD-"] }]
+      "postConverters": [
+        { "name": "padLeft", "arguments": [8, "0"] },
+        { "name": "addBefore", "arguments": ["ORD-"] }
+      ]
     },
     {
       "name": "price_with_currency",
@@ -25,7 +28,7 @@
       "generationStrategy": "algorithm",
       "convertToString": true,
       "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true },
-      "postConverters": [{ "name": "replaceAll", "arguments": ["^(\\d{4})\\d{4}", "$1****"] }]
+      "postConverters": [{ "name": "mask", "arguments": [4, 2] }]
     }
   ]
 }
