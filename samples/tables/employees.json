@@ -1,0 +1,112 @@
+{
+  "size": 20,
+  "fileType": "sql",
+  "tableName": "employees",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "personnel_number",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#id" },
+      "converters": [{ "name": "padLeft", "arguments": [6, "0"] }, { "name": "addBefore", "arguments": ["T-"] }]
+    },
+    {
+      "name": "last_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["LAST_NAME"] }
+    },
+    {
+      "name": "first_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FIRST_NAME"] }
+    },
+    {
+      "name": "email",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#first_name + '.' + #last_name + '@company.example'" },
+      "converters": [{ "name": "translit" }, { "name": "lowerCase" }]
+    },
+    {
+      "name": "passport",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["RUSSIAN_PASSPORT"] }
+    },
+    {
+      "name": "inn",
+      "type": "inn_pers",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "snils",
+      "type": "snils",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "department",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["Разработка", "Тестирование", "Аналитика", "Поддержка", "Бухгалтерия"]] }
+    },
+    {
+      "name": "grade",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "1",
+        "end": "6",
+        "notNull": true,
+        "distribution": { "type": "normal", "mean": "3", "stddev": "1" }
+      }
+    },
+    {
+      "name": "position",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#grade >= 5 ? 'Руководитель группы' : (#grade >= 3 ? 'Ведущий специалист' : 'Специалист')" }
+    },
+    {
+      "name": "salary",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "60000 + #grade * 35000" }
+    },
+    {
+      "name": "hired_on",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2015-01-01", "end": "2025-12-31", "notNull": true }
+    },
+    {
+      "name": "probation_until",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#plusMonths(#hired_on, 3)" }
+    },
+    {
+      "name": "dismissed_on",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2026-01-01", "end": "2026-06-30", "notNull": true },
+      "converters": [{ "name": "to_null", "probability": 80 }]
+    },
+    {
+      "name": "is_remote",
+      "type": "bool",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true }
+    }
+  ]
+}

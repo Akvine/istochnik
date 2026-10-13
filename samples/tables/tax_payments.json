@@ -1,0 +1,102 @@
+{
+  "size": 20,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "payment_id",
+      "type": "uuid",
+      "generationStrategy": "algorithm",
+      "config": {}
+    },
+    {
+      "name": "payer_inn",
+      "type": "inn_org",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true }
+    },
+    {
+      "name": "payer_kpp",
+      "type": "kpp",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true }
+    },
+    {
+      "name": "okved",
+      "type": "okved",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true }
+    },
+    {
+      "name": "kbk",
+      "type": "kbk",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true }
+    },
+    {
+      "name": "oktmo",
+      "type": "oktmo",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true }
+    },
+    {
+      "name": "okato",
+      "type": "okato",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": false }
+    },
+    {
+      "name": "tax_period",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["МС\\.(0[1-9]|1[0-2])\\.2025", "КВ\\.0[1-4]\\.2025", "ГД\\.00\\.2025"] }
+    },
+    {
+      "name": "amount",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "100.00",
+        "end": "5000000.00",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "250000" }
+      }
+    },
+    {
+      "name": "due_date",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-01-28", "end": "2025-12-28", "notNull": true }
+    },
+    {
+      "name": "days_overdue",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "0",
+        "end": "90",
+        "notNull": true,
+        "distribution": { "type": "zipf", "exponent": "1.2" }
+      }
+    },
+    {
+      "name": "paid_on",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#plusDays(#due_date, #days_overdue)" }
+    },
+    {
+      "name": "penalty",
+      "type": "double",
+      "generationStrategy": "expression",
+      "config": { "expression": "#days_overdue > 0 ? #round(#amount * #days_overdue * 0.0005, 2) : 0" }
+    },
+    {
+      "name": "purpose",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "'Налог за период ' + #tax_period + ', КБК ' + #kbk" }
+    }
+  ]
+}

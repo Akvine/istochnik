@@ -1,0 +1,99 @@
+{
+  "size": 20,
+  "fileType": "sql",
+  "tableName": "products",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "sku",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["[A-Z]{3}-[0-9]{5}"] }
+    },
+    {
+      "name": "barcode",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["EAN13"] }
+    },
+    {
+      "name": "category",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["Чай", "Кофе", "Сладости", "Посуда"]] }
+    },
+    {
+      "name": "name",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#category + ' № ' + #id" }
+    },
+    {
+      "name": "price",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "50.00",
+        "end": "15000.00",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "1200" }
+      }
+    },
+    {
+      "name": "discount_percent",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["0", "5", "10", "25"]] }
+    },
+    {
+      "name": "sale_price",
+      "type": "double",
+      "generationStrategy": "expression",
+      "config": { "expression": "#round(#price * (100 - #toInt(#discount_percent)) / 100, 2)" }
+    },
+    {
+      "name": "stock",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "0",
+        "end": "500",
+        "notNull": true,
+        "distribution": { "type": "zipf" }
+      }
+    },
+    {
+      "name": "in_stock",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#stock > 0" }
+    },
+    {
+      "name": "weight_kg",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0.05", "end": "3", "notNull": true },
+      "converters": [{ "name": "round", "arguments": [3] }]
+    },
+    {
+      "name": "description",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": false, "topics": ["TEXT"], "length": 80 }
+    },
+    {
+      "name": "created_at",
+      "type": "datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-01-01 00:00:00", "end": "2025-12-31 23:59:59", "notNull": true },
+      "converters": [{ "name": "format", "arguments": ["yyyy-MM-dd HH:mm:ss"] }]
+    }
+  ]
+}

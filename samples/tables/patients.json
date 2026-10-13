@@ -1,0 +1,98 @@
+{
+  "size": 20,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "card_number",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["МК-[0-9]{6}/2[0-5]"] }
+    },
+    {
+      "name": "full_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "birth_date",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1940-01-01", "end": "2020-12-31", "notNull": true }
+    },
+    {
+      "name": "age",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#daysBetween(#birth_date, '2026-01-01') / 365" }
+    },
+    {
+      "name": "age_group",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#age < 18 ? 'дети' : (#age < 65 ? 'взрослые' : 'старше 65')" }
+    },
+    {
+      "name": "oms_policy",
+      "type": "oms",
+      "generationStrategy": "algorithm",
+      "config": { "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "snils",
+      "type": "snils",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "0", "end": "1", "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "blood_group",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": false, "dictionaries": [["0(I) Rh+", "0(I) Rh-", "A(II) Rh+", "A(II) Rh-", "B(III) Rh+", "B(III) Rh-", "AB(IV) Rh+", "AB(IV) Rh-"]] }
+    },
+    {
+      "name": "phone",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["CELL_PHONE"] }
+    },
+    {
+      "name": "address",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_ADDRESS"] }
+    },
+    {
+      "name": "last_visit",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "2024-01-01",
+        "end": "2026-01-01",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "90", "peak": "end" }
+      }
+    },
+    {
+      "name": "next_checkup",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#plusMonths(#last_visit, #age >= 65 ? 6 : 12)" },
+      "converters": [{ "name": "format", "arguments": ["dd.MM.yyyy"] }]
+    },
+    {
+      "name": "temperature",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "35.5",
+        "end": "40.0",
+        "notNull": true,
+        "distribution": { "type": "normal", "mean": "36.6", "stddev": "0.5" }
+      },
+      "converters": [{ "name": "round", "arguments": [1] }]
+    }
+  ]
+}

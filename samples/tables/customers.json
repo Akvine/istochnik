@@ -1,0 +1,102 @@
+{
+  "size": 20,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "customer_id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1000", "step": "1" },
+      "convertToString": true,
+      "postConverters": [{ "name": "addBefore", "arguments": ["CUS-"] }]
+    },
+    {
+      "name": "full_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "en", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "email",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "en", "topics": ["EMAIL"] }
+    },
+    {
+      "name": "email_masked",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#email" },
+      "converters": [{ "name": "replaceAll", "arguments": ["^(.).*@", "$1***@"] }]
+    },
+    {
+      "name": "phone",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "en", "topics": ["INTERNATIONAL_NUMBER"] }
+    },
+    {
+      "name": "address",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "en", "topics": ["FULL_ADDRESS"] }
+    },
+    {
+      "name": "passport",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": false, "topics": ["US_PASSPORT"] },
+      "converters": [{ "name": "mask", "arguments": [0, 4] }]
+    },
+    {
+      "name": "iban",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["IBAN"] }
+    },
+    {
+      "name": "bic",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["BIC"] }
+    },
+    {
+      "name": "card_masked",
+      "type": "card_visa",
+      "generationStrategy": "algorithm",
+      "config": { "valid": true, "notNull": true },
+      "converters": [{ "name": "mask", "arguments": [4, 4] }]
+    },
+    {
+      "name": "password_hash",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["PASSWORD"] },
+      "converters": [{ "name": "md5" }]
+    },
+    {
+      "name": "segment",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["RETAIL", "PREMIUM", "PRIVATE"]] }
+    },
+    {
+      "name": "credit_limit",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#segment == 'PRIVATE' ? 50000 : (#segment == 'PREMIUM' ? 15000 : 3000)" }
+    },
+    {
+      "name": "time_zone",
+      "type": "zone_id",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true }
+    },
+    {
+      "name": "registered_at",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2024-01-01T00:00:00Z", "end": "2025-12-31T23:59:59Z", "notNull": true }
+    }
+  ]
+}

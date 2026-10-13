@@ -1,0 +1,92 @@
+{
+  "size": 30,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "timestamp",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2025-09-01T09:00:00+03:00", "end": "2025-09-01T10:00:00+03:00", "notNull": true },
+      "converters": [{ "name": "sort_asc" }]
+    },
+    {
+      "name": "request_id",
+      "type": "uuid",
+      "generationStrategy": "algorithm",
+      "config": {}
+    },
+    {
+      "name": "client_ip",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["IPV4"] }
+    },
+    {
+      "name": "method",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["GET", "POST", "PUT", "DELETE"]] }
+    },
+    {
+      "name": "path",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["/api/v1/(orders|users|payments)", "/api/v1/(orders|users|payments)/[1-9][0-9]{2,4}"] }
+    },
+    {
+      "name": "status_code",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["200", "201", "204"], ["400", "401", "403", "404"], ["500", "503"]] }
+    },
+    {
+      "name": "level",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#toInt(#status_code) >= 500 ? 'ERROR' : (#toInt(#status_code) >= 400 ? 'WARN' : 'INFO')" }
+    },
+    {
+      "name": "duration_ms",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "2",
+        "end": "5000",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "120" }
+      }
+    },
+    {
+      "name": "is_slow",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#duration_ms > 300" }
+    },
+    {
+      "name": "response_bytes",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "120", "end": "65536", "notNull": true }
+    },
+    {
+      "name": "user_id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "1",
+        "end": "501",
+        "notNull": false,
+        "distribution": { "type": "zipf" }
+      }
+    },
+    {
+      "name": "session_hash",
+      "type": "str",
+      "generationStrategy": "algorithm",
+      "config": { "length": 12, "notNull": true },
+      "converters": [{ "name": "md5" }]
+    }
+  ]
+}

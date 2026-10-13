@@ -1,0 +1,24 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "random",
+      "type": "okato",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true }
+    },
+    {
+      "name": "random_unique",
+      "type": "okato",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true, "unique": true }
+    },
+    {
+      "name": "random_nullable",
+      "type": "okato",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": false }
+    }
+  ]
+}

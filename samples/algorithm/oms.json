@@ -1,0 +1,30 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "valid",
+      "type": "oms",
+      "generationStrategy": "algorithm",
+      "config": { "valid": true, "notNull": true }
+    },
+    {
+      "name": "valid_unique",
+      "type": "oms",
+      "generationStrategy": "algorithm",
+      "config": { "valid": true, "notNull": true, "unique": true }
+    },
+    {
+      "name": "valid_nullable",
+      "type": "oms",
+      "generationStrategy": "algorithm",
+      "config": { "valid": true, "notNull": false }
+    },
+    {
+      "name": "any_check_digit",
+      "type": "oms",
+      "generationStrategy": "algorithm",
+      "config": { "valid": false, "notNull": true }
+    }
+  ]
+}

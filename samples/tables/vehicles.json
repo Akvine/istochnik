@@ -1,0 +1,91 @@
+{
+  "size": 20,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "vin",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["VIN"] }
+    },
+    {
+      "name": "plate_number",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["[АВЕКМНОРСТУХ][0-9]{3}[АВЕКМНОРСТУХ]{2}(77|78|99|116|161|177)"] }
+    },
+    {
+      "name": "sts",
+      "type": "sts",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true, "unique": true }
+    },
+    {
+      "name": "pts",
+      "type": "pts",
+      "generationStrategy": "algorithm",
+      "config": { "notNull": true, "unique": true }
+    },
+    {
+      "name": "brand",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["Lada", "Haval", "Chery", "Geely", "Kia", "Toyota"]] }
+    },
+    {
+      "name": "production_year",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2008", "end": "2026", "notNull": true }
+    },
+    {
+      "name": "age_years",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "2026 - #production_year" }
+    },
+    {
+      "name": "km_per_year",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "3000",
+        "end": "40000",
+        "notNull": true,
+        "distribution": { "type": "normal", "mean": "15000", "stddev": "5000" }
+      }
+    },
+    {
+      "name": "mileage_km",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#age_years * #km_per_year" }
+    },
+    {
+      "name": "needs_inspection",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#age_years > 4" }
+    },
+    {
+      "name": "owner",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "owner_phone",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": false, "language": "ru", "topics": ["CELL_PHONE"] }
+    },
+    {
+      "name": "insured_until",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2026-01-01", "end": "2026-12-31", "notNull": true },
+      "converters": [{ "name": "format", "arguments": ["dd.MM.yyyy"] }]
+    }
+  ]
+}

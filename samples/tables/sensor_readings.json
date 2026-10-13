@@ -1,0 +1,62 @@
+{
+  "size": 24,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "device_id",
+      "type": "str",
+      "generationStrategy": "constant",
+      "config": { "constant": "meter-0042" }
+    },
+    {
+      "name": "measured_at",
+      "type": "datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "2025-06-01 00:00:00", "end": "2025-06-02 00:00:00", "step": "3600" },
+      "converters": [{ "name": "format", "arguments": ["yyyy-MM-dd HH:mm:ss"] }]
+    },
+    {
+      "name": "energy_total_kwh",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "15200", "end": "15260", "notNull": true },
+      "converters": [{ "name": "sort_asc" }, { "name": "round", "arguments": [2] }]
+    },
+    {
+      "name": "battery_percent",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "20", "end": "101", "notNull": true },
+      "converters": [{ "name": "sort_desc" }]
+    },
+    {
+      "name": "temperature",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "15",
+        "end": "35",
+        "notNull": true,
+        "distribution": { "type": "normal", "mean": "24", "stddev": "3" }
+      },
+      "converters": [{ "name": "round", "arguments": [1] }]
+    },
+    {
+      "name": "signal_dbm",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "-110", "end": "-60", "notNull": true },
+      "converters": [{ "name": "to_null", "probability": 15 }]
+    },
+    {
+      "name": "status",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": {
+        "notNull": true,
+        "expression": "#signal_dbm == null ? 'NO_SIGNAL' : (#battery_percent < 30 ? 'LOW_BATTERY' : (#temperature > 28 ? 'OVERHEAT' : 'OK'))"
+      }
+    }
+  ]
+}

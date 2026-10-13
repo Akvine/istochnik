@@ -1,0 +1,210 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "first_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FIRST_NAME"] }
+    },
+    {
+      "name": "last_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["LAST_NAME"] }
+    },
+    {
+      "name": "full_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "male_first_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["MALE_FIRST_NAME"] }
+    },
+    {
+      "name": "female_first_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FEMALE_FIRST_NAME"] }
+    },
+    {
+      "name": "country",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["COUNTRY"] }
+    },
+    {
+      "name": "city_name",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["CITY_NAME"] }
+    },
+    {
+      "name": "street_address",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["STREET_ADDRESS"] }
+    },
+    {
+      "name": "zip_code",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["ZIP_CODE"] }
+    },
+    {
+      "name": "full_address",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_ADDRESS"] }
+    },
+    {
+      "name": "coordinates",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["COORDINATES"] }
+    },
+    {
+      "name": "phone_number",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["PHONE_NUMBER"] }
+    },
+    {
+      "name": "cell_phone",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["CELL_PHONE"] }
+    },
+    {
+      "name": "international_number",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["INTERNATIONAL_NUMBER"] }
+    },
+    {
+      "name": "email",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["EMAIL"] }
+    },
+    {
+      "name": "url",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["URL"] }
+    },
+    {
+      "name": "password",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["PASSWORD"] }
+    },
+    {
+      "name": "ipv4",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["IPV4"] }
+    },
+    {
+      "name": "ipv6",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["IPV6"] }
+    },
+    {
+      "name": "mac",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["MAC"] }
+    },
+    {
+      "name": "iban",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["IBAN"] }
+    },
+    {
+      "name": "bic",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["BIC"] }
+    },
+    {
+      "name": "ean8",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["EAN8"] }
+    },
+    {
+      "name": "ean13",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["EAN13"] }
+    },
+    {
+      "name": "gtin8",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["GTIN8"] }
+    },
+    {
+      "name": "gtin12",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["GTIN12"] }
+    },
+    {
+      "name": "vin",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["VIN"] }
+    },
+    {
+      "name": "vehicle_number",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["VEHICLE_NUMBER"] }
+    },
+    {
+      "name": "russian_passport",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["RUSSIAN_PASSPORT"] }
+    },
+    {
+      "name": "us_passport",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["US_PASSPORT"] }
+    },
+    {
+      "name": "international_russian_passport",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["INTERNATIONAL_RUSSIAN_PASSPORT"] }
+    },
+    {
+      "name": "international_us_passport",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["INTERNATIONAL_US_PASSPORT"] }
+    },
+    {
+      "name": "international_common_passport",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["INTERNATIONAL_COMMON_PASSPORT"] }
+    },
+    {
+      "name": "text",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["TEXT"], "length": 40 }
+    }
+  ]
+}

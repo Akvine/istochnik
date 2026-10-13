@@ -50,6 +50,13 @@ curl.exe -X POST "http://localhost:8103/v1/generator" -H "Content-Type: applicat
 | [kpp.json](algorithm/kpp.json) | КПП | Случайные, уникальные, с `null` |
 | [bik.json](algorithm/bik.json) | БИК | Случайные, уникальные, с `null` |
 | [bank_account.json](algorithm/bank_account.json) | Расчётный счёт | Контрольный ключ под БИК из поля `start`, уникальные, с `null`, без проверки ключа |
+| [okved.json](algorithm/okved.json) | ОКВЭД | Случайные, уникальные, с `null` |
+| [oktmo.json](algorithm/oktmo.json) | ОКТМО | То же |
+| [okato.json](algorithm/okato.json) | ОКАТО | То же |
+| [kbk.json](algorithm/kbk.json) | КБК | То же |
+| [oms.json](algorithm/oms.json) | Полис ОМС | С корректной контрольной цифрой, уникальные, с `null`, без проверки |
+| [sts.json](algorithm/sts.json) | СТС | Случайные, уникальные, с `null` |
+| [pts.json](algorithm/pts.json) | ПТС | То же |
 | [imei.json](algorithm/imei.json) | IMEI | С корректной контрольной цифрой, уникальные, с `null`, без проверки |
 | [card_mir.json](algorithm/card_mir.json) | Номер карты «Мир» | То же |
 | [card_visa.json](algorithm/card_visa.json) | Номер карты Visa | То же |
@@ -67,6 +74,7 @@ curl.exe -X POST "http://localhost:8103/v1/generator" -H "Content-Type: applicat
 | [dictionary.json](strategies/dictionary.json) | Выбор из словаря: случайно, по порядку, без повторов, с `null`, из нескольких словарей |
 | [regexp.json](strategies/regexp.json) | Строки по регулярным выражениям: номер заказа, телефон, автомобильный номер, несколько выражений в одной колонке |
 | [faker.json](strategies/faker.json) | Имена, email, телефоны и адреса на русском и английском, несколько топиков в одной колонке, текст заданной длины, координаты |
+| [faker_topics.json](strategies/faker_topics.json) | Все топики стратегии `faker`, по одной колонке на топик: имена, адреса, телефоны, интернет, банковские реквизиты, штрихкоды, автомобили, паспорта, текст и координаты |
 | [expression.json](strategies/expression.json) | Колонки, вычисляемые по другим колонкам строки: сумма по цене и количеству, скидка по условию, email по имени и фамилии с конвертерами, пропуск и обработка `null`, дата окончания по дате начала, ссылка на колонку с пробелом в имени |
 
 ## Конвертеры
@@ -104,6 +112,14 @@ curl.exe -X POST "http://localhost:8103/v1/generator" -H "Content-Type: applicat
 | [organizations.json](tables/organizations.json) | Организации: название, ИНН, КПП, ОГРН, ОКПО, БИК и расчётный счёт с ключом под этот БИК. Выгрузка в SQL |
 | [payments.json](tables/payments.json) | Платежи: номер карты, сумма, валюта, статус, причина отказа, время с часовым поясом |
 | [orders.json](tables/orders.json) | Заказы: номер заказа по идентификатору, скидка по количеству, сумма по цене, количеству и скидке, дата доставки по дате создания, статус по сроку доставки. Выгрузка в SQL |
+| [employees.json](tables/employees.json) | Сотрудники: табельный номер с ведущими нулями, email по имени и фамилии, паспорт, ИНН и СНИЛС, должность и оклад по грейду, конец испытательного срока по дате приёма, дата увольнения у части строк. Выгрузка в SQL |
+| [customers.json](tables/customers.json) | Клиенты с данными на английском: имя, адрес и телефон, IBAN и BIC, маскирование email, паспорта и номера карты, хеш пароля, кредитный лимит по сегменту, часовой пояс |
+| [products.json](tables/products.json) | Товары: артикул, штрихкод EAN-13, название по категории, цена и цена со скидкой, остаток с распределением Ципфа и признак наличия. Выгрузка в SQL |
+| [vehicles.json](tables/vehicles.json) | Автомобили: VIN, госномер, СТС и ПТС, возраст и пробег по году выпуска, признак техосмотра, владелец |
+| [patients.json](tables/patients.json) | Пациенты: номер карты, возраст и возрастная группа по дате рождения, полис ОМС, СНИЛС, группа крови, дата следующего осмотра по возрасту, температура с нормальным распределением |
+| [tax_payments.json](tables/tax_payments.json) | Налоговые платежи: ИНН и КПП плательщика, ОКВЭД, КБК, ОКТМО и ОКАТО, налоговый период, дата оплаты и пени по дням просрочки |
+| [sensor_readings.json](tables/sensor_readings.json) | Показания датчика — временной ряд: время с шагом в час, накопительный счётчик по возрастанию, заряд батареи по убыванию, температура, пропуски сигнала, статус по показаниям |
+| [access_logs.json](tables/access_logs.json) | Журнал HTTP-запросов: время по возрастанию с неровными промежутками, IP, метод, путь, код ответа и уровень записи по нему, длительность с экспоненциальным распределением, идентификатор пользователя по Ципфу |
 
 ## Схемы
 
@@ -125,5 +141,7 @@ curl.exe -X POST "http://localhost:8103/v1/schemas/convert?size=50" -F "file=@sa
 
 | Файл | Формат | Что показано |
 |---|---|---|
-| [V1__shop.sql](schemas/V1__shop.sql) | SQL-скрипт | Три таблицы: первичные и уникальные ключи, `serial` и `IDENTITY`, внешние ключи, составной ключ, перечисление, `jsonb`, вычисляемая колонка, изменения через `ALTER TABLE` и `CREATE UNIQUE INDEX` |
+| [V1__shop.sql](schemas/V1__shop.sql) | SQL-скрипт (PostgreSQL) | Три таблицы: первичные и уникальные ключи, `serial` и `IDENTITY`, внешние ключи, составной ключ, перечисление, `jsonb`, вычисляемая колонка, изменения через `ALTER TABLE` и `CREATE UNIQUE INDEX` |
+| [V2__blog_mysql.sql](schemas/V2__blog_mysql.sql) | SQL-скрипт (MySQL) | Три таблицы: имена в обратных апострофах, `AUTO_INCREMENT`, `UNSIGNED`, `enum(...)`, `tinyint(1)`, ключи и индексы внутри `CREATE TABLE`, изменения через `ALTER TABLE` |
+| [V3__warehouse_mssql.sql](schemas/V3__warehouse_mssql.sql) | SQL-скрипт (SQL Server) | Две таблицы: имена в квадратных скобках со схемой `dbo`, `IDENTITY`, типы `uniqueidentifier`, `bit`, `money` и `datetimeoffset`, изменения через `ALTER TABLE` и `CREATE UNIQUE INDEX` |
 | [changelog.xml](schemas/changelog.xml) | Журнал изменений Liquibase | Две таблицы: `autoIncrement`, ограничения в `constraints`, внешний ключ, изменения через `addColumn`, `addNotNullConstraint`, `addUniqueConstraint` и `dropColumn` |
