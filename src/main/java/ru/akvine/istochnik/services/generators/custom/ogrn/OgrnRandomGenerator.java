@@ -2,7 +2,9 @@ package ru.akvine.istochnik.services.generators.custom.ogrn;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 
@@ -12,6 +14,7 @@ public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGener
     @Override
     public Collection<Long> generate(OgrnGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
+        Set<Long> uniqueValues = new HashSet<>();
 
         int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
@@ -22,7 +25,7 @@ public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGener
 
                 if (isNull) {
                     if (config.isUnique()) {
-                        if (generatedValues.contains(null)) {
+                        if (!uniqueValues.add(null)) {
                             iteration++;
                             continue;
                         } else {
@@ -51,7 +54,7 @@ public class OgrnRandomGenerator extends AbstractRandomGenerator<Long, OgrnGener
                 ogrnBuilder.append(config.getRandomGenerator().nextInt(10));
             }
 
-            if (config.isUnique() && generatedValues.contains(Long.parseLong(ogrnBuilder.toString()))) {
+            if (config.isUnique() && !uniqueValues.add(Long.parseLong(ogrnBuilder.toString()))) {
                 iteration++;
                 continue;
             }

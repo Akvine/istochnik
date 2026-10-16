@@ -2,7 +2,9 @@ package ru.akvine.istochnik.services.generators.custom.inn.org;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 
@@ -12,6 +14,7 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
     @Override
     public Collection<Long> generate(InnOrgGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
+        Set<Long> uniqueValues = new HashSet<>();
 
         int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
@@ -22,7 +25,7 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
 
                 if (isNull) {
                     if (config.isUnique()) {
-                        if (generatedValues.contains(null)) {
+                        if (!uniqueValues.add(null)) {
                             iteration++;
                             continue;
                         } else {
@@ -49,7 +52,7 @@ public class InnOrgGenerator extends AbstractRandomGenerator<Long, InnOrgGenerat
                 continue;
             }
 
-            if (config.isUnique() && generatedValues.contains(Long.parseLong(generatedInn))) {
+            if (config.isUnique() && !uniqueValues.add(Long.parseLong(generatedInn))) {
                 iteration++;
                 continue;
             }

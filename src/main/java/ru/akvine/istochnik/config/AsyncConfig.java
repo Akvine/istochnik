@@ -20,9 +20,13 @@ public class AsyncConfig {
 
     @Bean
     public TaskExecutor parallelGenerationExecutor() {
+        int threadsCount = parallelExecutorProperties.getThreadsCount() > 0
+                ? parallelExecutorProperties.getThreadsCount()
+                : Runtime.getRuntime().availableProcessors();
+
         ThreadPoolExecutor executor = new ThreadPoolExecutor(
-                parallelExecutorProperties.getThreadsCount(),
-                parallelExecutorProperties.getThreadsCount(),
+                threadsCount,
+                threadsCount,
                 0,
                 TimeUnit.SECONDS,
                 new LinkedBlockingQueue<>(parallelExecutorProperties.getQueueCapacity()),

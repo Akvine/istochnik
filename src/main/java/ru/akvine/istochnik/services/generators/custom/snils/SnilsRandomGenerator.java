@@ -2,7 +2,9 @@ package ru.akvine.istochnik.services.generators.custom.snils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.services.generators.custom.snils.configs.SnilsGeneratorConfig;
@@ -18,6 +20,7 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
     @Override
     public Collection<Long> generate(SnilsGeneratorConfig config) {
         List<Long> generatedValues = new ArrayList<>();
+        Set<Long> uniqueValues = new HashSet<>();
 
         int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
@@ -28,7 +31,7 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
 
                 if (isNull) {
                     if (config.isUnique()) {
-                        if (generatedValues.contains(null)) {
+                        if (!uniqueValues.add(null)) {
                             iteration++;
                             continue;
                         } else {
@@ -51,7 +54,7 @@ public class SnilsRandomGenerator extends AbstractRandomGenerator<Long, SnilsGen
                 generatedValue = config.getRandomGenerator().nextLong(MIN_SNILS_LEFT_BOUND, MIN_SNILS_RIGHT_BOUND);
             }
 
-            if (config.isUnique() && generatedValues.contains(generatedValue)) {
+            if (config.isUnique() && !uniqueValues.add(generatedValue)) {
                 iteration++;
                 continue;
             }

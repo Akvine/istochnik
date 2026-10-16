@@ -31,6 +31,9 @@ public class GeneratorValidator {
     @Value("${max.generation.columns.size}")
     private int maxGenerationColumnsSize;
 
+    @Value("${max.generation.cells.size}")
+    private long maxGenerationCellsSize;
+
     public void verifyGenerateTableRequest(GenerateTableRequest request) {
         Asserts.isNotNull(request);
 
@@ -55,6 +58,15 @@ public class GeneratorValidator {
                     "Can't generate columns count = [%s] more than max = [%s]",
                     columns.size(), maxGenerationColumnsSize);
             generalErrors.add(message);
+        } else if (rowsCount <= maxGenerationRowsSize) {
+            // Таблица целиком лежит в памяти, поэтому ограничены не только строки и колонки, но и их произведение
+            long cellsCount = (long) rowsCount * columns.size();
+            if (cellsCount > maxGenerationCellsSize) {
+                String message = String.format(
+                        "Can't generate cells count = [%s] (rows * columns) more than max = [%s]",
+                        cellsCount, maxGenerationCellsSize);
+                generalErrors.add(message);
+            }
         }
 
         FileType fileType = null;

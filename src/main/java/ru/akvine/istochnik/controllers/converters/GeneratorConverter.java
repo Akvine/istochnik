@@ -25,7 +25,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.random.RandomGenerator;
+import java.util.random.RandomGeneratorFactory;
 
 @Component
 @Slf4j
@@ -35,7 +38,13 @@ public class GeneratorConverter {
     private String seed;
 
     private static final String ALGORITHM_TYPE = "SHA1PRNG";
-    private static final SecureRandom SECURE_RANDOM_GENERATOR = new SecureRandom();
+
+    // Значениям колонок без seed криптостойкость не нужна, поэтому для них берётся быстрый генератор
+    private static final RandomGeneratorFactory<RandomGenerator> FAST_GENERATOR_FACTORY =
+            RandomGeneratorFactory.of("L64X128MixRandom");
+    private static final int FAST_GENERATOR_SEED_SIZE = 32;
+    // Задаёт только начальное состояние генераторов колонок: одно обращение на колонку, а не на каждое значение
+    private static final SecureRandom SEED_GENERATOR = new SecureRandom();
 
     public GenerateData convertToGenerateData(GenerateTableRequest request) {
         Asserts.isNotNull(request);
@@ -117,11 +126,11 @@ public class GeneratorConverter {
     }
 
     private Config buildConfig(int size, ConfigDto from, BaseType baseType) {
-        SecureRandom randomGenerator;
+        RandomGenerator randomGenerator;
         try {
              randomGenerator = resolveRandomizer(from);
         } catch (Exception exception) {
-            randomGenerator = SECURE_RANDOM_GENERATOR;
+            randomGenerator = createFastRandomGenerator();
         }
 
         Config to = new Config()
@@ -180,11 +189,23 @@ public class GeneratorConverter {
                 .toList();
     }
 
-    private SecureRandom resolveRandomizer(ConfigDto configDto) throws NoSuchAlgorithmException {
+    /**
+     * Генератор колонки без seed. У каждой колонки он свой: колонки генерируются одновременно, и общий
+     * генератор заставлял бы потоки ждать друг друга. Обёртка {@link Random} нужна библиотекам стратегий
+     * faker и regexp, которые принимают только этот класс
+     */
+    private static RandomGenerator createFastRandomGenerator() {
+        byte[] seedBytes = new byte[FAST_GENERATOR_SEED_SIZE];
+        SEED_GENERATOR.nextBytes(seedBytes);
+        return Random.from(FAST_GENERATOR_FACTORY.create(seedBytes));
+    }
+
+    // Колонки с seed остаются на прежнем генераторе: при том же seed значения должны совпадать с прежними версиями
+    private RandomGenerator resolveRandomizer(ConfigDto configDto) throws NoSuchAlgorithmException {
         // Пустое значение randomizer.seed в properties приходит как "", а не null
         if (StringUtils.isBlank(seed)) {
             if (StringUtils.isBlank(configDto.getSeed())) {
-                return SECURE_RANDOM_GENERATOR;
+                return createFastRandomGenerator();
             } else {
                 SecureRandom randomGenerator = SecureRandom.getInstance(ALGORITHM_TYPE);
                 randomGenerator.setSeed(configDto.getSeed().getBytes(StandardCharsets.UTF_8));

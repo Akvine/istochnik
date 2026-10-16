@@ -1,7 +1,9 @@
 package ru.akvine.istochnik.services.generators.base.number.doubles.random;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.services.generators.base.number.doubles.configs.DoubleGeneratorConfig;
@@ -12,6 +14,7 @@ public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, Doubl
     @Override
     public List<Double> generate(DoubleGeneratorConfig config) {
         List<Double> generatedValues = new ArrayList<>();
+        Set<Double> uniqueValues = new HashSet<>();
 
         Double start = config.getDoubleShiftRange().getStart();
         double end = config.getDoubleShiftRange().getEnd();
@@ -28,7 +31,7 @@ public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, Doubl
 
                 if (isNull) {
                     if (config.isUnique()) {
-                        if (generatedValues.contains(null)) {
+                        if (!uniqueValues.add(null)) {
                             iteration++;
                             continue;
                         } else {
@@ -44,7 +47,7 @@ public class DoubleRandomGenerator extends AbstractRandomGenerator<Double, Doubl
 
             double generatedValue = config.getDistribution().nextDouble(start, end, config.getRandomGenerator());
 
-            if (config.isUnique() && generatedValues.contains(generatedValue)) {
+            if (config.isUnique() && !uniqueValues.add(generatedValue)) {
                 iteration++;
                 continue;
             }

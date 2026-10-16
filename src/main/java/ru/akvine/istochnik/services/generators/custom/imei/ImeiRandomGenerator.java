@@ -2,7 +2,9 @@ package ru.akvine.istochnik.services.generators.custom.imei;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.utils.LuhnUtils;
@@ -13,6 +15,7 @@ public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGen
     @Override
     public Collection<String> generate(ImeiGeneratorConfig config) {
         List<String> generatedValues = new ArrayList<>();
+        Set<String> uniqueValues = new HashSet<>();
 
         int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
@@ -23,7 +26,7 @@ public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGen
 
                 if (isNull) {
                     if (config.isUnique()) {
-                        if (generatedValues.contains(null)) {
+                        if (!uniqueValues.add(null)) {
                             iteration++;
                             continue;
                         } else {
@@ -49,7 +52,7 @@ public class ImeiRandomGenerator extends AbstractRandomGenerator<String, ImeiGen
                 imei.append(config.getRandomGenerator().nextInt(10));
             }
 
-            if (config.isUnique() && generatedValues.contains(imei.toString())) {
+            if (config.isUnique() && !uniqueValues.add(imei.toString())) {
                 iteration++;
                 continue;
             }

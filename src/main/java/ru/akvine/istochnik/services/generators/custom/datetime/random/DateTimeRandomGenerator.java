@@ -2,7 +2,9 @@ package ru.akvine.istochnik.services.generators.custom.datetime.random;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.services.generators.custom.datetime.configs.DateTimeGeneratorConfig;
@@ -13,6 +15,7 @@ public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTi
     @Override
     public List<LocalDateTime> generate(DateTimeGeneratorConfig config) {
         List<LocalDateTime> generatedDates = new ArrayList<>();
+        Set<LocalDateTime> uniqueValues = new HashSet<>();
 
         LocalDateTime startDate = config.getDateTimeShiftRange().getStart();
         LocalDateTime endDate = config.getDateTimeShiftRange().getEnd();
@@ -41,7 +44,7 @@ public class DateTimeRandomGenerator extends AbstractRandomGenerator<LocalDateTi
             }
 
             if (config.isUnique()) {
-                if (generatedDates.contains(generateDate)) {
+                if (!uniqueValues.add(generateDate)) {
                     iteration++;
                     continue;
                 }

@@ -1,7 +1,9 @@
 package ru.akvine.istochnik.services.generators.base.bool.random;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.services.generators.AbstractRandomGenerator;
 import ru.akvine.istochnik.services.generators.base.bool.configs.BooleanGeneratorConfig;
@@ -12,6 +14,7 @@ public class BooleanRandomGenerator extends AbstractRandomGenerator<Boolean, Boo
     @Override
     public List<Boolean> generate(BooleanGeneratorConfig config) {
         List<Boolean> generatedValues = new ArrayList<>();
+        Set<Boolean> uniqueValues = new HashSet<>();
 
         int iteration = 0;
         while (generatedValues.size() != config.getSize()) {
@@ -22,7 +25,7 @@ public class BooleanRandomGenerator extends AbstractRandomGenerator<Boolean, Boo
 
                 if (isNull) {
                     if (config.isUnique()) {
-                        if (generatedValues.contains(null)) {
+                        if (!uniqueValues.add(null)) {
                             iteration++;
                             continue;
                         } else {
@@ -37,7 +40,7 @@ public class BooleanRandomGenerator extends AbstractRandomGenerator<Boolean, Boo
             }
 
             boolean generatedValue = config.getRandomGenerator().nextBoolean();
-            if (config.isUnique() && generatedValues.contains(generatedValue)) {
+            if (config.isUnique() && !uniqueValues.add(generatedValue)) {
                 iteration++;
                 continue;
             }

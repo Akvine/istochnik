@@ -10,6 +10,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "parallel.executor")
 public class ParallelExecutorProperties {
+    /**
+     * Размер пула потоков генерации. Значение 0 или меньше - по числу доступных ядер процессора
+     */
     private int threadsCount;
+
     private int queueCapacity;
 }
