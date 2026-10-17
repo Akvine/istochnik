@@ -124,16 +124,22 @@ public class GenerationRequestListenerTest extends ApiBaseTest {
     @Test
     @DisplayName("Error while generating column - reply contains generation error")
     void fail_generate_with_generation_error() throws IOException {
+        // Два уникальных значения из диапазона с одним числом: ошибка обнаруживается только при генерации
         ColumnDto column = new ColumnDto()
                 .setName("code")
-                .setType(BaseType.STRING.getValue())
-                .setGenerationStrategy(GenerationStrategy.REGEXP.getName())
-                .setConfig(new ConfigDto().setRangeType(RangeType.RANDOM.getType()));
+                .setType(BaseType.INTEGER.getValue())
+                .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
+                .setConfig(new ConfigDto()
+                        .setRangeType(RangeType.RANDOM.getType())
+                        .setStart("1")
+                        .setEnd("2")
+                        .setUnique(true)
+                        .setNotNull(true));
 
         JsonNode error = error(generationRequestListener.generate(message(request(2, FileType.CSV, column))));
 
         assertThat(error.get("code").asText()).isEqualTo("generation.error");
-        assertThat(error.get("message").asText()).contains("regexps can't be empty");
+        assertThat(error.get("message").asText()).contains("Max attempts to generation");
     }
 
     @Test

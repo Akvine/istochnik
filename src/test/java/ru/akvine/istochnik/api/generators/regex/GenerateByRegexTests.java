@@ -2,14 +2,18 @@ package ru.akvine.istochnik.api.generators.regex;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.response.ValidatableResponse;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.springframework.http.HttpStatus;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.ConfigDto;
@@ -88,18 +92,63 @@ public class GenerateByRegexTests extends ApiBaseTest {
     }
 
     @Test
-    @DisplayName("Generate without regexps - generation error")
+    @DisplayName("Generate without regexps - validation error")
     void fail_generate_without_regexps() {
-        RestAssured.given()
+        sendInvalid(request(column(new ConfigDto().setRangeType(RangeType.RANDOM.getType()))))
+                .body("columnErrors.column", hasItem("field [regexps] can't be empty"));
+    }
+
+    // Раньше на таких выражениях генерация зависала на минуты или исчерпывала память
+    @Test
+    @Timeout(10)
+    @DisplayName("Generate by too large or too complex regexps - validation error before generation")
+    void fail_generate_by_too_large_regexps() {
+        GenerateTableRequest request = new GenerateTableRequest()
+                .setSize(SIZE)
+                .setFileType(FileType.CSV.name())
+                .setColumns(List.of(
+                        namedColumn("huge_count", "[a-z]{10000000000000000000}"),
+                        namedColumn("long_result", "[a-z]{100000}"),
+                        namedColumn("nested", "((a{100}){100}){100}"),
+                        namedColumn("complex", "[ab]*a[ab]{20}"),
+                        namedColumn("long_regexp", "a".repeat(1001)),
+                        namedColumn("syntax", "[a-z")));
+
+        sendInvalid(request)
+                .body("columnErrors.huge_count[0]", containsString("is invalid"))
+                .body("columnErrors.long_result[0]", containsString("sets strings longer than max = [1000]"))
+                .body("columnErrors.nested[0]", containsString("sets strings longer than max = [1000]"))
+                .body("columnErrors.complex[0]", containsString("is too complex"))
+                .body("columnErrors.long_regexp[0]", containsString("is longer than max = [1000] characters"))
+                .body("columnErrors.syntax[0]", containsString("is invalid"));
+    }
+
+    @Test
+    @DisplayName("Generate by more regexps than allowed in one column - validation error")
+    void fail_generate_by_too_many_regexps() {
+        Set<String> regexps = new HashSet<>();
+        for (int i = 0; i < 11; i++) {
+            regexps.add("A" + i + "-[0-9]{3}");
+        }
+
+        sendInvalid(request(column(config(RangeType.RANDOM, regexps.toArray(String[]::new)))))
+                .body("columnErrors.column", hasItem("regexps count can't be more than max = [10]"));
+    }
+
+    private ValidatableResponse sendInvalid(GenerateTableRequest request) {
+        return RestAssured.given()
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(request(column(new ConfigDto().setRangeType(RangeType.RANDOM.getType()))))
+                .body(request)
                 .when()
                 .post(RestMethods.GENERATE_DATA_ENDPOINT)
                 .then()
-                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .body("code", containsString("generation.error"))
-                .body("message", containsString("regexps can't be empty"));
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("code", equalTo("request.fields.invalid.error"));
+    }
+
+    private ColumnDto namedColumn(String name, String regexp) {
+        return column(config(RangeType.RANDOM, regexp)).setName(name);
     }
 
     private List<String> generate(ConfigDto config) {

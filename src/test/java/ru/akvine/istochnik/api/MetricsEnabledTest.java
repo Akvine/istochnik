@@ -36,11 +36,11 @@ public class MetricsEnabledTest extends ApiBaseTest {
         sendGenerateRequest(request(7, uuidColumn()));
         sendGenerateRequest(request(3, uuidColumn()));
 
-        // Стратегия regexp без выражений завершается ошибкой уже во время генерации
+        // Пять уникальных значений из диапазона с одним числом: ошибка обнаруживается только при генерации
         RestAssured.given()
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(request(5, regexpColumnWithoutRegexps()))
+                .body(request(5, impossibleUniqueColumn()))
                 .when()
                 .post(RestMethods.GENERATE_DATA_ENDPOINT)
                 .then()
@@ -86,12 +86,17 @@ public class MetricsEnabledTest extends ApiBaseTest {
                 .setConfig(new ConfigDto());
     }
 
-    private ColumnDto regexpColumnWithoutRegexps() {
+    private ColumnDto impossibleUniqueColumn() {
         return new ColumnDto()
                 .setName("code")
-                .setType(BaseType.STRING.getValue())
-                .setGenerationStrategy(GenerationStrategy.REGEXP.getName())
-                .setConfig(new ConfigDto().setRangeType(RangeType.RANDOM.getType()));
+                .setType(BaseType.INTEGER.getValue())
+                .setGenerationStrategy(GenerationStrategy.ALGORITHM.getName())
+                .setConfig(new ConfigDto()
+                        .setRangeType(RangeType.RANDOM.getType())
+                        .setStart("1")
+                        .setEnd("2")
+                        .setUnique(true)
+                        .setNotNull(true));
     }
 
     private GenerateTableRequest request(int size, ColumnDto column) {
