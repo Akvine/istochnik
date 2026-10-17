@@ -1,7 +1,6 @@
 package ru.akvine.istochnik.controllers.validators;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import ru.akvine.istochnik.config.schema.SchemaConversionProperties;
@@ -10,6 +9,7 @@ import ru.akvine.istochnik.enums.SchemaType;
 import ru.akvine.istochnik.exceptions.SchemaConversionDisabledException;
 import ru.akvine.istochnik.exceptions.SchemaConversionException;
 import ru.akvine.istochnik.services.SchemaConversionService;
+import ru.akvine.istochnik.services.limits.GenerationLimitsService;
 
 @Component
 @RequiredArgsConstructor
@@ -18,9 +18,7 @@ public class SchemaValidator {
 
     private final SchemaConversionService schemaConversionService;
     private final SchemaConversionProperties schemaConversionProperties;
-
-    @Value("${max.generation.rows.size}")
-    private int maxGenerationRowsSize;
+    private final GenerationLimitsService generationLimitsService;
 
     public void verifyConvertSchemaRequest(MultipartFile file, String type, int size, String fileType) {
         if (!schemaConversionService.isEnabled()) {
@@ -37,6 +35,7 @@ public class SchemaValidator {
                     "Schema file size = [%s] bytes is greater than max = [%s] bytes", file.getSize(), maxFileSize));
         }
 
+        int maxGenerationRowsSize = generationLimitsService.getLimits().maxRowsSize();
         if (size < 0) {
             throw new SchemaConversionException("size can't be less than 0");
         }

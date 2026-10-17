@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.poi.ss.SpreadsheetVersion;
 import org.springframework.stereotype.Component;
 import ru.akvine.compozit.commons.istochnik.ColumnDto;
 import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
@@ -16,6 +16,8 @@ import ru.akvine.istochnik.enums.GenerationStrategy;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 import ru.akvine.istochnik.providers.GenerationStrategyValidatorsProvider;
+import ru.akvine.istochnik.services.limits.GenerationLimits;
+import ru.akvine.istochnik.services.limits.GenerationLimitsService;
 import ru.akvine.istochnik.validators.strategy.ExpressionStrategyValidator;
 import ru.akvine.istochnik.validators.strategy.GenerationStrategyValidator;
 
@@ -24,18 +26,17 @@ import ru.akvine.istochnik.validators.strategy.GenerationStrategyValidator;
 public class GeneratorValidator {
     private final GenerationStrategyValidatorsProvider generationStrategyValidatorsProvider;
     private final ExpressionStrategyValidator expressionStrategyValidator;
-
-    @Value("${max.generation.rows.size}")
-    private int maxGenerationRowsSize;
-
-    @Value("${max.generation.columns.size}")
-    private int maxGenerationColumnsSize;
-
-    @Value("${max.generation.cells.size}")
-    private long maxGenerationCellsSize;
+    private final GenerationLimitsService generationLimitsService;
 
     public void verifyGenerateTableRequest(GenerateTableRequest request) {
         Asserts.isNotNull(request);
+
+        GenerationLimits limits = generationLimitsService.getLimits();
+        int maxGenerationRowsSize = limits.maxRowsSize();
+        int maxGenerationColumnsSize = limits.maxColumnsSize();
+        // Ячейка XLSX занимает в памяти больше, поэтому лимит ячеек для этого формата свой
+        boolean xlsx = FileType.XLSX.name().equalsIgnoreCase(request.getFileType());
+        long maxGenerationCellsSize = xlsx ? limits.maxXlsxCellsSize() : limits.maxCellsSize();
 
         int rowsCount = request.getSize();
         List<ColumnDto> columns = request.getColumns();
@@ -63,8 +64,8 @@ public class GeneratorValidator {
             long cellsCount = (long) rowsCount * columns.size();
             if (cellsCount > maxGenerationCellsSize) {
                 String message = String.format(
-                        "Can't generate cells count = [%s] (rows * columns) more than max = [%s]",
-                        cellsCount, maxGenerationCellsSize);
+                        "Can't generate cells count = [%s] (rows * columns) more than max = [%s]%s",
+                        cellsCount, maxGenerationCellsSize, xlsx ? " for file type = XLSX" : "");
                 generalErrors.add(message);
             }
         }
@@ -79,6 +80,24 @@ public class GeneratorValidator {
         // TODO: добавить валидацию для каждого из fileType через providers
         if (FileType.SQL == fileType && StringUtils.isBlank(request.getTableName())) {
             generalErrors.add("Field 'tableName' can't be blank for file type = SQL");
+        }
+
+        // Лист XLSX вмещает ограниченное число строк и колонок, а первая строка занята заголовком.
+        // Рассчитанные по ресурсам машины лимиты могут быть больше
+        if (FileType.XLSX == fileType) {
+            int maxXlsxRows = SpreadsheetVersion.EXCEL2007.getLastRowIndex();
+            if (rowsCount > maxXlsxRows) {
+                generalErrors.add(String.format(
+                        "Can't generate rows size = [%s] more than max = [%s] for file type = XLSX",
+                        rowsCount, maxXlsxRows));
+            }
+
+            int maxXlsxColumns = SpreadsheetVersion.EXCEL2007.getMaxColumns();
+            if (columns != null && columns.size() > maxXlsxColumns) {
+                generalErrors.add(String.format(
+                        "Can't generate columns count = [%s] more than max = [%s] for file type = XLSX",
+                        columns.size(), maxXlsxColumns));
+            }
         }
 
         ValidationColumnsInfo validationColumnsInfo = new ValidationColumnsInfo();
