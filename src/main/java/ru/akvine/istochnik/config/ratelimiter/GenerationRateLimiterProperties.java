@@ -13,7 +13,7 @@ public class GenerationRateLimiterProperties {
     private boolean enabled = true;
 
     /**
-     * Сколько запросов на генерацию принимается за один период
+     * Сколько запросов на генерацию принимается от одного пользователя за один период
      */
     private int limitForPeriod = 20;
 
@@ -21,4 +21,9 @@ public class GenerationRateLimiterProperties {
      * Длительность периода в секундах, по истечении которого лимит восстанавливается
      */
     private int refreshPeriodSeconds = 1;
+
+    /**
+     * Скольких пользователей ограничитель отслеживает одновременно
+     */
+    private int maxUsers = 10000;
 }

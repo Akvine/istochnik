@@ -157,7 +157,7 @@ public interface GeneratorControllerMeta {
                             schema = @Schema(implementation = GenerateDataErrorResponse.class)))
     @ApiResponse(
             responseCode = "429",
-            description = "Превышен лимит запросов на генерацию. "
+            description = "Превышен лимит запросов на генерацию для пользователя. Лимит у каждого пользователя свой. "
                     + "Заголовок Retry-After содержит время ожидания в секундах",
             content =
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
