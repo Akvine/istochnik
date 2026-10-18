@@ -3,7 +3,7 @@ package ru.akvine.istochnik.services.converters.doubles;
 import java.util.List;
 import java.util.random.RandomGenerator;
 import org.springframework.stereotype.Service;
-import ru.akvine.compozit.commons.utils.MathUtils;
+import ru.akvine.istochnik.utils.MathUtils;
 import ru.akvine.istochnik.enums.ConverterType;
 
 @Service

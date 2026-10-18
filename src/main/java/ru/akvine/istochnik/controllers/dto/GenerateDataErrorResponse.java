@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import ru.akvine.compozit.commons.dto.ErrorResponse;
+import ru.akvine.istochnik.controllers.ErrorResponse;
 
 @Data
 @Accessors(chain = true)

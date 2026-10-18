@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.ToDoubleFunction;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ru.akvine.compozit.commons.utils.DateTimeUtils;
+import ru.akvine.istochnik.utils.DateTimeUtils;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.utils.ZonedDateTimeUtils;

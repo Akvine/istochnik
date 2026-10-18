@@ -2,7 +2,7 @@ package ru.akvine.istochnik.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.akvine.compozit.commons.utils.Asserts;
+import ru.akvine.istochnik.utils.Asserts;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.providers.FileTableGeneratorsProvider;
 import ru.akvine.istochnik.services.FileTableService;

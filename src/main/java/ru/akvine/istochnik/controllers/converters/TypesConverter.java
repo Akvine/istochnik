@@ -3,10 +3,10 @@ package ru.akvine.istochnik.controllers.converters;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.akvine.compozit.commons.istochnik.BaseTypeDto;
-import ru.akvine.compozit.commons.istochnik.BaseTypesListResponse;
-import ru.akvine.compozit.commons.istochnik.CustomBaseTypeDto;
-import ru.akvine.compozit.commons.istochnik.CustomTypesListResponse;
+import ru.akvine.istochnik.controllers.dto.types.BaseTypeDto;
+import ru.akvine.istochnik.controllers.dto.types.BaseTypesListResponse;
+import ru.akvine.istochnik.controllers.dto.types.CustomTypeDto;
+import ru.akvine.istochnik.controllers.dto.types.CustomTypesListResponse;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.Language;
@@ -31,8 +31,8 @@ public class TypesConverter {
                         .toList());
     }
 
-    private CustomBaseTypeDto buildCustomTypeDto(CustomType customType, Language language) {
-        CustomBaseTypeDto customTypeDto = new CustomBaseTypeDto();
+    private CustomTypeDto buildCustomTypeDto(CustomType customType, Language language) {
+        CustomTypeDto customTypeDto = new CustomTypeDto();
         customTypeDto.setCustomType(customType.getName());
         customTypeDto.setBaseType(customType.getBaseType().getValue());
         customTypeDto.setDescription(messageResolverService.message(customType.getCode(), language));

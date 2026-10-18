@@ -4,7 +4,7 @@ import jakarta.annotation.Nullable;
 import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import ru.akvine.compozit.commons.istochnik.ErrorResolveInfo;
+import ru.akvine.istochnik.controllers.dto.ErrorResolveInfo;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.enums.GenerationStrategy;

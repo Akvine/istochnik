@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.random.RandomGenerator;
 import org.springframework.stereotype.Service;
-import ru.akvine.compozit.commons.utils.DateTimeUtils;
 import ru.akvine.istochnik.enums.ConverterType;
+import ru.akvine.istochnik.utils.DateTimeUtils;
 import ru.akvine.istochnik.utils.ZonedDateTimeUtils;
 
 @Service

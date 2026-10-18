@@ -9,8 +9,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.akvine.compozit.commons.dto.ErrorResponse;
-import ru.akvine.compozit.commons.dto.Response;
+import ru.akvine.istochnik.controllers.ErrorResponse;
+import ru.akvine.istochnik.controllers.dto.Response;
 import ru.akvine.istochnik.controllers.dto.strategies.StrategiesListResponse;
 
 @Tag(name = "Стратегии генерации", description = "Справочник стратегий генерации колонок")

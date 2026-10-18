@@ -1,7 +1,7 @@
 package ru.akvine.istochnik.providers;
 
 import java.util.Map;
-import ru.akvine.compozit.commons.utils.Asserts;
+import ru.akvine.istochnik.utils.Asserts;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.services.generators.Config;
 import ru.akvine.istochnik.services.mappers.ConfigMapperService;

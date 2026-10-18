@@ -13,14 +13,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.springframework.http.HttpStatus;
-import ru.akvine.compozit.commons.istochnik.ColumnDto;
-import ru.akvine.compozit.commons.istochnik.ConfigDto;
-import ru.akvine.compozit.commons.istochnik.ConverterDto;
-import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
-import ru.akvine.compozit.commons.utils.DateTimeUtils;
 import ru.akvine.istochnik.api.ApiBaseTest;
 import ru.akvine.istochnik.api.common.configs.RestMethods;
+import ru.akvine.istochnik.controllers.dto.ColumnDto;
+import ru.akvine.istochnik.controllers.dto.ConfigDto;
+import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
+import ru.akvine.istochnik.controllers.dto.converters.ConverterDto;
 import ru.akvine.istochnik.enums.*;
+import ru.akvine.istochnik.utils.DateTimeUtils;
 
 @DisplayName("Custom types tests")
 public class GeneratorCustomTypesTest extends ApiBaseTest {

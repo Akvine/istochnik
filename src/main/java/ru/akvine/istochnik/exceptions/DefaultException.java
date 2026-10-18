@@ -1,7 +1,7 @@
 package ru.akvine.istochnik.exceptions;
 
 import lombok.Getter;
-import ru.akvine.compozit.commons.istochnik.ErrorResolveInfo;
+import ru.akvine.istochnik.controllers.dto.ErrorResolveInfo;
 
 @Getter
 public class DefaultException extends RuntimeException {

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
-import ru.akvine.compozit.commons.istochnik.DistributionDto;
+import ru.akvine.istochnik.controllers.dto.DistributionDto;
 import ru.akvine.istochnik.enums.DistributionPeak;
 import ru.akvine.istochnik.enums.DistributionType;
 import ru.akvine.istochnik.exceptions.InvalidDistributionException;

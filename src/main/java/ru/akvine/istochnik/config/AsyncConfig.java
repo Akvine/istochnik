@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.akvine.compozit.commons.utils.ThreadsUtils;
+import ru.akvine.istochnik.utils.ThreadsUtils;
 import ru.akvine.istochnik.config.async.ParallelExecutorProperties;
 import ru.akvine.istochnik.config.async.TaskExecutor;
 

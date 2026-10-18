@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.akvine.compozit.commons.dto.ErrorResponse;
-import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
+import ru.akvine.istochnik.controllers.ErrorResponse;
+import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
 import ru.akvine.istochnik.controllers.dto.GenerateDataErrorResponse;
 
 @Tag(name = "Генерация", description = "Генерация файла с тестовыми данными по описанию колонок")

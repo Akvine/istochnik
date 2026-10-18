@@ -9,10 +9,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.akvine.compozit.commons.dto.ErrorResponse;
-import ru.akvine.compozit.commons.dto.Response;
-import ru.akvine.compozit.commons.istochnik.BaseTypesListResponse;
-import ru.akvine.compozit.commons.istochnik.CustomTypesListResponse;
+import ru.akvine.istochnik.controllers.ErrorResponse;
+import ru.akvine.istochnik.controllers.dto.Response;
+import ru.akvine.istochnik.controllers.dto.types.BaseTypesListResponse;
+import ru.akvine.istochnik.controllers.dto.types.CustomTypesListResponse;
 
 @Tag(name = "Типы данных", description = "Справочник типов для стратегии algorithm")
 @RequestMapping(value = "/v1/types")

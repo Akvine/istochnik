@@ -1,7 +1,7 @@
 package ru.akvine.istochnik.validators.custom;
 
 import java.util.List;
-import ru.akvine.compozit.commons.istochnik.ColumnDto;
+import ru.akvine.istochnik.controllers.dto.ColumnDto;
 import ru.akvine.istochnik.enums.CustomType;
 
 /**

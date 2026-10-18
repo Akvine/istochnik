@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.stream.LongStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.akvine.compozit.commons.istochnik.DistributionDto;
+import ru.akvine.istochnik.controllers.dto.DistributionDto;
 import ru.akvine.istochnik.exceptions.InvalidDistributionException;
 
 @DisplayName("Distribution factory tests")

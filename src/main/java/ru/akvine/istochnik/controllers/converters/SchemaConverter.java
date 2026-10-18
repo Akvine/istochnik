@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import ru.akvine.compozit.commons.utils.Asserts;
+import ru.akvine.istochnik.utils.Asserts;
 import ru.akvine.istochnik.controllers.dto.schema.ConvertSchemaResponse;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.enums.SchemaType;

@@ -3,8 +3,8 @@ package ru.akvine.istochnik.controllers.dto.schema;
 import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import ru.akvine.compozit.commons.dto.SuccessfulResponse;
-import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
+import ru.akvine.istochnik.controllers.dto.SuccessfulResponse;
+import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
 
 @Data
 @Accessors(chain = true)

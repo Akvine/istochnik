@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.akvine.compozit.commons.istochnik.ColumnDto;
+import ru.akvine.istochnik.controllers.dto.ColumnDto;
 import ru.akvine.istochnik.controllers.dto.validation.ValidationColumnsInfo;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.CustomType;

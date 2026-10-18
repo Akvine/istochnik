@@ -5,8 +5,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import ru.akvine.compozit.commons.utils.Asserts;
 import ru.akvine.istochnik.enums.BaseType;
+import ru.akvine.istochnik.utils.Asserts;
 
 public interface TypeConverter<T> {
     List<T> convert(byte[] response);

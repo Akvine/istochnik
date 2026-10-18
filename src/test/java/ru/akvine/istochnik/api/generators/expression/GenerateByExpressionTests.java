@@ -23,20 +23,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
-import ru.akvine.compozit.commons.istochnik.ColumnDto;
-import ru.akvine.compozit.commons.istochnik.ConfigDto;
-import ru.akvine.compozit.commons.istochnik.ConverterDto;
-import ru.akvine.compozit.commons.istochnik.ErrorResolveInfo;
-import ru.akvine.compozit.commons.istochnik.ErrorResolvePolicy;
-import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.api.ApiBaseTest;
 import ru.akvine.istochnik.api.common.configs.RestMethods;
-import ru.akvine.istochnik.enums.BaseType;
-import ru.akvine.istochnik.enums.ConverterType;
-import ru.akvine.istochnik.enums.CustomType;
-import ru.akvine.istochnik.enums.FileType;
-import ru.akvine.istochnik.enums.GenerationStrategy;
-import ru.akvine.istochnik.enums.RangeType;
+import ru.akvine.istochnik.controllers.dto.ColumnDto;
+import ru.akvine.istochnik.controllers.dto.ConfigDto;
+import ru.akvine.istochnik.controllers.dto.ErrorResolveInfo;
+import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
+import ru.akvine.istochnik.controllers.dto.converters.ConverterDto;
+import ru.akvine.istochnik.enums.*;
 
 // Очередь пула в общих настройках тестов вмещает одну задачу, а в этих запросах по несколько колонок.
 // Лимит длины результата уменьшен, чтобы его можно было превысить коротким выражением

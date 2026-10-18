@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import ru.akvine.compozit.commons.istochnik.ColumnDto;
-import ru.akvine.compozit.commons.istochnik.ConfigDto;
+import ru.akvine.istochnik.controllers.dto.ColumnDto;
+import ru.akvine.istochnik.controllers.dto.ConfigDto;
 import ru.akvine.istochnik.enums.CustomType;
 import ru.akvine.istochnik.utils.RequisiteUtils;
 

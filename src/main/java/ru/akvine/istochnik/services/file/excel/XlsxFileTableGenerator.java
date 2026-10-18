@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
-import ru.akvine.compozit.commons.utils.Asserts;
+import ru.akvine.istochnik.utils.Asserts;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.exceptions.ReportGenerationException;
 import ru.akvine.istochnik.providers.CellConfigurersProvider;

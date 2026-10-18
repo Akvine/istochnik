@@ -2,7 +2,7 @@ package ru.akvine.istochnik.validators.strategy;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
-import ru.akvine.compozit.commons.istochnik.ColumnDto;
+import ru.akvine.istochnik.controllers.dto.ColumnDto;
 import ru.akvine.istochnik.providers.BaseTypeValidatorsProvider;
 import ru.akvine.istochnik.validators.type.dto.ValidateAction;
 

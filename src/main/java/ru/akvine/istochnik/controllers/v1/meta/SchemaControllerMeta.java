@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import ru.akvine.compozit.commons.dto.ErrorResponse;
-import ru.akvine.compozit.commons.dto.Response;
+import ru.akvine.istochnik.controllers.ErrorResponse;
+import ru.akvine.istochnik.controllers.dto.Response;
 import ru.akvine.istochnik.controllers.dto.schema.ConvertSchemaResponse;
 
 @Tag(

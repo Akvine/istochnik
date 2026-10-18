@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import ru.akvine.compozit.commons.istochnik.ConverterDto;
+import ru.akvine.istochnik.controllers.dto.converters.ConverterDto;
 
 @Data
 @Accessors(chain = true)

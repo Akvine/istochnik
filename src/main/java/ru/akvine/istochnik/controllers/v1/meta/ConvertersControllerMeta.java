@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.akvine.compozit.commons.dto.Response;
+import ru.akvine.istochnik.controllers.dto.Response;
 import ru.akvine.istochnik.controllers.dto.converters.ConvertersListResponse;
 
 @Tag(name = "Конвертеры", description = "Справочник преобразований над сгенерированными значениями")

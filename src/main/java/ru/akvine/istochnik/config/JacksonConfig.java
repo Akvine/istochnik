@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.akvine.compozit.commons.istochnik.ColumnDto;
-import ru.akvine.compozit.commons.istochnik.ConfigDto;
-import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
+import ru.akvine.istochnik.controllers.dto.ColumnDto;
+import ru.akvine.istochnik.controllers.dto.ConfigDto;
+import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
 
 @Configuration
 public class JacksonConfig {

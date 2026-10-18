@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
+import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
 import ru.akvine.istochnik.controllers.converters.GeneratorConverter;
 import ru.akvine.istochnik.controllers.v1.meta.GeneratorControllerMeta;
 import ru.akvine.istochnik.controllers.validators.GeneratorValidator;

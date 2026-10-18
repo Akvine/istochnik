@@ -13,11 +13,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.akvine.compozit.commons.istochnik.GenerateTableRequest;
 import ru.akvine.istochnik.IstochnikApplication;
 import ru.akvine.istochnik.api.common.configs.RestMethods;
 import ru.akvine.istochnik.api.common.providers.DetectorsProvider;
 import ru.akvine.istochnik.api.common.providers.TypeConvertersProvider;
+import ru.akvine.istochnik.controllers.dto.GenerateTableRequest;
 import ru.akvine.istochnik.enums.BaseType;
 
 @ExtendWith(SpringExtension.class)

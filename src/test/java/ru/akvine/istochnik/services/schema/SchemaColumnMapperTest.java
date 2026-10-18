@@ -9,8 +9,8 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.akvine.compozit.commons.istochnik.ColumnDto;
-import ru.akvine.compozit.commons.istochnik.ConfigDto;
+import ru.akvine.istochnik.controllers.dto.ColumnDto;
+import ru.akvine.istochnik.controllers.dto.ConfigDto;
 
 public class SchemaColumnMapperTest {
     private static final String TABLE = "users";
