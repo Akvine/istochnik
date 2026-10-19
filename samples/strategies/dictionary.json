@@ -13,6 +13,17 @@
       }
     },
     {
+      "name": "random_weighted",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["NEW", "ACTIVE", "BLOCKED", "DELETED"]],
+        "weights": { "NEW": 60, "ACTIVE": 30, "BLOCKED": 10, "DELETED": 0 }
+      }
+    },
+    {
       "name": "shift",
       "type": "str",
       "generationStrategy": "dictionary",

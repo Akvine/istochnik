@@ -36,7 +36,12 @@ public interface GeneratorControllerMeta {
                   "name": "status",
                   "type": "str",
                   "generationStrategy": "dictionary",
-                  "config": { "rangeType": "random", "notNull": true, "dictionaries": [["NEW", "ACTIVE", "BLOCKED"]] }
+                  "config": {
+                    "rangeType": "random",
+                    "notNull": true,
+                    "dictionaries": [["NEW", "ACTIVE", "BLOCKED"]],
+                    "weights": { "NEW": 70, "ACTIVE": 25, "BLOCKED": 5 }
+                  }
                 },
                 {
                   "name": "balance",

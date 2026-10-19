@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -30,6 +31,11 @@ public class ConfigDto {
     private Object constant;
 
     private Set<Set<String>> dictionaries;
+
+    /**
+     * Веса значений словарей стратегии dictionary: значение - вес. Значения без веса получают вес 1
+     */
+    private Map<String, Double> weights;
 
     private Set<String> regexps;
 

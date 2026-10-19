@@ -1,6 +1,7 @@
 package ru.akvine.istochnik.services.dto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.random.RandomGenerator;
 import lombok.Data;
@@ -41,6 +42,11 @@ public class Config {
     private Object constant;
 
     private List<List<String>> dictionaries;
+
+    /**
+     * Веса значений словарей. Если они не заданы, значения равновероятны
+     */
+    private Map<String, Double> weights;
 
     private Set<String> regexps;
 

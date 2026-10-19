@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.random.RandomGenerator;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.BaseType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
@@ -20,6 +22,8 @@ import ru.akvine.istochnik.services.dto.GenerateColumn;
 @Service
 @RequiredArgsConstructor
 public class DictionaryGenerationHandler implements GenerationHandler {
+    private static final double DEFAULT_WEIGHT = 1;
+
     private final ConverterConvertersProvider converterConvertersProvider;
 
     @Override
@@ -73,6 +77,10 @@ public class DictionaryGenerationHandler implements GenerationHandler {
         int size = config.getSize();
         RandomGenerator randomGenerator = config.getRandomGenerator();
         boolean random = config.getRangeType() == RangeType.RANDOM;
+        // Без весов значения выбираются так же, как до их появления: при том же seed получаются те же данные
+        double[] cumulativeWeights = random && MapUtils.isNotEmpty(config.getWeights())
+                ? cumulativeWeights(dictionary, config.getWeights())
+                : null;
 
         List<String> generatedValues = new ArrayList<>(size);
         for (int i = 0; i < size; ++i) {
@@ -81,11 +89,54 @@ public class DictionaryGenerationHandler implements GenerationHandler {
                 continue;
             }
 
-            int index = random ? randomGenerator.nextInt(dictionary.size()) : i % dictionary.size();
+            int index;
+            if (!random) {
+                index = i % dictionary.size();
+            } else if (cumulativeWeights == null) {
+                index = randomGenerator.nextInt(dictionary.size());
+            } else {
+                index = chooseWeighted(cumulativeWeights, randomGenerator);
+            }
             generatedValues.add(dictionary.get(index));
         }
 
         return generatedValues;
+    }
+
+    /**
+     * Накопленные веса: i-й элемент - сумма весов значений с первого по i-е. Значения без веса получают вес 1
+     */
+    private double[] cumulativeWeights(List<String> dictionary, Map<String, Double> weights) {
+        double[] cumulativeWeights = new double[dictionary.size()];
+        double total = 0;
+        for (int i = 0; i < dictionary.size(); ++i) {
+            total += weights.getOrDefault(dictionary.get(i), DEFAULT_WEIGHT);
+            cumulativeWeights[i] = total;
+        }
+
+        return cumulativeWeights;
+    }
+
+    /**
+     * Случайная точка на отрезке от 0 до суммы весов попадает в промежуток одного из значений, и чем больше вес,
+     * тем длиннее промежуток. Ищется первое значение, накопленный вес которого больше точки: значения с нулевым весом
+     * так никогда не выбираются
+     */
+    private int chooseWeighted(double[] cumulativeWeights, RandomGenerator randomGenerator) {
+        double point = randomGenerator.nextDouble(cumulativeWeights[cumulativeWeights.length - 1]);
+
+        int low = 0;
+        int high = cumulativeWeights.length - 1;
+        while (low < high) {
+            int middle = (low + high) >>> 1;
+            if (cumulativeWeights[middle] > point) {
+                high = middle;
+            } else {
+                low = middle + 1;
+            }
+        }
+
+        return low;
     }
 
     @Override

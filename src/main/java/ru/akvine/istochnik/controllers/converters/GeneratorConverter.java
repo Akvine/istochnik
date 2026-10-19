@@ -145,6 +145,7 @@ public class GeneratorConverter {
                 .setLength(from.getLength())
                 .setValid(from.isValid())
                 .setDictionaries(mapDictionaries(from.getDictionaries()))
+                .setWeights(from.getWeights())
                 .setConstant(from.getConstant())
                 .setRandomGenerator(randomGenerator)
                 .setTopics(from.getTopics().stream().map(Topic::safeFrom).toList())
