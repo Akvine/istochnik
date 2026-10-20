@@ -1,0 +1,98 @@
+{
+  "size": 25,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "flight_number",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["(SU|DP|S7|U6) [1-9][0-9]{2,3}"] }
+    },
+    {
+      "name": "route",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["SVO-LED", "SVO-AER", "SVO-KGD", "SVO-SVX", "DME-OVB", "VKO-MRV", "LED-KZN"]],
+        "weights": { "SVO-LED": 30, "SVO-AER": 20, "SVO-SVX": 13, "DME-OVB": 12, "SVO-KGD": 10, "LED-KZN": 8, "VKO-MRV": 7 }
+      }
+    },
+    {
+      "name": "departure_airport",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#substring(#route, 0, 3)" }
+    },
+    {
+      "name": "arrival_airport",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#substring(#route, 4, 7)" }
+    },
+    {
+      "name": "departure_at",
+      "type": "datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2026-03-01 00:00:00", "end": "2026-03-08 00:00:00", "notNull": true },
+      "converters": [{ "name": "sort_asc" }, { "name": "format", "arguments": ["yyyy-MM-dd HH:mm"] }]
+    },
+    {
+      "name": "aircraft",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["Airbus A320", "Airbus A321", "Boeing 737-800", "Sukhoi Superjet 100"]],
+        "weights": { "Airbus A320": 40, "Boeing 737-800": 30, "Sukhoi Superjet 100": 20, "Airbus A321": 10 }
+      }
+    },
+    {
+      "name": "seats",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": {
+        "expression": "#aircraft == 'Sukhoi Superjet 100' ? 98 : (#aircraft == 'Airbus A320' ? 158 : (#aircraft == 'Boeing 737-800' ? 189 : 206))"
+      }
+    },
+    {
+      "name": "load_factor",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "0.4",
+        "end": "1.0",
+        "notNull": true,
+        "distribution": { "type": "normal", "mean": "0.85", "stddev": "0.08" }
+      },
+      "converters": [{ "name": "round", "arguments": [2] }]
+    },
+    {
+      "name": "passengers",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#min(#seats, #toInt(#seats * #load_factor))" }
+    },
+    {
+      "name": "delay_min",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "0",
+        "end": "300",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "15" }
+      }
+    },
+    {
+      "name": "status",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#delay_min >= 120 ? 'СИЛЬНАЯ ЗАДЕРЖКА' : (#delay_min >= 15 ? 'ЗАДЕРЖАН' : 'ПО РАСПИСАНИЮ')" }
+    }
+  ]
+}

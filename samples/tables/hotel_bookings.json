@@ -1,0 +1,109 @@
+{
+  "size": 25,
+  "fileType": "sql",
+  "tableName": "bookings",
+  "sqlDialect": "postgresql",
+  "columns": [
+    {
+      "name": "booking_number",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["BK-[0-9]{7}"] }
+    },
+    {
+      "name": "guest",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "room_type",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["Стандарт", "Комфорт", "Люкс", "Апартаменты"]],
+        "weights": { "Стандарт": 60, "Комфорт": 25, "Люкс": 10, "Апартаменты": 5 }
+      }
+    },
+    {
+      "name": "price_per_night",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": {
+        "expression": "#room_type == 'Стандарт' ? 4500 : (#room_type == 'Комфорт' ? 6900 : (#room_type == 'Люкс' ? 12500 : 18000))"
+      }
+    },
+    {
+      "name": "check_in",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "notNull": true,
+        "distribution": { "type": "normal", "mean": "2026-07-15", "stddev": "45" }
+      }
+    },
+    {
+      "name": "nights",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "1",
+        "end": "15",
+        "notNull": true,
+        "distribution": { "type": "zipf", "exponent": "1.3" }
+      }
+    },
+    {
+      "name": "check_out",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#plusDays(#check_in, #nights)" }
+    },
+    {
+      "name": "guests",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["1", "2", "3", "4"]],
+        "weights": { "1": 25, "2": 55, "3": 12, "4": 8 }
+      }
+    },
+    {
+      "name": "total",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#price_per_night * #nights" }
+    },
+    {
+      "name": "season",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#toInt(#substring(#check_in, 5, 7)) between {6, 8} ? 'высокий' : 'низкий'" }
+    },
+    {
+      "name": "breakfast",
+      "type": "bool",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true }
+    },
+    {
+      "name": "status",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["CONFIRMED", "CANCELLED", "NO_SHOW"]],
+        "weights": { "CONFIRMED": 80, "CANCELLED": 15, "NO_SHOW": 5 }
+      }
+    }
+  ]
+}

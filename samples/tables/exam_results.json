@@ -1,0 +1,78 @@
+{
+  "size": 30,
+  "fileType": "xlsx",
+  "columns": [
+    {
+      "name": "student",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "group",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["ИВТ-21", "ИВТ-22", "ПМИ-21", "ПМИ-22", "БИ-21"]] }
+    },
+    {
+      "name": "subject",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["Математический анализ", "Линейная алгебра", "Программирование", "Базы данных", "Философия"]]
+      }
+    },
+    {
+      "name": "exam_date",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2026-01-10", "end": "2026-01-31", "notNull": true },
+      "converters": [{ "name": "format", "arguments": ["dd.MM.yyyy"] }]
+    },
+    {
+      "name": "attempt",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["1", "2", "3"]],
+        "weights": { "1": 85, "2": 12, "3": 3 }
+      }
+    },
+    {
+      "name": "grade",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "2",
+        "end": "6",
+        "notNull": true,
+        "distribution": { "type": "normal", "mean": "4", "stddev": "0.9" }
+      }
+    },
+    {
+      "name": "grade_text",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": {
+        "expression": "#grade == 5 ? 'отлично' : (#grade == 4 ? 'хорошо' : (#grade == 3 ? 'удовлетворительно' : 'неудовлетворительно'))"
+      }
+    },
+    {
+      "name": "passed",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#grade >= 3" }
+    },
+    {
+      "name": "scholarship",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#grade == 5 and #toInt(#attempt) == 1" }
+    }
+  ]
+}

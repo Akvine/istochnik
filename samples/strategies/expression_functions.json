@@ -1,0 +1,110 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "city",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["CITY_NAME"] }
+    },
+    {
+      "name": "qty",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "1", "end": "11" }
+    },
+    {
+      "name": "radius",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "1", "end": "5" },
+      "converters": [{ "name": "round", "arguments": [1] }]
+    },
+    {
+      "name": "nickname",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": false, "topics": ["FIRST_NAME"] },
+      "converters": [{ "name": "lowerCase" }]
+    },
+    {
+      "name": "start",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "2026-01-01", "end": "2026-12-31" }
+    },
+    {
+      "name": "code",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#upper(#substring(#city, 0, 3)) + '-' + #toStr(#qty)" }
+    },
+    {
+      "name": "city_lower_length",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#lower(#city) + ' (' + #length(#city) + ')'" }
+    },
+    {
+      "name": "bonus_over_five",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#max(0, #qty - 5)" }
+    },
+    {
+      "name": "at_most_three",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#min(#qty, 3)" }
+    },
+    {
+      "name": "distance_to_ten",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#abs(#qty - 10)" }
+    },
+    {
+      "name": "circle_area",
+      "type": "double",
+      "generationStrategy": "expression",
+      "config": { "expression": "#round(#pow(#radius, 2) * 3.14159, 2)" }
+    },
+    {
+      "name": "is_even",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#qty % 2 == 0" }
+    },
+    {
+      "name": "in_range_3_7",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#qty between {3, 7}" }
+    },
+    {
+      "name": "regular_customer",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "!(#qty > 8 or #city == 'Москва')" }
+    },
+    {
+      "name": "nickname_or_default",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "notNull": true, "expression": "#nickname ?: 'anonymous'" }
+    },
+    {
+      "name": "valid_until",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#plusDays(#plusYears(#start, 1), -1)" }
+    },
+    {
+      "name": "days_valid",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#daysBetween(#start, #valid_until) + 1" }
+    }
+  ]
+}

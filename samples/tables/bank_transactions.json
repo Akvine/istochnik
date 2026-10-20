@@ -1,0 +1,97 @@
+{
+  "size": 30,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "transaction_id",
+      "type": "uuid",
+      "generationStrategy": "algorithm",
+      "config": {}
+    },
+    {
+      "name": "created_at",
+      "type": "zoned_datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2026-03-01T00:00:00+03:00", "end": "2026-03-02T00:00:00+03:00", "notNull": true },
+      "converters": [{ "name": "sort_asc" }]
+    },
+    {
+      "name": "account",
+      "type": "bank_account",
+      "generationStrategy": "algorithm",
+      "config": { "start": "044525225", "valid": true, "notNull": true }
+    },
+    {
+      "name": "card",
+      "type": "card_mir",
+      "generationStrategy": "algorithm",
+      "config": { "valid": true, "notNull": true },
+      "converters": [{ "name": "mask", "arguments": [4, 4] }]
+    },
+    {
+      "name": "type",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["PURCHASE", "TRANSFER", "WITHDRAWAL", "REFUND"]],
+        "weights": { "PURCHASE": 70, "TRANSFER": 20, "WITHDRAWAL": 8, "REFUND": 2 }
+      }
+    },
+    {
+      "name": "description",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": {
+        "expression": "#type == 'PURCHASE' ? 'Оплата покупки' : (#type == 'TRANSFER' ? 'Перевод' : (#type == 'WITHDRAWAL' ? 'Снятие наличных' : 'Возврат'))"
+      }
+    },
+    {
+      "name": "amount",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "10.00",
+        "end": "500000.00",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "4000" }
+      }
+    },
+    {
+      "name": "currency",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["RUB", "USD", "EUR", "CNY"]],
+        "weights": { "RUB": 90, "USD": 4, "EUR": 3, "CNY": 3 }
+      }
+    },
+    {
+      "name": "fee",
+      "type": "double",
+      "generationStrategy": "expression",
+      "config": { "expression": "#type == 'TRANSFER' ? #round(#max(30, #amount * 0.01), 2) : 0" }
+    },
+    {
+      "name": "status",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["COMPLETED", "DECLINED", "PENDING"]],
+        "weights": { "COMPLETED": 92, "DECLINED": 6, "PENDING": 2 }
+      }
+    },
+    {
+      "name": "needs_review",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#amount > 100000 or (#currency != 'RUB' and #type == 'WITHDRAWAL')" }
+    }
+  ]
+}

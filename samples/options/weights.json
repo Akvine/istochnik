@@ -1,0 +1,72 @@
+{
+  "size": 20,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "status_percent",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["NEW", "ACTIVE", "BLOCKED"]],
+        "weights": { "NEW": 20, "ACTIVE": 75, "BLOCKED": 5 }
+      }
+    },
+    {
+      "name": "city_one_weighted",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["Москва", "Санкт-Петербург", "Казань", "Новосибирск", "Екатеринбург", "Самара"]],
+        "weights": { "Москва": 5 }
+      }
+    },
+    {
+      "name": "without_deleted",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["A", "B", "C", "DELETED"]],
+        "weights": { "DELETED": 0 }
+      }
+    },
+    {
+      "name": "fractional",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["rare", "often"]],
+        "weights": { "rare": 0.25, "often": 2.75 }
+      }
+    },
+    {
+      "name": "shared_value",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["chat", "email"], ["email", "phone"]],
+        "weights": { "email": 8 }
+      }
+    },
+    {
+      "name": "nullable_weighted",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": false,
+        "dictionaries": [["да", "нет"]],
+        "weights": { "да": 9, "нет": 1 }
+      }
+    }
+  ]
+}

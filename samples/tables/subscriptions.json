@@ -1,0 +1,109 @@
+{
+  "size": 25,
+  "fileType": "csv",
+  "seed": "subscriptions-demo",
+  "columns": [
+    {
+      "name": "account_id",
+      "type": "uuid",
+      "generationStrategy": "algorithm",
+      "config": {}
+    },
+    {
+      "name": "company",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["(ООО|АО) «(Север|Вектор|Атлас|Орбита|Квант)-(Софт|Трейд|Групп)»"] }
+    },
+    {
+      "name": "country",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["Россия", "Казахстан", "Беларусь", "Узбекистан", "Армения"]],
+        "weights": { "Россия": 80, "Казахстан": 8, "Беларусь": 6 }
+      }
+    },
+    {
+      "name": "plan",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["FREE", "PRO", "ENTERPRISE"]],
+        "weights": { "FREE": 60, "PRO": 30, "ENTERPRISE": 10 }
+      }
+    },
+    {
+      "name": "seats",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#plan == 'ENTERPRISE' ? 50 : (#plan == 'PRO' ? 5 : 1)" }
+    },
+    {
+      "name": "billing",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["MONTHLY", "YEARLY"]],
+        "weights": { "MONTHLY": 70, "YEARLY": 30 }
+      }
+    },
+    {
+      "name": "monthly_price",
+      "type": "double",
+      "generationStrategy": "expression",
+      "config": {
+        "expression": "#plan == 'FREE' ? 0 : #round((#plan == 'PRO' ? 990 : 9900) * (#billing == 'YEARLY' ? 0.8 : 1), 2)"
+      }
+    },
+    {
+      "name": "started_on",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "2023-01-01",
+        "end": "2026-10-01",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "200", "peak": "end" }
+      }
+    },
+    {
+      "name": "months_active",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#max(1, #daysBetween(#started_on, '2026-10-01') / 30)" }
+    },
+    {
+      "name": "renews_on",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": {
+        "expression": "#billing == 'YEARLY' ? #plusYears(#started_on, #months_active / 12 + 1) : #plusMonths(#started_on, #months_active + 1)"
+      }
+    },
+    {
+      "name": "lifetime_value",
+      "type": "double",
+      "generationStrategy": "expression",
+      "config": { "expression": "#round(#monthly_price * #months_active, 2)" }
+    },
+    {
+      "name": "status",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["ACTIVE", "PAST_DUE", "CANCELLED"]],
+        "weights": { "ACTIVE": 75, "PAST_DUE": 5, "CANCELLED": 20 }
+      }
+    }
+  ]
+}

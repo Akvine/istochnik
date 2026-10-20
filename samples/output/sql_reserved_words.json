@@ -1,0 +1,45 @@
+{
+  "size": 5,
+  "fileType": "sql",
+  "tableName": "public.user",
+  "sqlDialect": "postgresql",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "order",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "10", "step": "10" }
+    },
+    {
+      "name": "group",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["admins", "users", "guests"]] }
+    },
+    {
+      "name": "select",
+      "type": "bool",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true }
+    },
+    {
+      "name": "Created At",
+      "type": "datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "2026-01-01 00:00:00", "end": "2026-12-31 23:59:59" },
+      "converters": [{ "name": "format", "arguments": ["yyyy-MM-dd HH:mm:ss"] }]
+    },
+    {
+      "name": "comment",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": false, "dictionaries": [["It's fine", "Путь C:\\temp", "Без комментариев"]] }
+    }
+  ]
+}

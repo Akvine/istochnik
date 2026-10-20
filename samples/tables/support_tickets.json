@@ -1,0 +1,100 @@
+{
+  "size": 25,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "ticket",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "10001", "step": "1" },
+      "convertToString": true,
+      "postConverters": [{ "name": "addBefore", "arguments": ["TCK-"] }]
+    },
+    {
+      "name": "created_at",
+      "type": "datetime",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2026-02-01 08:00:00", "end": "2026-02-28 20:00:00", "notNull": true },
+      "converters": [{ "name": "sort_asc" }, { "name": "format", "arguments": ["dd.MM.yyyy HH:mm"] }]
+    },
+    {
+      "name": "customer_email",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "en", "topics": ["EMAIL"] }
+    },
+    {
+      "name": "channel",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["EMAIL", "CHAT", "PHONE", "PORTAL"]],
+        "weights": { "EMAIL": 45, "CHAT": 35, "PHONE": 15, "PORTAL": 5 }
+      }
+    },
+    {
+      "name": "priority",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["LOW", "MEDIUM", "HIGH", "CRITICAL"]],
+        "weights": { "LOW": 45, "MEDIUM": 35, "HIGH": 15, "CRITICAL": 5 }
+      }
+    },
+    {
+      "name": "subject",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["TEXT"], "length": 50 }
+    },
+    {
+      "name": "assignee",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] },
+      "converters": [{ "name": "to_null", "probability": 20 }]
+    },
+    {
+      "name": "sla_hours",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "expression": "#priority == 'CRITICAL' ? 4 : (#priority == 'HIGH' ? 8 : (#priority == 'MEDIUM' ? 24 : 72))" }
+    },
+    {
+      "name": "first_response_hours",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "0",
+        "end": "120",
+        "notNull": true,
+        "distribution": { "type": "exponential", "stddev": "8" }
+      },
+      "converters": [{ "name": "round", "arguments": [1] }]
+    },
+    {
+      "name": "sla_breached",
+      "type": "bool",
+      "generationStrategy": "expression",
+      "config": { "expression": "#first_response_hours > #sla_hours" }
+    },
+    {
+      "name": "satisfaction",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": {
+        "rangeType": "random",
+        "start": "1",
+        "end": "6",
+        "notNull": true,
+        "distribution": { "type": "zipf", "exponent": "1.2", "peak": "end" }
+      },
+      "converters": [{ "name": "to_null", "probability": 40 }]
+    }
+  ]
+}

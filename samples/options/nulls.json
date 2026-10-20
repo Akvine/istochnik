@@ -1,0 +1,61 @@
+{
+  "size": 20,
+  "fileType": "csv",
+  "columns": [
+    {
+      "name": "middle_name",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": false, "dictionaries": [["Иванович", "Петрович", "Сергеевич", "Андреевич"]] }
+    },
+    {
+      "name": "half_nulls",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1", "end": "100", "notNull": false }
+    },
+    {
+      "name": "ten_percent_nulls",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1", "end": "100", "notNull": true },
+      "converters": [{ "name": "to_null", "probability": 10 }]
+    },
+    {
+      "name": "comment_rarely_filled",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["TEXT"], "length": 30 },
+      "converters": [{ "name": "to_null", "probability": 80 }]
+    },
+    {
+      "name": "full_name_skips_null",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "'Петров Иван ' + #middle_name" }
+    },
+    {
+      "name": "full_name_handles_null",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "notNull": true, "expression": "'Петров Иван' + (#middle_name == null ? '' : ' ' + #middle_name)" }
+    },
+    {
+      "name": "default_for_null",
+      "type": "int",
+      "generationStrategy": "expression",
+      "config": { "notNull": true, "expression": "#half_nulls ?: 0" }
+    },
+    {
+      "name": "unique_with_one_null",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": false,
+        "unique": true,
+        "dictionaries": [["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20"]]
+      }
+    }
+  ]
+}

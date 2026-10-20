@@ -1,0 +1,84 @@
+{
+  "size": 20,
+  "fileType": "sql",
+  "tableName": "policies",
+  "sqlDialect": "mssql",
+  "columns": [
+    {
+      "name": "policy_number",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["(ХХХ|ТТТ|ААС|ААВ) [0-9]{10}"] }
+    },
+    {
+      "name": "owner",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "vin",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "topics": ["VIN"] }
+    },
+    {
+      "name": "plate_number",
+      "type": "str",
+      "generationStrategy": "regexp",
+      "config": { "rangeType": "random", "notNull": true, "regexps": ["[АВЕКМНОРСТУХ][0-9]{3}[АВЕКМНОРСТУХ]{2}(77|97|99|177|197|50|750)"] }
+    },
+    {
+      "name": "base_rate",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "1646.00", "end": "7535.00", "notNull": true }
+    },
+    {
+      "name": "kbm",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.4", "2.45"]],
+        "weights": { "0.5": 25, "0.6": 12, "0.7": 12, "0.8": 12, "0.9": 10, "1": 22, "1.4": 5, "2.45": 2 }
+      }
+    },
+    {
+      "name": "power_coefficient",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["0.6", "1", "1.1", "1.2", "1.4", "1.6"]],
+        "weights": { "0.6": 5, "1": 25, "1.1": 30, "1.2": 25, "1.4": 10, "1.6": 5 }
+      }
+    },
+    {
+      "name": "premium",
+      "type": "double",
+      "generationStrategy": "expression",
+      "config": { "expression": "#round(#base_rate * #toDouble(#kbm) * #toDouble(#power_coefficient), 2)" }
+    },
+    {
+      "name": "unlimited_drivers",
+      "type": "bool",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true }
+    },
+    {
+      "name": "starts_on",
+      "type": "date",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "2026-01-01", "end": "2026-12-31", "notNull": true }
+    },
+    {
+      "name": "ends_on",
+      "type": "str",
+      "generationStrategy": "expression",
+      "config": { "expression": "#plusDays(#plusYears(#starts_on, 1), -1)" }
+    }
+  ]
+}
