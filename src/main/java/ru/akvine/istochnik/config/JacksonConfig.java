@@ -25,7 +25,9 @@ public class JacksonConfig {
                 .mixIn(ConfigDto.class, OnlyChangedFieldsMixin.class);
     }
 
-    @JsonPropertyOrder({"tableName", "size", "fileType", "columns"})
+    // Поля без значения не выводятся: в запросах, построенных по схеме, seed не задаётся
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonPropertyOrder({"tableName", "size", "fileType", "seed", "columns"})
     private interface GenerateTableRequestMixin {}
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)

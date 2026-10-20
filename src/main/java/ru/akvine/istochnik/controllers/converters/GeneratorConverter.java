@@ -24,7 +24,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.random.RandomGenerator;
@@ -38,6 +40,7 @@ public class GeneratorConverter {
     private String seed;
 
     private static final String ALGORITHM_TYPE = "SHA1PRNG";
+    private static final String COLUMN_SEED_SEPARATOR = "#";
 
     // Значениям колонок без seed криптостойкость не нужна, поэтому для них берётся быстрый генератор
     private static final RandomGeneratorFactory<RandomGenerator> FAST_GENERATOR_FACTORY =
@@ -52,6 +55,7 @@ public class GeneratorConverter {
         int size = request.getSize();
         String tableName = request.getTableName();
         List<GenerateColumn> generateColumns = new ArrayList<>();
+        Map<String, Integer> columnNameOccurrences = new HashMap<>();
         for (ColumnDto column : request.getColumns()) {
 
             GenerationStrategy strategy = GenerationStrategy.from(column.getGenerationStrategy());
@@ -64,7 +68,8 @@ public class GeneratorConverter {
                 }
             }
 
-            Config config = buildConfig(size, column.getConfig(), baseType);
+            String columnSeed = resolveColumnSeed(request.getSeed(), column, columnNameOccurrences);
+            Config config = buildConfig(size, column.getConfig(), baseType, columnSeed);
             if (strategy == GenerationStrategy.ALGORITHM) {
                 config.setDistribution(DistributionFactory.create(
                         column.getConfig().getDistribution(),
@@ -125,10 +130,27 @@ public class GeneratorConverter {
                 .setProbability(converterDto.getProbability());
     }
 
-    private Config buildConfig(int size, ConfigDto from, BaseType baseType) {
+    /**
+     * seed колонки: её собственный или полученный из seed запроса. Из seed запроса каждая колонка получает свой seed
+     * по имени: колонки с одинаковыми настройками не повторяют друг друга, а значения колонки не меняются, если
+     * переставить или добавить другие колонки. Колонки с одинаковыми именами различаются номером повтора имени
+     */
+    private String resolveColumnSeed(String requestSeed, ColumnDto column, Map<String, Integer> columnNameOccurrences) {
+        if (StringUtils.isNotBlank(column.getConfig().getSeed())) {
+            return column.getConfig().getSeed();
+        }
+        if (StringUtils.isBlank(requestSeed)) {
+            return null;
+        }
+
+        int occurrence = columnNameOccurrences.merge(String.valueOf(column.getName()), 1, Integer::sum);
+        return requestSeed + COLUMN_SEED_SEPARATOR + column.getName() + COLUMN_SEED_SEPARATOR + occurrence;
+    }
+
+    private Config buildConfig(int size, ConfigDto from, BaseType baseType, String columnSeed) {
         RandomGenerator randomGenerator;
         try {
-             randomGenerator = resolveRandomizer(from);
+             randomGenerator = resolveRandomizer(columnSeed);
         } catch (Exception exception) {
             randomGenerator = createFastRandomGenerator();
         }
@@ -152,8 +174,8 @@ public class GeneratorConverter {
                 .setLang(from.getLanguage())
                 .setRegexps(from.getRegexps())
                 .setExpression(from.getExpression())
-                // Действующий seed: глобальный из настроек имеет приоритет над seed колонки
-                .setSeed(StringUtils.isBlank(seed) ? StringUtils.defaultIfBlank(from.getSeed(), null) : seed);
+                // Действующий seed: глобальный из настроек имеет приоритет над seed колонки и запроса
+                .setSeed(StringUtils.isBlank(seed) ? columnSeed : seed);
 
         // TODO: добавить инициализацию ConfigDto в провайдер в зависимости от RangeType / Типа данных
         // Вычисление end по start / step / size применимо только к целым числам
@@ -202,14 +224,14 @@ public class GeneratorConverter {
     }
 
     // Колонки с seed остаются на прежнем генераторе: при том же seed значения должны совпадать с прежними версиями
-    private RandomGenerator resolveRandomizer(ConfigDto configDto) throws NoSuchAlgorithmException {
+    private RandomGenerator resolveRandomizer(String columnSeed) throws NoSuchAlgorithmException {
         // Пустое значение randomizer.seed в properties приходит как "", а не null
         if (StringUtils.isBlank(seed)) {
-            if (StringUtils.isBlank(configDto.getSeed())) {
+            if (StringUtils.isBlank(columnSeed)) {
                 return createFastRandomGenerator();
             } else {
                 SecureRandom randomGenerator = SecureRandom.getInstance(ALGORITHM_TYPE);
-                randomGenerator.setSeed(configDto.getSeed().getBytes(StandardCharsets.UTF_8));
+                randomGenerator.setSeed(columnSeed.getBytes(StandardCharsets.UTF_8));
                 return randomGenerator;
             }
         } else {

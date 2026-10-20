@@ -12,4 +12,9 @@ public class GenerateTableRequest {
     private int size;
     private String fileType;
     private String tableName;
+
+    /**
+     * Seed всего запроса: каждая колонка без своего seed получает из него свой seed по имени колонки
+     */
+    private String seed;
 }

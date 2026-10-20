@@ -1,0 +1,48 @@
+{
+  "size": 10,
+  "fileType": "csv",
+  "seed": "orders-2025",
+  "columns": [
+    {
+      "name": "id",
+      "type": "uuid",
+      "generationStrategy": "algorithm",
+      "config": {}
+    },
+    {
+      "name": "customer",
+      "type": "str",
+      "generationStrategy": "faker",
+      "config": { "rangeType": "random", "notNull": true, "language": "ru", "topics": ["FULL_NAME"] }
+    },
+    {
+      "name": "amount",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "10.00", "end": "5000.00" }
+    },
+    {
+      "name": "same_settings_as_amount",
+      "type": "decimal",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "10.00", "end": "5000.00" }
+    },
+    {
+      "name": "status",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": {
+        "rangeType": "random",
+        "notNull": true,
+        "dictionaries": [["NEW", "PAID", "CANCELLED"]],
+        "weights": { "NEW": 2, "PAID": 7, "CANCELLED": 1 }
+      }
+    },
+    {
+      "name": "own_seed",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true, "start": "1", "end": "1000", "seed": "my-seed" }
+    }
+  ]
+}
