@@ -13,6 +13,7 @@ import ru.akvine.istochnik.utils.Asserts;
 import ru.akvine.istochnik.controllers.dto.validation.ValidationColumnsInfo;
 import ru.akvine.istochnik.enums.FileType;
 import ru.akvine.istochnik.enums.GenerationStrategy;
+import ru.akvine.istochnik.enums.SqlDialect;
 import ru.akvine.istochnik.exceptions.UnsupportedTypeGenerationException;
 import ru.akvine.istochnik.exceptions.validation.ConfigValidationException;
 import ru.akvine.istochnik.providers.GenerationStrategyValidatorsProvider;
@@ -80,6 +81,17 @@ public class GeneratorValidator {
         // TODO: добавить валидацию для каждого из fileType через providers
         if (FileType.SQL == fileType && StringUtils.isBlank(request.getTableName())) {
             generalErrors.add("Field 'tableName' can't be blank for file type = SQL");
+        }
+
+        if (StringUtils.isNotBlank(request.getSqlDialect())) {
+            if (fileType != null && fileType != FileType.SQL) {
+                generalErrors.add("Field 'sqlDialect' can be used only with file type = SQL");
+            }
+            try {
+                SqlDialect.safeFrom(request.getSqlDialect());
+            } catch (UnsupportedOperationException exception) {
+                generalErrors.add(exception.getMessage());
+            }
         }
 
         // Лист XLSX вмещает ограниченное число строк и колонок, а первая строка занята заголовком.

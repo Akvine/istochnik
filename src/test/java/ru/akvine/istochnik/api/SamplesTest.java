@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 import ru.akvine.istochnik.api.common.configs.RestMethods;
 import ru.akvine.istochnik.enums.FileType;
+import ru.akvine.istochnik.enums.SqlDialect;
 
 // Очередь пула в общих настройках тестов вмещает одну задачу, а в примерах десятки колонок
 @TestPropertySource(properties = {"parallel.executor.threads-count=4", "parallel.executor.queue-capacity=100"})
@@ -119,6 +120,15 @@ public class SamplesTest extends ApiBaseTest {
             case SQL -> {
                 String tableName = request.get("tableName").asText();
                 String columns = String.join(", ", columnNames).toUpperCase();
+                // В диалекте имена заключаются в кавычки этого диалекта
+                SqlDialect dialect = request.has("sqlDialect")
+                        ? SqlDialect.safeFrom(request.get("sqlDialect").asText())
+                        : null;
+                if (dialect != null) {
+                    tableName = dialect.quoteTableName(tableName);
+                    columns = String.join(
+                            ", ", columnNames.stream().map(dialect::quoteName).toList());
+                }
                 assertThat(text).startsWith("INSERT INTO " + tableName + " (" + columns + ") VALUES");
                 // Каждая строка таблицы - отдельная строка файла, начинающаяся со скобки
                 assertThat(text.lines().filter(line -> line.startsWith("("))).hasSize(size);

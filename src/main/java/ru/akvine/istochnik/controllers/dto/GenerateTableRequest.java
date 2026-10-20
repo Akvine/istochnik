@@ -14,6 +14,11 @@ public class GenerateTableRequest {
     private String tableName;
 
     /**
+     * Диалект SQL для файла в формате SQL: postgresql, mysql, mssql, oracle или sqlite
+     */
+    private String sqlDialect;
+
+    /**
      * Seed всего запроса: каждая колонка без своего seed получает из него свой seed по имени колонки
      */
     private String seed;

@@ -1,0 +1,39 @@
+{
+  "size": 5,
+  "fileType": "sql",
+  "tableName": "shop.products",
+  "sqlDialect": "mssql",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "shift", "start": "1", "step": "1" }
+    },
+    {
+      "name": "title",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": true, "dictionaries": [["Чай", "Кофе", "Какао", "Сок"]] }
+    },
+    {
+      "name": "price",
+      "type": "double",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "start": "50", "end": "500", "notNull": true },
+      "converters": [{ "name": "round", "arguments": [2] }]
+    },
+    {
+      "name": "in_stock",
+      "type": "bool",
+      "generationStrategy": "algorithm",
+      "config": { "rangeType": "random", "notNull": true }
+    },
+    {
+      "name": "comment",
+      "type": "str",
+      "generationStrategy": "dictionary",
+      "config": { "rangeType": "random", "notNull": false, "dictionaries": [["Хит продаж", "It's new"]] }
+    }
+  ]
+}

@@ -108,7 +108,8 @@ public class GeneratorConverter {
                 .setSize(size)
                 .setGenerateColumns(generateColumns)
                 .setFileType(FileType.from(request.getFileType()))
-                .setTableName(tableName);
+                .setTableName(tableName)
+                .setSqlDialect(SqlDialect.safeFrom(request.getSqlDialect()));
     }
 
     public ResponseEntity<?> convertToResponse(byte[] file, FileType fileType, String tableName) {

@@ -4,12 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import ru.akvine.istochnik.enums.SqlDialect;
 import ru.akvine.istochnik.exceptions.AddColumnException;
 
 @Data
 @Accessors(chain = true)
 public class Table {
     private String tableName;
+
+    /**
+     * Диалект SQL для выгрузки в формате SQL. Если не задан, файл получается таким же, как до появления диалектов
+     */
+    private SqlDialect sqlDialect;
+
     private final int rowsCount;
     private List<Column> columns;
 

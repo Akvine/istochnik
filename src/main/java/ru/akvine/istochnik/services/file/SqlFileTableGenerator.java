@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.akvine.istochnik.enums.FileType;
+import ru.akvine.istochnik.enums.SqlDialect;
 import ru.akvine.istochnik.services.dto.Table;
 
 @Service
@@ -14,10 +15,17 @@ public class SqlFileTableGenerator implements FileTableGenerator {
 
     @Override
     public byte[] generate(Table table) {
+        // Без диалекта файл получается таким же, как до появления диалектов
+        SqlDialect dialect = table.getSqlDialect();
         int rowsCount = table.getRowsCount();
         int batchSize = insertBatchSize > 0 ? insertBatchSize : Math.max(rowsCount, 1);
+        // Диалект может ограничивать число строк в одном INSERT сильнее настройки
+        if (dialect != null && dialect.getMaxRowsPerInsert() > 0) {
+            batchSize = Math.min(batchSize, dialect.getMaxRowsPerInsert());
+        }
 
-        String insertHeader = "INSERT INTO " + table.getTableName() + " (" + extractColumnNames(table) + ") VALUES\n";
+        String tableName = dialect == null ? table.getTableName() : dialect.quoteTableName(table.getTableName());
+        String insertHeader = "INSERT INTO " + tableName + " (" + extractColumnNames(table, dialect) + ") VALUES\n";
 
         StringBuilder sql = new StringBuilder();
 
@@ -32,9 +40,9 @@ public class SqlFileTableGenerator implements FileTableGenerator {
             for (int columnIndex = 0; columnIndex < table.getColumns().size(); columnIndex++) {
                 Object value = table.getColumns().get(columnIndex).getValues().get(row);
                 if (columnIndex == lastColumnIndex) {
-                    sql.append(formatValue(value)).append(")");
+                    sql.append(formatValue(value, dialect)).append(")");
                 } else {
-                    sql.append(formatValue(value)).append(", ");
+                    sql.append(formatValue(value, dialect)).append(", ");
                 }
             }
 
@@ -50,27 +58,34 @@ public class SqlFileTableGenerator implements FileTableGenerator {
         return FileType.SQL;
     }
 
-    private String extractColumnNames(Table table) {
+    private String extractColumnNames(Table table, SqlDialect dialect) {
         StringBuilder sb = new StringBuilder();
 
         int lastColumnIndex = table.getColumns().size() - 1;
         for (int i = 0; i < table.getColumns().size(); ++i) {
             if (i == lastColumnIndex) {
-                sb.append(table.getColumns().get(i).getName().toUpperCase());
+                sb.append(columnName(table.getColumns().get(i).getName(), dialect));
             } else {
-                sb.append(table.getColumns().get(i).getName().toUpperCase()).append(", ");
+                sb.append(columnName(table.getColumns().get(i).getName(), dialect)).append(", ");
             }
         }
 
         return sb.toString();
     }
 
-    private static String formatValue(Object value) {
+    private String columnName(String name, SqlDialect dialect) {
+        return dialect == null ? name.toUpperCase() : dialect.quoteName(name);
+    }
+
+    private static String formatValue(Object value, SqlDialect dialect) {
         switch (value) {
             case null -> {
                 return "NULL";
             }
             case String s -> {
+                if (dialect != null) {
+                    return dialect.quoteString(s);
+                }
                 String escaped = s.replace("'", "''");
                 return "'" + escaped + "'";
             }
@@ -78,7 +93,7 @@ public class SqlFileTableGenerator implements FileTableGenerator {
                 return value.toString();
             }
             case Boolean b -> {
-                return b ? "TRUE" : "FALSE";
+                return dialect == null ? (b ? "TRUE" : "FALSE") : dialect.booleanLiteral(b);
             }
             default -> {}
         }

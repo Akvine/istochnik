@@ -56,6 +56,7 @@ public class GeneratorFacadeImpl implements GeneratorFacade {
         int size = generateData.getSize();
         String tableName = generateData.getTableName();
         Table table = new Table(size, tableName);
+        table.setSqlDialect(generateData.getSqlDialect());
         List<GenerateColumn> generateColumns = generateData.getGenerateColumns();
         // Значения колонок по индексам колонок в запросе
         List<List<?>> generatedColumns = new ArrayList<>(Collections.nCopies(generateColumns.size(), null));

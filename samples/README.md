@@ -101,6 +101,7 @@ curl.exe -X POST "http://localhost:8103/v1/generator" -H "Content-Type: applicat
 | [options/distribution.json](options/distribution.json) | Распределения случайных значений: нормальное для возраста и времени визита, экспоненциальное для суммы и для дат с преобладанием свежих, Ципфа для идентификатора клиента и оценки. Для сравнения — колонка с равномерным распределением |
 | [options/error_policy.json](options/error_policy.json) | Политика `IGNORE`: колонка, которую невозможно сгенерировать (100 уникальных строк из одного символа), заполняется значением `defaultValue` |
 | [output/sql.json](output/sql.json) | Выгрузка в SQL: имя таблицы, кавычки для строк, экранирование апострофа, `NULL` |
+| [output/sql_postgresql.json](output/sql_postgresql.json), [sql_mysql.json](output/sql_mysql.json), [sql_mssql.json](output/sql_mssql.json), [sql_oracle.json](output/sql_oracle.json), [sql_sqlite.json](output/sql_sqlite.json) | Тот же запрос в диалектах PostgreSQL, MySQL, SQL Server, Oracle и SQLite: имена в кавычках диалекта, имя таблицы со схемой, запись логических значений и строк, отдельный `INSERT` на строку для Oracle |
 | [output/xlsx.json](output/xlsx.json) | Выгрузка в XLSX |
 
 ## Таблицы целиком
