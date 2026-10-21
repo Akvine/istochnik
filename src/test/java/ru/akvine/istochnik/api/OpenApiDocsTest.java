@@ -44,6 +44,7 @@ public class OpenApiDocsTest extends ApiBaseTest {
                 .body("paths.'/v1/types/custom'.get.summary", equalTo("Получить пользовательские типы"))
                 .body("paths.'/v1/strategies'.get.summary", equalTo("Получить стратегии генерации"))
                 .body("paths.'/v1/converters'.get.summary", equalTo("Получить конвертеры"))
+                .body("paths.'/v1/converters'.get.parameters[0].description", not(emptyOrNullString()))
                 .body("paths.'/v1/topics'.get.summary", equalTo("Получить топики"))
                 .body("paths.'/v1/topics'.get.parameters[0].description", not(emptyOrNullString()))
                 .body("paths.'/v1/schemas/convert'.post.summary", equalTo("Построить запросы на генерацию по схеме"))

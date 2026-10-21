@@ -8,6 +8,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ConverterTypeDto {
     private String type;
-    private List<String> names;
+    private List<ConverterInfoDto> names;
     private int size;
 }

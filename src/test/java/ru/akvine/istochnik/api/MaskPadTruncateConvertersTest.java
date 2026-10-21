@@ -155,8 +155,10 @@ public class MaskPadTruncateConvertersTest extends ApiBaseTest {
                 .get("/v1/converters")
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("converters.find { it.type == 'str' }.names", hasItems("mask", "padLeft", "padRight", "truncate"))
-                .body("converters.find { it.type == 'int' }.names", not(hasItem("mask")));
+                .body(
+                        "converters.find { it.type == 'str' }.names.name",
+                        hasItems("mask", "padLeft", "padRight", "truncate"))
+                .body("converters.find { it.type == 'int' }.names.name", not(hasItem("mask")));
     }
 
     private List<String> generate(ConverterDto converter) {
