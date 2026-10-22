@@ -95,7 +95,9 @@ public class ReferenceEndpointsTest extends ApiBaseTest {
                     .body("strategies.find { it.name == 'algorithm' }.supportsUnique", equalTo(true))
                     .body("strategies.find { it.name == 'algorithm' }.supportsValid", equalTo(true))
                     .body("strategies.find { it.name == 'constant' }.supportsNotNull", equalTo(false))
-                    .body("strategies.find { it.name == 'faker' }.supportsUnique", equalTo(false));
+                    .body("strategies.find { it.name == 'faker' }.supportsUnique", equalTo(true))
+                    .body("strategies.find { it.name == 'regexp' }.supportsUnique", equalTo(true))
+                    .body("strategies.find { it.name == 'expression' }.supportsUnique", equalTo(false));
         }
     }
 

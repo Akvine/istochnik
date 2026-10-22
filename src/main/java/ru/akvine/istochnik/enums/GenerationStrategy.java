@@ -11,8 +11,8 @@ public enum GenerationStrategy {
     CONSTANT("constant", "constant.strategy.description", false, false, false),
     ALGORITHM("algorithm", "algorithm.strategy.description", true, true, true),
     DICTIONARY("dictionary", "dictionary.strategy.description", true, true, false),
-    REGEXP("regexp", "regexp.strategy.description", false, true, false),
-    FAKER("faker", "faker.strategy.description", false, true, false),
+    REGEXP("regexp", "regexp.strategy.description", true, true, false),
+    FAKER("faker", "faker.strategy.description", true, true, false),
     EXPRESSION("expression", "expression.strategy.description", false, true, false);
 
     private final String name;

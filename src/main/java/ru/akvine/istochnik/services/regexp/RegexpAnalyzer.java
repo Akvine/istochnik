@@ -9,8 +9,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import org.springframework.stereotype.Component;
@@ -62,6 +64,48 @@ public class RegexpAnalyzer {
      * строки или требует слишком большого автомата
      */
     public void verify(String regexp) {
+        verified(regexp);
+    }
+
+    /**
+     * Сколько разных строк задаёт выражение. Выражение проверяется так же, как в {@link #verify(String)}
+     *
+     * @return число строк или Long.MAX_VALUE, если их бесконечно много или больше, чем помещается в long
+     * @throws InvalidRegexpException если выражение не проходит проверку
+     */
+    public long countStrings(String regexp) {
+        Automaton automaton = verified(regexp);
+        // После удаления тупиковых переходов из любого состояния можно дойти до принимающего, поэтому цикл
+        // означает бесконечно много строк
+        automaton.removeDeadTransitions();
+        return countStrings(automaton.getInitialState(), new HashMap<>(), new HashSet<>());
+    }
+
+    /**
+     * Число путей от состояния до принимающих состояний. В детерминированном автомате каждой строке соответствует
+     * один путь. Если автомат недетерминированный, путей может быть больше, чем строк, и результат - оценка сверху
+     */
+    private long countStrings(State state, Map<State, Long> counted, Set<State> onPath) {
+        Long known = counted.get(state);
+        if (known != null) {
+            return known;
+        }
+        if (!onPath.add(state)) {
+            return Long.MAX_VALUE;
+        }
+
+        long count = state.isAccept() ? 1 : 0;
+        for (Transition transition : state.getTransitions()) {
+            long symbols = transition.getMax() - transition.getMin() + 1;
+            count = add(count, multiply(countStrings(transition.getDest(), counted, onPath), symbols));
+        }
+
+        onPath.remove(state);
+        counted.put(state, count);
+        return count;
+    }
+
+    private Automaton verified(String regexp) {
         if (regexp.length() > regexpProperties.getMaxLength()) {
             throw invalid(regexp, "is longer than max = [" + regexpProperties.getMaxLength() + "] characters");
         }
@@ -79,7 +123,7 @@ public class RegexpAnalyzer {
                     "sets strings longer than max = [" + regexpProperties.getMaxResultLength() + "] characters");
         }
 
-        build(regexp, parsed);
+        return build(regexp, parsed);
     }
 
     /**

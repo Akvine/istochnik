@@ -11,6 +11,7 @@ import nl.flotsam.xeger.Xeger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.akvine.istochnik.config.regexp.RegexpProperties;
 import ru.akvine.istochnik.exceptions.InvalidRegexpException;
@@ -129,6 +130,41 @@ class RegexpAnalyzerTest {
         assertThatThrownBy(() -> customAnalyzer.verify("a{4}")).hasMessageContaining("max = [3] characters");
         assertThatThrownBy(() -> customAnalyzer.verify("[ab]*a[ab]"))
                 .hasMessageContaining("max = [3] automaton states");
+    }
+
+    @ParameterizedTest(name = "{0} - {1}")
+    @CsvSource(
+            delimiter = ';',
+            value = {
+                "ORD-[0-9]{6}; 1000000",
+                "[A-C][0-9]{2}; 300",
+                "(ab|cd)?; 3",
+                "<001-999>; 999",
+                "~(a{5})&a{1,6}; 5",
+                // Строки, подходящие под обе части выражения, считаются один раз
+                "[a-c]|[b-d]; 4",
+                "(a|ab)(c|bcd); 4",
+                "#; 0"
+            })
+    @DisplayName("Strings of finite regexp are counted exactly")
+    void count_strings(String regexp, long expected) {
+        assertThat(analyzer.countStrings(regexp)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(strings = {"[a-z]+", "(ab|cd)*x?", ".*", "[a-z]{2,}", "[a-z]{1000}"})
+    @DisplayName("Infinite regexp or regexp with more strings than long holds - max long")
+    void count_strings_of_unbounded_regexp(String regexp) {
+        assertTimeoutPreemptively(TIMEOUT, () -> assertThat(analyzer.countStrings(regexp))
+                .isEqualTo(Long.MAX_VALUE));
+    }
+
+    @Test
+    @DisplayName("Strings of invalid regexp are not counted - the same error as in verify")
+    void count_strings_of_invalid_regexp() {
+        assertTimeoutPreemptively(TIMEOUT, () -> assertThatThrownBy(() -> analyzer.countStrings("[ab]*a[ab]{20}"))
+                .isInstanceOf(InvalidRegexpException.class)
+                .hasMessageContaining("is too complex"));
     }
 
     private void assertRejected(String regexp, String reason) {

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.startsWith;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -92,6 +93,88 @@ public class GenerateByRegexTests extends ApiBaseTest {
     }
 
     @Test
+    @DisplayName("Generate unique values [rangeType = RANDOM] - every value of regexp is used once")
+    void successful_generate_unique_by_regexp() {
+        // Выражение задаёт ровно 30 строк, и все они должны найтись, хотя повторы выпадают постоянно
+        List<String> values = generate(config(RangeType.RANDOM, "[A-C][0-9]").setUnique(true), 30);
+
+        assertThat(values).hasSize(30).doesNotHaveDuplicates().allMatch(value -> value.matches("[A-C][0-9]"));
+    }
+
+    @Test
+    @DisplayName("Generate unique values [notNull = false] - null is one more unique value")
+    void successful_generate_unique_nullable_by_regexp() {
+        List<String> values =
+                generate(config(RangeType.RANDOM, "[A-C][0-9]").setUnique(true).setNotNull(false), 31);
+
+        // Пустая строка в CSV соответствует null
+        assertThat(values).hasSize(31).doesNotHaveDuplicates().containsOnlyOnce("");
+    }
+
+    @Test
+    @DisplayName("Generate unique values [rangeType = SHIFT] - regexps are used in turn")
+    void successful_generate_unique_by_regexps_in_turn() {
+        List<String> values = generate(config(RangeType.SHIFT, "A[0-9]", "B[0-9]").setUnique(true), 20);
+
+        String firstLetter = values.get(0).substring(0, 1);
+        assertThat(values).hasSize(20).doesNotHaveDuplicates();
+        for (int index = 0; index < values.size(); index++) {
+            assertThat(values.get(index).startsWith(firstLetter)).isEqualTo(index % 2 == 0);
+        }
+    }
+
+    @Test
+    @DisplayName("Generate more unique values than regexps set - validation error before generation")
+    void fail_generate_more_unique_values_than_regexps_set() {
+        sendInvalid(request(column(config(RangeType.RANDOM, "[A-C][0-9]").setUnique(true)), 31))
+                .body(
+                        "columnErrors.column[0]",
+                        startsWith("Rows count = [31] greater than available unique values of regexps = [30]"));
+        // Строки разных выражений складываются
+        sendInvalid(request(column(config(RangeType.RANDOM, "[AB]", "C[0-9]").setUnique(true)), 13))
+                .body("columnErrors.column[0]", containsString("available unique values of regexps = [12]"));
+        // С null значений на одно больше
+        sendInvalid(request(column(config(RangeType.RANDOM, "[AB]").setUnique(true).setNotNull(false)), 4))
+                .body("columnErrors.column[0]", containsString("available unique values of regexps = [3]"));
+    }
+
+    @Test
+    @DisplayName("Generate unique values in turn by too narrow regexp - validation error before generation")
+    void fail_generate_unique_values_in_turn_by_narrow_regexp() {
+        // Каждому выражению достаётся по 15 строк, а первое задаёт только 10
+        ConfigDto config = config(RangeType.SHIFT, "A[0-9]", "B[0-9]{2}").setUnique(true);
+
+        sendInvalid(request(column(config), 30))
+                .body(
+                        "columnErrors.column[0]",
+                        startsWith("regexp [A[0-9]] sets only [10] unique values, but with rangeType = [shift] "
+                                + "it is used for at least [15] rows"));
+        // При случайном выборе выражения те же строки находятся
+        assertThat(generate(config.setRangeType(RangeType.RANDOM.getType()), 30)).doesNotHaveDuplicates();
+    }
+
+    // Выражения пересекаются: по отдельности они задают четыре строки, а вместе - три. Проверка запроса
+    // этого не видит, и нехватка обнаруживается при генерации без перебора всех попыток
+    @Test
+    @Timeout(10)
+    @DisplayName("Generate unique values by overlapping regexps - generation error instead of endless search")
+    void fail_generate_unique_values_by_overlapping_regexps() {
+        RestAssured.given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .body(request(column(config(RangeType.RANDOM, "[AB]", "[BC]").setUnique(true)), 4))
+                .when()
+                .post(RestMethods.GENERATE_DATA_ENDPOINT)
+                .then()
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .body("code", equalTo("generation.error"))
+                .body(
+                        "message",
+                        containsString("Unique values of [regexp] strategy run out: only [3] unique values were "
+                                + "generated for [4] rows"));
+    }
+
+    @Test
     @DisplayName("Generate without regexps - validation error")
     void fail_generate_without_regexps() {
         sendInvalid(request(column(new ConfigDto().setRangeType(RangeType.RANDOM.getType()))))
@@ -155,15 +238,27 @@ public class GenerateByRegexTests extends ApiBaseTest {
         return generate(column(config));
     }
 
+    private List<String> generate(ConfigDto config, int size) {
+        return generate(request(column(config), size));
+    }
+
     private List<String> generate(ColumnDto column) {
-        return convert(BaseType.STRING, sendGenerateRequest(request(column))).stream()
+        return generate(request(column));
+    }
+
+    private List<String> generate(GenerateTableRequest request) {
+        return convert(BaseType.STRING, sendGenerateRequest(request)).stream()
                 .map(String::valueOf)
                 .toList();
     }
 
     private GenerateTableRequest request(ColumnDto column) {
+        return request(column, SIZE);
+    }
+
+    private GenerateTableRequest request(ColumnDto column, int size) {
         return new GenerateTableRequest()
-                .setSize(SIZE)
+                .setSize(size)
                 .setFileType(FileType.CSV.name())
                 .setColumns(List.of(column));
     }

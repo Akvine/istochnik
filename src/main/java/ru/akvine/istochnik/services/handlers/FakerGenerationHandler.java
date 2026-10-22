@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.function.IntFunction;
 import java.util.random.RandomGenerator;
 
 @Service
@@ -27,7 +28,7 @@ import java.util.random.RandomGenerator;
 public class FakerGenerationHandler implements GenerationHandler {
     private final FakerGeneratorServicesProvider fakerGeneratorServicesProvider;
     private final ConverterConvertersProvider converterConvertersProvider;
-
+    private final UniqueValuesGenerator uniqueValuesGenerator;
 
     @Override
     public List<?> handle(GenerateColumn generateColumn) {
@@ -51,45 +52,26 @@ public class FakerGenerationHandler implements GenerationHandler {
             faker = new Faker(new Locale(language), (Random) randomGenerator);
         }
 
-        List<String> generatedValues = new ArrayList<>();
-        int iterationCount = 0;
-        // TODO: добавить поддерку unique
-        while (generatedValues.size() != size) {
-            if (rangeType == RangeType.SHIFT) {
-                if (notNull) {
-                    Topic currentTopic = topics.get(iterationCount % topics.size());
-                    generatedValues.add(fakerGeneratorServicesProvider
-                            .getByTopic(currentTopic)
-                            .generate(faker, config));
+        // По порядку топики чередуются по номеру строки, а случайно выбираются для каждого значения
+        IntFunction<String> valueForRow = row -> {
+            Topic topic = rangeType == RangeType.SHIFT
+                    ? topics.get(row % topics.size())
+                    : randomTopic(topics, randomGenerator);
+            return fakerGeneratorServicesProvider.getByTopic(topic).generate(faker, config);
+        };
+
+        List<String> generatedValues;
+        if (config.isUnique()) {
+            generatedValues = uniqueValuesGenerator.generate(config, getStrategy(), valueForRow);
+        } else {
+            generatedValues = new ArrayList<>(size);
+            for (int row = 0; row < size; ++row) {
+                if (!notNull && randomGenerator.nextBoolean()) {
+                    generatedValues.add(null);
                 } else {
-                    boolean isNull = randomGenerator.nextBoolean();
-                    if (isNull) {
-                        generatedValues.add(null);
-                    } else {
-                        Topic currentTopic = topics.get(iterationCount % topics.size());
-                        generatedValues.add(fakerGeneratorServicesProvider
-                                .getByTopic(currentTopic)
-                                .generate(faker, config));
-                    }
-                }
-            } else {
-                if (notNull) {
-                    Topic topic = randomTopic(topics, randomGenerator);
-                    generatedValues.add(
-                            fakerGeneratorServicesProvider.getByTopic(topic).generate(faker, config));
-                } else {
-                    boolean isNull = randomGenerator.nextBoolean();
-                    if (isNull) {
-                        generatedValues.add(null);
-                    } else {
-                        Topic topic = randomTopic(topics, randomGenerator);
-                        generatedValues.add(
-                                fakerGeneratorServicesProvider.getByTopic(topic).generate(faker, config));
-                    }
+                    generatedValues.add(valueForRow.apply(row));
                 }
             }
-
-            iterationCount++;
         }
 
         return converterConvertersProvider
